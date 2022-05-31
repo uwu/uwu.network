@@ -1,0 +1,8 @@
+{
+    "windicss.includeLanguages": {
+        "astro": "html"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+}

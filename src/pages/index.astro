@@ -1,0 +1,21 @@
+---
+import IndexLayout from "../layouts/IndexLayout.astro";
+
+const uwu = `
+/$$   /$$ /$$  /$$  /$$ /$$   /$$
+| $$  | $$| $$ | $$ | $$| $$  | $$
+| $$  | $$| $$ | $$ | $$| $$  | $$
+| $$  | $$| $$ | $$ | $$| $$  | $$
+|  $$$$$$/|  $$$$$/$$$$/|  $$$$$$/
+\\______/  \\_____/\\___/  \\______/
+`.trim();
+---
+
+<IndexLayout title="uwu">
+	<div class="grid place-items-center h-full text-center">
+		<div>
+			<pre id="fallback-uwu" class="text-3xl">{uwu}</pre>
+			<p class="font-plex mt-2">a group of people building projects that won't change the world</p>
+		</div>
+	</div>
+</IndexLayout>

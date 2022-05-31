@@ -1,0 +1,24 @@
+---
+import windi from "virtual:windi.css";
+// THIS IS THE MAIN LAYOUT
+// your layout should import THIS
+
+const { title, class: className } = Astro.props;
+---
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>{title}</title>
+	<style is:inline set:html={windi}></style>
+
+	<slot name="head" />
+</head>
+
+<body class={className}>
+  <slot />
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+---
+import IndexLayout from "../../layouts/IndexLayout.astro";
+import { readdir } from "fs/promises";
+
+const uwuArr = [...Array((await readdir("public/uwus")).length).keys()];
+---
+
+<IndexLayout title="uwus">
+  <div class="font-plex">
+    <div class="text-3xl">Index of /uwus</div>
+    <div class="flex flex-col">
+      <a href="/" class="text-xl">..</a>
+      {uwuArr.map((uwu) => (
+      <a href={`/uwus/${uwu}.txt`} class="text-xl">
+        {uwu}.txt
+      </a>
+      ))}
+    </div>
+    <a href="/" class="absolute bottom-0 right-0 underline">powered by uwu.network</a>
+  </div>
+</IndexLayout>

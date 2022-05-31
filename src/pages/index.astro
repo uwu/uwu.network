@@ -9,16 +9,28 @@ const uwuCount = (await readdir("public/uwus")).length;
 <IndexLayout title="uwu">
 	<div class="grid place-items-center h-full text-center">
 		<div>
-			<!-- <a href="/uwus" class="text-white no-underline"> -->
-				<pre id="big-uwu" class="text-3xl">{mainUwu}</pre>
-			<!-- </a> -->
+			<a href="/uwus" class="text-white no-underline">
+				<pre id="big-uwu" class="text-3xl min-h-40"><noscript>{mainUwu}</noscript></pre>
+			</a>
 			<p class="font-plex mt-2">a group of people building projects that won't change the world</p>
 		</div>
 	</div>
 
 	<script define:vars={{ uwuCount }} type="module">
 		const pickedUwu = Math.floor(Math.random() * uwuCount);
-		const uwu = await (await fetch(`/uwus/${pickedUwu}.txt`)).text()
-		document.getElementById("big-uwu").innerText = uwu;
+		const bigUwu = document.getElementById("big-uwu");
+
+		bigUwu.style.opacity = 0;
+
+		try {
+			const resp = await fetch(`/uwus/${pickedUwu}.txt`);
+			if (!resp.ok) throw null;
+			bigUwu.innerText = await resp.text();
+		} catch {
+			bigUwu.innerHTML = bigUwu.textContent;
+		}
+
+		bigUwu.style.transition = "opacity 1s linear";
+		bigUwu.style.opacity = "";
 	</script>
 </IndexLayout>

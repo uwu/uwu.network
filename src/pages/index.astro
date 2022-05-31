@@ -1,21 +1,24 @@
 ---
 import IndexLayout from "../layouts/IndexLayout.astro";
+import mainUwu from "/uwus/1.txt?raw";
+import { readdir } from "fs/promises";
 
-const uwu = `
-/$$   /$$ /$$  /$$  /$$ /$$   /$$
-| $$  | $$| $$ | $$ | $$| $$  | $$
-| $$  | $$| $$ | $$ | $$| $$  | $$
-| $$  | $$| $$ | $$ | $$| $$  | $$
-|  $$$$$$/|  $$$$$/$$$$/|  $$$$$$/
-\\______/  \\_____/\\___/  \\______/
-`.trim();
+const uwuCount = (await readdir("public/uwus")).length;
 ---
 
 <IndexLayout title="uwu">
 	<div class="grid place-items-center h-full text-center">
 		<div>
-			<pre id="fallback-uwu" class="text-3xl">{uwu}</pre>
+			<!-- <a href="/uwus" class="text-white no-underline"> -->
+				<pre id="big-uwu" class="text-3xl">{mainUwu}</pre>
+			<!-- </a> -->
 			<p class="font-plex mt-2">a group of people building projects that won't change the world</p>
 		</div>
 	</div>
+
+	<script define:vars={{ uwuCount }} type="module">
+		const pickedUwu = Math.floor(Math.random() * uwuCount);
+		const uwu = await (await fetch(`/uwus/${pickedUwu}.txt`)).text()
+		document.getElementById("big-uwu").innerText = uwu;
+	</script>
 </IndexLayout>

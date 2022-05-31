@@ -1,0 +1,16 @@
+---
+import "virtual:windi.css";
+
+import IndexLayout from "../../layouts/beef/IndexLayout.astro";
+---
+
+<IndexLayout>
+	<div class="grid place-items-center h-screen text-center">
+        <div class="grid place-items-center text-center">
+            <img src="/beef/logo.png" />
+            <p class="text-8xl font-medium mb-4">Hello world!</p>
+            <p class="text-2xl text-cat-subtext-primary">I'm Beef, and this is my site!</p>
+            <a class="transition-all text-cat-yellow underline hover:(text-cat-peach)" href="/~beef/about">About me</a>
+        </div>
+	</div>
+</IndexLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../BaseLayout.astro";
+import PoweredBy from "../../components/PoweredBy.astro";
+---
+
+<BaseLayout title="Beef's website - uwu.network" class="bg-cat-base text-cat-text px-4">
+    <link slot="head" rel="preconnect" href="https://fonts.googleapis.com">
+    <link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link slot="head" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	
+	<slot />
+    <PoweredBy />
+
+	<style slot="head" is:inline>
+		* {
+			font-family: "Inter", sans-serif !important;
+		}
+	</style>
+</BaseLayout>

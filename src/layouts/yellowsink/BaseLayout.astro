@@ -1,0 +1,17 @@
+---
+import IbmPlexSans from "../../components/IbmPlexSans.astro";
+import PoweredBy from "../../components/PoweredBy.astro";
+import UwuBaseLayout from "../BaseLayout.astro";
+const { title, bodyClass } = Astro.props;
+
+const titleSuffix = "sink on uwu";
+const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
+---
+
+<UwuBaseLayout title={resolvedTitle} class={`${bodyClass ?? ""} bg-black font-plex text-white h-screen p-6`}>
+  <IbmPlexSans slot="head" />
+
+  <slot />
+
+  <PoweredBy />
+</UwuBaseLayout>

@@ -1,11 +1,10 @@
 ---
+import IbmPlexSans from "../components/IbmPlexSans.astro";
 import BaseLayout from "./BaseLayout.astro";
 ---
 
 <BaseLayout title="uwu" class="bg-black text-white h-screen">
-	<link slot="head" rel="preconnect" href="https://fonts.googleapis.com">
-	<link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link slot="head" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet"> 
+	<IbmPlexSans slot="head" />
 	
 	<slot />
 

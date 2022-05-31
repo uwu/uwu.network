@@ -5,6 +5,7 @@ export default defineConfig({
   preflight: true, // set false to disable removal of browser default styles
   theme: {
     extend: {
+      // setup the theme here
       fontFamily: { // class="font-plex"
           plex: ["IBM Plex Mono", "monospace"],
           inter: ["Inter", "sans-serif"]

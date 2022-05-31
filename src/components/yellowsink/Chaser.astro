@@ -1,0 +1,58 @@
+<div id="chaser" class="absolute rounded-1 bg-red-500 w-4 h-4"></div>
+
+<script>
+  /* 
+  I spent a god-damn age writing this wretched thing.
+  If you steal please credit thanks.
+  Mobile users cry.
+  -- sink
+  */
+
+  let currentTarget;
+  window.addEventListener("mousemove", e => {
+    currentTarget = [e.clientX, e.clientY];
+  });
+
+  const chaser = document.getElementById("chaser");
+
+  let targetX;
+  let targetY;
+
+  const speed = 2;
+  const offset = chaser.clientWidth / 2;
+
+  const snapThreshold = chaser.clientWidth / 4;
+
+  setInterval(() => {
+    if (!currentTarget) return;
+    if (!targetX || !targetY) {
+      targetX = chaser.offsetLeft;
+      targetY = chaser.offsetTop;
+    }
+
+    const diffX = currentTarget[0] - (chaser.offsetLeft + offset);
+    const diffY = currentTarget[1] - (chaser.offsetTop + offset);
+
+    if (Math.abs(diffX) < snapThreshold && Math.abs(diffY) < snapThreshold) {
+      targetX = currentTarget[0];
+      targetY = currentTarget[1];
+    } else {
+      let coeffX = 1;
+      let coeffY = Math.abs(diffY) / Math.abs(diffX);
+
+      if (Math.abs(diffY) > Math.abs(diffX)) {
+        coeffX = 1 / coeffY;
+        coeffY = 1;
+      }
+
+      if (diffX < 0) coeffX *= -1;
+      if (diffY < 0) coeffY *= -1;
+
+      targetX += speed * coeffX;
+      targetY += speed * coeffY;
+    }
+
+    chaser.style.left = (targetX - offset) + "px";
+    chaser.style.top = (targetY - offset) + "px";
+  }, 10);
+</script>

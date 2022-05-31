@@ -1,0 +1,24 @@
+---
+import "../../res/css/alyxia/loader.css";
+import "../../res/css/alyxia/common.css";
+import "../../res/css/alyxia/scanlines.css";
+---
+
+<div id="contentloader">
+  <img id="loadtsuki" src="/res/img/alyxia/loader/loadtsuki.png"/>
+  <img id="loadspin" src="/res/img/alyxia/loader/loadspin.png"/>
+</div>
+
+<slot />
+
+<script>
+	window.addEventListener("load", function(event) {
+		document.getElementById("contentloader").className = "destroyedloader";
+		document.getElementById("loadspin").src = "/res/img/alyxia/loader/loadfinish.png";
+	});
+
+	window.onbeforeunload = function() {
+		document.getElementById("contentloader").classList.remove("destroyedloader");
+		document.getElementById("loadspin").src = "/res/img/alyxia/loader/loadspin.png";
+	}
+</script>

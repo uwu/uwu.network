@@ -15,6 +15,7 @@
     "@astrojs/vue": "^0.1.5",
     "@types/node": "^17.0.38",
     "astro": "^1.0.0-beta.38",
+    "sass": "^1.52.1",
     "solid-js": "^1.4.3",
     "svelte": "^3.48.0",
     "vite-plugin-windicss": "^1.8.4",

@@ -1,0 +1,21 @@
+---
+import { readdir } from "fs/promises"
+import { join, resolve } from "path";
+
+const upOne = (path: string) => resolve(path, "..");
+
+const { dir } = Astro.props;
+
+const realDir = resolve(join("public", dir));
+
+const files = (await readdir(realDir)).map(f => [join(dir, f), f]);
+files.splice(0, 0, [upOne(dir), ".."]);
+---
+
+<ul>
+  {files.map(([path, name]) => (
+    <li>
+      <a href={path}>{name}</a>
+    </li>
+  ))}
+</ul>

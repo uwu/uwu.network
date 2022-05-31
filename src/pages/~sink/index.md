@@ -1,6 +1,6 @@
 ---
-layout: "../../layouts/yellowsink/BaseLayout.astro"
-setup: import Chaser from "../../components/yellowsink/Chaser.astro"
+layout: "../../layouts/sink/BaseLayout.astro"
+setup: import Chaser from "../../components/sink/Chaser.astro"
 ---
 
 # Yellowsink on uwu.network

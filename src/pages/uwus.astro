@@ -1,5 +1,5 @@
 ---
-import IndexLayout from "../../layouts/IndexLayout.astro";
+import IndexLayout from "../layouts/IndexLayout.astro";
 import { readdir } from "fs/promises";
 
 const uwuArr = [...Array((await readdir("public/uwus")).length).keys()];

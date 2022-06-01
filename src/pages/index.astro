@@ -10,7 +10,7 @@ const uwuCount = (await readdir("public/uwus")).length;
 	<div class="grid place-items-center h-full text-center">
 		<div>
 			<a href="/uwus" class="text-white no-underline">
-				<pre id="big-uwu" class="text-3xl min-h-60"><noscript>{mainUwu}</noscript></pre>
+				<pre id="big-uwu" class="text-3xl <md:text-lg min-h-60"><noscript>{mainUwu}</noscript></pre>
 			</a>
 			<!-- CHANGE SPANS TO A TAGS LATER -->
 			<p class="font-plex mt-2">a group of <span class="bg-white text-black underline" href="/people">people</span> building
@@ -20,21 +20,25 @@ const uwuCount = (await readdir("public/uwus")).length;
 		</div>
 	</div>
 
-	<script define:vars={{ uwuCount }} type="module">
-		const pickedUwu = Math.floor(Math.random() * uwuCount);
-		const bigUwu = document.getElementById("big-uwu");
+	<script define:vars={{ uwuCount }}>
+    (async () => {
 
-		bigUwu.style.opacity = 0;
+      const pickedUwu = Math.floor(Math.random() * uwuCount);
+      const bigUwu = document.getElementById("big-uwu");
 
-		try {
-			const resp = await fetch(`/uwus/${pickedUwu}.txt`);
-			if (!resp.ok) throw null;
-			bigUwu.innerText = await resp.text();
-		} catch {
-			bigUwu.innerHTML = bigUwu.textContent;
-		}
+      bigUwu.style.opacity = 0;
 
-		bigUwu.style.transition = "opacity 1s linear";
-		bigUwu.style.opacity = "";
+      try {
+        const resp = await fetch(`/uwus/${pickedUwu}.txt`);
+        if (!resp.ok) throw null;
+        bigUwu.innerText = await resp.text();
+      } catch {
+        bigUwu.innerHTML = bigUwu.textContent;
+      }
+
+      bigUwu.style.transition = "opacity 1s linear";
+      bigUwu.style.opacity = "";
+
+    })()
 	</script>
 </IndexLayout>

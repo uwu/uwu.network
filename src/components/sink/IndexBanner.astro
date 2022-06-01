@@ -1,0 +1,20 @@
+---
+import DrawnPfp from "./DrawnPfp.astro";
+
+const yellowsink = `
+___  _ _____ _     _     ____  _      ____  _  _      _  __
+\\  \\///  __// \\   / \\   /  _ \\/ \\  /|/ ___\\/ \\/ \\  /|/ |/ /
+ \\  / |  \\  | |   | |   | / \\|| |  |||    \\| || |\\ |||   / 
+ / /  |  /_ | |_/\\| |_/\\| \\_/|| |/\\||\\___ || || | \\|||   \\ 
+/_/   \\____\\\\____/\\____/\\____/\\_/  \\|\\____/\\_/\\_/  \\|\\_|\\_\\
+`.trim();
+---
+
+<div class="flex justify-center">
+  <div class="inline-grid grid-cols-[repeat(2,auto)] grid-rows-2 gap-x-6">
+    <DrawnPfp class="row-span-2" />
+
+    <pre>{yellowsink}</pre>
+    <p class="text-right">on uwu.network</p>
+  </div>
+</div>

@@ -7,6 +7,7 @@ specifiers:
   '@astrojs/vue': ^0.1.5
   '@types/node': ^17.0.38
   astro: ^1.0.0-beta.38
+  crossani: ^1.1.1
   sass: ^1.52.1
   solid-js: ^1.4.3
   svelte: ^3.48.0
@@ -21,6 +22,7 @@ devDependencies:
   '@astrojs/vue': 0.1.5_sass@1.52.1+vue@3.2.36
   '@types/node': 17.0.38
   astro: 1.0.0-beta.38_sass@1.52.1
+  crossani: 1.1.1
   sass: 1.52.1
   solid-js: 1.4.3
   svelte: 3.48.0
@@ -1142,6 +1144,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+    dev: true
+
+  /crossani/1.1.1:
+    resolution: {integrity: sha512-Xq3xa34gz6WqfxfLiybM/hauRvjmeYlDh0ClhHAJs9Ryp03Aap74e0zkB/mu3s4alNSG1RavNHuLa3vAJwcluQ==}
     dev: true
 
   /csstype/2.6.20:

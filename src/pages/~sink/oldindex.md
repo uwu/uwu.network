@@ -2,10 +2,10 @@
 layout: "^layouts/BaseLayout.astro"
 setup: |
   import Chaser from "^components/Chaser.astro"
-  import IndexBanner from "^components/IndexBanner.astro"
+  import LoadingPfp from "^components/LoadingPfp.astro"
 ---
 
-<IndexBanner />
+# <LoadingPfp /> Yellowsink on uwu.network
 
 Helo I'm sink. I will add the things later.
 

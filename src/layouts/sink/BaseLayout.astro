@@ -4,9 +4,9 @@ import UwuBaseLayout from "@layouts/BaseLayout.astro";
 
 import "^css/global.sass";
 
-const { title, bodyClass } = Astro.props;
+const { title, bodyClass, name } = Astro.props;
 
-const titleSuffix = "sink on uwu";
+const titleSuffix = `${name ?? "sink"} on uwu`;
 const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
 ---
 

@@ -8,7 +8,7 @@ import takodachi from "^/takodachi.gif";
   }
 </style>
 
-<img src={takodachi} id="chaser" class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0">
+<img src={takodachi} id="takodachi" class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0">
 
 <script>
   /* 
@@ -23,7 +23,7 @@ import takodachi from "^/takodachi.gif";
     currentTarget = [e.clientX, e.clientY];
   });
 
-  const chaser = document.getElementById("chaser");
+  const chaser = document.getElementById("takodachi");
   setTimeout(() => {
     chaser.classList.remove("opacity-0");
   }, 1000)

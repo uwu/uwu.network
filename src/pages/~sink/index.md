@@ -1,7 +1,7 @@
 ---
 layout: "^layouts/BaseLayout.astro"
 setup: |
-  import Chaser from "^components/Chaser.astro"
+  import Takodachi from "^components/Takodachi.astro"
   import IndexBanner from "^components/IndexBanner.astro"
 ---
 
@@ -13,4 +13,4 @@ To keep you entertained heres a
 [takodachi](https://hololive.wiki/wiki/File:Takodachi.png)
 that chases your cursor.
 
-<Chaser />
+<Takodachi />

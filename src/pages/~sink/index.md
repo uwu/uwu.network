@@ -1,8 +1,8 @@
 ---
-layout: "../../layouts/sink/BaseLayout.astro"
+layout: "^layouts/BaseLayout.astro"
 setup: |
-  import Chaser from "../../components/sink/Chaser.astro"
-  import LoadingPfp from "../../components/sink/LoadingPfp.astro"
+  import Chaser from "^components/Chaser.astro"
+  import LoadingPfp from "^components/LoadingPfp.astro"
 ---
 
 # <LoadingPfp /> Yellowsink on uwu.network

@@ -20,6 +20,13 @@
       // Alyxia
       "#components/*": ["src/components/alyxia/*"],
       "#layouts/*": ["src/layouts/alyxia/*"],
+
+      // Sink
+      "^components/*": ["src/components/sink/*"],
+      "^layouts/*": ["src/layouts/sink/*"],
+      "^css/*": ["src/res/css/sink/*"],
+      "^js/*": ["src/res/js/sink/*"],
+      "^/*": ["public/sink/*"]
     },
     // Add type definitions for our Vite runtime.
     "types": ["vite/client", "@types/node"]

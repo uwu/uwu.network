@@ -11,10 +11,16 @@ const titleSuffix = "sink on uwu";
 const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
 ---
 
-<UwuBaseLayout title={resolvedTitle} class={`${bodyClass ?? ""} bg-black font-plex text-white h-screen p-6`}>
+<UwuBaseLayout title={resolvedTitle} class={`${bodyClass ?? "" } bg-black font-plex text-white h-screen p-8px`}>
   <IbmPlexSans slot="head" />
 
-  <slot />
+  <div class="border border-white p-4px h-full">
+    <main class="border border-white p-6 h-full">
+      <slot />
+    </main>
+  </div>
 
-  <PoweredBy />
+  <a href="/~sink" class="absolute px-2 bg-black top-0 left-1/2 transform -translate-x-1/2">YELLOWSINK</a>
+
+  <a href="/" class="absolute px-2 bg-black right-4 bottom-0">UWU.NETWORK</a>
 </UwuBaseLayout>

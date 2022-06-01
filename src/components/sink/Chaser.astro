@@ -37,16 +37,11 @@
       targetX = currentTarget[0];
       targetY = currentTarget[1];
     } else {
-      let coeffX = 1;
-      let coeffY = Math.abs(diffY) / Math.abs(diffX);
 
-      if (Math.abs(diffY) > Math.abs(diffX)) {
-        coeffX = 1 / coeffY;
-        coeffY = 1;
-      }
+      const vecLength = Math.sqrt(diffX * diffX + diffY * diffY);
 
-      if (diffX < 0) coeffX *= -1;
-      if (diffY < 0) coeffY *= -1;
+      const coeffX = diffX / vecLength;
+      const coeffY = diffY / vecLength;
 
       targetX += speed * coeffX;
       targetY += speed * coeffY;

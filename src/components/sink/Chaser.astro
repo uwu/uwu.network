@@ -1,4 +1,14 @@
-<div id="chaser" class="absolute rounded-1 bg-red-500 w-4 h-4 -z-1 pointer-events-none"></div>
+---
+import takodachi from "^/takodachi.gif";
+---
+
+<style>
+  * {
+    filter: grayscale() brightness(1.5) contrast(3) invert();
+  }
+</style>
+
+<img src={takodachi} id="chaser" class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0">
 
 <script>
   /* 
@@ -14,6 +24,9 @@
   });
 
   const chaser = document.getElementById("chaser");
+  setTimeout(() => {
+    chaser.classList.remove("opacity-0");
+  }, 1000)
 
   let targetX;
   let targetY;
@@ -21,7 +34,7 @@
   const speed = 2;
   const offset = chaser.clientWidth / 2;
 
-  const snapThreshold = chaser.clientWidth / 4;
+  const snapThreshold = 5; // px
 
   setInterval(() => {
     if (!currentTarget) return;

@@ -9,8 +9,8 @@ setup: |
 
 Helo I'm sink. I will add the things later.
 
-To keep you entertained heres a circle that chases your cursor.
-
-I spent an embarassingly long time on this. Sorry mobile users.
+To keep you entertained heres a
+[takodachi](https://hololive.wiki/wiki/File:Takodachi.png)
+that chases your cursor.
 
 <Chaser />

@@ -1,61 +1,57 @@
 ---
 import { randomUUID } from "crypto"
+import Spinner from "./Spinner.astro";
 const { time, speed, width, height } = Astro.props;
 const id = "sus" + randomUUID();
 ---
 
 <style define:vars={{ width, height }}>
   div {
-    display: grid;
+    display: inline-block;
     width: var(--width);
     height: var(--height);
+    position: relative;
   }
-  div > :global(*) {
-    grid-area: 1 / 1 / 2 / 2;
+
+  div> :global(:not(noscript)) {
+    position: absolute;
+    margin-left: calc(var(--width) / 2);
+    margin-top: calc(var(--height) / 2);
+    transform: translate(-50%, -50%);
   }
 </style>
 
-<div id={id} class="contents transition-none duration-1000 ease-linear max-w-max">
-  {/* content, JS promotes this out of the noscript */}
-  <noscript><slot /></noscript>
-  {/* spinner */}
-  <p class="hidden place-self-center"></p>
+<div id={id} class="contents transition-none duration-1000 ease-linear">
+  <noscript>
+    <slot />
+  </noscript>
+  <Spinner class="hidden" />
 </div>
 
 <script define:vars={{ id, time, speed }}>
+
   const suspense = document.getElementById(id);
-  const spinner = suspense.querySelector("p");
+  const spinner = suspense.querySelector(".spinner");
 
-  // this makes the height look right
-  const noscr = suspense.querySelector("noscript");
-  noscr.remove();
-  const newElem = document.createElement("div");
-  newElem.innerHTML = noscr.innerHTML;
-  newElem.style.visibility = "hidden";
-  suspense.prepend(newElem);
-
+  // get no-JS styles out of the way
   suspense.classList.remove("contents");
   spinner.classList.remove("hidden");
 
-  const spins = "|/-\\";
-  let spinState = 0;
-  const cancelSpin = setInterval(() => {
-    if (++spinState >= spins.length)
-      spinState = 0;
-    
-    spinner.innerText = spins[spinState];
-  }, speed ?? 50);
+  // remove <noscript> but keep a copy for the innerHTML
+  const noscr = suspense.querySelector("noscript");
+  noscr.remove();
 
   setTimeout(() => {
-    clearInterval(cancelSpin);
-    suspense.innerHTML = newElem.innerHTML;
+    // set elements, make invisible
+    suspense.innerHTML = noscr.innerHTML;
     suspense.style.opacity = 0;
 
-    // for info on why two of these is needed,
+    // fade in the content
+    // for info on why two RAFs are needed,
     // see the excellent talk on how the event loop works
-    setTimeout(() => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
       suspense.style.transitionProperty = "opacity";
       suspense.style.opacity = 1;
-    }, 100)
+    }));
   }, time ?? 2000)
 </script>

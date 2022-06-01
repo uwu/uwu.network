@@ -4,13 +4,16 @@ import UwuBaseLayout from "@layouts/BaseLayout.astro";
 
 import "^css/global.sass";
 
-const { title, bodyClass, name } = Astro.props;
+// content is where markdown pages pass their FrontMatter
+const { title: compTitle, bodyClass, name, content } = Astro.props;
 
-const titleSuffix = `${name ?? "sink"} on uwu`;
+const title = compTitle ?? content.title;
+
+const titleSuffix = `${name ?? content.name ?? "sink"} on uwu`;
 const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
 ---
 
-<UwuBaseLayout title={resolvedTitle} class={`${bodyClass ?? "" } bg-black font-plex text-white h-screen p-8px`}>
+<UwuBaseLayout title={resolvedTitle} class={`${bodyClass ?? content.bodyClass ?? "" } bg-black font-plex text-white h-screen p-8px`}>
   <IbmPlexSans slot="head" />
 
   <div class="border border-white p-4px h-full">

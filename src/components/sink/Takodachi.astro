@@ -8,7 +8,8 @@ import takodachi from "^/takodachi.gif";
   }
 </style>
 
-<img src={takodachi} id="takodachi" class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0">
+<img src={takodachi} id="takodachi"
+  class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0">
 
 <script>
   /* 
@@ -22,6 +23,9 @@ import takodachi from "^/takodachi.gif";
   window.addEventListener("mousemove", e => {
     currentTarget = [e.clientX, e.clientY];
   });
+  window.addEventListener("touchstart", e => {
+    currentTarget = [e.touches[0].clientX, e.touches[0].clientY];
+  })
 
   const chaser = document.getElementById("takodachi");
   setTimeout(() => {

@@ -29,10 +29,11 @@ class Grid2D {
   }
 
   wrapCoords(x: number, y: number) {
-    while (x >= this.width) x -= this.width;
-    while (y >= this.height) y -= this.height;
-    while (x < 0) x += this.width;
-    while (y < 0) y += this.height;
+    if (x === this.width) x = 0;
+    if (y === this.height) y = 0;
+    if (x < 0) x = this.width - 1;
+    if (y < 0) y = this.height - 1;
+
     return [x, y];
   }
 
@@ -105,22 +106,18 @@ function renderCells() {
 }
 
 function cellSurvives(x: number, y: number) {
-  const neighbors = [
-    [x - 1, y - 1],
-    [x, y - 1],
-    [x + 1, y - 1],
-    [x - 1, y],
-    [x + 1, y],
-    [x - 1, y + 1],
-    [x, y + 1],
-    [x + 1, y + 1],
-  ].map(([x, y]) => grid.at(x, y));
+  let liveNeighbors = 0;
 
-  const liveNeighbors = neighbors.filter((c) => c).length;
+  if (grid.at(x - 1, y - 1)) liveNeighbors++;
+  if (grid.at(x, y - 1)) liveNeighbors++;
+  if (grid.at(x + 1, y - 1)) liveNeighbors++;
+  if (grid.at(x - 1, y)) liveNeighbors++;
+  if (grid.at(x + 1, y)) liveNeighbors++;
+  if (grid.at(x - 1, y + 1)) liveNeighbors++;
+  if (grid.at(x, y + 1)) liveNeighbors++;
+  if (grid.at(x + 1, y + 1)) liveNeighbors++;
 
-  const isLive = grid.at(x, y);
-
-  return liveNeighbors === 3 || (isLive && liveNeighbors === 2);
+  return liveNeighbors === 3 || (liveNeighbors === 2 && grid.at(x, y));
 }
 
 function tick() {
@@ -151,7 +148,9 @@ export default (cellWidth: number, cellHeight: number) => {
   renderCells();
 
   setInterval(() => {
+    console.time("tick");
     tick();
+    console.timeEnd("tick");
     renderCells();
   }, 100);
 };

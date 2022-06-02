@@ -37,6 +37,13 @@
       "+css/*": ["src/res/css/creatable/*"],
       "+js/*": ["src/res/js/creatable/*"],
       "+/*": ["public/creatable/*"],
+
+      // Beef
+      "%components/*": ["src/components/beef/*"],
+      "%layouts/*": ["src/layouts/beef/*"],
+      "%css/*": ["src/res/css/beef/*"],
+      "%js/*": ["src/res/js/beef/*"],
+      "%/*": ["public/beef/*"],
     },
     // Add type definitions for our Vite runtime.
     "types": ["vite/client", "@types/node"]

@@ -8,12 +8,16 @@ specifiers:
   '@types/node': ^17.0.38
   astro: ^1.0.0-beta.38
   crossani: ^1.1.1
+  howler: ^2.2.3
   sass: ^1.52.1
   solid-js: ^1.4.3
   svelte: ^3.48.0
   vite-plugin-windicss: ^1.8.4
   vue: ^3.2.36
   windicss: ^3.5.4
+
+dependencies:
+  howler: 2.2.3
 
 devDependencies:
   '@astrojs/sitemap': 0.1.0
@@ -1914,6 +1918,10 @@ packages:
       property-information: 6.1.1
       space-separated-tokens: 2.0.1
     dev: true
+
+  /howler/2.2.3:
+    resolution: {integrity: sha512-QM0FFkw0LRX1PR8pNzJVAY25JhIWvbKMBFM4gqk+QdV+kPXOhleWGCB6AiAF/goGjIHK2e/nIElplvjQwhr0jg==}
+    dev: false
 
   /html-entities/2.3.2:
     resolution: {integrity: sha512-c3Ab/url5ksaT0WyleslpBEthOzWhrjQbg75y7XUsfSzi3Dgzt0l8w5e7DylRn15MTlMMD58dTfzddNS2kcAjQ==}

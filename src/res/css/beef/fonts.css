@@ -1,0 +1,5 @@
+@font-face {
+    font-family: "Perfect DOS VGA 437";
+    src: url("/beef/font/Perfect DOS VGA 437.ttf") format("truetype");
+    font-display: block;
+}

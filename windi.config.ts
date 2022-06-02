@@ -1,6 +1,4 @@
 import { defineConfig } from "windicss/helpers";
-import * as catpuccin from "./catppuccin.json";
-
 export default defineConfig({
   preflight: true, // set false to disable removal of browser default styles
   theme: {
@@ -10,9 +8,6 @@ export default defineConfig({
           plex: ["IBM Plex Mono", "monospace"],
           inter: ["Inter", "sans-serif"]
       },
-      colors: {
-          ...catpuccin
-      }
     },
   },
   extract: {

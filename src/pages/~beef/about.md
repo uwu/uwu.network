@@ -1,12 +1,9 @@
 ---
-title: Who am I?
-layout: ../../layouts/beef/IndexLayout.astro
+name: Who am I?
+layout: "%layouts/DOSContentLayout.astro"
 ---
 
-# Hi there!
+## Hello!
 
-I'm Beef, a developer from Britain, who specialises in **TypeScript** and **JavaScript**. I love to build innovative new things, and am generally a friendly person.
-
-## TODO
-
-Write more here!
+My name is Beef, and this is my uwu.network site!
+There will be things here later on.

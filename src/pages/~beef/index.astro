@@ -1,16 +1,53 @@
 ---
 import "virtual:windi.css";
-
-import IndexLayout from "../../layouts/beef/IndexLayout.astro";
+import IndexLayout from "%layouts/DOSLayout.astro";
 ---
 
 <IndexLayout>
-	<div class="grid place-items-center h-screen text-center">
-        <div class="grid place-items-center text-center">
-            <img src="/beef/logo.png" />
-            <p class="text-8xl font-medium mb-4">Hello world!</p>
-            <p class="text-2xl text-cat-subtext-primary">I'm Beef, and this is my site!</p>
-            <a class="transition-all text-cat-yellow underline hover:(text-cat-peach)" href="/~beef/about">About me</a>
+	<div id="bootscreen-container" class="leading-tight">
+        <div class="text-[#b767d2]">
+            <p>Copyright 1991, Oak Technology VGA BIOS 067B/C V1.042</p>
+            <!-- TODO: Detect actual VRAM amount? -->
+            <p>Video Memory: 512KB</p>
         </div>
 	</div>
 </IndexLayout>
+
+<!-- We love the loader code -->
+<!-- Yellowsink hates him!! -->
+<script>
+    import { sleep, setContainerContent, writeContainerContent } from "%js/utils";
+    import { Howl } from "howler";
+
+    const loaderContent = `
+    <div class="leading-tight">
+        <div class="mb-8">
+            <p class="text-4xl italic text-purple-200">UWUNET</p>
+            <p class="text-sm">Nobody grew up listening to us. Nobody does still.</p>
+        </div>
+
+        <div class="mb-4">
+            <p>Phoenix 80386 ROM BIOS PLUS Version 1.10 2714</p>
+            <p>Copyright (C) 1985-1989 Phoenix Technologies Ltd.</p>
+            <p>All Rights Reserved</p>
+        </div>
+
+        <p>19920225151230</p>
+    </div>
+    `;
+
+    const seekAudio = new Howl({
+        src: "/beef/audio/seek.mp3",
+        volume: 0.5
+    });
+
+    sleep(1000).then(() => {
+        setContainerContent("bootscreen-container", loaderContent);
+        seekAudio.play();
+
+        sleep(4000).then(() => {
+            writeContainerContent("bootscreen-container", `<p class="mt-4">Starting MS-DOS...</p>`);
+            sleep(500).then(() => { location.replace(location.origin + "/~beef/about"); });
+        });
+    });
+</script>

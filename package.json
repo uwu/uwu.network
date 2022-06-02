@@ -22,5 +22,8 @@
     "vite-plugin-windicss": "^1.8.4",
     "vue": "^3.2.36",
     "windicss": "^3.5.4"
+  },
+  "dependencies": {
+    "howler": "^2.2.3"
   }
 }

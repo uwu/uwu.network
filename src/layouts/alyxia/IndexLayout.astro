@@ -1,24 +1,28 @@
 ---
-import "@res/css/alyxia/loader.css";
-import "@res/css/alyxia/common.css";
-import "@res/css/alyxia/scanlines.css";
+import "#css/loader.css";
+import "#css/common.css";
+import "#css/scanlines.css";
+
+import loadtsuki from "#/img/loader/loadtsuki.png";
+import loadspin from "#/img/loader/loadspin.png";
+import loadfinish from "#/img/loader/loadfinish.png";
 ---
 
 <div id="contentloader">
-  <img id="loadtsuki" src="/res/img/alyxia/loader/loadtsuki.png"/>
-  <img id="loadspin" src="/res/img/alyxia/loader/loadspin.png"/>
+  <img id="loadtsuki" src={loadtsuki} />
+  <img id="loadspin" src={loadspin} />
 </div>
 
 <slot />
 
-<script>
+<script define:vars={{ loadspin, loadfinish }}>
 	window.addEventListener("load", function(event) {
 		document.getElementById("contentloader").className = "destroyedloader";
-		document.getElementById("loadspin").src = "/res/img/alyxia/loader/loadfinish.png";
+		document.getElementById("loadspin").src = loadfinish;
 	});
 
 	window.onbeforeunload = function() {
 		document.getElementById("contentloader").classList.remove("destroyedloader");
-		document.getElementById("loadspin").src = "/res/img/alyxia/loader/loadspin.png";
+		document.getElementById("loadspin").src = loadspin;
 	}
 </script>

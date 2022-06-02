@@ -7,7 +7,7 @@ body:before {
   height: 100%;
   pointer-events: none;
   z-index: 1000;
-  background-image: url(/res/img/alyxia/ui/overlay.png);
+  background-image: url(/alyxia/img/ui/overlay.png);
   background-repeat: all;
   background-position: 0px 0px;
   animation-name: Static;
@@ -26,7 +26,7 @@ body:after {
   height: 100%;
   pointer-events: none;
   z-index: 1000;
-  background-image: url(/res/img/alyxia/ui/overlay2.png);
+  background-image: url(/alyxia/img/ui/overlay2.png);
   background-repeat: all;
   background-position: 0px 0px;
   animation-name: Static;

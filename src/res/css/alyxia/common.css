@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Paragraph';
-  src: url(/res/font/alyxia/paragraph.ttf);
+  src: url(/alyxia/font/paragraph.ttf);
 }
 
 @font-face {
   font-family: 'Heading';
-  src: url(/res/font/alyxia/heading.woff);
+  src: url(/alyxia/font/heading.woff);
 }
 
 html {
@@ -13,11 +13,11 @@ html {
   color: #fff;
   font-family: 'Paragraph', sans-serif;
   font-size: 16px;
-  cursor: url(/res/img/alyxia/ui/cursor.png), default;
+  cursor: url(/alyxia/img/ui/cursor.png), default;
 }
 
 a {
-  cursor: url(/res/img/alyxia/ui/pointer.png), default;
+  cursor: url(/alyxia/img/ui/pointer.png), default;
   color: inherit;
   text-decoration: none;
 }
@@ -53,13 +53,13 @@ h1 {
 .separator {
   width: 100%;
   height: 32px;
-  background-image: url(/res/img/alyxia/ui/seperator.png);
+  background-image: url(/alyxia/img/ui/seperator.png);
 }
 
 .seperate {
   width: 100%;
   height: 32px;
-  background-image: url(/res/img/alyxia/ui/seperate.png);
+  background-image: url(/alyxia/img/ui/seperate.png);
 }
 
 .syn {

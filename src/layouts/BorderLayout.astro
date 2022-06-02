@@ -1,0 +1,28 @@
+---
+// BorderLayout.astro originally sink/BaseLayout.astro
+import IbmPlexSans from "@components/IbmPlexSans.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import getProps from "@res/js/getProps";
+
+import "^css/global.sass";
+
+const { title, bodyClass, titleName, headerName, mainHref } = getProps(Astro.props);
+
+const titleSuffix = `${titleName} on uwu`;
+const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
+---
+
+<BaseLayout title={resolvedTitle} class={`${bodyClass ?? "" } bg-black font-plex text-white h-screen p-8px`}>
+  <IbmPlexSans slot="head" />
+
+  <div class="border border-white p-4px h-full">
+    <main class="border border-white p-6 h-full">
+      <slot />
+    </main>
+  </div>
+
+  <a href={mainHref}
+    class="absolute px-2 bg-black top-0 left-1/2 transform -translate-x-1/2">{headerName?.toUpperCase()}</a>
+
+  <a href="/" class="absolute px-2 bg-black right-4 bottom-0">UWU.NETWORK</a>
+</BaseLayout>

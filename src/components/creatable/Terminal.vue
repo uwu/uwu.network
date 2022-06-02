@@ -12,7 +12,13 @@ let currentLine = reactive({
 
 terminalLines.push(currentLine);
 
-let commands = {}
+let commands = {
+  clear() {
+    while (terminalLines.length > 0) {
+      terminalLines.pop();
+    }
+  },
+};
 
 function handleKeypress(e) {
   const { key } = e;
@@ -26,6 +32,8 @@ function handleKeypress(e) {
           text: `${currentLine.input}: '${currentLine.input}' does not exist`,
           type: "text",
         });
+      } else {
+        commands[currentLine.input](currentLine.input);
       }
 
       currentLine = reactive({
@@ -73,10 +81,20 @@ function handleKeypress(e) {
 </style>
 
 <template>
-  <div id="term" class="w-full h-full outline-none" tabindex="0" ref="lineDivRef" @keydown="handleKeypress">
+  <div
+    id="term"
+    class="w-full h-full outline-none"
+    tabindex="0"
+    ref="lineDivRef"
+    @keydown="handleKeypress"
+  >
     <template v-for="line in terminalLines">
-      <TerminalPrompt v-if="line.type === 'prompt'" :value="line.input" :hideCaret="line.hideCaret"></TerminalPrompt>
-      <template v-else-if="line.type === 'text'">{{line.text}}</template>
+      <TerminalPrompt
+        v-if="line.type === 'prompt'"
+        :value="line.input"
+        :hideCaret="line.hideCaret"
+      ></TerminalPrompt>
+      <template v-else-if="line.type === 'text'">{{ line.text }}</template>
     </template>
   </div>
 </template>

@@ -1,0 +1,50 @@
+---
+import IndexLayout from "@layouts/IndexLayout.astro";
+
+const _404 = `
+ ___   ___  ________  ___   ___     
+|\\  \\ |\\  \\|\\   __  \\|\\  \\ |\\  \\    
+\\ \\  \\\\_\\  \\ \\  \\|\\  \\ \\  \\\\_\\  \\   
+ \\ \\______  \\ \\  \\\\\\  \\ \\______  \\  
+  \\|_____|\\  \\ \\  \\\\\\  \\|_____|\\  \\ 
+         \\ \\__\\ \\_______\\     \\ \\__\\
+          \\|__|\\|_______|      \\|__|
+`.trim()
+---
+
+<IndexLayout>
+  <div class="grid h-full">
+    <div id="gol"></div>
+    <div class="place-self-center p-5 bg-black font-plex">
+      <pre>{" "}{_404}</pre>
+      <p class="text-right"><a href="/">back to uwu.network</a></p>
+    </div>
+  </div>
+</IndexLayout>
+
+<style>
+  .grid> :global(*) {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+</style>
+
+<style is:global>
+  .gol-row {
+    display: flex;
+  }
+
+  .gol-cell {
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    transition: background-color 250ms linear;
+  }
+  .gol-on {
+    background: #CCC;
+  }
+</style>
+
+<script>
+  import GOL from "@res/js/gameOfLife";
+  GOL(10, 10);
+</script>

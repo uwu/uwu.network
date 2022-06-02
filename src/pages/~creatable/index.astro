@@ -1,7 +1,91 @@
 ---
 import BorderLayout from "@layouts/BorderLayout.astro";
+
+import Terminal from "+components/Terminal.vue";
 ---
 
+<style is:global>
+  main {
+    padding: 0px !important;
+  }
+</style>
+
 <BorderLayout title="~creatable" titleName="Hey! Listen!" headerName="CREATABLE">
-  <div class="text-5xl text-center w-full h-full">Adding features does not necessarily increase functionality -- it just makes the manuals thicker.</div>
+  <div class="grid h-full w-full children:(col-start-1 col-end-2 row-end-2)">
+    <div class="z-10 h-full w-full grid">
+      <div class="terminal top-25 left-58 absolute overflow-hidden resize border-double border-3 border-white bg-black flex flex-col w-150 h-100">
+        <div class="terminal-header border-b border-white flex justify-between select-none cursor-move px-2">
+          <div>terminal</div>
+          <div class="terminal-close cursor-pointer">x</div>
+        </div>
+        <div class="terminal-content px-1 w-full h-full overflow-auto">
+          <Terminal client:load />
+        </div>
+      </div>
+    </div>
+    <marquee class="h-full w-full" direction="down" behavior="alternate">
+      <marquee class="h-full w-full" behavior="alternate">
+        <pre class="!leading-[17px] text-3xl w-min text-center">▲
+▲▲</pre>
+      </marquee>
+    </marquee>
+  </div>
 </BorderLayout>
+
+<script>
+  // copied off of stackoverflow lmao
+  function makeDragable(dragHandle, dragTarget) {
+    let dragObj = null; //object to be moved
+    let xOffset = 0; //used to prevent dragged object jumping to mouse location
+    let yOffset = 0;
+
+    document.querySelector(dragHandle).addEventListener("mousedown", startDrag, true);
+    document.querySelector(dragHandle).addEventListener("touchstart", startDrag, true);
+
+    /*sets offset parameters and starts listening for mouse-move*/
+    function startDrag(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragObj = document.querySelector(dragTarget);
+      dragObj.style.position = "absolute";
+      let rect = dragObj.getBoundingClientRect();
+
+      if (e.type == "mousedown") {
+        xOffset = e.clientX - rect.left; //clientX and getBoundingClientRect() both use viewable area adjusted when scrolling aka 'viewport'
+        yOffset = e.clientY - rect.top;
+        window.addEventListener('mousemove', dragObject, true);
+      } else if (e.type == "touchstart") {
+        xOffset = e.targetTouches[0].clientX - rect.left;
+        yOffset = e.targetTouches[0].clientY - rect.top;
+        window.addEventListener('touchmove', dragObject, true);
+      }
+    }
+
+    /*Drag object*/
+    function dragObject(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (dragObj == null) {
+        return; // if there is no object being dragged then do nothing
+      } else if (e.type == "mousemove") {
+        dragObj.style.left = e.clientX - xOffset + "px"; // adjust location of dragged object so doesn't jump to mouse position
+        dragObj.style.top = e.clientY - yOffset + "px";
+      } else if (e.type == "touchmove") {
+        dragObj.style.left = e.targetTouches[0].clientX - xOffset + "px"; // adjust location of dragged object so doesn't jump to mouse position
+        dragObj.style.top = e.targetTouches[0].clientY - yOffset + "px";
+      }
+    }
+
+    /*End dragging*/
+    document.onmouseup = function (e) {
+      if (dragObj) {
+        dragObj = null;
+        window.removeEventListener('mousemove', dragObject, true);
+        window.removeEventListener('touchmove', dragObject, true);
+      }
+    }
+  }
+
+  makeDragable(".terminal-header", ".terminal");
+</script>

@@ -1,0 +1,43 @@
+<div class="inline-grid place-items-center children:(border border-white row-start-1 col-start-1 row-end-2 col-end-2)">
+  <div id="scared" class="rounded-1 w-4 h-4" />
+  <div class="w-4" />
+  <div class="h-4" />
+</div>
+
+<script>
+  import { EASE } from "crossani";
+  import { v2angleBtw, v2add, v2sub, v2len, v2smul } from "^js/math";
+
+  let mousePos = [0, 0];
+  window.addEventListener("mousemove", e => {
+    mousePos = [e.clientX, e.clientY];
+  });
+
+  const scared = document.getElementById("scared");
+
+  const origin = [scared.offsetLeft + (scared.clientWidth / 2), scared.offsetTop + (scared.clientHeight / 2)];
+  let currentTranslate = [0, 0];
+
+  (async () => {
+
+    while (true) {
+      const currentPos = v2add(origin, currentTranslate);
+
+      const vec = v2sub(mousePos, currentPos);
+
+      const dist = v2len(vec);
+
+      if (dist < 30)
+        currentTranslate = v2sub(currentTranslate, v2smul(vec, .5));
+      else if (Math.abs(v2angleBtw(vec, currentTranslate)) < 30)
+        currentTranslate = v2sub(currentTranslate, v2smul(currentTranslate, .3));
+
+      await scared.doTransition({
+        state: { transform: `translate(${currentTranslate[0]}px, ${currentTranslate[1]}px)` },
+        ms: 50,
+        easing: EASE.linear
+      });
+    }
+
+  })()
+</script>

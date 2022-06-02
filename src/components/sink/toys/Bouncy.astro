@@ -1,0 +1,46 @@
+<div id="bouncy-container" class="border border-white relative place-self-stretch">
+  <div id="bouncy" class="border border-white rounded-1 absolute w-15px h-15px" />
+</div>
+
+<script>
+  import { v2add, v2sub } from "^js/math"
+
+  const container = document.getElementById("bouncy-container");
+  const bouncy = document.getElementById("bouncy");
+
+  const padding = bouncy.clientHeight / 2;
+
+  const xDamping = .01; // a little goes a long way
+  const bounceDamping = .4;
+  // units: pixels per 50ms
+  const gravity = 2;
+  let velocity = [10, 0];
+
+  let position = [padding, padding];
+
+  setInterval(() => {
+    const size = [container.clientHeight, container.clientWidth];
+
+    const newPosition = v2add(position, velocity);
+
+    velocity[0] *= (1 - xDamping);
+    velocity[1] += gravity;
+
+    // bottom bounce
+    if (newPosition[1] + padding >= size[1])
+      velocity[1] *= -(1 - bounceDamping);
+
+    // right bounce
+    if (newPosition[0] + padding >= size[0])
+      velocity[0] *= -(1 - bounceDamping);
+
+    // left bounce
+    if (newPosition[0] - padding <= 0)
+      velocity[0] *= -(1 - bounceDamping);
+
+    position = v2add(position, velocity);
+
+    bouncy.style.left = position[0] + "px";
+    bouncy.style.top = position[1] + "px";
+  }, 50);
+</script>

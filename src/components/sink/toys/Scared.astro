@@ -1,12 +1,12 @@
-<div class="inline-grid place-items-center children:(border border-white row-start-1 col-start-1 row-end-2 col-end-2)">
-  <div id="scared" class="rounded-1 w-4 h-4" />
-  <div class="w-4" />
-  <div class="h-4" />
+<div class="inline-grid place-items-center children:(row-start-1 col-start-1 row-end-2 col-end-2)">
+  <div id="scared" class="rounded-1 w-5 h-5 border border-white" />
+  <div class="w-5 h-px bg-white" />
+  <div class="h-5 w-px bg-white" />
 </div>
 
 <script>
   import { EASE } from "crossani";
-  import { v2angleBtw, v2add, v2sub, v2len, v2smul } from "^js/math";
+  import { v2degBtw, v2add, v2sub, v2mag, v2smul } from "^js/math";
 
   let mousePos = [0, 0];
   window.addEventListener("mousemove", e => {
@@ -25,11 +25,11 @@
 
       const vec = v2sub(mousePos, currentPos);
 
-      const dist = v2len(vec);
+      const dist = v2mag(vec);
 
       if (dist < 30)
         currentTranslate = v2sub(currentTranslate, v2smul(vec, .5));
-      else if (Math.abs(v2angleBtw(vec, currentTranslate)) < 30)
+      else if (dist > 60 || Math.abs(v2degBtw(vec, currentTranslate)) > 30)
         currentTranslate = v2sub(currentTranslate, v2smul(currentTranslate, .3));
 
       await scared.doTransition({

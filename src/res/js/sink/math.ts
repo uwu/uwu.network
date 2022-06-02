@@ -4,7 +4,7 @@ export type Vec2D = [number, number];
 /** Lenient square root */
 export const lSqrt = (n: number) => Math.sqrt(Math.abs(n));
 
-export const v2len = (vec: Vec2D) =>
+export const v2mag = (vec: Vec2D) =>
   Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
 
 export const v2add = (v1: Vec2D, v2: Vec2D) => [v1[0] + v2[0], v1[1] + v2[1]];
@@ -12,23 +12,31 @@ export const v2add = (v1: Vec2D, v2: Vec2D) => [v1[0] + v2[0], v1[1] + v2[1]];
 export const v2sub = (v1: Vec2D, v2: Vec2D) => [v1[0] - v2[0], v1[1] - v2[1]];
 
 /** Multiplies a 2D vector by a scalar */
-export const v2smul = (vec: Vec2D, scalar: number) => [vec[0] * scalar, vec[1] * scalar];
+export const v2smul = (vec: Vec2D, scalar: number) => [
+  vec[0] * scalar,
+  vec[1] * scalar,
+];
 
 export function v2norm(vec: Vec2D): Vec2D {
-  const l = v2len(vec);
+  const l = v2mag(vec);
   if (l === 0) return [Math.sqrt(2), Math.sqrt(2)];
 
   return [vec[0] / l, vec[1] / l];
 }
 
-// https://www.omnicalculator.com/math/angle-between-two-vectors
-/** Angle in degrees between two vec2ds */
-export function v2angleBtw(v1: Vec2D, v2: Vec2D) {
-  const nv1 = v2norm(v1);
-  const nv2 = v2norm(v2);
+export const rad2deg = (n: number) => (n * 180) / Math.PI;
 
-  return Math.acos(
-    (nv1[0] * nv1[1] + nv2[0] * nv2[1]) /
-      (lSqrt(nv1[0] + nv2[0]) * lSqrt(nv1[1] + nv2[1]))
-  );
-}
+/** Calculates the gradient of a vector */
+export const v2grad = (vec: Vec2D) => vec[1] / vec[0];
+
+/** Calculates the angle of the vector against [1, 0] in radians */
+export const v2rad = (vec: Vec2D) => Math.atan(v2grad(vec));
+
+/** Calculates the angle of the vector against [1, 0] in degrees */
+export const v2deg = (vec: Vec2D) => rad2deg(v2rad(vec));
+
+/** Angle in degrees between two vec2ds in radians */
+export const v2radBtw = (v1: Vec2D, v2: Vec2D) => v2rad(v1) - v2rad(v2);
+
+/** Angle in degrees between two vec2ds in degrees */
+export const v2degBtw = (v1: Vec2D, v2: Vec2D) => rad2deg(v2radBtw(v1, v2));

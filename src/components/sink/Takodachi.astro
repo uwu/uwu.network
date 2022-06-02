@@ -17,7 +17,7 @@ import takodachi from "^/takodachi.gif";
   If you use, please credit. thanks.
   -- sink
   */
-  import { v2add, v2len, v2norm, v2smul, v2sub } from "^js/math";
+  import { v2add, v2mag, v2norm, v2smul, v2sub } from "^js/math";
   const speed = 2;
   const snapThreshold = 5; // px
 
@@ -47,7 +47,7 @@ import takodachi from "^/takodachi.gif";
     const diff = v2sub(mousePos, currentPos);
 
     target =
-      v2len(diff) < snapThreshold
+      v2mag(diff) < snapThreshold
         ? mousePos
         : v2add(target, v2smul(v2norm(diff), speed));
 

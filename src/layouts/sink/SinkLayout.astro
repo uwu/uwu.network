@@ -1,0 +1,11 @@
+---
+import "^css/global.sass";
+import BorderLayout from "@layouts/BorderLayout.astro";
+import getProps from "@res/js/getProps";
+
+const { title, bodyClass, /* titleName, headerName, mainHref */ } = getProps(Astro.props);
+---
+
+<BorderLayout {...{ title, bodyClass }} titleName="sink" headerName="YELLOWSINK" mainHref="/~sink">
+  <slot />
+</BorderLayout>

@@ -1,9 +1,5 @@
 ---
-layout: "@layouts/BorderLayout.astro"
-titleName: sink
-headerName: YELLOWSINK
-mainHref: /~sink
-
+layout: "^layouts/SinkLayout.astro"
 setup: |
   import Takodachi from "^components/Takodachi.astro"
   import IndexBanner from "^components/IndexBanner.astro"

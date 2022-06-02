@@ -29,7 +29,14 @@
       "^layouts/*": ["src/layouts/sink/*"],
       "^css/*": ["src/res/css/sink/*"],
       "^js/*": ["src/res/js/sink/*"],
-      "^/*": ["public/sink/*"]
+      "^/*": ["public/sink/*"],
+
+      // creatable
+      "+components/*": ["src/components/creatable/*"],
+      "+layouts/*": ["src/layouts/creatable/*"],
+      "+css/*": ["src/res/css/creatable/*"],
+      "+js/*": ["src/res/js/creatable/*"],
+      "+/*": ["public/creatable/*"],
     },
     // Add type definitions for our Vite runtime.
     "types": ["vite/client", "@types/node"]

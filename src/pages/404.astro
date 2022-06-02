@@ -7,9 +7,19 @@ const insults = rawInsults.split("\n")
 ---
 
 <IndexLayout>
-  <div class="grid place-items-center h-full">
+  <div class="place-items-center h-full grid children:(col-start-1 row-start-1 col-end-2 row-end-2)">
+
     <div id="gol"></div>
-    <div class="flex flex-col justify-center items-stretch gap-2 z-1 font-plex w-[400px] children:(bg-black p-5)">
+
+    <div id="gol-buttons" class="absolute bottom-2 right-2 flex gap-2 opacity-0 transition-opacity duration-500">
+      <button id="gol-fade">Fade</button>
+      <button id="gol-rand">Random</button>
+      <button id="gol-clear">Clear</button>
+      <button id="gol-stop">Pause</button>
+    </div>
+
+    
+    <div class="flex flex-col justify-center items-stretch gap-2 z-1 font-plex w-[400px] children:(bg-black p-5 border border-white)">
 
       <div>
         <pre class="text-center">{_404}</pre>
@@ -23,12 +33,6 @@ const insults = rawInsults.split("\n")
   </div>
 </IndexLayout>
 
-<style>
-  .grid> :global(*) {
-    grid-area: 1 / 1 / 2 / 2;
-  }
-</style>
-
 <style is:global>
   .gol-row {
     display: flex;
@@ -41,14 +45,26 @@ const insults = rawInsults.split("\n")
     transition: background-color 250ms linear;
   }
 
+  /* hello linux chromium users! */
+  .gol-simple .gol-cell {
+    transition: none;
+  }
+
   .gol-on {
     background: #CCC;
+  }
+
+  #gol-buttons > * {
+    background: black;
+    border: 1px solid white;
+    padding: .25rem;
   }
 </style>
 
 <script>
   import GOL from "@res/js/gameOfLife";
   GOL(10, 10);
+  document.getElementById("gol-buttons").classList.remove("opacity-0")
 </script>
 
 <script define:vars={{ insults }}>

@@ -12,6 +12,11 @@ const CONTAINER_ID = "gol",
   ROW_CLASS = "gol-row",
   CELL_CLASS = "gol-cell",
   ACTIVE_CLASS = "gol-on",
+  SIMPLE_CLASS = "gol-simple",
+  SIMPLE_B_ID = "gol-fade",
+  RAND_B_ID = "gol-rand",
+  PAUSE_B_ID = "gol-stop",
+  CLEAR_B_ID = "gol-clear",
   RAND_THRES = 0.8;
 
 const container = document.getElementById(CONTAINER_ID);
@@ -84,13 +89,18 @@ function createCells() {
 
   for (let y = 0; y < grid.height; y++) {
     const rowElem = document.createElement("div");
-    rowElem.className = ROW_CLASS;
     container.appendChild(rowElem);
+    rowElem.className = ROW_CLASS;
 
     for (let x = 0; x < grid.width; x++) {
       const cell = document.createElement("div");
-      cell.className = CELL_CLASS;
       rowElem.appendChild(cell);
+      cell.className = CELL_CLASS;
+
+      cell.onclick = () => {
+        grid.set(x, y, !grid.at(x, y));
+        renderCells();
+      };
     }
   }
 }
@@ -147,10 +157,30 @@ export default (cellWidth: number, cellHeight: number) => {
   grid.randomize();
   renderCells();
 
+  let tickingPaused = false;
+
   setInterval(() => {
-    console.time("tick");
+    if (tickingPaused) return;
     tick();
-    console.timeEnd("tick");
     renderCells();
   }, 100);
+
+  document.getElementById(SIMPLE_B_ID).onclick = () =>
+    container.classList.toggle(SIMPLE_CLASS);
+
+  document.getElementById(RAND_B_ID).onclick = () => {
+    grid.randomize();
+    renderCells();
+  };
+
+  const pauseButton = document.getElementById(PAUSE_B_ID);
+  pauseButton.onclick = () => {
+    tickingPaused = !tickingPaused;
+    pauseButton.innerText = pauseButton.innerText === "Play" ? "Pause" : "Play";
+  };
+
+  document.getElementById(CLEAR_B_ID).onclick = () => {
+    grid.resize(0, 0);
+    makeGrid();
+  };
 };

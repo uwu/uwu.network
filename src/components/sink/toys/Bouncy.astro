@@ -3,12 +3,15 @@
 </div>
 
 <script>
-  import { v2add, v2sub } from "^js/math"
+  import { v2add, v2sub, v2smul } from "^js/math"
 
   const container = document.getElementById("bouncy-container");
   const bouncy = document.getElementById("bouncy");
 
   const padding = bouncy.clientHeight / 2;
+
+  const yStopThres = 1.5; // max y velocity to stop at
+  const yBotThres = 7; // max y level to snap down at
 
   const xDamping = .01; // a little goes a long way
   const bounceDamping = .4;
@@ -18,25 +21,42 @@
 
   let position = [padding, padding];
 
-  setInterval(() => {
-    const size = [container.clientHeight, container.clientWidth];
+  let mousePos;
+  container.onmousedown = (ev) => mousePos = [ev.clientX, ev.clientY];
+  container.onmousemove = (ev) => mousePos && (mousePos = [ev.clientX, ev.clientY]);
+  window.addEventListener("mouseup", () => mousePos = null);
 
-    const newPosition = v2add(position, velocity);
+  setInterval(() => {
+    if (mousePos) {
+      const containerPos = [container.offsetLeft, container.offsetTop];
+      const relativePos = [bouncy.offsetLeft, bouncy.offsetTop];
+      const realPos = v2add([padding, padding], v2add(relativePos, containerPos))
+      velocity = v2smul(v2sub(mousePos, realPos), 1);
+    }
+
+    const size = [container.clientWidth, container.clientHeight];
+
+    const precheckPos = v2add(position, velocity);
 
     velocity[0] *= (1 - xDamping);
     velocity[1] += gravity;
 
     // bottom bounce
-    if (newPosition[1] + padding >= size[1])
+    if (precheckPos[1] + (padding * 2) >= size[1])
       velocity[1] *= -(1 - bounceDamping);
 
     // right bounce
-    if (newPosition[0] + padding >= size[0])
+    if (precheckPos[0] + (padding * 2) >= size[0])
       velocity[0] *= -(1 - bounceDamping);
 
     // left bounce
-    if (newPosition[0] - padding <= 0)
+    if (precheckPos[0] <= 0)
       velocity[0] *= -(1 - bounceDamping);
+
+    if (!mousePos && Math.abs(velocity[1]) <= yStopThres && size[1] - (precheckPos[1] + (padding * 2)) <= yBotThres) {
+      velocity[1] = 0;
+      position[1] = size[1] - (padding * 2);
+    }
 
     position = v2add(position, velocity);
 

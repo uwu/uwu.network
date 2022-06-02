@@ -3,7 +3,7 @@
 </div>
 
 <script>
-  import { v2add, v2sub, v2smul } from "^js/math"
+  import { v2add, v2sub } from "^js/math"
 
   const container = document.getElementById("bouncy-container");
   const bouncy = document.getElementById("bouncy");
@@ -31,7 +31,7 @@
       const containerPos = [container.offsetLeft, container.offsetTop];
       const relativePos = [bouncy.offsetLeft, bouncy.offsetTop];
       const realPos = v2add([padding, padding], v2add(relativePos, containerPos))
-      velocity = v2smul(v2sub(mousePos, realPos), 1);
+      velocity = v2sub(mousePos, realPos);
     }
 
     const size = [container.clientWidth, container.clientHeight];

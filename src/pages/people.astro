@@ -1,0 +1,28 @@
+---
+import IndexLayout from "../layouts/IndexLayout.astro";
+import PoweredBy from "../components/PoweredBy.astro";
+
+import windi from "virtual:windi.css"
+import triforceUrl from "+/ssemblem.png"
+---
+
+<style set:text={windi}></style>
+
+<IndexLayout title="people">
+  <div class="font-plex p-10">
+    <div class="w-full border-double border-white border-4 p-3 flex flex-col !md:flex-row items-center">
+      <a href="https://creatable.cafe">
+        <img src={triforceUrl} width="210" style="image-rendering: pixelated" class="md:pr-8" />
+      </a>
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-col !md:flex-row items-center gap-2">
+          <div class="text-xl md:text-4xl">creatable</div>
+          <div class="text-sm md:text-1xl"><a href="https://keybase.io/creatable">[keybase]</a><a href="https://github.com/cr3atable">[github]</a><a href="https://twitter.com/cr3atable">[twitter]</a>
+          </div>
+        </div>
+        <div class="md:text-2xl">i'm proficient in making things do things that they aren't supposed to do</div>
+      </div>
+    </div>
+    <PoweredBy />
+  </div>
+</IndexLayout>

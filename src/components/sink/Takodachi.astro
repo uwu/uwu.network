@@ -14,17 +14,19 @@ import takodachi from "^/takodachi.gif";
 <script>
   /* 
   I spent a god-damn age writing this wretched thing.
-  If you steal please credit thanks.
-  Mobile users cry.
+  If you use, please credit. thanks.
   -- sink
   */
+  import { v2add, v2len, v2norm, v2smul, v2sub } from "^js/math";
+  const speed = 2;
+  const snapThreshold = 5; // px
 
-  let currentTarget;
+  let mousePos;
   window.addEventListener("mousemove", e => {
-    currentTarget = [e.clientX, e.clientY];
+    mousePos = [e.clientX, e.clientY];
   });
   window.addEventListener("touchstart", e => {
-    currentTarget = [e.touches[0].clientX, e.touches[0].clientY];
+    mousePos = [e.touches[0].clientX, e.touches[0].clientY];
   })
 
   const chaser = document.getElementById("takodachi");
@@ -32,39 +34,26 @@ import takodachi from "^/takodachi.gif";
     chaser.classList.remove("opacity-0");
   }, 1000)
 
-  let targetX;
-  let targetY;
-
-  const speed = 2;
-  const offset = chaser.clientWidth / 2;
-
-  const snapThreshold = 5; // px
+  let target;
+  const offset = v2smul([chaser.clientWidth, chaser.clientHeight], .5);
 
   setInterval(() => {
-    if (!currentTarget) return;
-    if (!targetX || !targetY) {
-      targetX = chaser.offsetLeft;
-      targetY = chaser.offsetTop;
-    }
+    if (!mousePos) return;
 
-    const diffX = currentTarget[0] - (chaser.offsetLeft + offset);
-    const diffY = currentTarget[1] - (chaser.offsetTop + offset);
+    const currentPos = v2add([chaser.offsetLeft, chaser.offsetTop], offset);
 
-    if (Math.abs(diffX) < snapThreshold && Math.abs(diffY) < snapThreshold) {
-      targetX = currentTarget[0];
-      targetY = currentTarget[1];
-    } else {
+    target ??= currentPos;
 
-      const vecLength = Math.sqrt(diffX * diffX + diffY * diffY);
+    const diff = v2sub(mousePos, currentPos);
 
-      const coeffX = diffX / vecLength;
-      const coeffY = diffY / vecLength;
+    target =
+      v2len(diff) < snapThreshold
+        ? mousePos
+        : v2add(target, v2smul(v2norm(diff), speed));
 
-      targetX += speed * coeffX;
-      targetY += speed * coeffY;
-    }
+    const finalVec = v2sub(target, offset);
 
-    chaser.style.left = (targetX - offset) + "px";
-    chaser.style.top = (targetY - offset) + "px";
+    chaser.style.left = finalVec[0] + "px";
+    chaser.style.top = finalVec[1] + "px";
   }, 10);
 </script>

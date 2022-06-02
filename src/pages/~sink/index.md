@@ -7,10 +7,12 @@ setup: |
 
 <IndexBanner />
 
-Helo I'm sink. I will add the things later.
+Helo I'm sink. I will add more later.
 
 To keep you entertained heres a
 [takodachi](https://hololive.wiki/wiki/File:Takodachi.png)
 that chases your cursor.
 
 <Takodachi />
+
+[Play with some dumb interactive toys](/~sink/toys)

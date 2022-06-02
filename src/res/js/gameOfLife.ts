@@ -176,7 +176,7 @@ export default (cellWidth: number, cellHeight: number) => {
   const pauseButton = document.getElementById(PAUSE_B_ID);
   pauseButton.onclick = () => {
     tickingPaused = !tickingPaused;
-    pauseButton.innerText = pauseButton.innerText === "Play" ? "Pause" : "Play";
+    pauseButton.innerText = pauseButton.innerText === "play" ? "pause" : "play";
   };
 
   document.getElementById(CLEAR_B_ID).onclick = () => {

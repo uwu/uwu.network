@@ -25,6 +25,7 @@ You can't get the wood, you know.
 ... and it used to be so popular...
 Pauses for audience applause, not a sausage
 Hold it up to the light --- not a brain in sight!
+
 There's a lot of it about, you know.
 You do that again and see what happens...
 Harm can come to a young lad like that!
@@ -50,8 +51,10 @@ Your mother was a hamster and your father smelt of elderberries!
 You must cut down the mightiest tree in the forest... with... a herring!
 I wave my private parts at your aunties!
 He's not the Messiah, he's a very naughty boy!
-When you're walking home tonight, and some homicidal maniac comes after you with a bunch of loganberries, don't come crying to me!
-This man, he doesn't know when he's beaten! He doesn't know when he's winning, either. He has no... sort of... sensory apparatus...
+When you're walking home tonight, and some homicidal maniac comes after you with a bunch of loganberries, don't come
+crying to me!
+This man, he doesn't know when he's beaten! He doesn't know when he's winning, either. He has no... sort of... sensory
+apparatus...
 There's nothing wrong with you that an expensive operation can't prolong.
 I'm very sorry, but I'm not allowed to argue unless you've paid.`.split("\n")
 ---
@@ -65,7 +68,7 @@ I'm very sorry, but I'm not allowed to argue unless you've paid.`.split("\n")
         <p class="text-right"><a href="/">back to uwu.network</a></p>
       </div>
       <div class="bg-black font-plex min-w-[385px] max-w-[385px]">
-        <p class="italic text-center">{insults[Math.floor(Math.random() * insults.length)]}</p>
+        <p class="italic text-center" id="snarky-sudo-insult"><noscript>My mind is going. I can feel it.</noscript></p>
       </div>
     </div>
   </div>
@@ -97,4 +100,8 @@ I'm very sorry, but I'm not allowed to argue unless you've paid.`.split("\n")
 <script>
   import GOL from "@res/js/gameOfLife";
   GOL(10, 10);
+</script>
+
+<script define:vars={{ insults }}>
+  document.getElementById("snarky-sudo-insult").innerText = insults[Math.floor(Math.random() * insults.length)]
 </script>

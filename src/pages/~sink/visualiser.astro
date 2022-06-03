@@ -17,7 +17,7 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 
 <script>
   import audioUrl from "^/visualised.ogg?url";
-  import {Synths} from "^js/visualiser";
+  import visualise from "^js/visualiser";
 
   const playButton = document.getElementsByTagName("button")[0];
   const grid = document.getElementsByClassName("grid")[0];
@@ -31,6 +31,5 @@ import SinkLayout from "^layouts/SinkLayout.astro";
   const audio = new Audio(audioUrl);
   await audio.play();
 
-  Synths();
-
+  visualise();
 </script>

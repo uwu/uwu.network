@@ -1,8 +1,6 @@
 import type { Transition } from "crossani";
 import "crossani";
 
-type Track = [number, number, number][];
-
 const showState: Transition = {
   state: { opacity: "1" },
   ms: 50,
@@ -20,20 +18,6 @@ const show = (x: number, y: number, dur = 250) => {
   at(x, y).doTransition(showState);
   at(x, y).doTransition(hideState(dur));
 };
-
-const SynthTrack: Track = [
-  [0, 4, 4],
-  [1000, 5, 5],
-  [1500, 5, 4],
-  [2450, 4, 5],
-  [3000, 4, 4],
-  [3950, 5, 5],
-  [4500, 5, 4],
-  // end trill
-  [5400, 5, 3],
-  [5600, 4, 3],
-  [5800, 3, 4],
-];
 
 export async function Synths() {
   let lastT = 0;
@@ -84,4 +68,30 @@ export async function Synths() {
     await wait(12000);
     lastT = 0;
   }
+}
+
+export async function Bass() {
+  async function run(x: number, y: number) {
+    for (let i = 0; i < 4; i++) {
+      show(x, y);
+      await sleep(375);
+    }
+  }
+
+  await sleep(12200);
+  while (true) {
+    await run(8, 7);
+    await run(7, 7);
+    await run(8, 7);
+    await run(7, 7);
+    await run(8, 6);
+    await run(7, 7);
+    await run(8, 7);
+    await run(6, 7);
+  }
+}
+
+export default () => {
+  Synths();
+  Bass();
 }

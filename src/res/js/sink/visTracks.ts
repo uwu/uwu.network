@@ -110,3 +110,7 @@ export async function Snare() {
     await for_(beats(2));
   }
 }
+
+export async function Lead() {
+  await for_(bars(32));
+}

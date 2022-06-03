@@ -3,7 +3,12 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 ---
 
 <SinkLayout title="visualiser">
-  <button class="text-3xl border border-white p-2">Start</button>
+  <button class="text-3xl border border-white p-2">
+    Start
+    <div class="text-xl">
+      If it desyncs, reload page and go again
+    </div>
+  </button>
   <div class="grid hidden h-full grid-rows-[1fr,auto]">
     <div class="grid grid-cols-9 grid-rows-9">
       {

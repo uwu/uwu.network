@@ -14,7 +14,7 @@ import SinkLayout from "^layouts/SinkLayout.astro";
       ))
       }
     </div>
-    <p>Bar:beat:ms<span id="vis-readout" /></p>
+    <p id="vis-readout" />
   </div>
 </SinkLayout>
 
@@ -28,15 +28,21 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 
   const audio = new Audio(audioUrl);
 
-  await new Promise(res => {
+  const buttonProm = new Promise(res => {
     playButton.onclick = res;
   });
+
+  await new Promise(res => {
+    audio.oncanplaythrough = res;
+  });
+
+  await buttonProm;
 
   playButton.remove();
 
   document.getElementsByClassName("hidden")[0].classList.remove("hidden");
 
-  await audio.play();
+  audio.play();
 
-  await play(tracks, 160, 113, (txt) => { visReadout.innerText = txt });
+  await play(tracks, 160, 112, (txt) => { visReadout.innerText = txt });
 </script>

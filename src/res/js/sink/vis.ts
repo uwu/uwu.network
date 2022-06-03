@@ -31,6 +31,9 @@ export let FINISHED: number;
 // await for_(time);
 export const for_ = (t: number) => new Promise<void>((r) => setTimeout(r, t));
 
+// await tick();
+export const tick = () => for_(0);
+
 let start: DOMHighResTimeStamp;
 // await until(time)
 export const until = (t: number) => for_(t + performance.now() - start);
@@ -38,16 +41,17 @@ export const until = (t: number) => for_(t + performance.now() - start);
 // while (notYet(time)) {}
 export const notYet = (t: number) => performance.now() - start < t;
 
-// if (inRange(time, time)) continue;
+// if (inRange(time, time)) {}
 export const inRange = (tS: number, tE: number) =>
   performance.now() - start > tS && performance.now() - start < tE;
 
-// await skipBar(bar number);
-export async function skipBar(n: number) {
-  const currentTime = performance.now() - start;
-
-  if (inRange(bars(n), bars(n + 1))) await for_(bars(n + 1) - currentTime);
+// await skipBars(start bar, end bar);
+export async function skipBars(nS: number, nE: number) {
+  if (inRange(bars(nS), bars(nE))) await for_(bars(nE - nS));
 }
+
+// await skipBar(bar number);
+export const skipBar = (n: number) => skipBars(n, n + 1);
 
 export function play(
   tracks: { [key: string]: () => Promise<void> },

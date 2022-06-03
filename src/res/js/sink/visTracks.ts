@@ -4,8 +4,8 @@ import {
   FINISHED,
   for_,
   skipBar,
+  skipBars,
   notYet,
-  inRange,
   show,
   showArea,
 } from "./vis";
@@ -59,7 +59,7 @@ export async function Bass() {
 
   await for_(bars(8));
   while (notYet(FINISHED)) {
-    if (inRange(bars(72), bars(80))) continue;
+    await skipBars(72, 80)
 
     await run(7, 7);
     await run(6, 7);
@@ -80,6 +80,7 @@ export async function BassDrum() {
     await skipBar(88);
     await skipBar(91);
     await skipBar(104);
+    await skipBar(107);
     showArea(0, 2, 0, 0);
     await for_(beats(1));
   }
@@ -89,6 +90,8 @@ export async function Hat() {
   await for_(bars(8) - 25);
 
   while (notYet(FINISHED)) {
+    await skipBar(88);
+    await skipBar(91);
     await skipBar(104);
     showArea(3, 5, 0, 0, 130);
     await for_(beats(0.5));
@@ -100,7 +103,9 @@ export async function Snare() {
 
   while (notYet(FINISHED)) {
     await skipBar(88);
+    await skipBar(91);
     await skipBar(104);
+    await skipBar(107);
     showArea(6, 8, 0, 0);
     await for_(beats(2));
   }

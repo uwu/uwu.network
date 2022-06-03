@@ -43,7 +43,7 @@ export const tick = () => for_(0);
 
 let start: DOMHighResTimeStamp;
 // await until(time)
-export const until = (t: number) => for_(t + performance.now() - start);
+export const until = (t: number) => for_(t - (performance.now() - start));
 
 // while (notYet(time)) {}
 export const notYet = (t: number) => performance.now() - start < t;
@@ -53,8 +53,13 @@ export const inRange = (tS: number, tE: number) =>
   performance.now() - start > tS && performance.now() - start < tE;
 
 // await skipBars(start bar, end bar);
+// returns true if it waited this time
 export async function skipBars(nS: number, nE: number) {
-  if (inRange(bars(nS), bars(nE))) await for_(bars(nE - nS));
+  if (inRange(bars(nS), bars(nE))) {
+    await for_(bars(nE - nS));
+    return true;
+  }
+  return false;
 }
 
 // await skipBar(bar number);
@@ -82,6 +87,6 @@ export function play(
   });
 
   finishPromise.then(() => clearInterval(stopInterval));
-  
+
   return finishPromise;
 }

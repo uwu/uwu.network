@@ -3,6 +3,7 @@ import {
   beats,
   FINISHED,
   for_,
+  until,
   skipBar,
   skipBars,
   notYet,
@@ -91,7 +92,6 @@ export async function Hat() {
 
   while (notYet(FINISHED)) {
     await skipBar(88);
-    await skipBar(91);
     await skipBar(104);
     showArea(3, 5, 0, 0, 130);
     await for_(beats(0.5));
@@ -112,9 +112,12 @@ export async function Snare() {
 }
 
 export async function Lead() {
-  async function riff() {
+  function first() {
     show(2, 7);
-    await for_(bars(1) + beats(2));
+    return for_(bars(1) + beats(2));
+  }
+
+  async function riff() {
     show(2, 7);
     await for_(beats(0.5));
     show(1, 7);
@@ -140,8 +143,6 @@ export async function Lead() {
     await for_(beats(2));
     show(2, 7);
     await for_(beats(2));
-    show(1, 7);
-    await for_(beats(2));
     show(1, 5);
     await for_(beats(1));
     show(1, 6);
@@ -149,16 +150,23 @@ export async function Lead() {
     show(1, 7);
     await for_(beats(1));
     show(2, 7);
-    await for_(beats(1));
-    show(3, 7);
+
+    await for_(bars(1) + beats(1));
   }
 
   await for_(bars(16));
 
-  await riff();
-  // bar 24 -> 32
-  await for_(bars(16));
-  await riff();
-  // bar 40
-  await riff();
+  while (notYet(bars(24))) {
+    await first();
+    await riff();
+  }
+
+  // force this to trail, hence the need to split out instead of skipBars()
+  await first();
+  await until(bars(32));
+
+  while (notYet(FINISHED)) {
+    await first();
+    await riff();
+  }
 }

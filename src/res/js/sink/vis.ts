@@ -81,7 +81,7 @@ export function play(
     const barLen = Math.floor(currentTime / bars(1));
     const notBars = currentTime - bars(barLen);
     const beatLen = Math.floor(notBars / beats(1));
-    const notBeats = notBars - beats(beatLen);
+    const notBeats = (notBars - beats(beatLen)).toFixed().padStart(3, "0");
 
     progressCallback(`${barLen}.${beatLen}.${notBeats}`);
   });

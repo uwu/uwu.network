@@ -19,35 +19,52 @@ import SinkLayout from "^layouts/SinkLayout.astro";
       ))
       }
     </div>
-    <p id="vis-readout" />
+    <p class="flex justify-between">
+      <span id="vis-readout" />
+      <span>Music: Marble Marcher level 1 - Petty Theft</span>
+    </p>
   </div>
 </SinkLayout>
 
 <script>
-  import audioUrl from "^/visualised.ogg?url";
+  import audioUrl from "^/visualised.mp3?url";
   import * as tracks from "^js/visTracks";
   import { play } from "^js/vis"
 
-  const playButton = document.getElementsByTagName("button")[0];
-  const visReadout = document.getElementById("vis-readout");
+  const debug = (txt) => {
+    const div = document.createElement("div")
+    div.innerText = txt;
+    document.querySelector("main").prepend(div);
+  }
 
-  const audio = new Audio(audioUrl);
+  // pov webkit no top level await support
+  (async () => {
 
-  const buttonProm = new Promise(res => {
-    playButton.onclick = res;
-  });
+    const playButton = document.getElementsByTagName("button")[0];
+    const visReadout = document.getElementById("vis-readout");
 
-  await new Promise(res => {
-    audio.oncanplaythrough = res;
-  });
+    const audio = new Audio(audioUrl);
+    audio.load(); // needed for ios safari
 
-  await buttonProm;
+    const buttonProm = new Promise(res => {
+      playButton.onclick = res;
+    });
 
-  playButton.remove();
+    await new Promise(res => {
+      audio.oncanplaythrough = res;
+    });
 
-  document.getElementsByClassName("hidden")[0].classList.remove("hidden");
+    await buttonProm;
 
-  audio.play();
+    playButton.remove();
 
-  await play(tracks, 160, 112, (txt) => { visReadout.innerText = txt });
+    document.getElementsByClassName("hidden")[0].classList.remove("hidden");
+
+    audio.play();
+
+    await play(tracks, 160, 112, (txt) => { visReadout.innerText = txt });
+    
+    console.log("et voila!")
+
+  })()
 </script>

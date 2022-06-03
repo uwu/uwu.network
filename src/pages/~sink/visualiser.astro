@@ -4,33 +4,39 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 
 <SinkLayout title="visualiser">
   <button class="text-3xl border border-white p-2">Start</button>
-  <div class="grid h-full hidden grid-cols-9 grid-rows-9">
-    {
+  <div class="grid hidden h-full grid-rows-[1fr,auto]">
+    <div class="grid grid-cols-9 grid-rows-9">
+      {
       Array.from({ length: 9 }, (_, y) => (
-        Array.from({ length: 9 }, (_, x) => (
-          <div id={`${x}-${y}`} class="opacity-0 bg-white" />
-        ))
+      Array.from({ length: 9 }, (_, x) => (
+      <div id={`${x}-${y}`} class="opacity-0 bg-white" />
       ))
-    }
+      ))
+      }
+    </div>
+    <p>Bar:beat:ms<span id="vis-readout" /></p>
   </div>
 </SinkLayout>
 
 <script>
   import audioUrl from "^/visualised.ogg?url";
-  import visualise from "^js/visualiser";
+  import * as tracks from "^js/visTracks";
+  import { play } from "^js/vis"
 
   const playButton = document.getElementsByTagName("button")[0];
-  const grid = document.getElementsByClassName("grid")[0];
+  const visReadout = document.getElementById("vis-readout");
 
   const audio = new Audio(audioUrl);
 
   await new Promise(res => {
     playButton.onclick = res;
   });
+
   playButton.remove();
-  grid.classList.remove("hidden");
+
+  document.getElementsByClassName("hidden")[0].classList.remove("hidden");
 
   await audio.play();
 
-  visualise();
+  await play(tracks, 160, 113, (txt) => { visReadout.innerText = txt });
 </script>

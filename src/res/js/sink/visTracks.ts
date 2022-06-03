@@ -1,6 +1,16 @@
-import { bars, beats, FINISHED, for_, inRange, notYet, show, showArea } from "./visualiserDsl";
+import {
+  bars,
+  beats,
+  FINISHED,
+  for_,
+  skipBar,
+  notYet,
+  inRange,
+  show,
+  showArea,
+} from "./vis";
 
-async function Synths() {
+export async function Synths() {
   async function main() {
     show(4, 4);
     await for_(beats(2.5));
@@ -39,7 +49,7 @@ async function Synths() {
   }
 }
 
-async function Bass() {
+export async function Bass() {
   async function run(x: number, y: number) {
     for (let i = 0; i < 4; i++) {
       show(x, y);
@@ -49,8 +59,8 @@ async function Bass() {
 
   await for_(bars(8));
   while (notYet(FINISHED)) {
-    if (inRange(bars(71), bars(80))) continue;
-  
+    if (inRange(bars(72), bars(80))) continue;
+
     await run(7, 7);
     await run(6, 7);
     await run(7, 7);
@@ -62,38 +72,36 @@ async function Bass() {
   }
 }
 
-async function BassDrum() {
+export async function BassDrum() {
   // 25ms offset for the animation
   await for_(bars(4) - 25);
 
   while (notYet(FINISHED)) {
+    await skipBar(88);
+    await skipBar(91);
+    await skipBar(104);
     showArea(0, 2, 0, 0);
     await for_(beats(1));
   }
 }
 
-async function Hat() {
+export async function Hat() {
   await for_(bars(8) - 25);
 
   while (notYet(FINISHED)) {
+    await skipBar(104);
     showArea(3, 5, 0, 0, 130);
     await for_(beats(0.5));
   }
 }
 
-async function Snare() {
+export async function Snare() {
   await for_(bars(16) + beats(1) - 25);
 
   while (notYet(FINISHED)) {
+    await skipBar(88);
+    await skipBar(104);
     showArea(6, 8, 0, 0);
     await for_(beats(2));
   }
 }
-
-export default () => {
-  Synths();
-  Bass();
-  BassDrum();
-  Hat();
-  Snare();
-};

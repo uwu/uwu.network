@@ -1,0 +1,36 @@
+---
+import SinkLayout from "^layouts/SinkLayout.astro";
+---
+
+<SinkLayout title="visualiser">
+  <button class="text-3xl border border-white p-2">Start</button>
+  <div class="grid h-full hidden grid-cols-10 grid-rows-10 gap-2">
+    {
+      Array.from({ length: 10}, (_, y) => (
+        Array.from({ length: 10}, (_, x) => (
+          <div id={`${x}-${y}`} class="opacity-0 bg-white" />
+        ))
+      ))
+    }
+  </div>
+</SinkLayout>
+
+<script>
+  import audioUrl from "^/visualised.ogg?url";
+  import {Synths} from "^js/visualiser";
+
+  const playButton = document.getElementsByTagName("button")[0];
+  const grid = document.getElementsByClassName("grid")[0];
+
+  await new Promise(res => {
+    playButton.onclick = res;
+  });
+  playButton.remove();
+  grid.classList.remove("hidden");
+
+  const audio = new Audio(audioUrl);
+  await audio.play();
+
+  Synths();
+
+</script>

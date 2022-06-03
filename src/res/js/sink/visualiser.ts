@@ -1,27 +1,4 @@
-import "crossani";
-
-function show(x: number, y: number, dur = 250) {
-  const elem = document.getElementById(`${x}-${y}`);
-  elem.doTransition({
-    state: { opacity: "1" },
-    ms: 50,
-  });
-  elem.doTransition({
-    reset: true,
-    ms: dur - 50,
-  });
-}
-
-function showArea(x1: number, x2: number, y1: number, y2: number, dur = 250) {
-  for (let y = y1; y <= y2; y++) for (let x = x1; x <= x2; x++) show(x, y, dur);
-}
-
-// await for_(time);
-const for_ = (t: number) => new Promise((r) => setTimeout(r, t));
-
-const BPM = 160;
-const beats = (n: number) => 1000 * n * (60 / BPM);
-const bars = (n: number) => beats(n) * 4;
+import { bars, beats, FINISHED, for_, inRange, notYet, show, showArea } from "./visualiserDsl";
 
 async function Synths() {
   async function main() {
@@ -53,7 +30,7 @@ async function Synths() {
   await main();
   await trill();
 
-  while (true) {
+  while (notYet(FINISHED)) {
     await main();
     await trill();
     await main();
@@ -71,7 +48,9 @@ async function Bass() {
   }
 
   await for_(bars(8));
-  while (true) {
+  while (notYet(FINISHED)) {
+    if (inRange(bars(71), bars(80))) continue;
+  
     await run(7, 7);
     await run(6, 7);
     await run(7, 7);
@@ -87,7 +66,7 @@ async function BassDrum() {
   // 25ms offset for the animation
   await for_(bars(4) - 25);
 
-  while (true) {
+  while (notYet(FINISHED)) {
     showArea(0, 2, 0, 0);
     await for_(beats(1));
   }
@@ -96,7 +75,7 @@ async function BassDrum() {
 async function Hat() {
   await for_(bars(8) - 25);
 
-  while (true) {
+  while (notYet(FINISHED)) {
     showArea(3, 5, 0, 0, 130);
     await for_(beats(0.5));
   }
@@ -105,7 +84,7 @@ async function Hat() {
 async function Snare() {
   await for_(bars(16) + beats(1) - 25);
 
-  while (true) {
+  while (notYet(FINISHED)) {
     showArea(6, 8, 0, 0);
     await for_(beats(2));
   }

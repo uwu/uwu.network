@@ -22,13 +22,14 @@ import SinkLayout from "^layouts/SinkLayout.astro";
   const playButton = document.getElementsByTagName("button")[0];
   const grid = document.getElementsByClassName("grid")[0];
 
+  const audio = new Audio(audioUrl);
+
   await new Promise(res => {
     playButton.onclick = res;
   });
   playButton.remove();
   grid.classList.remove("hidden");
 
-  const audio = new Audio(audioUrl);
   await audio.play();
 
   visualise();

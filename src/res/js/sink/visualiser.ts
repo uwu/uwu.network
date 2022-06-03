@@ -1,91 +1,76 @@
-import type { Transition } from "crossani";
 import "crossani";
 
-const showState: Transition = {
-  state: { opacity: "1" },
-  ms: 50,
-};
-const hideState = (dur: number): Transition => ({
-  reset: true,
-  ms: dur - 50,
-});
-
-const for_ = (t: number) => new Promise((r) => setTimeout(r, t));
-
-const at = (x: number, y: number) => document.getElementById(`${x}-${y}`);
-
 function show(x: number, y: number, dur = 250) {
-  at(x, y).doTransition(showState);
-  at(x, y).doTransition(hideState(dur));
+  const elem = document.getElementById(`${x}-${y}`);
+  elem.doTransition({
+    state: { opacity: "1" },
+    ms: 50,
+  });
+  elem.doTransition({
+    reset: true,
+    ms: dur - 50,
+  });
 }
 
 function showArea(x1: number, x2: number, y1: number, y2: number, dur = 250) {
   for (let y = y1; y <= y2; y++) for (let x = x1; x <= x2; x++) show(x, y, dur);
 }
 
+// await for_(time);
+const for_ = (t: number) => new Promise((r) => setTimeout(r, t));
+
 const BPM = 160;
-const beatDivision = (div: number) => 1000 * ((60 / BPM) / (div / 2));
+const beats = (n: number) => 1000 * n * (60 / BPM);
+const bars = (n: number) => beats(n) * 4;
 
-export async function Synths() {
-  let lastT = 0;
-  const until = (t: number) => {
-    const prom = for_(t - lastT);
-    lastT = t;
-    return prom;
-  };
-
+async function Synths() {
   async function main() {
     show(4, 4);
-    await for_(1000);
+    await for_(beats(2.5));
     show(5, 5);
-    await for_(1500 - 1000);
+    await for_(beats(1.5));
     show(5, 4);
-    await for_(2450 - 1500);
+    await for_(beats(2.5));
     show(4, 5);
-    await for_(3000 - 2440);
+    await for_(beats(1.5));
     show(4, 4);
-    await for_(3950 - 3000);
+    await for_(beats(2.5));
     show(5, 5);
-    await for_(4500 - 3950);
+    await for_(beats(1.5));
     show(5, 4);
+    await for_(beats(2.5));
   }
 
   async function trill() {
     show(4, 3);
-    await for_(200);
+    await for_(beats(0.5));
     show(5, 3);
-    await for_(200);
+    await for_(beats(0.5));
     show(6, 4);
+    await for_(beats(0.5));
   }
 
-  main();
-  await until(5400);
-  trill();
-  await until(6000);
-  lastT = 0;
+  await main();
+  await trill();
 
   while (true) {
-    main();
-    await until(5400);
-    trill();
-    await until(6000);
-    main();
-    await until(11500);
+    await main();
+    await trill();
+    await main();
     show(4, 5);
-    await until(12000);
-    lastT = 0;
+    await for_(beats(1.5));
   }
 }
 
-export async function Bass() {
+async function Bass() {
   async function run(x: number, y: number) {
     for (let i = 0; i < 4; i++) {
       show(x, y);
-      await for_(375);
+      await for_(beats(1));
     }
   }
 
-  await for_(12200);
+  await for_(bars(8));
   while (true) {
     await run(7, 7);
     await run(6, 7);
@@ -98,22 +83,31 @@ export async function Bass() {
   }
 }
 
-export async function BassDrum() {
-  // actually starts at 6000 but animation moment
-  await for_(6000 - 25);
+async function BassDrum() {
+  // 25ms offset for the animation
+  await for_(bars(4) - 25);
 
   while (true) {
-    showArea(0, 2, 0, 0)
-    await for_(beatDivision(2));
+    showArea(0, 2, 0, 0);
+    await for_(beats(1));
   }
 }
 
-export async function Hat() {
-  await for_(12000 - 25);
+async function Hat() {
+  await for_(bars(8) - 25);
 
   while (true) {
     showArea(3, 5, 0, 0, 130);
-    await for_(beatDivision(4));
+    await for_(beats(0.5));
+  }
+}
+
+async function Snare() {
+  await for_(bars(16) + beats(1) - 25);
+
+  while (true) {
+    showArea(6, 8, 0, 0);
+    await for_(beats(2));
   }
 }
 
@@ -122,4 +116,5 @@ export default () => {
   Bass();
   BassDrum();
   Hat();
+  Snare();
 };

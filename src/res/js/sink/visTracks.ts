@@ -59,7 +59,7 @@ export async function Bass() {
 
   await for_(bars(8));
   while (notYet(FINISHED)) {
-    await skipBars(72, 80)
+    await skipBars(72, 80);
 
     await run(7, 7);
     await run(6, 7);
@@ -112,5 +112,53 @@ export async function Snare() {
 }
 
 export async function Lead() {
-  await for_(bars(32));
+  async function riff() {
+    show(2, 7);
+    await for_(bars(1) + beats(2));
+    show(2, 7);
+    await for_(beats(0.5));
+    show(1, 7);
+    await for_(beats(0.5));
+    show(2, 7);
+    await for_(beats(0.5));
+    show(3, 7);
+    await for_(beats(0.5));
+    show(2, 7);
+
+    await for_(bars(1) + beats(1));
+    show(2, 7);
+    await for_(beats(1));
+    show(1, 7);
+    await for_(beats(1));
+    show(1, 6);
+    await for_(beats(1));
+    show(1, 5);
+    await for_(beats(2));
+    show(1, 4);
+    await for_(beats(2));
+    show(1, 7);
+    await for_(beats(2));
+    show(2, 7);
+    await for_(beats(2));
+    show(1, 7);
+    await for_(beats(2));
+    show(1, 5);
+    await for_(beats(1));
+    show(1, 6);
+    await for_(beats(1));
+    show(1, 7);
+    await for_(beats(1));
+    show(2, 7);
+    await for_(beats(1));
+    show(3, 7);
+  }
+
+  await for_(bars(16));
+
+  await riff();
+  // bar 24 -> 32
+  await for_(bars(16));
+  await riff();
+  // bar 40
+  await riff();
 }

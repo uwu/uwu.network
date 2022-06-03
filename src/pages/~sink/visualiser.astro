@@ -49,5 +49,5 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 
   audio.play();
 
-  await play(tracks, 160, 112, (txt) => { visReadout.innerText = txt });
+  await play({a: tracks.Lead}, 160, 112, (txt) => { visReadout.innerText = txt });
 </script>

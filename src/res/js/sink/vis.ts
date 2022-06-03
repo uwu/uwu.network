@@ -1,3 +1,10 @@
+/* 
+  music visualiser framework
+  by Cain Atkinson / Yellowsink
+  for uwu.network 2022
+  please credit if used
+*/
+
 import "crossani";
 
 export function show(x: number, y: number, dur = 200) {

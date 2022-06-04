@@ -1,0 +1,4 @@
+<svg width="160px" height="160px"  version="1.1" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+  <path fill="none" stroke="#fff" id="btm" d="m0 160h160v-40l-40 40v-40l-40 40v-40l-40 40v-40z" />
+  <path fill="none" stroke="#fff" id="top" d="m0 120h80v-80h40v40l40-40h-40l40-40h-40l-40 40v-40l-40 40h40l-40 40h40l-40 40v-120h-40z" />
+</svg>

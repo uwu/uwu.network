@@ -51,10 +51,7 @@
 	function keyHandler(e) {
 		console.log("keyHandler called!")
 		if (e.keyCode == 13) {
-			fadein.classList.add("nope"); console.log("Fading content")
-			setTimeout(function () { block.classList.add("nope"); console.log("Collapsing") }, 1000);
-			setTimeout(function () { block.classList.add("nah"); console.log("Hiding") }, 1300);
-			setTimeout(function () { floppy.classList.add("floppygone"); console.log("Removing overlay") }, 2000);
+			floppy.classList.add("floppygone");
 			document.removeEventListener("keypress", keyHandler);
 			isPaused = false;
 		}
@@ -63,20 +60,20 @@
 	setInterval(async () => {
 		if (!isPaused) {
 			console.log("running, but unpaused", isPaused)
-			// Pause the interval until the user presses enter 
+			// Pause the interval until the user 
 			isPaused = true;
 
-			// Do the transitions to show the menu
+			// Show the floppy menu
 			floppy.classList.remove("floppygone");
-			setTimeout(function () { block.classList.remove("nah") }, 1000);
-			setTimeout(function () { block.classList.remove("nope") }, 1500);
-			setTimeout(function () { fadein.classList.remove("nope") }, 2000);
-			setTimeout(function () { write(document.getElementById("floppyheader")); }, 2000);
 
-			// Add our enter key listener
+			setTimeout(function () { block.classList.remove("nah") }, 1000);
+			setTimeout(function () { block.classList.remove("nope") }, 1000);
+			setTimeout(function () { fadein.classList.remove("nope") }, 2000);
+			setTimeout(function () { write(document.getElementById("floppyheader")); }, 1900);
+
 			document.addEventListener("keypress", keyHandler);
 		} else {
 			console.log("running, but paused", isPaused)
 		}
-	}, 10000);
+	}, 1000);
 </script>

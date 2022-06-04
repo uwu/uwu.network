@@ -7,8 +7,8 @@
 
 <div class="padder"></div>
 <center>
-    <div id={divclass} class="nope nah block">
-        <center id={fadeinclass} class="nope fadein">
+    <div id={divclass} class="nope nah">
+        <center id={fadeinclass} class="nope">
             <h1 id={headerclass}>{title}</h1>
             <slot />
         </center>
@@ -21,7 +21,7 @@
         padding: 20vh;
     }
 
-    .fadein {
+    #fadein {
         transition: 1s;
 
         &.nope {
@@ -29,7 +29,7 @@
         }
     }
 
-    .block {
+    #block {
         background-color: #000;
         width: 60em;
         padding: 1em;

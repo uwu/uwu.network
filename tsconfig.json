@@ -44,6 +44,13 @@
       "%css/*": ["src/res/css/beef/*"],
       "%js/*": ["src/res/js/beef/*"],
       "%/*": ["public/beef/*"],
+
+      // Phorcys
+      "§components/*": ["src/components/phorcys/*"],
+      "§layouts/*": ["src/layouts/phorcys/*"],
+      "§css/*": ["src/res/css/phorcys/*"],
+      "§js/*": ["src/res/js/phorcys/*"],
+      "§/*": ["public/phorcys/*"],
     },
     // Add type definitions for our Vite runtime.
     "types": ["vite/client", "@types/node"]

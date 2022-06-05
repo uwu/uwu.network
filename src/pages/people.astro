@@ -5,6 +5,7 @@ import PersonCard from "../components/PersonCard.astro";
 
 import triforceUrl from "+/ssemblem.png"
 import sinkUrl from "^/bw-pfp.svg"
+import phorcysUrl from "§/pfp.png"
 ---
 
 <IndexLayout title="people">
@@ -40,6 +41,20 @@ import sinkUrl from "^/bw-pfp.svg"
       <span slot="header">Yellowsink</span>
       <span>
         When awful ideas and free time collide.
+      </span>
+    </PersonCard>
+
+    <PersonCard
+      imgSrc={phorcysUrl}
+      imgLink="https://phorcys.net"
+      headLink="/~phorcys"
+      links={{
+        "[github]": "https://github.com/phorcys420"
+      }}
+    >
+      <span slot="header">Phorcys</span>
+      <span>
+        i'm creatable
       </span>
     </PersonCard>
 

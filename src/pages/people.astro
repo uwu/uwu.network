@@ -7,73 +7,28 @@ import triforceUrl from "+/ssemblem.png"
 import sinkUrl from "^/bw-pfp.svg"
 import floppyUrl from "#/img/icons/floppy.png";
 import phorcysUrl from "§/pfp.png"
+
+import people from "/peopleInfo.json";
 ---
 
 <IndexLayout title="people">
-  <div class="font-plex p-10 flex flex-col gap-2">  
-
-    <PersonCard
-      imgSrc={triforceUrl}
-      imgLink="https://creatable.cafe"
-      pixelated
-      headLink="/~creatable"
-      links={{
-        "[keybase]": "https://keybase.io/creatable",
-        "[github]": "https://github.com/cr3atable",
-        "[twitter]": "https://twitter.com/cr3atable"
-      }}
-    >
-      <span slot="header">creatable</span>
-      <span>
-        i'm proficient in making things do things that they aren't supposed to do
-      </span>
-    </PersonCard>
-
-    <PersonCard
-      imgSrc={sinkUrl}
-      imgLink="https://yellowsink.vercel.app"
-      headLink="/~sink"
-      links={{
-        "[githu🅱️]": "https://github.com/yellowsink",
-        "[twattter]": "https://twitter.com/CainAtkin",
-        "[peemail]": "mailto:yellowsink@riseup.net"
-      }}
-    >
-      <span slot="header">Yellowsink</span>
-      <span>
-        When awful ideas and free time collide.
-      </span>
-    </PersonCard>
-
-    <PersonCard
-      imgSrc={floppyUrl}
-      imgLink="https://alyxia.dev"
-      headLink="~/alyxia"
-      links={{
-        "[keybase]": "https://keybase.io/lexisother",
-        "[github]": "https://github.com/lexsother",
-        "[twitter]": "https://twitter.com/lexisother",
-        "[email]": "mailto:alyxia@riseup.net"
-      }}
-    >
-      <i>static noise</i>
-    </PersonCard>
-
-    <PersonCard
-      imgSrc={phorcysUrl}
-      imgLink="https://phorcys.net"
-      headLink="/~phorcys"
-      links={{
-        "[github]": "https://github.com/phorcys420"
-      }}
-    >
-      <span slot="header">Phorcys</span>
-      <span>
-        i'm creatable
-      </span>
-    </PersonCard>
-
+  <div class="font-plex">
+    <div class="p-10 flex flex-col gap-2">  
+        {people.map((person) => {
+            return(
+            <PersonCard
+                imgSrc={person.img.src}
+                imgLink={person.img.link}
+                pixelated={person.pixelated}
+                headLink={person.headLink}
+                links={person.links}
+            >
+                <span slot="header">{person.header}</span>
+                <span>{person.body}</span>
+            </PersonCard>
+            )
+        })}
+      </div>
+    <PoweredBy />
   </div>
-
-  <PoweredBy />
 </IndexLayout>

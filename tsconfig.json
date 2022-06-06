@@ -16,6 +16,7 @@
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@res/*": ["src/res/*"],
+      "/*": ["public/*"],
 
       // Alyxia
       "#components/*": ["src/components/alyxia/*"],

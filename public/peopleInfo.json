@@ -1,0 +1,73 @@
+[
+    {
+        "header": "creatable",
+        "body": "i'm proficient in making things do things that they aren't supposed to do",
+        "img": {
+            "src": "/creatable/ssemblem.png",
+            "link": "https://creatable.cafe"
+        },
+        "pixelated": true,
+        "headLink": "~/creatable",
+        "links": {
+            "[keybase]": "https://keybase.io/creatable",
+            "[github]": "https://github.com/cr3atable",
+            "[twitter]": "https://twitter.com/cr3atable"
+        }
+    },
+    {
+        "header": "Yellowsink",
+        "body": "When awful ideas and free time collide.",
+        "img": {
+            "src": "/sink/bw-pfp.svg",
+            "link": "https://yellowsink.vercel.app"
+        },
+        "headLink": "/~sink",
+        "links": {
+            "[githu🅱️]": "https://github.com/yellowsink",
+            "[twattter]": "https://twitter.com/CainAtkin",
+            "[peemail]": "mailto:yellowsink@riseup.net"
+        }
+    },
+    {
+        "header": "Beef",
+        "body": "uwu.network janitor, local TypeScript enthusiast",
+        "img": {
+            "src": "/beef/img/logo.png",
+            "link": "https://beefers.dev"
+        },
+        "headLink": "/~beef",
+        "links": {
+            "[github]": "https://github.com/Beefers",
+            "[twitter]": "https://twitter.com/Beef_ers",
+            "[email]": "mailto:beefers@riseup.net"
+        }
+    },
+    {
+        "header": "",
+        "body": "static noise",
+        "img": {
+            "src": "/alyxia/img/icons/floppy.png",
+            "link": "https://alyxia.dev"
+        },
+        "pixelated": true,
+        "headLink": "/~alyxia",
+        "links": {
+            "[keybase]": "https://keybase.io/lexisother",
+            "[github]": "https://github.com/lexsother",
+            "[twitter]": "https://twitter.com/lexisother",
+            "[email]": "mailto:alyxia@riseup.net"
+        }
+    },
+    {
+        "header": "Phorcys",
+        "body": "i'm creatable",
+        "img": {
+            "src": "/phorcys/pfp.png",
+            "link": "https://phorcys.net"
+        },
+        "headLink": "/~phorcys",
+        "links": {
+            "[github]": "https://github.com/phorcys420"
+        }
+    }
+]

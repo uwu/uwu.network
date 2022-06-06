@@ -5,6 +5,7 @@ import PersonCard from "../components/PersonCard.astro";
 
 import triforceUrl from "+/ssemblem.png"
 import sinkUrl from "^/bw-pfp.svg"
+import floppyUrl from "#/img/icons/floppy.png";
 import phorcysUrl from "§/pfp.png"
 ---
 
@@ -42,6 +43,20 @@ import phorcysUrl from "§/pfp.png"
       <span>
         When awful ideas and free time collide.
       </span>
+    </PersonCard>
+
+    <PersonCard
+      imgSrc={floppyUrl}
+      imgLink="https://alyxia.dev"
+      headLink="~/alyxia"
+      links={{
+        "[keybase]": "https://keybase.io/lexisother",
+        "[github]": "https://github.com/lexsother",
+        "[twitter]": "https://twitter.com/lexisother",
+        "[email]": "mailto:alyxia@riseup.net"
+      }}
+    >
+      <i>static noise</i>
     </PersonCard>
 
     <PersonCard

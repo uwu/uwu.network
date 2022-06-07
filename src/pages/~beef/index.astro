@@ -8,45 +8,18 @@ import IndexLayout from "%layouts/DOSLayout.astro";
             <p>Copyright 1991, Oak Technology VGA BIOS 067B/C V1.042</p>
             <!-- TODO: Detect actual VRAM amount? -->
             <p>Video Memory: 512KB</p>
+            <noscript>
+                <div class="mt-4">
+                    <p>Error! JavaScript not detected.</p>
+                    <a href="/~beef/about">Click here to continue</a>
+                </div>
+            </noscript>
         </div>
 	</div>
 </IndexLayout>
 
-<!-- We love the loader code -->
-<!-- Yellowsink hates him!! -->
 <script>
-    import { sleep, setContainerContent, writeContainerContent } from "%js/utils";
-    import { Howl } from "howler";
+import boot from "%js/boot";
 
-    const loaderContent = `
-    <div class="leading-tight">
-        <div class="mb-8">
-            <p class="text-4xl italic text-purple-200">UWUNET</p>
-            <p class="text-sm">Nobody grew up listening to us. Nobody does still.</p>
-        </div>
-
-        <div class="mb-4">
-            <p>Phoenix 80386 ROM BIOS PLUS Version 1.10 2714</p>
-            <p>Copyright (C) 1985-1989 Phoenix Technologies Ltd.</p>
-            <p>All Rights Reserved</p>
-        </div>
-
-        <p>19920225151230</p>
-    </div>
-    `;
-
-    const seekAudio = new Howl({
-        src: "/beef/audio/seek.mp3",
-        volume: 0.5
-    });
-
-    sleep(1000).then(() => {
-        setContainerContent("bootscreen-container", loaderContent);
-        seekAudio.play();
-
-        sleep(4000).then(() => {
-            writeContainerContent("bootscreen-container", `<p class="mt-4">Starting MS-DOS...</p>`);
-            sleep(500).then(() => { location.replace(location.origin + "/~beef/about"); });
-        });
-    });
+document.addEventListener("DOMContentLoaded", boot);
 </script>

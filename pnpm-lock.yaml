@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@astrojs/react': ^0.1.3
   '@astrojs/sitemap': ^0.1.0
   '@astrojs/solid-js': ^0.1.3
   '@astrojs/svelte': ^0.1.4
@@ -9,6 +10,8 @@ specifiers:
   astro: ^1.0.0-beta.38
   crossani: ^1.1.1
   howler: ^2.2.3
+  react: ^18.2.0
+  react-dom: ^18.2.0
   sass: ^1.52.1
   solid-js: ^1.4.3
   svelte: ^3.48.0
@@ -20,6 +23,7 @@ dependencies:
   howler: 2.2.3
 
 devDependencies:
+  '@astrojs/react': 0.1.3_biqbaboplfbrettd7655fr4n2y
   '@astrojs/sitemap': 0.1.0
   '@astrojs/solid-js': 0.1.3_solid-js@1.4.3
   '@astrojs/svelte': 0.1.4_sass@1.52.1+svelte@3.48.0
@@ -27,6 +31,8 @@ devDependencies:
   '@types/node': 17.0.38
   astro: 1.0.0-beta.38_sass@1.52.1
   crossani: 1.1.1
+  react: 18.2.0
+  react-dom: 18.2.0_react@18.2.0
   sass: 1.52.1
   solid-js: 1.4.3
   svelte: 3.48.0
@@ -103,6 +109,20 @@ packages:
   /@astrojs/prism/0.4.1:
     resolution: {integrity: sha512-JxkrXFiFhfunOFBI2Xxwru9t4IzrLw+nfA7RkNnV8qP65BLidrwWS+NfZhOSVGTrbf+cQfF8QNe6O4gAX8wQHw==}
     engines: {node: ^14.15.0 || >=16.0.0}
+    dev: true
+
+  /@astrojs/react/0.1.3_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-0CudcI3buiRQ1ZOxBCsscSGNJSTGUFEU4evZeGlrxND6nPskS3S1HcUIO9UpkHJayef54SbX5ABiLFftQznDuA==}
+    engines: {node: ^14.15.0 || >=16.0.0}
+    peerDependencies:
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      '@babel/plugin-transform-react-jsx': 7.17.12
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@babel/core'
     dev: true
 
   /@astrojs/sitemap/0.1.0:
@@ -240,6 +260,13 @@ packages:
       jsesc: 2.5.2
     dev: true
 
+  /@babel/helper-annotate-as-pure/7.16.7:
+    resolution: {integrity: sha512-s6t2w/IPQVTAET1HitoowRGXooX8mCgtuP5195wD/QJPV6wYjpujCGF7JuMODVX2ZAJOf1GT6DT9MHEZvLOFSw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/types': 7.18.4
+    dev: true
+
   /@babel/helper-compilation-targets/7.18.2_@babel+core@7.18.2:
     resolution: {integrity: sha512-s1jnPotJS9uQnzFtiZVBUxe67CuBa679oWFHpxYYnTpRL/1ffhyX44R9uYiXoa/pLXcY9H2moJta0iaanlk/rQ==}
     engines: {node: '>=6.9.0'}
@@ -367,6 +394,19 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/helper-plugin-utils': 7.17.12
+    dev: true
+
+  /@babel/plugin-transform-react-jsx/7.17.12:
+    resolution: {integrity: sha512-Lcaw8bxd1DKht3thfD4A12dqo1X16he1Lm8rIv8sTwjAYNInRS1qHa9aJoqvzpscItXvftKDCfaEQzwoVyXpEQ==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/helper-annotate-as-pure': 7.16.7
+      '@babel/helper-module-imports': 7.16.7
+      '@babel/helper-plugin-utils': 7.17.12
+      '@babel/plugin-syntax-jsx': 7.17.12
+      '@babel/types': 7.18.4
     dev: true
 
   /@babel/template/7.16.7:
@@ -2299,6 +2339,13 @@ packages:
     resolution: {integrity: sha512-cHlYSUpL2s7Fb3394mYxwTYj8niTaNHUCLr0qdiCXQfSjfuA7CKofpX2uSwEfFDQ0EB7JcnMnm+GjbqqoinYYg==}
     dev: true
 
+  /loose-envify/1.4.0:
+    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
+    dependencies:
+      js-tokens: 4.0.0
+    dev: true
+
   /lower-case/2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
@@ -3196,6 +3243,23 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
+  /react-dom/18.2.0_react@18.2.0:
+    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.2.0
+      scheduler: 0.23.0
+    dev: true
+
+  /react/18.2.0:
+    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: true
+
   /readable-stream/3.6.0:
     resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==}
     engines: {node: '>= 6'}
@@ -3400,6 +3464,12 @@ packages:
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
+    dev: true
+
+  /scheduler/0.23.0:
+    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+    dependencies:
+      loose-envify: 1.4.0
     dev: true
 
   /section-matter/1.0.0:

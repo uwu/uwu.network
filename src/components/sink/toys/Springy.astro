@@ -1,0 +1,54 @@
+<div id="springy-container" class="relative place-self-stretch">
+  <div class="absolute left-1/2 top-1/2 border border-white rounded-1 w-15px h-15px"
+    style="transform: translate(-50%, -50%)" />
+</div>
+
+<script>
+  import "@crossani/spring";
+  import { v2sub, v2smul } from "^js/math";
+
+  const container = document.getElementById("springy-container");
+  const ball = container.firstElementChild;
+
+  const containerPos = () => [container.offsetLeft, container.offsetTop];
+  const containerSize = () => [container.clientWidth, container.clientHeight];
+  const centerVec = () => v2smul(containerSize(), .5);
+
+  let mousePos = [0, 0];
+  let animating = false;
+  let dragging = false;
+
+  const moveHandler = (ev) => {
+    mousePos = v2sub([ev.clientX, ev.clientY], containerPos());
+
+    if (!animating && dragging) {
+      ball.style.left = mousePos[0] + "px";
+      ball.style.top = mousePos[1] + "px";
+    }
+  }
+
+  container.addEventListener("mousemove", moveHandler);
+
+  container.addEventListener("mousedown", (ev) => {
+    if (!animating) dragging = true
+    moveHandler(ev)
+  });
+
+  container.addEventListener("mouseup", async () => {
+    if (!dragging) return;
+
+    dragging = false;
+    animating = true;
+
+    const centered = centerVec();
+
+    await Promise.all([
+      // reduce closeness to 0 required so springs dont feel like theyre unresponsive after they stop
+      ball.doSpring(mousePos[0], centered[0], "left", "px", { restThres: 2 }),
+      ball.doSpring(mousePos[1], centered[1], "top", "px", { restThres: 2 })
+    ]);
+
+    animating = false;
+    ball.style.transition = "";
+  });
+</script>

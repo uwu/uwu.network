@@ -3,21 +3,21 @@
 </div>
 
 <script>
-  import { v2add, v2sub } from "^js/math"
+  import { v2add, v2smul, v2sub } from "^js/math"
 
   const container = document.getElementById("bouncy-container");
   const bouncy = document.getElementById("bouncy");
 
-  const padding = bouncy.clientHeight / 2;
+  const padding = (bouncy.clientHeight / 2) + 1;
 
-  const yStopThres = 1.5; // max y velocity to stop at
-  const yBotThres = 7; // max y level to snap down at
+  const yStopThres = .1; // max y velocity to stop at
+  const yBotThres = 3; // max y level to snap down at
 
-  const xDamping = .01; // a little goes a long way
-  const bounceDamping = .4;
-  // units: pixels per 50ms
-  const gravity = 2;
-  let velocity = [10, 0];
+  const xDamping = .005; // a little goes a long way
+  const bounceDamping = .3;
+  // units: pixels per 5ms
+  const gravity = .06;
+  let velocity = [5, 0];
 
   let position = [padding, padding];
 
@@ -26,12 +26,16 @@
   container.onmousemove = (ev) => mousePos && (mousePos = [ev.clientX, ev.clientY]);
   window.addEventListener("mouseup", () => mousePos = null);
 
+  let i = 0; // balls
   setInterval(() => {
-    if (mousePos) {
+    i++;
+    if (i > 5) i = 0;
+
+    if (mousePos && i === 0) {
       const containerPos = [container.offsetLeft, container.offsetTop];
       const relativePos = [bouncy.offsetLeft, bouncy.offsetTop];
       const realPos = v2add([padding, padding], v2add(relativePos, containerPos))
-      velocity = v2sub(mousePos, realPos);
+      velocity = v2smul(v2sub(mousePos, realPos), .1);
     }
 
     const size = [container.clientWidth, container.clientHeight];
@@ -62,5 +66,8 @@
 
     bouncy.style.left = position[0] + "px";
     bouncy.style.top = position[1] + "px";
-  }, 50);
+  }, 5);
+  // 5ms is way overkill for the 16ms 60fps needs
+  // however 144hz needs 6.9ms (nice) so yep.
+  // still, 240hz needs 4ms CRY LMAO
 </script>

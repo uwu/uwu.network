@@ -69,5 +69,18 @@
         "links": {
             "[github]": "https://github.com/phorcys420"
         }
+    },
+    {
+        "header": "xirreal",
+        "body": "train rights 🏳️‍⚧️",
+        "img": {
+            "src": "/xirreal/pfp.jpg",
+            "link": "https://xirreal.dev"
+        },
+        "headLink": "/~xirreal",
+        "links": {
+            "[github]": "https://github.xirreal.dev/",
+            "[email]": "mailto:me@xirreal.dev"
+        }
     }
 ]

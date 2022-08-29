@@ -11,6 +11,7 @@ specifiers:
   astro: ^1.0.0-beta.38
   crossani: ^1.1.1
   howler: ^2.2.3
+  mingine-engine: ^1.0.0
   react: ^18.2.0
   react-dom: ^18.2.0
   sass: ^1.52.1
@@ -33,6 +34,7 @@ devDependencies:
   '@types/node': 17.0.38
   astro: 1.0.0-beta.38_sass@1.52.1
   crossani: 1.1.1
+  mingine-engine: 1.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   sass: 1.52.1
@@ -2910,6 +2912,10 @@ packages:
   /min-indent/1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
+    dev: true
+
+  /mingine-engine/1.0.0:
+    resolution: {integrity: sha512-A8oPV1tLvEtEg5mLCD/iJyKb1ouKfVpwfOKVhmzQwhq3NV1Fo7g8uuHYWu2+H9GzC3yFoer1ylsmEFwvwepDhA==}
     dev: true
 
   /minimatch/3.1.2:

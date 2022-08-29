@@ -1,73 +1,138 @@
-<div id="bouncy-container" class="border border-t-0 border-white relative place-self-stretch">
-  <div id="bouncy" class="border border-white rounded-1 absolute w-15px h-15px" />
+<div
+  id="bouncy-container"
+  class="border border-t-0 border-white relative place-self-stretch"
+>
+  <div id="bouncy-mingine-container"></div>
 </div>
 
 <script>
-  import { v2add, v2smul, v2sub } from "^js/math"
+  import {
+    consts,
+    createCircle,
+    createEngine,
+    createRect,
+    createScene,
+    forceModels,
+    v,
+    vo
+  } from "mingine-engine";
+
+  const renderScale = 50;
 
   const container = document.getElementById("bouncy-container");
-  const bouncy = document.getElementById("bouncy");
+  const mingineRoot = document.getElementById("bouncy-mingine-container");
 
-  const padding = (bouncy.clientHeight / 2) + 1;
+  let mousePos, mousePressed = false;
+  container.onmousedown = () => (mousePressed = true);
+  window.addEventListener(
+    "mousemove",
+    (ev) => (mousePos = [ev.clientX, ev.clientY])
+  );
+  window.addEventListener("mouseup", () => (mousePressed = false));
 
-  const yStopThres = .1; // max y velocity to stop at
-  const yBotThres = 3; // max y level to snap down at
+  const getLocalMousePos = () => {
+    if (!mousePos) return;
+    const oset = v(mousePos[0], mousePos[1]).sub(
+      v(container.offsetLeft, container.offsetTop)
+    );
+    const flipped = v(
+      oset.x,
+      container.offsetTop + container.clientHeight - oset.y
+    );
+    return flipped.scdiv(renderScale);
+  };
 
-  const xDamping = .005; // a little goes a long way
-  const bounceDamping = .3;
-  // units: pixels per 5ms
-  const gravity = .06;
-  let velocity = [5, 0];
-
-  let position = [padding, padding];
-
-  let mousePos;
-  container.onmousedown = (ev) => mousePos = [ev.clientX, ev.clientY];
-  container.onmousemove = (ev) => mousePos && (mousePos = [ev.clientX, ev.clientY]);
-  window.addEventListener("mouseup", () => mousePos = null);
-
-  let i = 0; // balls
+  let lastMouse;
   setInterval(() => {
-    i++;
-    if (i > 5) i = 0;
+    lastMouse = mousePressed ? getLocalMousePos() : undefined;
+  }, 100);
 
-    if (mousePos && i === 0) {
-      const containerPos = [container.offsetLeft, container.offsetTop];
-      const relativePos = [bouncy.offsetLeft, bouncy.offsetTop];
-      const realPos = v2add([padding, padding], v2add(relativePos, containerPos))
-      velocity = v2smul(v2sub(mousePos, realPos), .1);
-    }
+  const engine = createEngine(
+    createScene({
+      canvasSize: v(1, 1), // this will be instantly overwritten lol
+      scale: renderScale,
 
-    const size = [container.clientWidth, container.clientHeight];
+      postTickHooks: [
+        ([s]) => {
+          s.canvasSize = v(container.clientWidth, container.clientHeight).scdiv(
+            renderScale
+          );
 
-    const precheckPos = v2add(position, velocity);
+          s.getObjects().find((o) => o.id === "RIGHT_WALL").physicsObj.pos.x =
+            container.clientWidth / renderScale + 1;
+        },
 
-    velocity[0] *= (1 - xDamping);
-    velocity[1] += gravity;
+        ([s]) => {
+          const g = s.getObjects().find((o) => o.id === "BALL").physicsObj;
 
-    // bottom bounce
-    if (precheckPos[1] + (padding * 2) >= size[1])
-      velocity[1] *= -(1 - bounceDamping);
+          if (!mousePressed) return [vo(), 0];
 
-    // right bounce
-    if (precheckPos[0] + (padding * 2) >= size[0])
-      velocity[0] *= -(1 - bounceDamping);
+          const localMousePos = getLocalMousePos();
+          g.pos = localMousePos;
 
-    // left bounce
-    if (precheckPos[0] <= 0)
-      velocity[0] *= -(1 - bounceDamping);
+          if (lastMouse) {
+            g.velocity = localMousePos.sub(lastMouse).scale(1000 / 100);
+          }
+        },
+      ],
 
-    if (!mousePos && Math.abs(velocity[1]) <= yStopThres && size[1] - (precheckPos[1] + (padding * 2)) <= yBotThres) {
-      velocity[1] = 0;
-      position[1] = size[1] - (padding * 2);
-    }
+      objects: [
+        createRect({
+          id: "FLOOR",
+          height: 2,
+          width: 50,
+          mass: Infinity,
+          momentOfInertia: Infinity,
+          pos: v(0, -1),
+          collide: true,
+          angle: 0.01,
+        }),
+        createRect({
+          id: "LEFT_WALL",
+          height: 50,
+          width: 2,
+          mass: Infinity,
+          momentOfInertia: Infinity,
+          pos: v(-1, 25.1),
+          collide: true,
+        }),
+        createRect({
+          id: "RIGHT_WALL",
+          height: 50,
+          width: 2,
+          mass: Infinity,
+          momentOfInertia: Infinity,
+          pos: v(2, 25.1), // also instantly overwritten lol
+          collide: true,
+        }),
 
-    position = v2add(position, velocity);
+        createCircle({
+          id: "BALL",
+          mass: 0.5, // kg
+          // (m r^2) / 2
+          momentOfInertia: (0.5 * (Math.PI * 0.3 * 0.3)) / 2,
+          radius: 0.2, // 20cm
+          pos: v(0.2, 3),
+          velocity: v(3, 0),
+          styles: {
+            border: "1px solid white",
+            borderRadius: "999999px",
+            width: `${0.2 * 2 * renderScale}px`,
+            height: `${0.2 * 2 * renderScale}px`,
+          },
+          collide: true,
 
-    bouncy.style.left = position[0] + "px";
-    bouncy.style.top = position[1] + "px";
-  }, 5);
-  // 5ms is way overkill for the 16ms 60fps needs
-  // however 144hz needs 6.9ms (nice) so yep.
-  // still, 240hz needs 4ms CRY LMAO
+          restitutionCoeff: 0.8, // we want a fair bit of bounce
+
+          forces: [
+            // @ts-expect-error the def is wrong lmao
+            forceModels.weight(consts.earthGravity)
+          ],
+        }),
+      ],
+    })
+  );
+
+  engine.mount(mingineRoot);
+  engine.start();
 </script>

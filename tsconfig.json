@@ -52,6 +52,13 @@
       "§css/*": ["src/res/css/phorcys/*"],
       "§js/*": ["src/res/js/phorcys/*"],
       "§/*": ["public/phorcys/*"],
+
+      // xirreal
+      "<components/*": ["src/components/xirreal/*"],
+      "<layouts/*": ["src/layouts/xirreal/*"],
+      "<css/*": ["src/res/css/xirreal/*"],
+      "<js/*": ["src/res/js/xirreal/*"],
+      "</*": ["public/xirreal/*"]
     },
     // Add type definitions for our Vite runtime.
     "types": ["vite/client", "@types/node"]

@@ -21,12 +21,13 @@ const title = `
     <div id="raytracer"></div>
 
     <div id="raytracer-buttons" class="absolute bottom-2 right-2 flex gap-2 transition-opacity duration-500 z-10">
+      <button id="raytracer-ui">hide</button>
       <button id="raytracer-stop">pause</button>
       <button id="raytracer-ground">moving ground: false</button>
       <button id="raytracer-bitdepth">bitdepth: 6</button>
     </div>
 
-    <div class="absolute bottom-2 items-stretch gap-2 z-1 w-[800px] children:(bg-black p-5 border border-white)">
+    <div id="user" class="absolute bottom-2 items-stretch gap-2 z-1 w-[800px] children:(bg-black p-5 border border-white)">
       <div>
         <pre class="text-center">{title}</pre>
         <pre class="text-center">I do graphics and JS.</pre>

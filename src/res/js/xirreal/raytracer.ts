@@ -14,7 +14,9 @@ const CONTAINER_ID = "raytracer",
   CELL_CLASS = "raytracer-cell",
   PAUSE_B_ID = "raytracer-stop",
   GROUND_B_ID = "raytracer-ground",
-  DEPTH_B_ID = "raytracer-bitdepth";
+  DEPTH_B_ID = "raytracer-bitdepth",
+  HIDEUI_B_ID = "raytracer-ui",
+  NAME_DIV_ID = "user";
 
 const container = document.getElementById(CONTAINER_ID);
 
@@ -324,12 +326,26 @@ export default () => {
   makeGrid();
 
   let rendering = true;
+  let uiHidden = false;
 
   const pauseButton = document.getElementById(PAUSE_B_ID);
   pauseButton.onclick = () => {
     rendering = !rendering;
     pauseButton.innerText =
       pauseButton.innerText === "resume" ? "pause" : "resume";
+  };
+
+  const nameBar = document.getElementById(NAME_DIV_ID);
+  const uiButton = document.getElementById(HIDEUI_B_ID);
+  uiButton.onclick = () => {
+    uiHidden = !uiHidden;
+    if (uiHidden) {
+      nameBar.classList.add("opacity-0");
+      uiButton.innerText = "show";
+    } else {
+      nameBar.classList.remove("opacity-0");
+      uiButton.innerText = "hide";
+    }
   };
 
   const groundButton = document.getElementById(GROUND_B_ID);

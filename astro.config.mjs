@@ -1,5 +1,5 @@
-import WindiCSS from "vite-plugin-windicss";
-import { defineConfig } from 'astro/config';
+import uno from "astro-uno";
+import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 //import solid from "@astrojs/solid-js";
 import react from "@astrojs/react";
@@ -7,11 +7,18 @@ import react from "@astrojs/react";
 import svelte from "@astrojs/svelte";
 import vue from "@astrojs/vue";
 
+import unoConfig from "./uno.config";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), svelte(), /* solid(), */ /* preact(), */ react(), sitemap()],
+  integrations: [
+    vue(),
+    svelte(),
+    // solid(),
+    // preact(),
+    react(),
+    sitemap(),
+    uno(unoConfig),
+  ],
   site: "https://uwu.network",
-  vite: {
-    plugins: WindiCSS()
-  }
 });

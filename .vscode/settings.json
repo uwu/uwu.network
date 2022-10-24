@@ -2,6 +2,9 @@
     "windicss.includeLanguages": {
         "astro": "html"
     },
+    "//": "use the uno extension for this, windi one is just setup for autocomplete",
+    "windicss.enableHoverPreview": false,
+    "windicss.enableColorDecorators": false,
     "editor.quickSuggestions": {
         "strings": true
     },

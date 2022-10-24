@@ -1,0 +1,33 @@
+---
+import SinkLayout from "^layouts/SinkLayout.astro";
+import silent from "^/silent.svg";
+import posts from "^/quietsystem.json";
+
+const fmtTags = (tags) => tags.map(t => `[${t.toUpperCase()}]`).join(" ")
+---
+
+<SinkLayout title="Quiet System">
+  <div class="flex gap-5">
+    <img class="h-40" src={silent} />
+    <div class="flex flex-col justify-center">
+      <h1 class="spaced mb-0">Quiet System</h1>
+      <p class="text-xl italic self-end">Yellowsink's blog</p>
+    </div>
+  </div>
+
+  {posts.map((post) => (
+    <a href={"blog/" + post.path} class="block mt-2 p-2 border border-white no-underline">
+      <div class="flex justify-between">
+        <p class="text-xl">{post.title}</p>
+        <p class="text-lg">{fmtTags(post.tags)} {post.date}</p>
+      </div>
+
+      <p>{post.desc}</p>
+    </a>
+  ))}
+</SinkLayout>
+
+<style lang="sass">
+  .spaced
+    letter-spacing: .3rem
+</style>

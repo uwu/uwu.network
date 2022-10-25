@@ -13,6 +13,8 @@ To keep you entertained heres a
 [takodachi](https://hololive.wiki/wiki/File:Takodachi.png)
 that chases your cursor.
 
+I have a [blog!](/~sink/blog)
+
 [Play with some dumb interactive toys](/~sink/toys)
 
 [A music-synced visualiser](/~sink/visualiser)

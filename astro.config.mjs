@@ -11,6 +11,9 @@ import unoConfig from "./uno.config";
 
 // https://astro.build/config
 export default defineConfig({
+  legacy: {
+    astroFlavoredMarkdown: true
+  },
   integrations: [
     vue(),
     svelte(),

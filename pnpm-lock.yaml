@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@astrojs/react': ^0.1.3
+  '@astrojs/rss': ^1.0.2
   '@astrojs/sitemap': ^0.1.0
   '@astrojs/solid-js': ^0.1.3
   '@astrojs/svelte': ^0.1.4
@@ -28,6 +29,7 @@ dependencies:
 
 devDependencies:
   '@astrojs/react': 0.1.3_biqbaboplfbrettd7655fr4n2y
+  '@astrojs/rss': 1.0.2
   '@astrojs/sitemap': 0.1.0
   '@astrojs/solid-js': 0.1.3_solid-js@1.4.3
   '@astrojs/svelte': 0.1.4_sass@1.52.1+svelte@3.48.0
@@ -159,6 +161,12 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     transitivePeerDependencies:
       - '@babel/core'
+    dev: true
+
+  /@astrojs/rss/1.0.2:
+    resolution: {integrity: sha512-WPMW5a3D+nAbuu/i7LANfp1GnVrdnzcsUNrR7o8IvPJXJMjVGtDqdUqNDj20Rj3rwcWbOL2KVvGPMjCqx0tRWQ==}
+    dependencies:
+      fast-xml-parser: 4.0.11
     dev: true
 
   /@astrojs/sitemap/0.1.0:
@@ -2399,6 +2407,13 @@ packages:
       micromatch: 4.0.5
     dev: true
 
+  /fast-xml-parser/4.0.11:
+    resolution: {integrity: sha512-4aUg3aNRR/WjQAcpceODG1C3x3lFANXRo8+1biqfieHmg9pyMt7qB4lQV/Ta6sJCTbA5vfD8fnA8S54JATiFUA==}
+    hasBin: true
+    dependencies:
+      strnum: 1.0.5
+    dev: true
+
   /fastq/1.13.0:
     resolution: {integrity: sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==}
     dependencies:
@@ -4345,6 +4360,10 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       min-indent: 1.0.1
+    dev: true
+
+  /strnum/1.0.5:
+    resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
     dev: true
 
   /style-to-object/0.3.0:

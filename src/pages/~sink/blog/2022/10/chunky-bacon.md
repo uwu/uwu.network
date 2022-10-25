@@ -1,7 +1,11 @@
 ---
 layout: "^layouts/QuietLayout.astro"
-postIdx: 0
+title: Chunky bacon!
+description: Is this thing on...? Yeah maybe. I think so.
+pubDate: "2022-10-24"
+tags: ["META"]
 ---
+
 # Chunky bacon!
 [(see: _why's (poignant) Guide to Ruby)](https://poignant.guide)
 

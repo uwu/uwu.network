@@ -1,17 +1,17 @@
 ---
 import "^css/global.sass";
 import BorderLayout from "@layouts/BorderLayout.astro";
-import getProps from "@res/js/getProps";
-import posts from "^/quietsystem.json";
 
-const { postIdx } = getProps(Astro.props);
+const posts = await Astro.glob("/src/pages/~sink/blog/**/*.md");
+
+const { frontmatter } = posts.find((p) => Astro.request.url.endsWith(p.url));
 ---
 
 <BorderLayout
-  title={posts[postIdx].title}
+  title={frontmatter.title}
   titleName="Quiet System"
   headerName="Quiet System"
-  footerOride={"YELLOWSINK @ UWU.NETWORK " + posts[postIdx].date}
+  footerOride={"YELLOWSINK @ UWU.NETWORK " + frontmatter.pubDate}
   mainHref="/~sink/blog"
 >
   <div id="quiet">

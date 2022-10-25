@@ -4,7 +4,13 @@ import BorderLayout from "@layouts/BorderLayout.astro";
 
 const posts = await Astro.glob("/src/pages/~sink/blog/**/*.md");
 
-const { frontmatter } = posts.find((p) => Astro.request.url.endsWith(p.url));
+console.log(posts, Astro.request.url);
+
+const { frontmatter } = posts.find(
+  (p) =>
+    Astro.request.url.endsWith(p.url) ||
+    Astro.request.url.slice(0, -1).endsWith(p.url)
+);
 ---
 
 <BorderLayout

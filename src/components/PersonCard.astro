@@ -4,7 +4,7 @@ const { imgLink, imgSrc, pixelated, headLink, links } = Astro.props;
 const linkEntries = Object.entries<string>(links);
 ---
 
-<div class="<md:(flex flex-col) border-double border-white border-4 p-3 grid grid-cols-[auto,1fr] grid-rows-2 gap-x-6">
+<div class="<md:(flex flex-col) border-double border-white border-4 p-3 grid grid-cols-[auto_1fr] grid-rows-2 gap-x-6">
   <a href={imgLink} class="row-span-2 place-self-center">
     <img src={imgSrc} class="w-28" style={pixelated && "image-rendering: pixelated" } />
   </a>

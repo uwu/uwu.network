@@ -5,22 +5,22 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 <SinkLayout title="visualiser">
   <button class="text-3xl border border-white p-2">
     Start
-    <div class="text-xl">
-      If it desyncs, reload page and go again
-    </div>
+    <div class="text-xl">If it desyncs, reload page and go again</div>
   </button>
-  <div class="grid hidden h-full grid-rows-[1fr,auto]">
+  <div class="grid hidden h-full grid-rows-[1fr_auto]">
     <div class="grid grid-cols-9 grid-rows-9">
       {
-      Array.from({ length: 9 }, (_, y) => (
-      Array.from({ length: 9 }, (_, x) => (
-      <div id={`${x}-${y}`} class="opacity-0 bg-white" />
-      ))
-      ))
+        Array.from({ length: 9 }, (_, y) => (
+          <>
+            {Array.from({ length: 9 }, (_, x) => (
+              <div id={`${x}-${y}`} class="opacity-0 bg-white" />
+            ))}
+          </>
+        ))
       }
     </div>
     <p class="flex justify-between">
-      <span id="vis-readout" />
+      <span id="vis-readout"></span>
       <span>Music: Marble Marcher level 1 - Petty Theft</span>
     </p>
   </div>
@@ -29,28 +29,27 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 <script>
   import audioUrl from "^/visualised.mp3?url";
   import * as tracks from "^js/visTracks";
-  import { play } from "^js/vis"
+  import { play } from "^js/vis";
 
   const debug = (txt) => {
-    const div = document.createElement("div")
+    const div = document.createElement("div");
     div.innerText = txt;
     document.querySelector("main").prepend(div);
-  }
+  };
 
   // pov webkit no top level await support
   (async () => {
-
     const playButton = document.getElementsByTagName("button")[0];
     const visReadout = document.getElementById("vis-readout");
 
     const audio = new Audio(audioUrl);
     audio.load(); // needed for ios safari
 
-    const buttonProm = new Promise(res => {
+    const buttonProm = new Promise((res) => {
       playButton.onclick = res;
     });
 
-    await new Promise(res => {
+    await new Promise((res) => {
       audio.oncanplaythrough = res;
     });
 
@@ -62,9 +61,10 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 
     audio.play();
 
-    await play(tracks, 160, 112, (txt) => { visReadout.innerText = txt });
-    
-    console.log("et voila!")
+    await play(tracks, 160, 112, (txt) => {
+      visReadout.innerText = txt;
+    });
 
-  })()
+    console.log("et voila!");
+  })();
 </script>

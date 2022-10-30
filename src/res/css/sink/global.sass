@@ -1,4 +1,6 @@
 main
+  overflow-y: auto
+
   h1
     display: flex
     align-items: center
@@ -16,5 +18,22 @@ main
     text-decoration-color: #fff
 
 #quiet
+  @apply font-plexsans
+
   img
     margin: .5rem 0
+  
+  h1, h2, h3
+    @apply font-plex
+
+  h2
+    @apply text-2xl mt-4 mb-6
+  
+  h3
+    @apply text-xl mt-3 mb-5
+
+  p
+    @apply mb-2 ml-1
+  
+  ul
+    @apply list-disc ml-8 mb-3

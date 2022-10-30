@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, presetWind } from "unocss";
 import variantGroups from "@unocss/transformer-variant-group";
+import directives from "@unocss/transformer-directives";
 
 export default defineConfig({
   transformers: [
@@ -28,11 +29,13 @@ export default defineConfig({
       },
     },
     variantGroups(),
+    directives()
   ],
   presets: [presetWind()],
   theme: {
     fontFamily: {
       plex: "IBM Plex Mono, monospace",
+      plexsans: "IBM Plex Sans, sans-serif",
       inter: "Inter, sans-serif",
     },
   },

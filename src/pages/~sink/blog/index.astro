@@ -5,16 +5,25 @@ import rss from "^/rss.svg";
 
 const posts = await Astro.glob("/src/pages/~sink/blog/**/*.md");
 
-const fmtTags = (tags) => tags.map((t) => `[${t.toUpperCase()}]`).join(" ");
+const fmtTags = (tags) => tags.map((t) => `[${t.toUpperCase()}]`);
+
+// reverse chronological order
+const compareFn = (m1, m2) =>
+  new Date(m2.frontmatter.pubDate).getTime() -
+  new Date(m1.frontmatter.pubDate).getTime();
 ---
 
 <SinkLayout title="Quiet System">
-  <div class="grid grid-cols-[repeat(3,max-content)] grid-rows-2">
-    <img class="h-40 row-span-2 mr-5" src={silent} />
-    
+  <div
+    class="grid grid-cols-[repeat(3,max-content)] <sm:grid-cols-[auto_max-content_max-content] grid-rows-2"
+  >
+    <img class="h-40 <sm:h-0 row-span-2 mr-5" src={silent} />
+
     <h1 class="spaced mb-0 self-end">Quiet System</h1>
 
-    <p class="text-xl italic self-start justify-self-end col-start-2">Yellowsink's blog</p>
+    <p class="text-xl italic self-start justify-self-end col-start-2">
+      Yellowsink's blog
+    </p>
 
     <a href="quiet.rss" class="col-start-3 row-start-1 self-end m-2">
       <img class="h-[calc(1.75rem*.8)]" src={rss} />
@@ -22,12 +31,15 @@ const fmtTags = (tags) => tags.map((t) => `[${t.toUpperCase()}]`).join(" ");
   </div>
 
   {
-    posts.map(({ url, frontmatter }) => (
+    posts.sort(compareFn).map(({ url, frontmatter }) => (
       <a href={url} class="block mt-2 p-2 border border-white no-underline">
-        <div class="flex justify-between">
+        <div class="flex justify-between mb-2 <md:flex-col">
           <p class="text-xl">{frontmatter.title}</p>
-          <p class="text-lg">
-            {fmtTags(frontmatter.tags)} {frontmatter.pubDate}
+          <p class="text-lg text-right flex wrap justify-end gap-1">
+            {fmtTags(frontmatter.tags).map((t) => (
+              <span>{t}</span>
+            ))}
+            <span>{frontmatter.pubDate}</span>
           </p>
         </div>
 

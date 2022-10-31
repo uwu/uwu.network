@@ -6,7 +6,7 @@ pubDate: "2022-10-31"
 tags: ["3DPRINT"]
 ---
 
- Two "beginner" 3D printers
+# Two "beginner" 3D printers
 
 For quite a while now, I have been using 3D printers. My first machine was the XYZ Da Vinci nano, a machine designed specifically for people new to it.
 

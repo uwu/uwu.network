@@ -17,7 +17,6 @@
     "@astrojs/vue": "^0.1.5",
     "@crossani/spring": "^1.0.3",
     "@types/node": "^17.0.38",
-    "@unocss/reset": "^0.45.30",
     "@unocss/transformer-directives": "^0.46.1",
     "@unocss/transformer-variant-group": "^0.45.30",
     "astro": "^1.0.0",

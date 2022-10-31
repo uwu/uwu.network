@@ -9,7 +9,6 @@ specifiers:
   '@astrojs/vue': ^0.1.5
   '@crossani/spring': ^1.0.3
   '@types/node': ^17.0.38
-  '@unocss/reset': ^0.45.30
   '@unocss/transformer-directives': ^0.46.1
   '@unocss/transformer-variant-group': ^0.45.30
   astro: ^1.0.0
@@ -37,7 +36,6 @@ devDependencies:
   '@astrojs/vue': 0.1.5_sass@1.52.1+vue@3.2.36
   '@crossani/spring': 1.0.3
   '@types/node': 17.0.38
-  '@unocss/reset': 0.45.30
   '@unocss/transformer-directives': 0.46.1
   '@unocss/transformer-variant-group': 0.45.30
   astro: 1.5.2_sass@1.52.1

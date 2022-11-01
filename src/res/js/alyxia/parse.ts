@@ -85,7 +85,6 @@ export function analyzeUnderlines(cmds: Command[]): MarkupInstruction[] {
 }
 
 export function parse(input: string) {
-  console.time("parse")
   const cmds: Command[] = [];
   const parsed = parser.parse(input, cmds);
   
@@ -103,6 +102,5 @@ export function parse(input: string) {
   }
 
   result += parsed.substring(pos);
-console.timeEnd("parse")
   return result;
 }

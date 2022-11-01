@@ -1,25 +1,19 @@
 ---
   import IndexLayout from "#layouts/IndexLayout.astro";
-
-  import CenterBox from "#components/CenterBox.astro";
 ---
 
 <IndexLayout>
-  <CenterBox title="Welcome." />
+  <div class="padded">
+    <h1 id="welcome">Welcome.</h1>
+  </div>
 </IndexLayout>
 
 <script>
   import { write } from "#js/write.js";
-  let block = document.getElementById("block");
-  let fadein = document.getElementById("fadein");
-
-  block.classList.remove("nah")
-  setTimeout(function () { block.classList.remove("nope") }, 1000);
-  setTimeout(function () { fadein.classList.remove("nope") }, 2000);
-  setTimeout(function () { write(document.getElementById("header")); }, 1900);
+  write(document.getElementById("welcome"));
 </script>
 
-<style>
+<style is:global>
   body {
     background-image: url(/alyxia/img/bg/login.png);
     background-repeat: no-repeat;

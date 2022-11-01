@@ -16,6 +16,7 @@ const colorMap = [
 
 const parser = new TextParser<[ColorCommand[]]>();
 
+parser.registerCommand("\\", false, () => "\\");
 parser.registerCommand("c", true, (color, index, colors) =>
   void colors.push({ index, color }));
 

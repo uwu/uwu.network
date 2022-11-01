@@ -84,7 +84,6 @@ export function analyzeUnderlines(cmds: Command[]): MarkupInstruction[] {
   return result;
 }
 
-// takes 0.08ms - 0.25ms time
 export function parse(input: string) {
   console.time("parse")
   const cmds: Command[] = [];
@@ -107,45 +106,3 @@ export function parse(input: string) {
 console.timeEnd("parse")
   return result;
 }
-
-// takes 0.04ms - 0.15ms time
-// export function parse(input: string) {
-//   const cmds: Command[] = [];
-//   const parsed = parser.parse(input, cmds);
-
-//   let result = "";
-//   let pos = 0;
-
-//   let span = false;
-//   let underlined = false;
-
-//   for (const cmd of cmds) {
-//     result += parsed.substring(pos, cmd.index);
-
-//     switch (cmd.type) {
-//       case "COLOR":
-//         if (span)
-//           result += "</span>";
-//         if (cmd.color !== "0") {
-//           result += `<span style="color: ${colorMap[cmd.color]}">`
-//           span = true;
-//         } else {
-//           if (span)
-//             span = false;
-//         }
-//         break;
-//       case "UNDERLINE":
-//         result += underlined ? "</u>" : "<u>";
-//         underlined = !underlined;
-//         pos = cmd.index;
-//         break;
-//     }
-
-//     pos = cmd.index;
-//   }
-//   result += parsed.substring(pos);
-//   if (span)
-//     result += "</span>"
-
-//   return result;
-// }

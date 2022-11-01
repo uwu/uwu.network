@@ -21,7 +21,7 @@
     "@unocss/transformer-variant-group": "^0.45.30",
     "astro": "^1.0.0",
     "astro-uno": "^0.2.1",
-    "cc-textparser": "^1.0.0",
+    "cc-textparser": "^1.0.1",
     "crossani": "^1.1.1",
     "mingine-engine": "^1.0.1",
     "react": "^18.2.0",

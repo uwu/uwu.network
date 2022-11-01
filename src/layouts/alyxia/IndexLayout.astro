@@ -1,5 +1,6 @@
 ---
 	import BorderLayout from "@layouts/BorderLayout.astro";
+	import CrossCode from "#components/CrossCode.astro";
 
 	import loadtsuki from "#/img/loader/loadtsuki.png";
 	import loadspin from "#/img/loader/loadspin.png";
@@ -19,7 +20,9 @@
 
 <BorderLayout bodyClass="wrapper" title="~alyxia" titleName="what?" headerName="ALYXIA">
 	<main>
-		<slot />
+		<CrossCode>
+			<slot />
+		</CrossCode>
 	</main>
 </BorderLayout>
 

@@ -13,6 +13,7 @@ specifiers:
   '@unocss/transformer-variant-group': ^0.45.30
   astro: ^1.0.0
   astro-uno: ^0.2.1
+  cc-textparser: ^1.0.0
   crossani: ^1.1.1
   howler: ^2.2.3
   mingine-engine: ^1.0.1
@@ -40,6 +41,7 @@ devDependencies:
   '@unocss/transformer-variant-group': 0.45.30
   astro: 1.5.2_sass@1.52.1
   astro-uno: 0.2.1_astro@1.5.2+unocss@0.45.30
+  cc-textparser: 1.0.0
   crossani: 1.1.1
   mingine-engine: 1.0.1
   react: 18.2.0
@@ -1396,6 +1398,10 @@ packages:
 
   /caniuse-lite/1.0.30001344:
     resolution: {integrity: sha512-0ZFjnlCaXNOAYcV7i+TtdKBp0L/3XEU2MF/x6Du1lrh+SRX4IfzIVL4HNJg5pB2PmFb8rszIGyOvsZnqqRoc2g==}
+    dev: true
+
+  /cc-textparser/1.0.0:
+    resolution: {integrity: sha512-w5brTe/dvGturl6Fz7jvSYKC3cpSZ7YQpJK6SPMAd0uPWUOwhQvkfF33RCTCs07KPn2S0sQQITjy4zHe+fNpHw==}
     dev: true
 
   /ccount/2.0.1:

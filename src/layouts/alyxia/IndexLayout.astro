@@ -1,15 +1,14 @@
 ---
-	import CenterBox from "@components/alyxia/CenterBox.astro";
-
-	import "#css/reset.css";
-	import "#css/loader.css";
-	import "#css/floppy.scss";
-	import "#css/common.css";
-	import "#css/scanlines.css";
+	import BorderLayout from "@layouts/BorderLayout.astro";
 
 	import loadtsuki from "#/img/loader/loadtsuki.png";
 	import loadspin from "#/img/loader/loadspin.png";
 	import loadfinish from "#/img/loader/loadfinish.png";
+
+	import "#css/reset.css";
+	import "#css/loader.css";
+	import "#css/common.css";
+	import "#css/scanlines.css";
 ---
 
 <div id="contentloader">
@@ -18,11 +17,11 @@
 </div>
 
 
-<slot />
-
-<div id="floppy" class="floppygone">
-	<CenterBox title="test" divclass="floppyblock" headerclass="floppyheader" fadeinclass="floppyfadein" />
-</div>
+<BorderLayout bodyClass="wrapper" title="~alyxia" titleName="what?" headerName="ALYXIA">
+	<main>
+		<slot />
+	</main>
+</BorderLayout>
 
 <script define:vars={{ loadspin, loadfinish }}>
 	window.loadspin = loadspin;
@@ -30,53 +29,16 @@
 </script>
 
 <script>
-	import { write } from "#js/write.js";
+	// Remove IBM Plex as the default document font.
+	document.body.classList.remove("font-plex");
 
+	// Set up the loader
 	window.addEventListener("load", function (event) {
 		document.getElementById("contentloader").className = "destroyedloader";
-		document.getElementById("loadspin").src = loadfinish;
+		(document.getElementById("loadspin") as HTMLImageElement).src = loadfinish;
 	});
-
 	window.onbeforeunload = function () {
 		document.getElementById("contentloader").classList.remove("destroyedloader");
-		document.getElementById("loadspin").src = loadspin;
+		(document.getElementById("loadspin") as HTMLImageElement).src = loadspin;
 	}
-
-
-	let floppy = document.getElementById("floppy");
-	let block = document.getElementById("floppyblock");
-	let fadein = document.getElementById("floppyfadein");
-	let isPaused = false;
-
-	function keyHandler(e) {
-		console.log("keyHandler called!")
-		if (e.keyCode == 13) {
-			fadein.classList.add("nope"); console.log("Fading content")
-			setTimeout(function () { block.classList.add("nope"); console.log("Collapsing") }, 1000);
-			setTimeout(function () { block.classList.add("nah"); console.log("Hiding") }, 1300);
-			setTimeout(function () { floppy.classList.add("floppygone"); console.log("Removing overlay") }, 2000);
-			document.removeEventListener("keypress", keyHandler);
-			isPaused = false;
-		}
-	}
-
-	setInterval(async () => {
-		if (!isPaused) {
-			console.log("running, but unpaused", isPaused)
-			// Pause the interval until the user presses enter 
-			isPaused = true;
-
-			// Do the transitions to show the menu
-			floppy.classList.remove("floppygone");
-			setTimeout(function () { block.classList.remove("nah") }, 1000);
-			setTimeout(function () { block.classList.remove("nope") }, 1500);
-			setTimeout(function () { fadein.classList.remove("nope") }, 2000);
-			setTimeout(function () { write(document.getElementById("floppyheader")); }, 2000);
-
-			// Add our enter key listener
-			document.addEventListener("keypress", keyHandler);
-		} else {
-			console.log("running, but paused", isPaused)
-		}
-	}, 10000);
 </script>

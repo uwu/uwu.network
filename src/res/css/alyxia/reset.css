@@ -16,7 +16,6 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
 }
 
@@ -46,7 +45,13 @@ html {
 
 body {
 	height: 100%;
-	line-height: 1; /* Proof that webdev is absolute cancer */
+}
+
+/* Super hacky fix related to the page content being fucked when these two
+ * properties are global */
+main {
+	line-height: 1 !important /* Proof that webdev is absolute cancer */;
+	font: inherit;
 }
 
 p {

@@ -82,5 +82,19 @@
             "[github]": "https://github.xirreal.dev/",
             "[email]": "mailto:me@xirreal.dev"
         }
+    },
+    {
+        "header": "kasimir",
+        "body": "good at reading what is not meant to be read",
+        "img":  {
+            "src": "/kasimir/img/logo.png",
+            "link": "https://k6.tf"
+        },
+        "headLink": "/~kasimir",
+        "links": {
+            "[github]": "https://github.com/redstonekasi",
+            "[twitter]": "https://twitter.com/redstonekasi",
+            "[email]": "mailto:kasi@hanneskann.de"
+        }
     }
 ]

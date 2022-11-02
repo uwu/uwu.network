@@ -6,6 +6,6 @@ import getProps from "@res/js/getProps";
 const { title, bodyClass } = getProps(Astro.props);
 ---
 
-<BorderLayout {...{ title, bodyClass }} titleName="sink" headerName="YELLOWSINK" mainHref="/~sink">
+<BorderLayout {...{ title, bodyClass }} titleName="sink" headerName="YELLOWSINK" mainHref="/~sink" scroll>
   <slot />
 </BorderLayout>

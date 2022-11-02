@@ -4,7 +4,7 @@ import IbmPlexSans from "@components/IbmPlex.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import getProps from "@res/js/getProps";
 
-const { title, bodyClass, titleName, footerOride, headerName, mainHref } = getProps(Astro.props);
+const { title, bodyClass, titleName, footerOride, headerName, mainHref, scroll } = getProps(Astro.props);
 
 const titleSuffix = `${titleName} on uwu`;
 const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
@@ -14,7 +14,7 @@ const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
   <IbmPlexSans slot="head" />
 
   <div class="border border-white p-4px h-full">
-    <main class="border border-white p-6 h-full">
+    <main class={"border border-white p-6 h-full " + (scroll ? "of-auto" : "")}>
       <slot />
     </main>
   </div>

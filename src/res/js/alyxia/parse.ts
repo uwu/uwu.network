@@ -25,6 +25,7 @@ const colorMap = [
   "#ffe430", // yellow (purple in code)
   "#808080", // gray
   "#ff8932", // orange (small font)
+  "#00FFFF", // cyan
 ];
 
 const parser = new TextParser<[Command[]]>();

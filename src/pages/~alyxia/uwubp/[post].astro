@@ -1,0 +1,32 @@
+---
+import { parse } from "#js/parse";
+import IndexLayout from "#layouts/IndexLayout.astro";
+
+// this function is used by astro to dynamically generate routes
+export function getStaticPaths() {
+    // get all posts again, same as before
+    const posts = import.meta.glob("./_posts/*.txt", {
+        eager: true,
+        as: "raw",
+    });
+
+    return Object.keys(posts).map((path) => ({
+        params: {
+            post: path.split("/").pop().split(".")[0],
+        },
+        props: {
+            content: parse(posts[path]),
+        },
+    }));
+}
+
+const { post: date } = Astro.params;
+const { content } = Astro.props;
+---
+
+<IndexLayout>
+    <div class="padded">
+        <h1>{date}</h1>
+        <Fragment set:html={content} />
+    </div>
+</IndexLayout>

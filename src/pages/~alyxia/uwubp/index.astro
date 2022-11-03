@@ -1,0 +1,37 @@
+---
+import IndexLayout from "#layouts/IndexLayout.astro";
+import { parse } from "#js/parse";
+import "#css/uwubp.scss";
+
+// get all posts, import as raw files, eager makes vite provide the file content instead of an import function
+const rawPosts = import.meta.glob("./_posts/*.txt", { eager: true, as: "raw" });
+const posts = Object.keys(rawPosts).map((path) => {
+    // get the filename without extension from the file path "./_pages/something.txt" -> something
+    const date = path.split("/").pop().split(".")[0];
+    // get the current url -> /~alyxia/uwubp/
+    const normalizedUrl = Astro.url.pathname.replace(/\/?$/, "/");
+
+    return {
+        path: normalizedUrl + date, // construct the permaling -> /~alyxia/uwubp/something
+        date,
+        content: parse(rawPosts[path]), // parsed content
+    };
+});
+---
+
+<IndexLayout>
+    <div class="padded">
+        {
+            posts.map((post) => (
+                <div class="blogpane">
+                    <h1>
+                        <a href={post.path}>{post.date}</a>
+                    </h1>
+                    <p>
+                        <Fragment set:html={post.content} />
+                    </p>
+                </div>
+            ))
+        }
+    </div>
+</IndexLayout>

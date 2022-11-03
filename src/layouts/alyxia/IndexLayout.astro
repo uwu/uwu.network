@@ -18,7 +18,7 @@
 </div>
 
 
-<BorderLayout bodyClass="wrapper" title="~alyxia" titleName="what?" headerName="ALYXIA">
+<BorderLayout bodyClass="wrapper" title="~alyxia" titleName={Astro.props.titleName ?? "what?"} headerName="ALYXIA" scroll>
 	<main>
 		<CrossCode>
 			<slot />

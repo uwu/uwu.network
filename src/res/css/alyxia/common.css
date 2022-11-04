@@ -102,10 +102,13 @@ h1 {
 }
 
 #wallpaper {
-  display: table;
+  /* display: table; */
+  display: flex;
   height: 18vh;
   width: 100%;
-  text-align: center;
+  /* text-align: center; */
+  justify-content: center;
+  align-items: center;
   line-height: 6rem;
   background-color: #000;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/alyxia/img/bg/home.png);

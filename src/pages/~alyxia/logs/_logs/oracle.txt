@@ -1,0 +1,2 @@
+[L] user: Hello Oracle.
+[R] oracle: Hello User.

@@ -1,0 +1,31 @@
+---
+import IndexLayout from "#layouts/IndexLayout.astro";
+import { parseChat } from "@res/js/alyxia/parseChats";
+
+export function getStaticPaths() {
+    const logs = import.meta.glob("./_logs/*.txt", {
+        eager: true,
+        as: "raw",
+    });
+
+    return Object.keys(logs).map((path) => ({
+        params: {
+            log: path.split("/").pop().split(".")[0],
+        },
+        props: {
+            content: parseChat(logs[path]),
+        },
+    }));
+}
+
+const { log: title } = Astro.params;
+const { content } = Astro.props;
+---
+
+<IndexLayout>
+    {title}
+    <div class="mcon">
+        {content}
+        <!-- <Fragment set:html={content} /> -->
+    </div>
+</IndexLayout>

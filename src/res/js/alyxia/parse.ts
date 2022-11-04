@@ -22,7 +22,7 @@ const colorMap = [
   "#ffffff", // white (default)
   "#ff6969", // red
   "#65ff89", // green
-  "#ffe430", // yellow (purple in code)
+  "#ffff00", // yellow (purple in code)
   "#808080", // gray
   "#ff8932", // orange (small font)
   "#00FFFF", // cyan
@@ -54,7 +54,7 @@ export function analyzeColors(cmds: Command[]): MarkupInstruction[] {
       span = true;
     } else if (span)
       span = false;
-    
+
     result.push(instruction);
   }
 
@@ -67,7 +67,7 @@ export function analyzeColors(cmds: Command[]): MarkupInstruction[] {
 export function analyzeUnderlines(cmds: Command[]): MarkupInstruction[] {
   const result = [];
   let underlined = false;
-  
+
   for (const cmd of cmds) {
     if (cmd.type !== "UNDERLINE") continue;
     const instruction: MarkupInstruction = {
@@ -88,7 +88,7 @@ export function analyzeUnderlines(cmds: Command[]): MarkupInstruction[] {
 export function parse(input: string) {
   const cmds: Command[] = [];
   const parsed = parser.parse(input, cmds);
-  
+
   let instructions: MarkupInstruction[] = [];
   instructions.push(...analyzeColors(cmds));
   instructions.push(...analyzeUnderlines(cmds));

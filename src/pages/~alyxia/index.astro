@@ -30,6 +30,13 @@ import Indexer from "#components/Indexer.astro";
   import { write } from "#js/write.js";
   write(document.getElementById("welcome"));
 
+  let pos = ["bottom", "center", "left", "right", "top"];
+  let rep = ["", "round"];
+  document.getElementById("wallpaper").style.backgroundPosition =
+    pos[Math.floor(Math.random() * pos.length)];
+  document.getElementById("wallpaper").style.backgroundRepeat =
+    rep[Math.floor(Math.random() * rep.length)];
+
   let new_time = Math.floor(new Date("Nov 28 2022 17:00").getTime() / 1000);
 
   updateClock();

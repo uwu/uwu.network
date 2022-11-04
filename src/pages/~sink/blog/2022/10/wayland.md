@@ -24,11 +24,11 @@ Nowadays, there is a new challenger, hailing from the year of 2008, who follows 
 The **Wayland protocol** is a new contender, gaining traction rapidly,
 and growing in viability each day.
 
-(alright, I can't keep up this writing style, but its still fun I guess)
+(alright, I can't keep up this writing style, but It's still fun I guess)
 
 Around 2013, Canonical did Canonical things and decided to make their own display server, **Mir**,
 but it was only ever used in Ubuntu, and was compatible with both X11 and Wayland at points over its
-life, so it was pretty useless and eventually they realised this and dropped it.
+life, so it was pretty useless, and eventually they realised this and dropped it.
 
 This is the one and only mention Mir will get here because it is utterly irrelevant.
 
@@ -57,15 +57,15 @@ It's useful to note that the window manager does not talk to clients directly, i
 to the X server to mediate things.
 
 Another component that just talks to X is the compositor.
-In most mainstream cases the compositor comes with your window manager, but outside of *desktop environments*
+In most mainstream cases the compositor comes with your window manager, but outside *desktop environments*
 this is less common, and a separate one such as **compton** or **picom** may be used.
 
 The job of the compositor is to take all the windows' graphics and combine them in a pretty way.
 This is where transparency, blur, rounded corners, and shadows come from.
-They can also do things like enable vsync, if thats what you prefer.
+They can also do things like enable vsync, if that's what you prefer.
 (note that in most cases your GPU driver probably has a better option, such as mesa's `TearFree` setting)
 
-A very important thing to note here is that the compositor is optional, and if its not running,
+A very important thing to note here is that the compositor is optional, and if it's not running,
 X will just composite windows itself, very basically with no effects.
 
 The X compositor is what's known as *active* - this means it has to ask X for all the pixel data,
@@ -79,7 +79,7 @@ and it works very differently to X.
 
 It boasts higher performance, less jank, and no extraneous moving parts left over from the 80s.
 
-Wayland is a specification that describes how to implement a *wayland compositor*,
+Wayland is a specification that describes how to implement a *Wayland compositor*,
 which actually handles all the work.
 
 The reference implementation of a compositor is called **Weston**,
@@ -101,17 +101,17 @@ window manager would all do.
 This means there is much less overhead from the parts talking to each other, at the expense of
 modularity.
 
-Unlike X, the Wayland compositor is *passive* - it recieves data directly from clients and
-process it stragiht from them, which removes the overhead of having to ask the server for all the data.
+Unlike X, the Wayland compositor is *passive* - it receives data directly from clients and
+process it straight from them, which removes the overhead of having to ask the server for all the data.
 
 The compositor will most often allow you to configure a lot of things about your setup in one place,
 for example, in Sway's config:
- - you could configure your window manager options and keybinds, usually handled, e.g. **i3**
- - you could configure your keyboard layout, usually handled by the X server and libinput.
- - you could configure your compositing and vsync, usually handled by the copositor.
- - you could configure your display options and layouts, usually handled by **RandR**
+ - You could configure your window manager options and keybinds, usually handled, e.g. **i3**
+ - You could configure your keyboard layout, usually handled by the X server and libinput.
+ - You could configure your compositing and vsync, usually handled by the compositor.
+ - You could configure your display options and layouts, usually handled by **RandR**
 
-Another major benefit of Wayland is driver support - I had massive issues attempting to setup
+Another major benefit of Wayland is driver support - I had massive issues attempting to set up
 FreeSync under X, with obscure bugs like (according to ArchWiki) all your connected screens
 must run FreeSync/G-Sync or none of them can.
 
@@ -124,14 +124,14 @@ Some interesting cases were found when gaming.
 Muse Dash always stuttered and struggled running under Proton on X, and tweaks were required
 (notably disabling DXVK and setting a framerate limiter).
 
-Under Wayland, however, (after reenabling DXVK) it runs buttery smooth - just like on Windows,
+Under Wayland, however, (after re-enabling DXVK) it runs buttery smooth - just like on Windows,
 and no framerate limiting tweaks were needed.
 
 It was also interesting playing with the framerate limiting options in Quaver.
 Unlimited could pull around 600fps on my hardware, and the CPU stuck to the same rate.
 Vsync just locked both the framerate and CPU tick rate to 144Hz.
 
-But the interesting caes was WaylandVsync - the framerate still vsynced to 144fps,
+But the interesting CAES was WaylandVsync - the framerate still vsynced to 144fps,
 but this limit mode was unique in unlocking the CPU tick rate, which could shoot as high as 20,000Hz
 during gameplay.
 
@@ -164,7 +164,7 @@ They eventually stopped being uncooperative.
 
 Even then, older versions of Nvidia drivers don't work support hardware acceleration in XWayland.
 
-However, app support in Wayland is getting better everyday, and is mostly ready for a lot of users' use cases.
+However, app support in Wayland is getting better every day, and is mostly ready for a lot of users' use cases.
 
 The push from both KDE and GNOME supporting it is a major cause for this - both KWin and Mutter now support Nvidia
 drivers, and Sway supports Nouveau.
@@ -173,10 +173,10 @@ drivers, and Sway supports Nouveau.
 I would say it definitely is.
 
 My whole desktop felt smoother and more responsive - though I will say this was mostly because before I was using
-Picom's (pretty damn bad) Vsync implementation. I could have got most of the way there by just using `TearFree` instead.
+Picom's (pretty damn bad) vsync implementation. I could have got most of the way there by just using `TearFree` instead.
 
 Even then, apps were buttery smooth under Wayland - I hadn't experienced a smooth scroll at 144Hz that looked as
-smooth as it did in Windows before this - only fullscreen games etc actually achieved smoothness before.
+smooth as it did in Windows before this - only full-screen games etc actually achieved smoothness before.
 
 In addition, having all my config in mostly one place was a very welcome change, even if I had to ditch some niceties
 of Picom such as rounded corners and background blur.
@@ -186,19 +186,19 @@ wallpaper yourself - I used **feh** to set my wallpaper under i3.
 
 In Sway you simply set your background in the config.
 
-Wayland has blown me away since trying it again, and I whole-heartedly recommend any somewhat technical Linux user
+Wayland has blown me away since trying it again, and I wholeheartedly recommend any somewhat technical Linux user
 to at least give it a try.
 
 Even if you uninstall it again afterwards its still a very interesting thing to try, and you may fall in love with it!
 
 While I'm here, another fun note is that **libinput** started as the input handling code of **Weston** - the
 reference Wayland implementation, and it was split out, and is now the common way of handling input in X due to its
-vesatility and device support - though that said, there are still some things that don't use libinput - notably
+versatility and device support - though that said, there are still some things that don't use libinput - notably
 the LinuxWacom project provides libinput drivers, but only the X-specific drivers allow configuring the tablet.
 
 It's worth noting that multiple distributions of Linux have switched to Wayland as the default:
  - **Fedora** uses Wayland on GNOME since 2016 and KDE since 2021, with X as a fallback if the driver doesn't support it.
- - **Ubuntu** tried Wayland in 2017, but reverted it. Since 2021, its the default again.
+ - **Ubuntu** tried Wayland in 2017, but reverted it. Since 2021, it's the default again.
  - **Red Hat Enterprise Linux** uses it since 2019.
  - **Debian** uses it for GNOME since 2019.
  - **Slackware** uses it since 2020.
@@ -209,7 +209,7 @@ It is natively supported by many application frameworks and toolkits:
  - **EFL** has almost-complete support.
  - **GTK >=3.20** has full support.
  - **Qt >=5** has full support - which allows writing clients *and compositors!*
- - **SDL >=2.0.2** supports it, and its the default since 2.0.4
+ - **SDL >=2.0.2** supports it, and it's the default since 2.0.4
  - **GLFW >=3.2** supports it.
  - **FreeGLUT** has "initial" support (what does this mean?).
 

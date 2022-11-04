@@ -1,0 +1,63 @@
+body {
+    hyphens: auto;
+}
+
+.text div {
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+}
+
+.mcon {
+    display: flex;
+    gap: 1ch;
+    flex-direction: column;
+    max-width: 902px;
+    margin: 0 auto;
+    border: 2px solid;
+    background-color: black;
+    padding: 0 !important;
+}
+
+.mesom {
+    display: grid;
+    grid-template-areas: ". .";
+    grid-template-columns: min(25%, 100px) auto;
+    width: 600px;
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+    align-self: flex-end;
+    background-color: black;
+    border: double 3px white;
+    padding: 0px !important;
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem) !important;
+    /* I hate everything */
+
+    div {
+        padding: 1ch;
+        border: double 3px white;
+    }
+    img {
+        margin: 0 !important;
+        width: 100%;
+    }
+    b {
+        display: block;
+    }
+}
+
+.mright {
+    align-self: flex-end;
+    grid-template-columns: auto min(25%, 100px);
+
+    img {
+        float: right;
+        order: 2;
+    }
+}
+
+.mleft {
+    align-self: flex-start;
+
+    img {
+        float: left;
+    }
+}

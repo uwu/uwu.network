@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     // Enable stricter transpilation for better output.
     "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
     // Module aliases
     "paths": {
       // Generic paths

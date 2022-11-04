@@ -77,8 +77,8 @@ h1 {
 }
 
 .overload {
-  margin-left: 20vw;
-  width: calc(100% - 40vw);
+  margin-left: 15vw;
+  width: calc(100% - 30vw);
   background-color: #000;
 }
 
@@ -116,10 +116,13 @@ h1 {
 /* Index List */
 #index {
   background-color: #000;
-  /* background-image: url('/res/img/bg/index.png'); */
-  /* background-attachment: fixed; */
-  /* background-position: center; */
-  padding: 5.2em 10vw 5.2em 10vw;
+  background-image: url('/alyxia/img/bg/login.png'); 
+  background-attachment: fixed;
+  background-position: center;
+  padding: 3em 0vw;
+}
+#index > .overload > img {
+  display: inline;
 }
 
 .indexlist {

@@ -8,6 +8,11 @@
   src: url(/alyxia/font/heading.woff);
 }
 
+@font-face {
+  font-family: CNT;
+  src: url(/alyxia/font/countdown.ttf);
+}
+
 html {
   background-color: #000;
   color: #fff;

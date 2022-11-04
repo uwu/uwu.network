@@ -17,14 +17,64 @@ import IndexLayout from "#layouts/IndexLayout.astro";
     <div class="separator"></div>
     <img height="48" width="48" src="/alyxia/img/icons/err.png" />
   </div>
+  <div class="padded">
+    <h1>My \c[3]birthday\c[0] is in:</h1>
+    <h1 id="countdown" style="color: yellow"></h1>
+  </div>
+  <div class="separate"></div>
 </IndexLayout>
 
 <script>
   import { write } from "#js/write.js";
   write(document.getElementById("welcome"));
+
+  let new_time = Math.floor(new Date("Nov 28 2022 17:00").getTime() / 1000);
+
+  updateClock();
+  setInterval(() => updateClock(), 1000);
+
+  function updateClock() {
+    let now = new Date().getTime();
+    let countdownDate = new Date(new_time * 1000).getTime();
+
+    let distance = countdownDate - now;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours: number | string = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    var minutes: number | string = Math.floor(
+      (distance % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    var seconds: number | string = Math.floor((distance % (1000 * 60)) / 1000);
+
+    if (hours < 10) {
+      hours = "0" + hours;
+    }
+
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
+    if (distance >= 0) {
+      document.getElementById(
+        "countdown"
+      ).innerHTML = `${days}d ${hours}:${minutes}:${seconds}`;
+    }
+  }
 </script>
 
 <style is:global>
+  #countdown {
+    font-family: CNT;
+    font-size: 3em;
+    margin: 0;
+    text-shadow: 0px 0px 16px #ff0;
+  }
   #welcome {
     display: table-cell;
     vertical-align: middle;

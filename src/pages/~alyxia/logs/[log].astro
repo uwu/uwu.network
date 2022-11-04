@@ -1,6 +1,8 @@
 ---
 import IndexLayout from "#layouts/IndexLayout.astro";
-import { parseChat } from "@res/js/alyxia/parseChats";
+import { parseChat } from "#js/parseChats";
+import { Message } from "#components/oracle/Message";
+import "#css/chat.scss";
 
 export function getStaticPaths() {
     const logs = import.meta.glob("./_logs/*.txt", {
@@ -25,7 +27,12 @@ const { content } = Astro.props;
 <IndexLayout>
     {title}
     <div class="mcon">
-        {content}
-        <!-- <Fragment set:html={content} /> -->
+        {
+            content.map((msg) => (
+                <Message name={msg.name} side={msg.side}>
+                    {msg.content}
+                </Message>
+            ))
+        }
     </div>
 </IndexLayout>

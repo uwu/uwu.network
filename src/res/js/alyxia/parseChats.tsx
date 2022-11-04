@@ -1,15 +1,36 @@
 import React from "react";
 
-export function parseChat(chat: string) {
-    let lines = chat.split("\n");
-    for (let line of lines) {
-        parseLine(line);
-    }
-    return (
-        <h1>a</h1>
-    )
+type Message = {
+    name?: string;
+    side?: string;
+    content?: string;
 }
 
-function parseLine(line: string) {
-    let res = /\[(.)\]\s+(.*?):\s+(.*)/.exec(line)
+export function parseChat(chat: string) {
+    let msgs = [];
+    let lines = chat.split("\n");
+    for (let line of lines) {
+        msgs.push(parseLine(line));
+    }
+    return msgs;
+}
+
+function parseLine(line: string): Message {
+    let parsed = /\[(.)\]\s+(.*?):\s+(.*)/.exec(line)
+    switch (parsed[1]) {
+        case "L":
+            parsed[1] = "left";
+            break;
+        case "R":
+            parsed[1] = "right";
+            break;
+        default:
+            parsed[1] = "left";
+            break;
+    }
+    return {
+        side: parsed[1],
+        name: parsed[2],
+        content: parsed[3]
+    };
 }

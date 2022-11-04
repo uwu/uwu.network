@@ -1,11 +1,21 @@
 ---
-  import IndexLayout from "#layouts/IndexLayout.astro";
+import IndexLayout from "#layouts/IndexLayout.astro";
 ---
 
 <IndexLayout>
-  <div class="padded">
+  <div class="wallpaper">
     <h1 id="welcome">Welcome.</h1>
-    This is \c[1]a colored\c[0] test. Und\uerlined text\u works as well! Ne\usted text \c[2]and color\c[0] DO work\u now.
+  </div>
+  <div class="separator"></div>
+  <div class="padded">
+    <h2>Hi, I am Alyxia.</h2>
+    <h2>I am currently working on this webpage.</h2>
+    <h2>There will be a way to navigate pages soon.</h2>
+  </div>
+  <div style="display: flex; flex-direction: row;">
+    <img height="48" width="48" src="/alyxia/img/icons/err.png" />
+    <div class="separator"></div>
+    <img height="48" width="48" src="/alyxia/img/icons/err.png" />
   </div>
 </IndexLayout>
 
@@ -15,10 +25,18 @@
 </script>
 
 <style is:global>
-  body {
+  #welcome {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .wallpaper {
+    height: 18vh;
+    width: 100%;
+    text-align: center;
+    line-height: 6rem;
+    background-color: #000;
     background-image: url(/alyxia/img/bg/login.png);
-    background-repeat: no-repeat;
-    background-position: 0px -100px;
-    opacity: 1;
+    background-attachment: fixed;
+    background-position: center;
   }
 </style>

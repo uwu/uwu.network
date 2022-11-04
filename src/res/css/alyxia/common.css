@@ -101,6 +101,18 @@ h1 {
   color: #000 !important;
 }
 
+#wallpaper {
+  display: table;
+  height: 18vh;
+  width: 100%;
+  text-align: center;
+  line-height: 6rem;
+  background-color: #000;
+  background-image: url(/alyxia/img/bg/home.png);
+  background-attachment: fixed;
+  background-position: center;
+}
+
 /* Index List */
 #index {
   background-color: #000;

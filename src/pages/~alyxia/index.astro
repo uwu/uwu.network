@@ -3,7 +3,7 @@ import IndexLayout from "#layouts/IndexLayout.astro";
 ---
 
 <IndexLayout>
-  <div class="wallpaper">
+  <div id="wallpaper">
     <h1 id="welcome">Welcome.</h1>
   </div>
   <div class="separator"></div>
@@ -72,22 +72,11 @@ import IndexLayout from "#layouts/IndexLayout.astro";
   #countdown {
     font-family: CNT;
     font-size: 3em;
-    margin: 0;
+    margin: 0px 0px 0.4em 0px;
     text-shadow: 0px 0px 16px #ff0;
   }
   #welcome {
     display: table-cell;
     vertical-align: middle;
-  }
-  .wallpaper {
-    display: table;
-    height: 18vh;
-    width: 100%;
-    text-align: center;
-    line-height: 6rem;
-    background-color: #000;
-    background-image: url(/alyxia/img/bg/login.png);
-    background-attachment: fixed;
-    background-position: center;
   }
 </style>

@@ -1,6 +1,7 @@
 ---
 import IndexLayout from "#layouts/IndexLayout.astro";
 import { parse } from "#js/parse";
+import { formatDate } from "#js/lib";
 import "#css/uwubp.scss";
 
 // get all posts, import as raw files, eager makes vite provide the file content instead of an import function
@@ -13,25 +14,32 @@ const posts = Object.keys(rawPosts).map((path) => {
 
     return {
         path: normalizedUrl + date, // construct the permaling -> /~alyxia/uwubp/something
-        date,
+        date: formatDate(date),
         content: parse(rawPosts[path]), // parsed content
     };
 });
 ---
 
 <IndexLayout>
+    <center>
+        <h1>Echo Chamber</h1>
+    </center>
+    <div class="separator"></div>
+    <br />
     <div class="padded">
-        {
-            posts.map((post) => (
-                <div class="blogpane">
-                    <h1>
-                        <a href={post.path}>{post.date}</a>
-                    </h1>
-                    <p>
-                        <Fragment set:html={post.content} />
-                    </p>
-                </div>
-            ))
-        }
+        <div class="padded">
+            {
+                posts.map((post) => (
+                    <div class="blogpane">
+                        <h1>
+                            <a href={post.path}>{post.date}</a>
+                        </h1>
+                        <p>
+                            <Fragment set:html={post.content} />
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
     </div>
 </IndexLayout>

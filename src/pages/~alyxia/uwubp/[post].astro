@@ -1,5 +1,6 @@
 ---
 import { parse } from "#js/parse";
+import { formatDate } from "#js/lib";
 import IndexLayout from "#layouts/IndexLayout.astro";
 
 // this function is used by astro to dynamically generate routes
@@ -26,7 +27,7 @@ const { content } = Astro.props;
 
 <IndexLayout>
     <div class="padded">
-        <h1>{date}</h1>
+        <h1>{formatDate(date.toString())}</h1>
         <Fragment set:html={content} />
     </div>
 </IndexLayout>

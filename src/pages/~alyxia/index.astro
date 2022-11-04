@@ -1,5 +1,6 @@
 ---
 import IndexLayout from "#layouts/IndexLayout.astro";
+import Indexer from "#components/Indexer.astro";
 ---
 
 <IndexLayout>
@@ -17,21 +18,12 @@ import IndexLayout from "#layouts/IndexLayout.astro";
     <div class="separator"></div>
     <img height="48" width="48" src="/alyxia/img/icons/err.png" />
   </div>
-  <div class="padded">
+  <center>
     <h1>My \c[3]birthday\c[0] is in:</h1>
     <h1 id="countdown" style="color: yellow"></h1>
-  </div>
+  </center>
   <div class="separate"></div>
-
-  <div id="index">
-    <div class="overload">
-      <img src="/alyxia/img/logos/uwunet.png" /><img
-        src="/alyxia/img/right.png"
-      /><div class="indexlist">
-        <span><a href="/">HOME</a> | <a href="/people">PEOPLE</a></span>
-      </div><br />
-    </div>
-  </div>
+  <Indexer />
 </IndexLayout>
 
 <script>

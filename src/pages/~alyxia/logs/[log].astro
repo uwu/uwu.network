@@ -29,9 +29,7 @@ const { content } = Astro.props;
     <div class="mcon">
         {
             content.map((msg) => (
-                <Message name={msg.name} side={msg.side}>
-                    {msg.content}
-                </Message>
+                <Message name={msg.name} side={msg.side} text={msg.content} />
             ))
         }
     </div>

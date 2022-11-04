@@ -108,7 +108,7 @@ h1 {
   text-align: center;
   line-height: 6rem;
   background-color: #000;
-  background-image: url(/alyxia/img/bg/home.png);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/alyxia/img/bg/home.png);
   background-attachment: fixed;
   background-position: center;
 }

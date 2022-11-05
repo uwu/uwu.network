@@ -4,7 +4,6 @@ import CrossCode from "#components/CrossCode.astro";
 
 import loadtsuki from "#/img/loader/loadtsuki.png";
 import loadspin from "#/img/loader/loadspin.png";
-import loadfinish from "#/img/loader/loadfinish.png";
 
 import "#css/reset.css";
 import "#css/loader.css";
@@ -32,11 +31,6 @@ import "#css/scanlines.css";
 	</main>
 </BorderLayout>
 
-<script define:vars={{ loadspin, loadfinish }}>
-	window.loadspin = loadspin;
-	window.loadfinish = loadfinish;
-</script>
-
 <script>
 	// Remove IBM Plex as the default document font.
 	document.body.classList.remove("font-plex");
@@ -45,13 +39,13 @@ import "#css/scanlines.css";
 	window.addEventListener("load", function (event) {
 		document.getElementById("contentloader").className = "destroyedloader";
 		(document.getElementById("loadspin") as HTMLImageElement).src =
-			loadfinish;
+			"/alyxia/img/loader/loadfinish.png";
 	});
 	window.onbeforeunload = function () {
 		document
 			.getElementById("contentloader")
 			.classList.remove("destroyedloader");
 		(document.getElementById("loadspin") as HTMLImageElement).src =
-			loadspin;
+			"/alyxia/img/loader/loadspin.png";
 	};
 </script>

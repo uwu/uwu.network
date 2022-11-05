@@ -1,3 +1,5 @@
+!title: ORACLE I
+!desc: RECOVERED CONVERSATION FROM MESSAGE SERVER B25L ( CODENAME: MONAD )
 [R] user: I had a dream last night of a fire on the horizon. I've had the same dream many times.
 [L] oracle: Dreams?
 [R] user: Yeah, like when you see an empty place in your mind. What kind of dream is mine?

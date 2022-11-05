@@ -1,5 +1,9 @@
 import React from "react";
 
+type Meta = {
+    title?: string;
+    desc?: string;
+}
 type Message = {
     name?: string;
     side?: string;
@@ -7,12 +11,18 @@ type Message = {
 }
 
 export function parseChat(chat: string) {
-    let msgs = [];
+    let meta: Meta = {};
+    let msgs: Message[] = [];
     let lines = chat.split("\n");
     for (let line of lines) {
-        msgs.push(parseLine(line));
+        if (line.startsWith("!")) {
+            let m = parseMeta(line);
+            meta[m.metaName] = m.metaVal;
+        } else {
+            msgs.push(parseLine(line));
+        }
     }
-    return msgs;
+    return { meta, msgs };
 }
 
 function parseLine(line: string): Message {
@@ -33,4 +43,12 @@ function parseLine(line: string): Message {
         name: parsed[2],
         content: parsed[3]
     };
+}
+
+function parseMeta(line: string) {
+    let parsed = /(?:!(.*?):\s+(.*))/.exec(line);
+    return {
+        metaName: parsed[1],
+        metaVal: parsed[2]
+    }
 }

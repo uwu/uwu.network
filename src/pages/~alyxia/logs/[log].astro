@@ -1,5 +1,6 @@
 ---
 import IndexLayout from "#layouts/IndexLayout.astro";
+import { parse } from "#js/parse";
 import { parseChat } from "#js/parseChats";
 import { Message } from "#components/oracle/Message";
 import "#css/chat.scss";
@@ -16,21 +17,35 @@ export function getStaticPaths() {
         },
         props: {
             content: parseChat(logs[path]),
+            path: path,
         },
     }));
 }
 
 const { log: title } = Astro.params;
-const { content } = Astro.props;
+const { content, path } = Astro.props;
 ---
 
 <IndexLayout>
-    {title}
-    <div class="mcon">
-        {
-            content.map((msg) => (
-                <Message name={msg.name} side={msg.side} text={msg.content} />
-            ))
-        }
+    <div class="text">
+        <h1 class="file">{path}</h1>
+        <div>
+            <h1>{content.meta.title}</h1>
+            <h3>
+                {content.meta.desc}
+            </h3>
+            <hr />
+            <div class="mcon">
+                {
+                    content.msgs.map((msg) => (
+                        <Message
+                            name={msg.name}
+                            side={msg.side}
+                            text={parse(msg.content)}
+                        />
+                    ))
+                }
+            </div>
+        </div>
     </div>
 </IndexLayout>

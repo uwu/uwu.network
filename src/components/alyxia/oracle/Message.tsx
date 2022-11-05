@@ -10,7 +10,7 @@ export const Message = ({ name, side, text }: MessageProps) => {
         <div className={`mesom m${side}`}>
             <img src={`/alyxia/img/oracle/${name}.png`} alt="" />
             <div>
-                <b>{name.toUpperCase()}</b> <p>{text}</p>
+                <b>{name.toUpperCase()}</b> <span dangerouslySetInnerHTML={{ __html: text }} />
             </div>
         </div>
     )

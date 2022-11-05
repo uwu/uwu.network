@@ -35,6 +35,7 @@ parser.registerCommand("c", true, (color, index, cmds) =>
   void cmds.push({ index, type: "COLOR", color }));
 parser.registerCommand("u", false, (index, cmds) =>
   void cmds.push({ index, type: "UNDERLINE" }));
+parser.registerCommand("n", false, () => "<br />");
 parser.registerCommand("n", true, (amount) => "<br />".repeat(parseInt(amount)));
 
 export function analyzeColors(cmds: Command[]): MarkupInstruction[] {

@@ -1,0 +1,26 @@
+---
+import "%css/global.sass";
+import "%css/rain.css";
+import routes from "%/routes.json";
+
+import JBMono from "%components/JBMono.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import NavBar from "@components/beef/NavBar.astro";
+---
+
+<BaseLayout title="a rainy place" class="bg-gradient-to-b from-[#202020] to-[#111119] text-[#ddd] overflow-hidden h-screen font-jbmono">
+    <JBMono />
+    <div class="rain front-row" />
+    <div class="rain back-row" />
+
+    <div class="absolute z-999 p-4 w-full h-full overflow-auto">
+        <NavBar routes={routes}/>
+        <slot />
+    </div>
+</BaseLayout>
+
+<script>
+    import rainmaker from "%js/rain"
+
+    rainmaker();
+</script>

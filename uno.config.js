@@ -36,7 +36,7 @@ export default defineConfig({
     fontFamily: {
       plex: "IBM Plex Mono, monospace",
       plexsans: "IBM Plex Sans, sans-serif",
-      inter: "Inter, sans-serif",
+      jbmono: "JetBrains Mono, monospace",
     },
   },
   configFile: false,

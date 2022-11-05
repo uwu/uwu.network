@@ -14,6 +14,12 @@
     --hic: hsl(0deg 0% 100% / 26%);
 }
 
+body {
+    background: url(/alyxia/img/bg/logs.png);
+    background-size: 248px;
+    background-attachment: fixed;
+}
+
 hr {
     border-color: var(--empc);
 }

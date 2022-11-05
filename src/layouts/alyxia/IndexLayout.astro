@@ -1,15 +1,15 @@
 ---
-	import BorderLayout from "@layouts/BorderLayout.astro";
-	import CrossCode from "#components/CrossCode.astro";
+import BorderLayout from "@layouts/BorderLayout.astro";
+import CrossCode from "#components/CrossCode.astro";
 
-	import loadtsuki from "#/img/loader/loadtsuki.png";
-	import loadspin from "#/img/loader/loadspin.png";
-	import loadfinish from "#/img/loader/loadfinish.png";
+import loadtsuki from "#/img/loader/loadtsuki.png";
+import loadspin from "#/img/loader/loadspin.png";
+import loadfinish from "#/img/loader/loadfinish.png";
 
-	import "#css/reset.css";
-	import "#css/loader.css";
-	import "#css/common.css";
-	import "#css/scanlines.css";
+import "#css/reset.css";
+import "#css/loader.css";
+import "#css/common.css";
+import "#css/scanlines.css";
 ---
 
 <div id="contentloader">
@@ -17,8 +17,14 @@
 	<img id="loadspin" src={loadspin} />
 </div>
 
-
-<BorderLayout bodyClass="wrapper" title="~alyxia" titleName={Astro.props.titleName ?? "what?"} headerName="ALYXIA" mainHref="/~alyxia" scroll>
+<BorderLayout
+	bodyClass="wrapper"
+	title="~alyxia"
+	titleName={Astro.props.titleName ?? "what?"}
+	headerName="ALYXIA"
+	mainHref="/~alyxia"
+	scroll
+>
 	<main>
 		<CrossCode>
 			<slot />
@@ -38,10 +44,14 @@
 	// Set up the loader
 	window.addEventListener("load", function (event) {
 		document.getElementById("contentloader").className = "destroyedloader";
-		(document.getElementById("loadspin") as HTMLImageElement).src = loadfinish;
+		(document.getElementById("loadspin") as HTMLImageElement).src =
+			loadfinish;
 	});
 	window.onbeforeunload = function () {
-		document.getElementById("contentloader").classList.remove("destroyedloader");
-		(document.getElementById("loadspin") as HTMLImageElement).src = loadspin;
-	}
+		document
+			.getElementById("contentloader")
+			.classList.remove("destroyedloader");
+		(document.getElementById("loadspin") as HTMLImageElement).src =
+			loadspin;
+	};
 </script>

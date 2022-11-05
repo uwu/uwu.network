@@ -22,11 +22,10 @@ export function getStaticPaths() {
     }));
 }
 
-const { log: title } = Astro.params;
 const { content, path } = Astro.props;
 ---
 
-<IndexLayout>
+<IndexLayout titleName="writing">
     <div class="text">
         <h1 class="file">{path}</h1>
         <div>

@@ -7,12 +7,12 @@ export const lSqrt = (n: number) => Math.sqrt(Math.abs(n));
 export const v2mag = (vec: Vec2D) =>
   Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
 
-export const v2add = (v1: Vec2D, v2: Vec2D) => [v1[0] + v2[0], v1[1] + v2[1]];
+export const v2add = (v1: Vec2D, v2: Vec2D): Vec2D => [v1[0] + v2[0], v1[1] + v2[1]];
 
-export const v2sub = (v1: Vec2D, v2: Vec2D) => [v1[0] - v2[0], v1[1] - v2[1]];
+export const v2sub = (v1: Vec2D, v2: Vec2D): Vec2D => [v1[0] - v2[0], v1[1] - v2[1]];
 
 /** Multiplies a 2D vector by a scalar */
-export const v2smul = (vec: Vec2D, scalar: number) => [
+export const v2smul = (vec: Vec2D, scalar: number): Vec2D => [
   vec[0] * scalar,
   vec[1] * scalar,
 ];

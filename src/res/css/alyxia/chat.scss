@@ -1,3 +1,74 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Declare Vars */
+:root {
+    --bgc: black;
+    --textc: #d5fff5;
+    --empc: white;
+    --brdc: var(--empc);
+    --linkc: rgb(74, 152, 176);
+    --linkv: rgb(101, 198, 196);
+    --hic: hsl(0deg 0% 100% / 26%);
+}
+
+hr {
+    border-color: var(--empc);
+}
+
+img {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    user-select: none;
+}
+
+.text {
+    width: 95%;
+    max-width: 163ch;
+    margin: 10ch auto;
+    border: double 5.5pt var(--empc);
+    /* Some would say just having a border around the 
+	 * inner content would be better. To that I say
+	 * yes. yes it would. */
+    outline: var(--empc) solid 2.5pt;
+    outline-offset: -3.5ch;
+    background: black;
+
+    div {
+        padding: 5ch;
+        font-size: 1.3rem;
+    }
+
+    img {
+        /* max-width: 90%; */
+        margin: 2ch;
+    }
+
+    strong::before {
+        content: ">";
+        display: inline-block;
+    }
+
+    strong::after {
+        content: "<";
+        display: inline-block;
+    }
+
+    ul {
+        margin-left: 4ch;
+        list-style: square;
+    }
+
+    /* Only targets hrs directly in the text portion, so hr's in blockquotes etc
+     * can be ignored. */
+    & > div > hr {
+        margin: 2ch 0;
+    }
+}
+
 body {
     hyphens: auto;
 }
@@ -6,13 +77,31 @@ body {
     font-size: clamp(0.9rem, 2.5vw, 1.3rem);
 }
 
+h1 {
+    margin: 0;
+}
+
+.file {
+    border-bottom: solid 2pt var(--empc);
+    background: black;
+    border-right: solid 2pt var(--empc);
+    z-index: 5;
+    position: relative;
+    padding: 0.5ch 2ch;
+    /* USING POSITIONING LIKE THIS IS STUPID!!!
+	 * TOO BAD!!! */
+    top: -4pt;
+    left: -4pt;
+    width: fit-content;
+    width: -moz-fit-content;
+    word-break: break-word;
+    font-weight: normal;
+}
+
 .mcon {
     display: flex;
     gap: 1ch;
     flex-direction: column;
-    max-width: 902px;
-    margin: 0 auto;
-    border: 2px solid;
     background-color: black;
     padding: 0 !important;
 }
@@ -28,7 +117,7 @@ body {
     background-color: black;
     border: double 3px white;
     padding: 0px !important;
-    /* I hate everything */
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem) !important; /* I hate everything */
 
     div {
         padding: 1ch;

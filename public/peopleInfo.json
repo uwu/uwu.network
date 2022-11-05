@@ -1,17 +1,17 @@
 [
     {
-        "header": "creatable",
+        "header": "toonlink",
         "body": "i'm proficient in making things do things that they aren't supposed to do",
         "img": {
-            "src": "/creatable/ssemblem.png",
-            "link": "https://creatable.cafe"
+            "src": "/toonlink/ssemblem.png",
+            "link": "https://toony.link"
         },
         "pixelated": true,
-        "headLink": "/~creatable",
+        "headLink": "/~toonlink",
         "links": {
-            "[keybase]": "https://keybase.io/creatable",
-            "[github]": "https://github.com/cr3atable",
-            "[twitter]": "https://twitter.com/cr3atable"
+            "[keybase]": "https://keybase.io/twnlink",
+            "[github]": "https://github.com/twnlink",
+            "[twitter]": "https://twitter.com/twnlink"
         }
     },
     {
@@ -60,7 +60,7 @@
     },
     {
         "header": "Phorcys",
-        "body": "i'm creatable",
+        "body": "i'm toonlink",
         "img": {
             "src": "/phorcys/pfp.png",
             "link": "https://phorcys.net"

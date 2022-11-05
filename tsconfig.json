@@ -33,12 +33,12 @@
       "^js/*": ["src/res/js/sink/*"],
       "^/*": ["public/sink/*"],
 
-      // creatable
-      "+components/*": ["src/components/creatable/*"],
-      "+layouts/*": ["src/layouts/creatable/*"],
-      "+css/*": ["src/res/css/creatable/*"],
-      "+js/*": ["src/res/js/creatable/*"],
-      "+/*": ["public/creatable/*"],
+      // toonlink
+      "+components/*": ["src/components/toonlink/*"],
+      "+layouts/*": ["src/layouts/toonlink/*"],
+      "+css/*": ["src/res/css/toonlink/*"],
+      "+js/*": ["src/res/js/toonlink/*"],
+      "+/*": ["public/toonlink/*"],
 
       // Beef
       "%components/*": ["src/components/beef/*"],

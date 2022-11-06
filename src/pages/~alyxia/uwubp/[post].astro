@@ -3,6 +3,7 @@ import { parse } from "#js/parse";
 import { formatDate } from "#js/lib";
 import IndexLayout from "#layouts/IndexLayout.astro";
 import UwubpLayout from "#layouts/UwubpLayout.astro";
+import Card from "#components/Card.astro";
 
 // this function is used by astro to dynamically generate routes
 export function getStaticPaths() {
@@ -28,5 +29,7 @@ const { content } = Astro.props;
 
 <UwubpLayout>
     <h1>{formatDate(date.toString())}</h1>
-    <Fragment set:html={content} />
+    <Card fileHeader={formatDate(date.toString())}>
+        <Fragment set:html={content} />
+    </Card>
 </UwubpLayout>

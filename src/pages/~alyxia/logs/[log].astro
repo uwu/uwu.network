@@ -4,6 +4,7 @@ import { parse } from "#js/parse";
 import { parseChat } from "#js/parseChats";
 import { Message } from "#components/oracle/Message";
 import "#css/chat.scss";
+import Card from "#components/Card.astro";
 
 export function getStaticPaths() {
     const logs = import.meta.glob("./_logs/*.txt", {
@@ -26,25 +27,22 @@ const { content, path } = Astro.props;
 ---
 
 <IndexLayout titleName="writing">
-    <div class="text">
-        <h1 class="file">{path}</h1>
-        <div>
-            <h1>{content.meta.title}</h1>
-            <h3>
-                {content.meta.desc}
-            </h3>
-            <hr />
-            <div class="mcon">
-                {
-                    content.msgs.map((msg) => (
-                        <Message
-                            name={msg.name}
-                            side={msg.side}
-                            text={parse(msg.content)}
-                        />
-                    ))
-                }
-            </div>
+    <Card fileHeader={path}>
+        <h1>{content.meta.title}</h1>
+        <h3>
+            {content.meta.desc}
+        </h3>
+        <hr />
+        <div class="mcon">
+            {
+                content.msgs.map((msg) => (
+                    <Message
+                        name={msg.name}
+                        side={msg.side}
+                        text={parse(msg.content)}
+                    />
+                ))
+            }
         </div>
-    </div>
+    </Card>
 </IndexLayout>

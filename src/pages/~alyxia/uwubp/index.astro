@@ -4,7 +4,7 @@ import UwubpLayout from "#layouts/UwubpLayout.astro";
 import { parse } from "#js/parse";
 import { formatDate } from "#js/lib";
 import "#css/uwubp.scss";
-import Indexer from "#components/Indexer.astro";
+import Card from "#components/Card.astro";
 
 // get all posts, import as raw files, eager makes vite provide the file content instead of an import function
 const rawPosts = import.meta.glob("./_posts/*.txt", { eager: true, as: "raw" });
@@ -16,7 +16,7 @@ const posts = Object.keys(rawPosts)
         const normalizedUrl = Astro.url.pathname.replace(/\/?$/, "/");
 
         return {
-            path: normalizedUrl + date, // construct the permaling -> /~alyxia/uwubp/something
+            path: normalizedUrl + date, // construct the permalink -> /~alyxia/uwubp/something
             date: formatDate(date),
             content: parse(rawPosts[path]), // parsed content
         };
@@ -27,16 +27,18 @@ const posts = Object.keys(rawPosts)
 ---
 
 <UwubpLayout>
+    <style is:global>
+        .text div {
+            padding: 0;
+            margin: 3ch 5ch 5ch 5ch;
+        }
+    </style>
+
     {
         posts.map((post) => (
-            <div class="blogpane">
-                <h1>
-                    <a href={post.path}>{post.date}</a>
-                </h1>
-                <p>
-                    <Fragment set:html={post.content} />
-                </p>
-            </div>
+            <Card fileHeader={post.date} href={post.path}>
+                <Fragment set:html={post.content} />
+            </Card>
         ))
     }
 </UwubpLayout>

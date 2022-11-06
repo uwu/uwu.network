@@ -1,0 +1,18 @@
+---
+import "#css/chat.scss";
+
+const { fileHeader, href } = Astro.props;
+---
+
+<div class="text">
+    {
+        fileHeader && (
+            <h1 class="file">
+                {href ? <a href={href}>{fileHeader}</a> : fileHeader}
+            </h1>
+        )
+    }
+    <div>
+        <slot />
+    </div>
+</div>

@@ -9,6 +9,8 @@ import "#css/reset.css";
 import "#css/loader.css";
 import "#css/common.css";
 import "#css/scanlines.css";
+
+const { titleName, bgm } = Astro.props;
 ---
 
 <div id="contentloader">
@@ -19,7 +21,7 @@ import "#css/scanlines.css";
 <BorderLayout
 	bodyClass="wrapper"
 	title="~alyxia"
-	titleName={Astro.props.titleName ?? "what?"}
+	titleName={titleName ?? "what?"}
 	headerName="ALYXIA"
 	mainHref="/~alyxia"
 	scroll
@@ -31,7 +33,16 @@ import "#css/scanlines.css";
 	</main>
 </BorderLayout>
 
+<script define:vars={{ bgm }}>
+	window.bgm = bgm;
+</script>
+
 <script>
+	import { Howl } from "howler";
+	declare global {
+		const bgm: any;
+	}
+
 	// Remove IBM Plex as the default document font.
 	document.body.classList.remove("font-plex");
 	document.querySelector(".border .p-6").classList.remove("p-6");
@@ -49,4 +60,24 @@ import "#css/scanlines.css";
 		(document.getElementById("loadspin") as HTMLImageElement).src =
 			"/alyxia/img/loader/loadspin.png";
 	};
+
+	if (bgm) {
+		let audioContext;
+		document.body.onclick = () => {
+			if (!audioContext) audioContext = new AudioContext();
+			audioContext.onstatechange = () => {
+				if (
+					audioContext.state !== "suspended" &&
+					audioContext.state !== "closed"
+				) {
+					let sound = new Howl({
+						src: `/alyxia/audio/${bgm.src ?? "ambience/2.ogg"}`,
+						volume: bgm.vol ?? 1,
+						loop: bgm.loop ?? false,
+					});
+					if (!sound.playing()) sound.play();
+				}
+			};
+		};
+	}
 </script>

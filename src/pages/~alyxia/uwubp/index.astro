@@ -1,5 +1,6 @@
 ---
 import IndexLayout from "#layouts/IndexLayout.astro";
+import UwubpLayout from "#layouts/UwubpLayout.astro";
 import { parse } from "#js/parse";
 import { formatDate } from "#js/lib";
 import "#css/uwubp.scss";
@@ -25,52 +26,17 @@ const posts = Object.keys(rawPosts)
     });
 ---
 
-<style is:global>
-    .padded {
-        background-color: #000;
-        background-image: url(/alyxia/img/bg/login.png);
-        background-attachment: fixed;
-        background-position: center;
+<UwubpLayout>
+    {
+        posts.map((post) => (
+            <div class="blogpane">
+                <h1>
+                    <a href={post.path}>{post.date}</a>
+                </h1>
+                <p>
+                    <Fragment set:html={post.content} />
+                </p>
+            </div>
+        ))
     }
-    h1[style] > a {
-        color: yellow;
-    }
-
-    @media screen and (max-width: 48rem) {
-        h1[style],
-        h1[style] > a {
-            font-size: 1.2em;
-        }
-        .padded {
-            padding: 0;
-            padding-bottom: 10vw;
-        }
-    }
-</style>
-
-<IndexLayout>
-    <Indexer />
-    <div class="separator"></div>
-    <div class="padded">
-        <center>
-            <h1 style="padding: 0.67em 0; margin: 0;">
-                <a href="/~alyxia">alyxia</a>@<a href="/~alyxia/uwubp">uwubp</a>
-                - Echo Chamber
-            </h1>
-        </center>
-        <div class="padded">
-            {
-                posts.map((post) => (
-                    <div class="blogpane">
-                        <h1>
-                            <a href={post.path}>{post.date}</a>
-                        </h1>
-                        <p>
-                            <Fragment set:html={post.content} />
-                        </p>
-                    </div>
-                ))
-            }
-        </div>
-    </div>
-</IndexLayout>
+</UwubpLayout>

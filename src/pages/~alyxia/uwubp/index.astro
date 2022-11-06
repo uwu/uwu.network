@@ -27,13 +27,6 @@ const posts = Object.keys(rawPosts)
 ---
 
 <UwubpLayout>
-    <style is:global>
-        .text div {
-            padding: 0;
-            margin: 3ch 5ch 5ch 5ch;
-        }
-    </style>
-
     {
         posts.map((post) => (
             <Card fileHeader={post.date} href={post.path}>
@@ -42,3 +35,10 @@ const posts = Object.keys(rawPosts)
         ))
     }
 </UwubpLayout>
+
+<style is:global>
+    .text div {
+        padding: 0;
+        margin: 3ch 5ch 5ch 5ch;
+    }
+</style>

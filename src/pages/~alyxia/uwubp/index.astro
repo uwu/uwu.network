@@ -32,6 +32,20 @@ const posts = Object.keys(rawPosts)
         background-attachment: fixed;
         background-position: center;
     }
+    h1[style] > a {
+        color: yellow;
+    }
+
+    @media screen and (max-width: 48rem) {
+        h1[style],
+        h1[style] > a {
+            font-size: 1.2em;
+        }
+        .padded {
+            padding: 0;
+            padding-bottom: 10vw;
+        }
+    }
 </style>
 
 <IndexLayout>
@@ -39,23 +53,24 @@ const posts = Object.keys(rawPosts)
     <div class="separator"></div>
     <div class="padded">
         <center>
-            <h1 style="padding: 0.67em 0; margin: 0;">Echo Chamber</h1>
+            <h1 style="padding: 0.67em 0; margin: 0;">
+                <a href="/~alyxia">alyxia</a>@<a href="/~alyxia/uwubp">uwubp</a>
+                - Echo Chamber
+            </h1>
         </center>
         <div class="padded">
-            <div class="padded">
-                {
-                    posts.map((post) => (
-                        <div class="blogpane">
-                            <h1>
-                                <a href={post.path}>{post.date}</a>
-                            </h1>
-                            <p>
-                                <Fragment set:html={post.content} />
-                            </p>
-                        </div>
-                    ))
-                }
-            </div>
+            {
+                posts.map((post) => (
+                    <div class="blogpane">
+                        <h1>
+                            <a href={post.path}>{post.date}</a>
+                        </h1>
+                        <p>
+                            <Fragment set:html={post.content} />
+                        </p>
+                    </div>
+                ))
+            }
         </div>
     </div>
 </IndexLayout>

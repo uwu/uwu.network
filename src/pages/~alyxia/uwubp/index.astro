@@ -3,6 +3,7 @@ import IndexLayout from "#layouts/IndexLayout.astro";
 import { parse } from "#js/parse";
 import { formatDate } from "#js/lib";
 import "#css/uwubp.scss";
+import Indexer from "#components/Indexer.astro";
 
 // get all posts, import as raw files, eager makes vite provide the file content instead of an import function
 const rawPosts = import.meta.glob("./_posts/*.txt", { eager: true, as: "raw" });
@@ -24,26 +25,37 @@ const posts = Object.keys(rawPosts)
     });
 ---
 
+<style is:global>
+    .padded {
+        background-color: #000;
+        background-image: url(/alyxia/img/bg/login.png);
+        background-attachment: fixed;
+        background-position: center;
+    }
+</style>
+
 <IndexLayout>
-    <center>
-        <h1>Echo Chamber</h1>
-    </center>
+    <Indexer />
     <div class="separator"></div>
-    <br />
     <div class="padded">
+        <center>
+            <h1 style="padding: 0.67em 0; margin: 0;">Echo Chamber</h1>
+        </center>
         <div class="padded">
-            {
-                posts.map((post) => (
-                    <div class="blogpane">
-                        <h1>
-                            <a href={post.path}>{post.date}</a>
-                        </h1>
-                        <p>
-                            <Fragment set:html={post.content} />
-                        </p>
-                    </div>
-                ))
-            }
+            <div class="padded">
+                {
+                    posts.map((post) => (
+                        <div class="blogpane">
+                            <h1>
+                                <a href={post.path}>{post.date}</a>
+                            </h1>
+                            <p>
+                                <Fragment set:html={post.content} />
+                            </p>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
     </div>
 </IndexLayout>

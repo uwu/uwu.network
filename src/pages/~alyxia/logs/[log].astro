@@ -27,6 +27,14 @@ const { content, path } = Astro.props;
 ---
 
 <IndexLayout titleName="writing">
+    <style is:global>
+        body {
+            background: url(/alyxia/img/bg/logs.png);
+            background-size: 248px;
+            background-attachment: fixed;
+        }
+    </style>
+
     <Card fileHeader={path}>
         <h1>{content.meta.title}</h1>
         <h3>

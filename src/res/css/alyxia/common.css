@@ -130,7 +130,7 @@ h1 {
 
 .indexlist {
   width: calc(100% - 170px);
-  display: inline-block;
+  display: inline;
   height: 64px;
   line-height: 64px;
   vertical-align: 28px;

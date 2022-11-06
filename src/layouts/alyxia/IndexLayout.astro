@@ -10,7 +10,7 @@ import "#css/loader.css";
 import "#css/common.css";
 import "#css/scanlines.css";
 
-const { titleName, bgm } = Astro.props;
+const { titleName, bgm, border } = Astro.props;
 ---
 
 <div id="contentloader">
@@ -26,11 +26,9 @@ const { titleName, bgm } = Astro.props;
 	mainHref="/~alyxia"
 	scroll
 >
-	<main>
-		<CrossCode>
-			<slot />
-		</CrossCode>
-	</main>
+	<CrossCode>
+		<slot />
+	</CrossCode>
 </BorderLayout>
 
 <script define:vars={{ bgm }}>
@@ -45,7 +43,7 @@ const { titleName, bgm } = Astro.props;
 
 	// Remove IBM Plex as the default document font.
 	document.body.classList.remove("font-plex");
-	document.querySelector(".border .p-6").classList.remove("p-6");
+	document.querySelector(".border .p-6")?.classList.remove("p-6");
 
 	// Set up the loader
 	window.addEventListener("load", function (event) {

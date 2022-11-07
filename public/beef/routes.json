@@ -1,10 +1,10 @@
 [
     {
         "name": "Home",
-        "path": "/~beef"
+        "path": "/~beef/"
     },
     {
         "name": "Credits",
-        "path": "/~beef/credits"
+        "path": "/~beef/credits/"
     }
 ]

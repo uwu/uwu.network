@@ -1,0 +1,12 @@
+---
+import RainLayout from "%layouts/RainLayout.astro";
+import { readdir } from "node:fs/promises";
+
+const files = await readdir("public/beef/files/");
+---
+
+<RainLayout>
+    <div class="flex flex-col">
+        {files.map(i => <a href={`/beef/files/${i}`}>{i}</a>)}
+    </div>
+</RainLayout>

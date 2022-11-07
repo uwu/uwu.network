@@ -26,7 +26,7 @@ export function getStaticPaths() {
 const { content, path } = Astro.props;
 ---
 
-<IndexLayout titleName="writing">
+<IndexLayout titleName="writing" bgm={{ src: "bgm/logs.ogg", loop: true }}>
     <style is:global>
         body {
             background: url(/alyxia/img/bg/logs.png);

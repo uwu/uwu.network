@@ -1,12 +1,20 @@
 ---
-import RainLayout from "%layouts/RainLayout.astro";
+import FilesLayout from "%layouts/FilesLayout.astro";
+import FilesPanel from "%components/FilesPanel.astro";
+import File from "%components/File.astro";
 import { readdir } from "node:fs/promises";
 
 const files = await readdir("public/beef/files/");
 ---
 
-<RainLayout>
-    <div class="flex flex-col">
-        {files.map(i => <a href={`/beef/files/${i}`}>{i}</a>)}
+<FilesLayout>
+    <div class="flex md:(flex-row) lt-md:(flex-col) h-full p-4 gap-4">
+        <FilesPanel>
+            <File name=".." path="/~beef/" />
+            {files.map(i => <File name={i} path={`/beef/files/${i}`} />)}
+        </FilesPanel>
+        <FilesPanel center>
+            <p>when i move to dynamic routes for this, this content will actually update :)</p>
+        </FilesPanel>
     </div>
-</RainLayout>
+</FilesLayout>

@@ -1,0 +1,12 @@
+---
+export interface Props {
+	name: string;
+    path: string;
+}
+
+const { name, path } = Astro.props;
+---
+
+<a class="transition-colors text-[#ddd] uppercase rounded-sm hover:(opacity-100 bg-opacity-75 text-black bg-[#ddd])" href={path}>
+    {name}
+</a>

@@ -1,0 +1,41 @@
+---
+import FilesLayout from "%layouts/FilesLayout.astro";
+import FilesPanel from "%components/FilesPanel.astro";
+import File from "%components/File.astro";
+
+const files = import.meta.glob("./_files/*.*", {
+    eager: true,
+    as: "raw",
+});
+
+export function getStaticPaths() {
+    const files = import.meta.glob("./_files/*.*", {
+        eager: true,
+        as: "raw",
+    });
+
+    return Object.keys(files).map((path) => ({
+        params: {
+            name: path.split("/").pop(),
+        },
+        props: {
+            content: files[path],
+        },
+    }));
+}
+
+const { name } = Astro.params;
+const { content } = Astro.props;
+---
+
+<FilesLayout>
+    <div class="flex md:(flex-row) lt-md:(flex-col) h-full p-4 gap-4">
+        <FilesPanel>
+            <File name=".." path="/~beef/" />
+            {Object.keys(files).map(i => <File name={i.split("/").pop()} path={`/~beef/files/${i.split("/").pop()}`} />)}
+        </FilesPanel>
+        <FilesPanel>
+            <Fragment set:html={content} />
+        </FilesPanel>
+    </div>
+</FilesLayout>

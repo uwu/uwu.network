@@ -1,0 +1,58 @@
+---
+import { readdir } from "node:fs/promises";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import FilesLayout from "%layouts/FilesLayout.astro";
+import FilesPanel from "%components/FilesPanel.astro";
+import File from "%components/File.astro";
+
+// Replicate __dirname, because we're in ESM.
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// I want file names, not content, so don't use a glob here.
+const files = await readdir(join(__dirname, "./_files"));
+
+export function getStaticPaths() {
+    const files = import.meta.glob("./_files/**/*", {
+        eager: true,
+        as: "raw",
+    });
+
+    return [
+        // Default route, incase the user goes to /files/
+        {
+            params: {
+                name: undefined,
+            },
+            props: {
+                content: "welcome to my file list :)"
+            }
+        },
+        // Other routes, generated dynamically from files
+        ...Object.keys(files).map((path) => ({
+            params: {
+                name: path.split("/").pop(),
+            },
+            props: {
+                content: files[path],
+            },
+        })),
+    ]
+}
+
+const { name } = Astro.params;
+const { content } = Astro.props;
+---
+
+<FilesLayout>
+    <div class="flex md:(flex-row) lt-md:(flex-col) h-full p-4 gap-4">
+        <FilesPanel>
+            <File name=".." path="/~beef/" />
+            {files.map(i => <File name={i} path={`/~beef/files/${i}`} />)}
+        </FilesPanel>
+        <FilesPanel>
+            <Fragment set:html={content} />
+        </FilesPanel>
+    </div>
+</FilesLayout>

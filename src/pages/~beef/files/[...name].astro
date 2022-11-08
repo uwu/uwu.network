@@ -8,10 +8,9 @@ import FilesPanel from "%components/FilesPanel.astro";
 import File from "%components/File.astro";
 
 // Replicate __dirname, because we're in ESM.
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// I want file names, not content, so don't use a glob here.
-const files = await readdir(join(__dirname, "./_files"));
+const files = Object.keys(import.meta.glob("./_files/**/*", {
+    as: "raw",
+})).map((path) => path.split("/").pop());
 
 export function getStaticPaths() {
     const files = import.meta.glob("./_files/**/*", {

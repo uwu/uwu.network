@@ -2,7 +2,10 @@
 import "^css/global.sass";
 import BorderLayout from "@layouts/BorderLayout.astro";
 
-const posts = await Astro.glob("/src/pages/~sink/blog/**/*.md");
+const posts = [
+  ...(await Astro.glob("/src/pages/~sink/blog/**/*.md")), 
+  ...(await Astro.glob("/src/pages/~sink/blog/**/*.mdx"))
+];
 
 const { frontmatter } = posts.find(
   (p) =>

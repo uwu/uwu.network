@@ -6,22 +6,14 @@ import react from "@astrojs/react";
 //import preact from "@astrojs/preact"; // this would need installing via npm
 import svelte from "@astrojs/svelte";
 import vue from "@astrojs/vue";
-
+import mdx from "@astrojs/mdx";
 import unoConfig from "./uno.config";
 
 // https://astro.build/config
 export default defineConfig({
   legacy: {
-    astroFlavoredMarkdown: true
+    astroFlavoredMarkdown: true,
   },
-  integrations: [
-    vue(),
-    svelte(),
-    // solid(),
-    // preact(),
-    react(),
-    sitemap(),
-    uno(unoConfig),
-  ],
+  integrations: [vue(), svelte(), react(), sitemap(), uno(unoConfig), mdx()],
   site: "https://uwu.network",
 });

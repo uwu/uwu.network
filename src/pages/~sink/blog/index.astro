@@ -3,7 +3,10 @@ import SinkLayout from "^layouts/SinkLayout.astro";
 import silent from "^/silent.svg";
 import rss from "^/rss.svg";
 
-const posts = await Astro.glob("/src/pages/~sink/blog/**/*.md");
+const posts = [
+  ...(await Astro.glob("/src/pages/~sink/blog/**/*.md")), 
+  ...(await Astro.glob("/src/pages/~sink/blog/**/*.mdx"))
+];
 
 const fmtTags = (tags) => tags.map((t) => `[${t.toUpperCase()}]`);
 

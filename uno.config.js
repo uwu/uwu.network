@@ -38,6 +38,9 @@ export default defineConfig({
       plexsans: "IBM Plex Sans, sans-serif",
       jbmono: "JetBrains Mono, monospace",
     },
+    fontSize: {
+      quiet: ["13pt", "17pt"]
+    }
   },
   configFile: false,
 });

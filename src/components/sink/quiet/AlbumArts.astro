@@ -17,7 +17,7 @@ const { img1, img2, name, name2, artist, highlight1, highlight2, video2 } = Astr
   </div>
   <div class="i">
     {video2
-      ? (<video src={img2} autoplay muted loop />)
+      ? (<video src={img2} autoplay muted loop playsinline />)
       : (<img src={img2} />)}
     {highlight2 && (
       <>

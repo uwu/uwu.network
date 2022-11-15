@@ -2,7 +2,7 @@
 // this file is absolute spaghetti.
 // i apologise -- sink
 
-const { img1, img2, name, name2, artist, highlight1, highlight2 } = Astro.props;
+const { img1, img2, name, name2, artist, highlight1, highlight2, video2 } = Astro.props;
 ---
 
 <div class="grid grid-cols-2 w-[min(45rem,100%)] mb-4 p-2 gap-2 children:(w-full lt-sm:col-span-2) bg-dark-9 group">
@@ -16,7 +16,9 @@ const { img1, img2, name, name2, artist, highlight1, highlight2 } = Astro.props;
     )}
   </div>
   <div class="i">
-    <img src={img2} />
+    {video2
+      ? (<video src={img2} autoplay muted loop />)
+      : (<img src={img2} />)}
     {highlight2 && (
       <>
         <div class="group-hover:(bg-black bg-opacity-40) transition-colors w-full h-full" />
@@ -35,11 +37,13 @@ const { img1, img2, name, name2, artist, highlight1, highlight2 } = Astro.props;
 <style lang="sass">
   .i
     @apply relative
-    aspect-ratio: 1/1
   
     &>*
       @apply absolute top-0 left-0
       margin: 0 !important
+
+    &>:first-child
+      position: unset
     
   .group:hover .ds
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))

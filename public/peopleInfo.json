@@ -27,7 +27,8 @@
             "[githu🅱️]": "https://github.com/yellowsink",
             "[twattter]": "https://twitter.com/CainAtkin",
             "[peemail]": "mailto:yellowsink@riseup.net"
-        }
+        },
+        "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPAiA4XAKgn3RWQNDIA4TITrC5giGQ17/IoC99M1Rk+"
     },
     {
         "header": "Beef",

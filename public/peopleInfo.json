@@ -13,8 +13,7 @@
             "[github]": "https://github.com/twnlink",
             "[twitter]": "https://twitter.com/twnlink"
         },
-        "publicKey": "ssh-ed25519 
-AAAAC3NzaC1lZDI1NTE5AAAAINbMQsMpuAx3H8V2/XJZjHFlmIO4Kvz7zRQKsVWC51ZK"
+        "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINbMQsMpuAx3H8V2/XJZjHFlmIO4Kvz7zRQKsVWC51ZK"
     },
     {
         "header": "Yellowsink",

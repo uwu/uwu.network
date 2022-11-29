@@ -1,0 +1,84 @@
+---
+import IndexLayout from "../layouts/IndexLayout.astro";
+import mainUwu from "/uwus/1.txt?raw";
+import { readdir } from "fs/promises";
+
+// please ignore all kinds of css you find here, welcome to hell
+// i purposefully didn't make the uwu a component since this page uses a slightly different one
+
+const featured = [
+  {
+    name: "radio",
+    description: "a collection of audio sent through technology we don't understand",
+    url: "https://radio.uwu.network",
+  },
+  {
+    name: "shelter",
+    description: "a flux interceptor with discord as a liability",
+    url: "https://github.com/uwu/shelter",
+  },
+]
+
+const uwuCount = (await readdir("public/uwus")).length;
+---
+
+<IndexLayout title="uwu projects">
+  <div class="grid grid-rows-[1fr min-content min-content] p-8 h-full text-center">
+    <div class="mt-auto mb-auto  min-h-70">
+      <a href="/" class="text-white no-underline">
+        <pre id="big-uwu" class="text-3xl <md:text-lg"><noscript>{mainUwu}</noscript></pre>
+      </a>
+
+      <p class="font-plex text-2xl underline underline-dashed">featured projects</p>
+    </div>
+
+    <div class="grid grid-auto-rows-min gap-4 w-fit ml-auto mr-auto">
+      {featured.map((p) =>
+        <div class="grid">
+          <a class="header font-plex relative" href={p.url}>
+            <span class="bg-black pl-2 pr-2">{p.name}</span>
+          </a>
+          <p class="font-plex">{p.description}</p>
+        </div>
+      )}
+    </div>
+
+    <p class="font-plex mt-auto">find more projects on <a class="bg-white text-black underline" href="https://github.com/uwu">github</a></p>
+  </div>
+
+  <script define:vars={{ uwuCount }}>
+    (async () => {
+
+      const pickedUwu = Math.floor(Math.random() * uwuCount);
+      const bigUwu = document.getElementById("big-uwu");
+
+      bigUwu.style.opacity = 0;
+
+      try {
+        const resp = await fetch(`/uwus/${pickedUwu}.txt`);
+        if (!resp.ok) throw null;
+        bigUwu.innerText = await resp.text();
+      } catch {
+        bigUwu.innerHTML = bigUwu.textContent;
+      }
+
+      bigUwu.style.transition = "opacity 1s linear";
+      bigUwu.style.opacity = "";
+
+    })()
+	</script>
+</IndexLayout>
+
+<style>
+  .header:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: .25rem;
+    top: calc(50% - 1rem / 8);
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    position: absolute;
+    z-index: -1;
+  }
+</style>

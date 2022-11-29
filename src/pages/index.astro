@@ -7,18 +7,15 @@ const uwuCount = (await readdir("public/uwus")).length;
 ---
 
 <IndexLayout title="uwu">
-	<div class="grid place-items-center h-full text-center">
-		<div>
-			<a href="/uwus" class="text-white no-underline">
-				<pre id="big-uwu" class="text-3xl <md:text-lg min-h-60"><noscript>{mainUwu}</noscript></pre>
-			</a>
-			<!-- CHANGE SPANS TO A TAGS LATER -->
-			<p class="font-plex mt-2">a group of <a class="bg-white text-black underline" href="/people">people</a> building
+  <div class="grid grid-rows-[2fr 1fr] h-full text-center">
+    <a href="/uwus" class="text-white no-underline mt-auto">
+      <pre id="big-uwu" class="text-3xl <md:text-lg min-h-60"><noscript>{mainUwu}</noscript></pre>
+    </a>
 
-				<a class="bg-white text-black underline" href="https://github.com/uwu">projects</a> that won't change the world
-			</p>
-		</div>
-	</div>
+    <p class="font-plex mt-2">a group of <a class="bg-white text-black underline" href="/people">people</a> building
+      <a class="bg-white text-black underline" href="/projects">projects</a> that won't change the world
+    </p>
+  </div>
 
 	<script define:vars={{ uwuCount }}>
     (async () => {

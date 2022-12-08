@@ -1,0 +1,40 @@
+---
+import { incrIn, incrOut } from "^js/notebookCounterProvider";
+---
+
+{/* a knock-off of the wolfram notebook cells */}
+
+<div class="cell my-4 font-mono w-[min(40rem,100%)] block!">
+  {
+    Astro.props.cells.map((b, i) => (
+      <div class="cell mb-2">
+        <span class="mr-4 w-14 shrink-0 text-right opacity-70 text-sm text-blue-300 font-plexsans">
+          {i == 0 ? `In[${incrIn()}]:=` : `Out[${incrOut()}]=`}
+        </span>
+
+        {b[0] === "IMG" ? (
+          <img src={b[1]} class="max-h-64" />
+        ) : b[0] === "MATRIX" ? (
+          <div
+            class="border-x-2 border-white grid gap-x-2 pl-2 pr-4 text-right rounded-md"
+            style={`grid-template-rows:repeat(${b[1].length},1fr);grid-template-columns:repeat(${b[1][0].length},1fr)`}
+          >
+            {b[1].map(row => (
+              <>
+                {row.map(cell => <span>{cell}</span>)}
+              </>
+            ))}
+          </div>
+        ) : (
+          <pre>{b}</pre>
+        )}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .cell {
+    @apply mr-2 border-r border-gray-500 flex rounded-r-md;
+  }
+</style>

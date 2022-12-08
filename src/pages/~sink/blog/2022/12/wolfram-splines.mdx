@@ -1,0 +1,420 @@
+---
+layout: "^layouts/QuietLayout.astro"
+title: Splines in Wolfram Mathematica
+description: Playing with splines using Mathematica.
+pubDate: "2022-12-08"
+tags: ["MATH"]
+---
+
+{/* important for more than one page using these, hot reloads, etc */}
+import NotebookResetter from "^components/quiet/NotebookResetter.astro";
+import NotebookCell from "^components/quiet/NotebookCell.astro";
+
+<NotebookResetter />
+
+# Splines in Wolfram Mathematica
+
+The other day, I watched Freya Holmér's new video, *The Continuity of Splines*.
+I had previously seen her video on Beziér curves, and this one was equally interesting.
+
+It struck me as I watched this that a lot of the math behind these wasn't all that
+complex to quantify, but often just involved a horrendously large amount of
+calculation.
+
+This felt, to me, like something that would be perfect to play with in Mathematica,
+since I've been playing about with it the past few days anyway,
+and perhaps some of those crazy big calculations might be tackled way better by a
+computer.
+
+## A quick note on built-ins
+
+Mathematica is a very complete program for doing all kinds of mathematical *stuff*.
+As such it has a built in set of Beziér functions available, notably `BezierFunction`
+and `BezierCurve`.
+
+I will be ignoring these for the most part and building them from scratch,
+but they are worth acknowledging, and I may use them to show that my constructions work.
+Here is a use example of both, showing both sampling a curve
+and rendering a curve using `Graphics`:
+
+<NotebookCell
+  cells={[
+    `
+func = BezierFunction[{\{0, 0}, {1, 1}, {2, 0}, {3, 2}}]
+func[0.5]`,
+  `BezierFunction[...]`,
+  `{1.5, 0.625}`
+  ]}
+/>
+
+<NotebookCell
+  cells={[
+    `
+ctrlPoints = \{{0, 0}, {1, 1}, {2, -1}, {3, 0}};
+Graphics[{
+  White, BezierCurve[ctrlPoints],
+  Green, Line[ctrlPoints],
+  Red,   Point[ctrlPoints]
+  }]`,
+  ["IMG", "/sink/quiet_beziers/BezierCurve_example.svg"]
+  ]}
+/>
+
+## Beziér curves
+
+A good place to start with generating curves would be Beziérs - they are very
+simple to create but very powerful.
+
+So, let's define a *cubic Beziér* in Mathematica!
+I'll use *De Casteljau's construction* of Beziér curves here: nested linear interpolation.
+
+Obviously this means we need linear interpolation first!
+
+<NotebookCell
+  cells={[`lerp[a_, b_, t_] := (1 - t)*a + t*b`]}
+/>
+
+And then we can nest out our lerps:
+
+<NotebookCell
+  cells={[
+    `
+cubicbezier[P0_, P1_, P2_, P3_, t_] :=
+ (a = lerp[P0, P1, t];
+  b = lerp[P1, P2, t];
+  c = lerp[P2, P3, t];
+  d = lerp[a, b, t];
+  e = lerp[b, c, t];
+  lerp[d, e, t])`
+  ]}
+/>
+
+And finally test it out!:
+
+<NotebookCell
+  cells={[
+    `cubicbezier[{0, 0}, {1, 1}, {2, 0}, {3, 2}, 0.5]`,
+    `{1.5, 0.625}`
+  ]}
+/>
+<NotebookCell
+  cells={[
+    `BezierFunction[\{{0, 0}, {1, 1}, {2, 0}, {3, 2}}][0.5]`,
+    `{1.5, 0.625}`
+  ]}
+/>
+
+As we can see, this construction of a Beziér curve yields a
+valid output for our `t` values.
+
+## Bernstein from
+
+The Bernstein form of Beziér curves is the form in which
+the control points are factored out.
+Let's see if we can have Mathematica help us find this form.
+
+The first thing to notice is that this actually can be expanded
+to a polynomial:
+
+<NotebookCell
+  cells={[
+    `dcjBezier = cubicbezier[P0, P1, P2, P3, t]`,
+    `
+  (1 - t) ((1 - t) (P0 (1 - t) + P1 t)
++ t (P1 (1 - t) + P2 t))
++ t ((1 - t) (P1 (1 - t) + P2 t)
++ t (P2 (1 - t) + P3 t))`
+  ]}
+/>
+
+<NotebookCell
+  cells={[
+    `Expand[%]`,
+    `
+P0 - 3 P0 t + 3 P1 t
++ 3 P0 t^2 - 6 P1 t^2 + 3 P2 t^2
+- P0 t^3 + 3 P1 t^3 - 3 P2 t^3 + P3 t^3`
+  ]}
+/>
+
+Now if we have Mathematica collect in terms of our control points,
+we are left with the Bernstein form of a Beziér curve!:
+
+<NotebookCell
+  cells={[
+    `Collect[%, {P0, P1, P2, P3}]`,
+    `
+  P0 (   -t^3 + 3 t^2 - 3 t + 1)
++ P1 (  3 t^3 - 6 t^2 + 3 t)
++ P2 (- 3 t^3 + 3 t^2)
++ P3 (    t^3)`
+  ]}
+/>
+
+Note that that expansion is actually a necessary step to get Mathematica
+to collect our terms the way we want, which is interesting.
+
+We can also have Mathematica verify that this Bernstein form is actually
+identical to the DeCasteljau construction
+(notice we grabbed this into `dcjBezier` earlier):
+
+<NotebookCell
+  cells={[
+    `FullSimplify[Equivalent[dcjBezier, %]]`,
+    `True`
+  ]}
+/>
+
+Worth mentioning that `==` (`Equal[]`) also returns `True` for this.
+I have no idea what the difference is, but I figured `Equivalent`
+is usually stricter in a mathematical sense.
+
+# Polynomial Coefficients
+
+Another form of the Beziér curve is as a polynomial of `t`.
+
+To have this calculated for us, we can ask Mathematica to collect the
+DeCasteljau construction for `t`:
+
+<NotebookCell
+  cells={[
+    `Collect[dcjBezier, t]`,
+    `
+          P0 
++   t (-3 P0 + 3 P1)
++ t^2 ( 3 P0 - 6 P1 + 3 P2)
++ t^3 (  -P0 + 3 P1 - 3 P2 + P3) `
+  ]}
+/>
+
+interestingly, expanding the DCJ construction is *not* necessary here.
+Not only is it equivalent, but it actually works out identical in
+structure as well as value.
+
+This is tested with `SameQ` or `===`:
+
+<NotebookCell
+  cells={[
+    `
+(* unrelated example of == vs === *)
+Reduce[a^2 - b*a ==  a (-b + a)]
+       a^2 - b*a === a (-b + a)
+
+Collect[dcjBezier, t] === Collect[Expand[dcjBezier], t]`,
+    `True`,
+    `False`,
+    `True`
+  ]}
+/>
+
+## Matrix form
+
+One of the more fascinating ideas I noticed from Freya's video on the splines
+was that any spline can be represented by a multiplication of three matrices:
+1. A one-row matrix of powers of `t`
+2. A big matrix of numbers - the *characteristic matrix*
+3. A one-column matrix of control points
+
+The characteristic matrix is the only thing that changes between different
+kinds of splines. So, let's find it for Beziérs!
+
+This is more complex than simple algebraic manipulation, however.
+
+Converting a polynomial directly into a matrix isn't something Mathematica
+can directly do, so we're going to need to get creative.
+
+We will give Mathematica a matrix form with a set of unfilled variables in
+the characteristic matrix.
+
+We will then tell it to solve the matrix form equal to our Beziér equation,
+enforcing that it must hold for all values of our control points and `t`.
+
+<NotebookCell
+  cells={[
+    `
+SolveAlways[
+  (* powers of t matrix *)
+ \{{1, t, t^2, t^3},
+  {1, t, t^2, t^3},
+  {1, t, t^2, t^3},
+  {1, t, t^2, t^3}} .
+  (* characteristic matrix *)
+ \{{ca, cb, cc, cd},
+  {ce, cf, cg, ch},
+  {ci, cj, ck, cl},
+  {cm, cn, co, cp}} .
+  (* control point matrix *)
+ \{{P0, P0, P0, P0},
+  {P1, P1, P1, P1},
+  {P2, P2, P2, P2},
+  {P3, P3, P3, P3}} == dcjBezier,
+  (* all of these values are unknowns *)
+  {P0, P1, P2, P3, t}
+  ]`,
+  `
+\{{
+  ca -> 1, cb -> 0, cc -> 0, cd -> 0,
+  ce -> -3, cf -> 3, cg -> 0, ch -> 0,
+  ci -> 3, cj -> -6, ck -> 3, cl -> 0,
+  cm -> -1, cn -> 3, co -> -3, cp -> 1
+  }}`
+  ]}
+/>
+
+If we apply the returned *set of rules* to a matrix:
+<NotebookCell
+  cells={[
+    `
+(\{{cp, cl, ch, cd},
+  {co, ck, cg, cc},
+  {cn, cj, cf, cb},
+  {cm, ci, ce, ca}} /. %)[[1]] // MatrixForm`,
+  ["MATRIX", [
+    [1,0,0,0],
+    [-3,3,0,0],
+    [3,-6,3,0],
+    [-1,3,-3,1]
+  ]]
+  ]}
+/>
+
+One characteristic matrix, right there!
+
+A quick note that in my calculations I assumed that matrices were lists of rows.
+Mathematica actually treats them as lists of columns.
+
+While this has not affected the calculation result, for displaying,
+I flipped around the rows and columns so that it looks correct.
+
+That's why the matrix I sub into is a bit weird.
+
+## Verifying the matrix form
+
+At first glance, the matrix form may look *really* weird.
+
+What are all these numbers doing?
+Isn't it magical how one matrix of integers defines all the
+unique traits of a Beziér curve outside of being cubic?
+
+Well lets verify that this is actually true, by plugging in a random value!
+
+We'll use the control points `(0,0) (1,1) (2,0) (3,2)` and `t` of `0.5`.
+
+<NotebookCell
+  cells={[
+    `
+cubicbezierMatrix[P0_, P1_, P2_, P3_, t_] :=
+  (\{{1, t, t^2, t^3},
+    {1, t, t^2, t^3},
+    {1, t, t^2, t^3},
+    {1, t, t^2, t^3}} .
+   \{{1, 0, 0, 0},
+    {-3, 3, 0, 0},
+    {3, -6, 3, 0},
+    {1, 3, -3, 1}} .
+   \{{P0, P0, P0, P0},
+    {P1, P1, P1, P1},
+    {P2, P2, P2, P2},
+    {P3, P3, P3, P3}})[[1]][[1]]`
+  ]}
+/>
+
+<NotebookCell
+  cells={[
+    `
+cubicbezierMatrix[{0, 0}, {1, 1}, {2, 0}, {3, 2}, 0.5]
+cubicbezier      [{0, 0}, {1, 1}, {2, 0}, {3, 2}, 0.5]`,
+    `{1.5, 0.625}`,
+    `{1.5, 0.625}`
+  ]}
+/>
+
+One thing I am yet to figure out is that Mathematica actually does not think
+that these two forms *are* fully equivalent.
+
+No idea why.
+
+<NotebookCell
+  cells={[
+    `
+FullSimplify[
+ cubicbezier[P0, P1, P2, P3, t] == 
+  cubicbezierMatrix[P0, P1, P2, P3, t]]
+FullSimplify[
+ Equivalent[cubicbezier[P0, P1, P2, P3, t], 
+  cubicbezierMatrix[P0, P1, P2, P3, t]]]
+FullSimplify[
+ ForAll[{P0, P1, P2, P3, t}, 
+  cubicbezier[P0, P1, P2, P3, t] == 
+   cubicbezierMatrix[P0, P1, P2, P3, t]]]`,
+    `P0 t == 0`,
+    `
+P0
++ 3 (-P0 + P1) t
++ 3 (P0 - 2 P1 + P2) t^2
++ (P0 + 3 P1 - 3 P2 + P3) t^3
+≡
+-P0 (-1 + t)^3
++ t (3 P1 (-1 + t)^2
++ t (3 P2 - 3 P2 t + P3 t))`,
+    `False`
+  ]}
+/>
+
+## Lets make some pretty pictures!
+
+We will start by generating a load of points on our curve by using `Table`.
+
+<NotebookCell
+  cells={[
+    `
+plotPoints = Table[
+  cubicbezier[{5, 2}, {1, 2}, {0, 3}, {2, 3}, t],
+  {t, 0, 1, 0.01}
+  ];`
+  ]}
+/>
+
+And then plot all the x,y pairs, drawing lines between them,
+and for comparison draw a Mathematica built-in Beziér curve:
+
+<NotebookCell
+  cells={[
+    `
+ListLinePlot[
+  plotPoints,
+  AxesOrigin -> {0, 0}, (* fix distortion *)
+  AxesStyle -> White
+  ]
+Graphics[{
+  White,
+  BezierCurve[\{{5, 2}, {1, 2}, {0, 3}, {2, 3}}]
+  }]`,
+    ["IMG", "/sink/quiet_beziers/plotted_custom_bezier.svg"],
+    ["IMG", "/sink/quiet_beziers/plotted_custom_real_comparison.svg"]
+  ]}
+/>
+
+You could even make the plot fit the theming of uwu.network more,
+by making it minimal and changing the colours:
+
+<NotebookCell
+  cells={[
+    `
+ListLinePlot[
+  plotPoints,
+  AxesOrigin -> {0, 0},
+  AxesStyle -> White, 
+  PlotStyle -> White,
+  PlotTheme -> Minimal
+  ]`,
+    ["IMG", "/sink/quiet_beziers/plotted_custom_bezier_minimal.svg"]
+  ]}
+/>
+
+## TODO:
+- derivatives
+- continuity
+- hermite splines and catmull-rom and b-spline
+
+[left off here for tomorrow: 21:23, 5 hours spent working, 496 wolfram evaluations]

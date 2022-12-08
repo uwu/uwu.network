@@ -1,0 +1,8 @@
+>buys vps\n
+>provisioning pending\n
+>go to work\n
+>come back home\n
+>check status\n
+>cancelled, they refunded me\n[2]
+
+it can't be this hard to buy a vps

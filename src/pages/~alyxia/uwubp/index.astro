@@ -22,7 +22,7 @@ const posts = Object.keys(rawPosts)
         };
     })
     .sort((a, b) => {
-        return new Date(b.date).getDate() - new Date(a.date).getDate();
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 ---
 

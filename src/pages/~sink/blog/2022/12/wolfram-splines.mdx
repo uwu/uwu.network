@@ -441,10 +441,10 @@ adding an arrowhead to make it clear how the graph is moving as `t` increases.
 <NotebookCell
   cells={[
     `
-directionedPlot[f_, rMin_, rMax_] :=
+directionedPlot[f_, range_] :=
  ListLinePlot[
    Table[f, {t, 0, 1, 0.01}],
-   PlotRange -> \{{rMin, rMax}, {rMin, rMax}},
+   PlotRange -> range,
    AspectRatio -> 1,
    Mesh -> 6,
    MeshShading -> {Arrowheads[Medium]},
@@ -460,11 +460,55 @@ And finally let's plot!
 <NotebookCell
   cells={[
     `
-directionedPlot[bezier, 0, 5]
-directionedPlot[derivative, -15, 15]`,
+directionedPlot[bezier, \{{0, 5}, {0, 5}}]
+directionedPlot[derivative, \{{-15, 15}, {-15, 15}}]`,
     ["IMG", "/sink/quiet_beziers/derivatives_plot1.svg"],
     ["IMG", "/sink/quiet_beziers/derivatives_plot2.svg"]
   ]}
 />
 
-//TODO interpret what these mean, second derivative.
+As you can see, this curve starts at the right and heads left.
+
+This corresponds to the fact that the derivative starts on the left of
+this graph. In fact, as the derivative begins at a point where y=0,
+we know that the very start of the curve is actually tangent to a horizontal
+line.
+
+This is evident when looking at a picture:
+
+<NotebookCell
+  cells={[
+    `
+Graphics[{
+    White,
+    BezierCurve[\{{5, 2}, {1, 2}, {0, 3}, {2, 3}}],
+    Green,
+    Line[\{{5, 2}, {6, 2}}]
+  }]`,
+    ["IMG", "/sink/quiet_beziers/derivatives_3_tangent.svg"]
+  ]}
+/>
+
+We can also see that as time goes on, it starts to slowly point upwards:
+this corresponds to when the leftmost part of the curve where it indeed moves upwards.
+
+Finally, the derivative comes back down, while continuing right.
+This means the curve moves towards the right while moving upwards less.
+
+Let's now look at the *second derivative* - the derivative of the derivative.
+
+<NotebookCell
+  cells={[
+    `
+secondDerivative = D[derivative, t]
+directionedPlot[secondDerivative, \{{0, 20}, {-10, 10}}]`,
+    `{18, -6 (-1 + t) - 6 t}`,
+    ["IMG", "/sink/quiet_beziers/derivatives_4_second.svg"]
+  ]}
+/>
+
+This shows us two things:
+ - the velocity is moving right at a constant speed
+   * the acceleration is to the right but not moving
+ - the velocity moves upwards at first, but then downwards
+   * the 2nd derivative shows an acceleration from up to downwards

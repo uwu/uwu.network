@@ -395,26 +395,76 @@ Graphics[{
   ]}
 />
 
-You could even make the plot fit the theming of uwu.network more,
-by making it minimal and changing the colours:
-
-<NotebookCell
-  cells={[
-    `
-ListLinePlot[
-  plotPoints,
-  AxesOrigin -> {0, 0},
-  AxesStyle -> White, 
-  PlotStyle -> White,
-  PlotTheme -> Minimal
-  ]`,
-    ["IMG", "/sink/quiet_beziers/plotted_custom_bezier_minimal.svg"]
-  ]}
-/>
-
 ## TODO:
 - derivatives
 - continuity
 - hermite splines and catmull-rom and b-spline
 
 [left off here for tomorrow: 21:23, 5 hours spent working, 496 wolfram evaluations]
+
+## Derivatives
+
+The derivative of a function tells you how that function changes over time.
+
+One way to think of a derivative is that if your function models position,
+its derivative models velocity: the rate of change of position.
+
+With that in mind, what if we could plot the velocity of our Beziér curves?
+
+Let's start by differentiating the DeCasteljau construction of our bezier:
+
+(Let's also keep the more interesting control points from the pretty pictures!)
+
+<NotebookCell
+  cells={[
+    `
+bezier = cubicbezier[{5, 2}, {1, 2}, {0, 3}, {2, 3}, t];
+derivative =
+  D[
+    bezier,
+    t
+    ] // Simplify`,
+    `{6 (-2 + 3 t), -6 (-1 + t) t}`
+  ]}
+/>
+
+And to visualise this we could do with a custom plotting function.
+This function should handle:
+ - sampling points
+ - drawing the plot
+ - correcting the weird skewing done by the automatic axes
+ - apply useful styles
+
+And as one additional job that will be useful here,
+adding an arrowhead to make it clear how the graph is moving as `t` increases.
+
+<NotebookCell
+  cells={[
+    `
+directionedPlot[f_, rMin_, rMax_] :=
+ ListLinePlot[
+   Table[f, {t, 0, 1, 0.01}],
+   PlotRange -> \{{rMin, rMax}, {rMin, rMax}},
+   AspectRatio -> 1,
+   Mesh -> 6,
+   MeshShading -> {Arrowheads[Medium]},
+   MeshStyle -> Opacity[0],
+   MeshFunctions -> {"ArcLength"},
+   AxesStyle -> White
+   ] /. Line -> Arrow`
+  ]}
+/>
+
+And finally let's plot!
+
+<NotebookCell
+  cells={[
+    `
+directionedPlot[bezier, 0, 5]
+directionedPlot[derivative, -15, 15]`,
+    ["IMG", "/sink/quiet_beziers/derivatives_plot1.svg"],
+    ["IMG", "/sink/quiet_beziers/derivatives_plot2.svg"]
+  ]}
+/>
+
+//TODO interpret what these mean, second derivative.

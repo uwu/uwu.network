@@ -9,6 +9,7 @@ tags: ["MATH"]
 {/* important for more than one page using these, hot reloads, etc */}
 import NotebookResetter from "^components/quiet/NotebookResetter.astro";
 import NotebookCell from "^components/quiet/NotebookCell.astro";
+import K from "^components/Katex.astro";
 
 <NotebookResetter />
 
@@ -105,7 +106,7 @@ And finally test it out!:
 />
 
 As we can see, this construction of a Beziér curve yields a
-valid output for our `t` values.
+valid output for our <K>t</K> values.
 
 ## Bernstein from
 
@@ -171,10 +172,10 @@ is usually stricter in a mathematical sense.
 
 # Polynomial Coefficients
 
-Another form of the Beziér curve is as a polynomial of `t`.
+Another form of the Beziér curve is as a polynomial of <K>t</K>.
 
 To have this calculated for us, we can ask Mathematica to collect the
-DeCasteljau construction for `t`:
+DeCasteljau construction for <K>t</K>:
 
 <NotebookCell
   cells={[
@@ -211,7 +212,7 @@ Collect[dcjBezier, t] === Collect[Expand[dcjBezier], t]`,
 
 One of the more fascinating ideas I noticed from Freya's video on the splines
 was that any spline can be represented by a multiplication of three matrices:
-1. A one-row matrix of powers of `t`
+1. A one-row matrix of powers of <K>t</K>
 2. A big matrix of numbers - the *characteristic matrix*
 3. A one-column matrix of control points
 
@@ -227,7 +228,7 @@ We will give Mathematica a matrix form with a set of unfilled variables in
 the characteristic matrix.
 
 We will then tell it to solve the matrix form equal to our Beziér equation,
-enforcing that it must hold for all values of our control points and `t`.
+enforcing that it must hold for all values of our control points and <K>t</K>.
 
 <NotebookCell
   cells={[
@@ -298,7 +299,7 @@ unique traits of a Beziér curve outside of being cubic?
 
 Well lets verify that this is actually true, by plugging in a random value!
 
-We'll use the control points `(0,0) (1,1) (2,0) (3,2)` and `t` of `0.5`.
+We'll use the control points <K>(0,0), (1,1), (2,0), (3,2)</K> and <K>t=0.5</K>.
 
 <NotebookCell
   cells={[
@@ -375,7 +376,7 @@ plotPoints = Table[
   ]}
 />
 
-And then plot all the x,y pairs, drawing lines between them,
+And then plot all the <K>(x,y)</K> pairs, drawing lines between them,
 and for comparison draw a Mathematica built-in Beziér curve:
 
 <NotebookCell
@@ -394,13 +395,6 @@ Graphics[{
     ["IMG", "/sink/quiet_beziers/plotted_custom_real_comparison.svg"]
   ]}
 />
-
-## TODO:
-- derivatives
-- continuity
-- hermite splines and catmull-rom and b-spline
-
-[left off here for tomorrow: 21:23, 5 hours spent working, 496 wolfram evaluations]
 
 ## Derivatives
 
@@ -436,7 +430,7 @@ This function should handle:
  - apply useful styles
 
 And as one additional job that will be useful here,
-adding an arrowhead to make it clear how the graph is moving as `t` increases.
+adding an arrowhead to make it clear how the graph is moving as <K>t</K> increases.
 
 <NotebookCell
   cells={[
@@ -470,7 +464,7 @@ directionedPlot[derivative, \{{-15, 15}, {-15, 15}}]`,
 As you can see, this curve starts at the right and heads left.
 
 This corresponds to the fact that the derivative starts on the left of
-this graph. In fact, as the derivative begins at a point where y=0,
+this graph. In fact, as the derivative begins at a point where <K>y=0</K>,
 we know that the very start of the curve is actually tangent to a horizontal
 line.
 
@@ -512,3 +506,138 @@ This shows us two things:
    * the acceleration is to the right but not moving
  - the velocity moves upwards at first, but then downwards
    * the 2nd derivative shows an acceleration from up to downwards
+
+
+## Continuity
+
+Continuity is the concept of multiple curves being connected in some ways.
+
+This is the core idea that takes a collection of curves and gives you a spline.
+
+If you want to learn about continuity in depth, please watch the video I mentioned at the start,
+the *Continuity of Splines*, it is truly exceptional and explains it much more in depth.
+
+### Testing continuity between two Beziér curves
+
+We'll start with the simplest form of continuity testing, <K>C^0</K> continuity.
+
+This is where two curves in the spline are connected end-to-end.
+
+That is, given two Beziérs in terms of <K>t</K>, <K>a</K> and <K>b</K>, <K>a(1)=b(0)</K>.
+
+This, we can do in Mathematica as well:
+
+<NotebookCell
+  cells={[
+    `
+bezier1[t_] = cubicbezier[{5, 2}, {1, 2}, {0, 3}, {2, 3}, t];
+bezier2[t_] = cubicbezier[{2, 3}, {2, 4}, {3, 2}, {3, 4}, t];
+
+bezier1[1]
+bezier2[0]`,
+    `{2, 3}`,
+    `{2, 3}`
+  ]}
+/>
+
+These two are <K>C^0</K> continuous because they touch at the ends.
+If you want some help visualising this, here's a picture:
+
+<NotebookCell
+  cells={[
+    `
+Graphics[{
+  White,
+  BezierCurve[\{{5, 2}, {1, 2}, {0, 3}, {2, 3}}],
+  Green,
+  BezierCurve[\{{2, 3}, {2, 4}, {3, 2}, {3, 4}}]
+  }]`,
+  ["IMG", "/sink/quiet_beziers/continuity_1_c0.svg"]
+  ]}
+/>
+
+To test for <K>C^1</K> continuity, the *derivatives* of the two curves
+must have the same value at the ends.
+
+In practice, this means that the two curves are tangent at their ends, and touching,
+and the control points are equidistant from the point.
+
+If we pick a different pair of curves:
+
+<NotebookCell
+  cells={[
+    `
+bezier3[t_] = cubicbezier[{5, 2}, {1, 2}, {0, 3}, {2, 3}, t];
+bezier4[t_] = cubicbezier[{2, 3}, {4, 3}, {3, 2}, {3, 3}, t];
+
+bezier3'[1]
+bezier4'[0]`,
+    `{6, 0}`,
+    `{6, 0}`
+  ]}
+/>
+
+They have equivalent derivatives (note the <K>\prime</K> prime symbol), so they are <K>C^1</K> continuous.
+
+If we plot the curves:
+
+<NotebookCell
+  cells={[
+    `
+Graphics[{
+  White,
+  BezierCurve[\{{5, 2}, {1, 2}, {0, 3}, {2, 3}}],
+  Green,
+  BezierCurve[\{{2, 3}, {4, 3}, {3, 2}, {3, 3}}]
+  }]`,
+  ["IMG", "/sink/quiet_beziers/continuity_2_c1.svg"]
+  ]}
+/>
+
+As you can see, <K>C^1</K> continuous curves look a lot smoother.
+
+If we graph the derivative instead
+(excuse the long plot function, its a slightly modified version of `directionedPlot`):
+
+<NotebookCell
+  cells={[
+    `
+points = Join[
+   Table[bezier3'[t], {t, 0, 1, 0.001}],
+   Table[bezier4'[t], {t, 0, 1, 0.001}]
+   ];
+
+ListLinePlot[
+  points,
+  PlotRange -> \{{-10, 10}, {-10, 10}},
+  AspectRatio -> 1,
+  Mesh -> 6,
+  MeshShading -> {Arrowheads[Medium]},
+  MeshStyle -> Opacity[0],
+  MeshFunctions -> {"ArcLength"},
+  AxesStyle -> White
+  ] /. Line -> Arrow`,
+    ["IMG", "/sink/quiet_beziers/continuity_3_c1d.svg"]
+  ]}
+/>
+
+You can see here that the derivatives are connected.
+
+You can also see this is not <K>C^2</K> continuous as there is a sharp corner,
+so the second derivative (acceleration) will have a discontinuity (jump).
+
+## G Continuity
+
+<K>G</K> continuity is less strict, and can define continuities
+such as tangent but not equal velocity.
+
+Again, see *The Continuity of Splines* for more info.
+
+To handle this in Mathematica, we may normalise both vectors before testing them.
+
+## Enforcing continuity
+// TODO
+
+## TODO:
+- continuity
+- hermite splines and catmull-rom and b-spline

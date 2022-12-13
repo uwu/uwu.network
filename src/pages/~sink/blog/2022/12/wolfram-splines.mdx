@@ -183,7 +183,7 @@ Worth mentioning that `==` (`Equal[]`) also returns `True` for this.
 I have no idea what the difference is, but I figured `Equivalent`
 is usually stricter in a mathematical sense.
 
-# Polynomial Coefficients
+## Polynomial Coefficients
 
 Another form of the Beziér curve is as a polynomial of <K>t</K>.
 
@@ -302,7 +302,7 @@ I flipped around the rows and columns so that it looks correct.
 
 That's why the matrix I sub into is a bit weird.
 
-## Verifying the matrix form
+### Verifying the matrix form
 
 At first glance, the matrix form may look *really* weird.
 
@@ -639,18 +639,104 @@ You can see here that the derivatives are connected.
 You can also see this is not <K>C^2</K> continuous as there is a sharp corner,
 so the second derivative (acceleration) will have a discontinuity (jump).
 
-## G Continuity
+### G Continuity
 
-<K>G</K> continuity is less strict, and can define continuities
+<K>G^n</K> continuity is less strict, and can define continuities
 such as tangent but not equal velocity.
 
 Again, see *The Continuity of Splines* for more info.
 
-To handle this in Mathematica, we may normalise both vectors before testing them.
+<K>G^0</K> (tangent) continuity is tested for similar to <K>C^1</K>,
+but normalising both vectors before testing them.
 
-## Enforcing continuity
-// TODO
+<K>G^1</K> continuity requires the *curvature* of the splines to be continuous
+where they join.
+
+### Enforcing continuity
+
+One important thing to note about continuity, is that when enforcing it,
+(at least with Beziér splines!) we lose local control of the curve,
+and moving control points can cause the rest of the curve to move incredibly
+unpredictably.
+
+Once again, *The Continuity of Splines* demonstrates this fact better that I could
+here.
+
+Nonetheless, let's see if we can enforce continuous splines!
+
+We can enforce that they must be <K>C^0</K>,
+by reusing the last point of the first curve as the first point of the second curve:
+
+<NotebookCell
+  cells={[
+    `
+Simplify[
+  cubicbezier[P0, P1, P2, P3, t] ==
+  cubicbezier[P4, P5, P6, P8, t - 1],
+  {t == 1}
+ ]`,
+    `P3 == P4`
+  ]}
+/>
+
+*From now on, we will treat <K>P_3</K> as this point, and the numbers of the subsequent control points will shift by one. (<K>P^5</K> is now <K>P^4</K> etc)*
+
+For <K>C^1</K> continuity, we have to surrender control over <K>P_4</K>.
+
+We can find this out by telling Mathematica that the curve's derivatives equal
+at <K>t=1</K> and asking it to simplify the expression:
+
+<NotebookCell
+  cells={[
+    `
+Simplify[
+  D[cubicbezier[P0, P1, P2, P3, t], t] ==
+  D[cubicbezier[P3, P4, P5, P6, t - 1], t],
+  {t == 1}
+  ]`,
+  `P2 + P4 == 2 P3`
+  ]}
+/>
+
+The result it has given us is the constraint for <K>C^1</K> continuity,
+which can be rearranged to <K>{`P_4=\\frac{2P_3}{P_2}`}</K>,
+or if you prefer, <K>{`\\frac{P_2+P_4}{2}=P_3`}</K>: <K>P_3</K> is the mean of <K>P_2</K> and <K>P_4</K> -
+in the middle of them!
+
+If we want <K>C^2</K> continuity, however, we lose a lot more control:
+
+<NotebookCell
+  cells={[
+    `
+Simplify[
+  D[D[cubicbezier[P0, P1, P2, P3, t], t], t] ==
+  D[D[cubicbezier[P3, P4, P5, P6, t - 1], t], t],
+  {
+    t == 1,
+    P2 + P4 == 2 P3
+  }
+  ]`,
+  `P1 + 4 P4 == 4 P3 + P5`
+  ]}
+/>
+
+This new constraint locks in the position of <K>P_5</K> as well.
+
+The geometric intuition for this constraint is a lot less useful,
+but we now only have control over the end points of each Beziér,
+plus the control points of the first curve.
+
+The constraint is more usefully rearranged to: <K>{`P_5=\\frac{P_1+4P_4}{4P_3}`}</K>.
+
+If you watch the relevant part of *The Continuity of Splines*,
+it is quite convincingly and satisfying shown that going higher,
+to <K>C^3</K> continuity in a Beziér spline implies <K>C^\infty</K> continuity for that spline,
+as you lose control over all but the first curve's control points,
+and your spline becomes the equivalent of just letting <K>t>1</K> for the first curve in the spline.
+
+*For all of these constraints* they can be generalised higher by just adding more curves,
+more control points, and requiring continuity at all relevant integer values of <K>t</K>
+instead of just at 1.
 
 ## TODO:
-- continuity
 - hermite splines and catmull-rom and b-spline

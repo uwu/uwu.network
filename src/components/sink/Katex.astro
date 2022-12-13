@@ -2,7 +2,7 @@
 import "katex/dist/katex.min.css";
 import { renderToString } from "katex";
 const child = await Astro.slots.render("default");
-const rendered = renderToString(child, { throwOnError: false });
+const rendered = renderToString(child.replaceAll("&gt;", ">"), { throwOnError: false });
 ---
 
 <Fragment set:html={rendered} />

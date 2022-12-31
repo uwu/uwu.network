@@ -2,7 +2,7 @@
 layout: "^layouts/QuietLayout.astro"
 title: A look back on 2022
 description: It's been a hell of a year for me, as well as a weird one.
-pubDate: "2022-11-10"
+pubDate: "2022-12-31"
 tags: []
 ---
 

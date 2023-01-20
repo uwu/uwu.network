@@ -165,7 +165,7 @@ I have a few ideas of more that can be added to shelter to improve it.
     to make these replacements easier to write.
 
 2. React patching  
-    We could bring back patching of react components by patching `createElement`.
+    We could bring back patching of react components by patching ~~`createElement`~~ `_jsx` (thanks for correction Ven, appreciated).
 
 3. i forgot  
     no actually i forgot what i was going to write here im sorry

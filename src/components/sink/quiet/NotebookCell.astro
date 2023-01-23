@@ -4,37 +4,52 @@ import { incrIn, incrOut } from "^js/notebookCounterProvider";
 
 {/* a knock-off of the wolfram notebook cells */}
 
-<div class="cell my-4 font-mono w-[min(40rem,100%)] block!">
-  {
-    Astro.props.cells.map((b, i) => (
-      <div class="cell mb-2">
-        <span class="mr-4 w-14 shrink-0 text-right opacity-70 text-sm text-blue-300 font-plexsans">
-          {i == 0 ? `In[${incrIn()}]:=` : `Out[${incrOut()}]=`}
-        </span>
+<div class="flex first:flex-1 my-4">
+  <div class="flex font-mono w-[min(40rem,100%)] flex-col gap-3">
+    {
+      Astro.props.cells.map((b, i) => (
+        <div class="flex">
+          <span class="mr-4 w-14 shrink-0 text-right opacity-70 text-sm text-blue-300 font-plexsans">
+            {i == 0 ? `In[${incrIn()}]:=` : `Out[${incrOut()}]=`}
+          </span>
 
-        {b[0] === "IMG" ? (
-          <img src={b[1]} class="max-h-64" />
-        ) : b[0] === "MATRIX" ? (
-          <div
-            class="border-x-2 border-white grid gap-x-2 pl-2 pr-4 text-right rounded-md"
-            style={`grid-template-rows:repeat(${b[1].length},1fr);grid-template-columns:repeat(${b[1][0].length},1fr)`}
-          >
-            {b[1].map(row => (
-              <>
-                {row.map(cell => <span>{cell}</span>)}
-              </>
-            ))}
+          {b[0] === "IMG" ? (
+            <img src={b[1]} class="max-h-64 mr-auto!" />
+          ) : b[0] === "MATRIX" ? (
+            <div
+              class="border-x-2 border-white grid gap-x-2 pl-2 pr-4 text-right rounded-md mr-auto"
+              style={`grid-template-rows:repeat(${b[1].length},1fr);grid-template-columns:repeat(${b[1][0].length},1fr)`}
+            >
+              {b[1].map(row => (
+                <>
+                  {row.map(cell => <span>{cell}</span>)}
+                </>
+              ))}
+            </div>
+          ) : (
+            <pre class="overflow-auto flex-1">{b}</pre>
+          )}
+
+          <div class="marker ml-2 relative">
+            <div class="border-b border-gray-500 w-2.82 diag" />
+            {i !== 0 && (<div class="absolute top-2 w-2 border-b border-gray-500" />)}
           </div>
-        ) : (
-          <pre>{b}</pre>
-        )}
-      </div>
-    ))
-  }
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="marker" />
 </div>
 
 <style>
-  .cell {
-    @apply mr-2 border-r border-gray-500 flex rounded-r-md;
+  .marker {
+    @apply mr-1 border-r border-t border-b border-gray-500 w-2;
+  }
+
+  .diag {
+    /* im so sorry */
+    transform: translateY(.25rem) translate(-1px, -2px) rotate(45deg);
+    transform-origin: .25rem 0;
   }
 </style>

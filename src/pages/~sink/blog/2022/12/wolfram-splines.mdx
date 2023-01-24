@@ -703,8 +703,8 @@ If we want <K>C^2</K> continuity, however, we lose a lot more control:
   cells={[
     `
 Simplify[
-  D[D[cubicbezier[P0, P1, P2, P3, t], t], t] ==
-  D[D[cubicbezier[P3, P4, P5, P6, t - 1], t], t],
+  D[cubicbezier[P0, P1, P2, P3, t], {t, 2}] ==
+  D[cubicbezier[P3, P4, P5, P6, t - 1], {t, 2}],
   {
     t == 1,
     P2 + P4 == 2 P3
@@ -720,7 +720,7 @@ The geometric intuition for this constraint is a lot less useful,
 but we now only have control over the end points of each Beziér,
 plus the control points of the first curve.
 
-The constraint is more usefully rearranged to: <K>{`P_5=\\frac{P_1+4P_4}{4P_3}`}</K>.
+The constraint is more usefully rearranged to: <K>P_5=P_1-4P_3+4P_4</K>.
 
 If you watch the relevant part of *The Continuity of Splines*,
 it is quite convincingly and satisfying shown that going higher,
@@ -731,6 +731,75 @@ and your spline becomes the equivalent of just letting <K>t>1</K> for the first 
 *For all of these constraints* they can be generalised higher by just adding more curves,
 more control points, and requiring continuity at all relevant integer values of <K>t</K>
 instead of just at 1.
+
+### Wait what? That's a confident assertion. Prove it!
+
+I assert that, for a cubic Beziér curve, <K>C^3\implies C^\infty</K>,
+and also that its equivalent to increasing <K>t>1</K>.
+
+Let's prove it!
+
+Let's define a spline of two cubic Beziérs,
+with the control points <K>P_0, P_1, P_2, P_3, P_4, P_5, P_6</K>.
+
+![](/sink/quiet_beziers/infinite_proof_setup.svg)
+
+And construct these in Mathematica and enforce <K>C^3</K> continuity:
+
+<NotebookCell 
+  cells={[
+    `
+Simplify[
+  D[cubicbezier[P0, P1, P2, P3, t], {t, 3}] ==
+  D[cubicbezier[P3, P4, P5, P6, t - 1], {t, 3}],
+  {
+    t == 1,
+    P2 + P4 == 2 P3,
+    P1 + 4 P4 == 4 P3 + P5
+  }
+  ]`,
+  `P0 + 12 P4 + P6 == 8 P3 + 6 P5`
+  ]}
+/>
+
+If we now consider our rules:
+- <K>P_2 + P_4 = 2P_3</K>
+- <K>P_1 + 4 P_4 = 4 P_3 + P_5</K>
+- <K>P_0 + 12 P_4 + P_6 = 8 P_3 + 6 P_5</K>
+
+And put all of the first curve's points on the right,
+and the second curve's points on the left:
+
+- <K>P_4=P_2-2P_3</K>
+- <K>4P_4-P_5=4P_3-P_1</K>
+- <K>12P_4+P_6-6P_5=8P_3-P_0</K>
+
+And solve for individual points:
+
+<NotebookCell
+  cells={[
+    `
+proofP4 = proofP2 - 2 proofP3
+proofP5 = SolveValues[
+  4 proofP4 - P5 == 4 proofP3 - proofP1,
+  P5
+  ][[1]]
+proofP6 = SolveValues[
+  12 proofP4 + P6 - 6 proofP5 == 8 proofP3 - proofP0,
+  P6
+  ][[1]]`,
+  `proofP2 - 2 proofP3`,
+  `proofP1 + 4 proofP2 - 12 proofP3`,
+  `-proofP0 + 6 proofP1 + 12 proofP2 - 40 proofP3`
+  ]}
+/>
+
+So the points of the second Beziér curve are fully constrained by the first curve:
+- <K>P_4=P_2-2P_3</K>
+- <K>P_5=P_1+4P_2-12P_3</K>
+- <K>P_6=-P_0+6P_1+12P_2-40P_3</K>
+
+// TODO help this is VERY VERY VERY wrong help must fix
 
 ## TODO:
 - hermite splines and catmull-rom and b-spline

@@ -41,4 +41,18 @@ but we do need to actually have an idea of what the curve *is*.
   <img src="/sink/quiet_parabola/approx_100.svg" />
 </div>
 
-//TODO
+So an important thing to notice here is that, if we take any of these ones lines
+(see the one in red!), the point on that line that we want to actually be a part of our curve
+is tangent to said curve.
+
+![](/sink/quiet_parabola/approx_6_highlighted.svg)
+
+Lets modify our construction just slightly so that we are constructing on diagonal lines,
+so each line will connect the points `(k, k)` and `(k-n, n-k)` for real `k` and constant `n`.
+
+![](/sink/quiet_parabola/kk_graph.svg)
+
+What we actually need to do is to make this graph dense and split the area into
+"places where there are points" and "places where there are no points".
+
+The boundary of these two areas is our curve.

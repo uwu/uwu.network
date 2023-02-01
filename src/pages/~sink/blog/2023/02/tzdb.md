@@ -91,5 +91,9 @@ It's probably >5x better than spending a couple hundred quid on a course.
 Well, hopefully someone else, if they find themselves in a similar place,
 might find this useful. Or maybe not ;)
 
+UPDATE: After being reminded to by link,
+I published the source code to my version of TZDB as a learning resource
+[here](https://github.com/sink-archive/tzdb).
+
 Cya next time  
  -- Yellowsink

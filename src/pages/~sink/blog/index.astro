@@ -42,7 +42,7 @@ const compareFn = (m1, m2) =>
             {fmtTags(frontmatter.tags).map((t) => (
               <span>{t}</span>
             ))}
-            <span>{frontmatter.pubDate}</span>
+            <span>{frontmatter.pubDate.split("T")[0]}</span>
           </p>
         </div>
 

@@ -2,7 +2,7 @@
 layout: "^layouts/QuietLayout.astro"
 title: The Oxidation Pt. 1 - The Reference Dance
 description: Rust series post on memory, ownership, and mutability
-pubDate: "2023-02-10"
+pubDate: "2023-02-10T19:39:11"
 tags: ["RUST", "OXIDATION"]
 ---
 

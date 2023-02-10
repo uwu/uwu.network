@@ -2,7 +2,7 @@
 layout: "^layouts/QuietLayout.astro"
 title: The Oxidation Pt. 0 - Intro
 description: Welcome to a series of blog posts on Rust.
-pubDate: "2023-02-10"
+pubDate: "2023-02-10T17:26:20"
 tags: ["RUST", "OXIDATION"]
 ---
 

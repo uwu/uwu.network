@@ -18,7 +18,7 @@ const { frontmatter } = posts.find(
   title={frontmatter.title}
   titleName="Quiet System"
   headerName="Quiet System"
-  footerOride={"YELLOWSINK @ UWUNET " + frontmatter.pubDate}
+  footerOride={"YELLOWSINK @ UWUNET " + frontmatter.pubDate.split("T")[0]}
   mainHref="/~sink/blog"
   scroll
 >

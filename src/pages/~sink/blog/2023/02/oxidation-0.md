@@ -54,3 +54,6 @@ I'll shove next and previous links at the bottom of each post in this series, ho
 
 Hopefully you find this series interesting, and I hope to see you back here soon!  
  -- Yellowsink
+
+~~*Previous*~~
+[*Next*](oxidation-1)

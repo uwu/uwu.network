@@ -35,7 +35,12 @@ import Indexer from "#components/Indexer.astro";
   document.getElementById("wallpaper").style.backgroundRepeat =
     rep[Math.floor(Math.random() * rep.length)];
 
-  let new_time = Math.floor(new Date("Nov 28 2022 00:00").getTime() / 1000);
+  let currentDate = new Date();
+  let countdownDate = new Date(currentDate.getFullYear(), 11 - 1, 28, 0, 0);
+  if (currentDate > countdownDate) {
+    countdownDate.setFullYear(countdownDate.getFullYear() + 1);
+  }
+  let new_time = Math.floor(countdownDate.getTime() / 1000);
 
   updateClock();
   setInterval(() => updateClock(), 1000);

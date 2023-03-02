@@ -1,3 +1,0 @@
-started working down the list of issues today\n
-not all too bad so far, got the project structure set up and a simple template working\n
-feeling like shit though so i'll probably consistently bother friends

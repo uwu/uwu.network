@@ -45,23 +45,6 @@
         }
     },
     {
-        "header": "Alyxia",
-        "body": "subpar programmer",
-        "img": {
-            "src": "/alyxia/img/icons/floppy.png",
-            "link": "https://alyxia.dev"
-        },
-        "pixelated": true,
-        "headLink": "/~alyxia",
-        "links": {
-            "[keybase]": "https://keybase.io/lexisother",
-            "[github]": "https://github.com/lexisother",
-            "[twitter]": "https://twitter.com/lexisother",
-            "[email]": "mailto:alyxia@riseup.net"
-        },
-        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqct05ChDRdiSYWhdgUbvCwwr85lJFHaziTkbreFDaV2nKrKE69cUFA3iG9D/HoVbpc7L72ETmh5Yj/mdHWujqc0ZmiZrCj7afOGxiauSZAJ4IPVto3fPeeTUmX6YgJJwBFhcMdccyvV6m1vY/nEpd+GylGZMgQTWF7G+7rmWjc780cwrMKIw4MrN/YOjQaPLCbT7RhJuXKf+SqtZsJWtgJmJWlzlxSyHK/7NhXX8+KaX68QpFr+CIBmNf3wcERxiw0snjEw2KwXEY2aJKOw6zbavAyr05CvJ3jCUH1LkTFg+QnCmE8UnA/zTY5e0NseX0mQVqzBEcCoc24WFv3ot8s44cgDDbto89MTC1x54w09k85wzdjDDNz8W9ZnyfkBxNlWeWzIJRGoDWwTLCGZl7rAn098BPqjOMYnhc9rGXOPMCRmq3u4kQVIRhISAI0u4ZdW4IcoN++JLphe6euX1qgaAy1ngQVaGuKtVGeQxjK4xYGXPV3v3hcDwStbyOYn8="
-    },
-    {
         "header": "Phorcys",
         "body": "i'm toonlink",
         "img": {

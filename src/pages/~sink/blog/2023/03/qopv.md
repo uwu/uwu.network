@@ -385,6 +385,37 @@ Holy crap, we beat the 1080p webm, and its lossless!
 
 IDK use [QOA](https://qoaformat.org/).
 
+## H.264 supports lossless right?
+
+Well, yes, H.264 does support lossless!
+Let's encode a video and extract a few frames:
+
+```sh
+$ ffmpeg -i No\ Mana\ A⧸V\ Set\ @\ Gravity\ 2021\ \[IMRPKeKBa5A\].webm -s 192x108 -sws_flags neighbor -sws_dither none -crf 0 no_mana_lossless.mp4
+$ ffmpeg -i no_mana_lossless.mp4 no_mana_lossless_1.png
+$ ffmpeg -i no_mana_lossless.mp4 -ss 0:10 no_mana_lossless_2.png
+$ ffmpeg -i no_mana_lossless.mp4 -ss 0:30 no_mana_lossless_3.png
+$ ls -l no_mana_lossless.mp4
+.rw-r--r-- 426M cain  2 Mar 19:03 no_mana_lossless.mp4
+```
+
+<div class="flex flex-wrap gap-5">
+  <img src="/sink/quiet_qopv/h264_lossless_1.png" class="max-w-384px w-full" />
+  <img src="/sink/quiet_qopv/h264_lossless_2.png" class="max-w-384px w-full" />
+  <img src="/sink/quiet_qopv/h264_lossless_3.png" class="max-w-384px w-full" />
+</div>
+
+Now, this looks fine, and weighs in smaller than QOLV!
+
+However, what's the catch? Well simply, here's what it looks like in VLC:
+
+<div class="flex flex-wrap gap-5">
+  <img src="/sink/quiet_qopv/vlc_1.png" class="max-w-384px w-full" />
+  <img src="/sink/quiet_qopv/vlc_2.png" class="max-w-384px w-full" />
+</div>
+
+Yikes.
+
 ## Conclusion
 
 So yeah, there's a lossless compressed format that appears to work well for pixel art.

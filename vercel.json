@@ -4,7 +4,6 @@
   },
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/~alyxia/(.*)", "status": 404, "dest": "/~alyxia/404" },
     { "src": "/(.*)", "status": 404, "dest": "/404.html" }
   ]
 }

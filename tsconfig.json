@@ -19,13 +19,6 @@
       "@res/*": ["src/res/*"],
       "/*": ["public/*"],
 
-      // Alyxia
-      "#components/*": ["src/components/alyxia/*"],
-      "#layouts/*": ["src/layouts/alyxia/*"],
-      "#css/*": ["src/res/css/alyxia/*"],
-      "#js/*": ["src/res/js/alyxia/*"],
-      "#/*": ["public/alyxia/*"],
-
       // Sink
       "^components/*": ["src/components/sink/*"],
       "^layouts/*": ["src/layouts/sink/*"],

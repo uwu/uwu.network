@@ -2,7 +2,7 @@
 layout: "^layouts/QuietLayout.astro"
 title: Quite Okay Pixel-Art Video Compression
 description: A toy video codec based on QOI
-pubDate: "2023-03-01T17:26:20"
+pubDate: "2023-03-02T18:49:05"
 tags: ["GRAPHICS"]
 ---
 
@@ -152,7 +152,12 @@ I'll basically just encode / decode every frame in sequence,
 except the encoder / decoder state is kept between frames,
 instead of resetting to `0x000000FF` & an empty index.
 
-So, coding time, we're gonna implement a QOI encoder and we're gonna do it in C#!
+We will also omit the 8-byte end tag (`0x0000000000000001`) between frames,
+and just include it at the end of the video stream.
+
+## Let's write some code
+
+So, coding time, we're gonna implement a QOLV encoder and we're gonna do it in C#!
 
 To start with, we're going to assume our input is a folder of QOI files, for ease of implementation.
 
@@ -168,86 +173,223 @@ So, here's code that decodes a folder of QOI images to pixels:
 ```csharp
 using QoiSharp;
 
-var imageFiles    = Directory.GetFiles(args[0]).OrderBy(f => int.Parse(f.Split("/").Last().Split(".")[0])).ToArray();
-var decodedImages = imageFiles.Select(path => QoiDecoder.Decode(File.ReadAllBytes(path)));
+var imageFiles = Directory.GetFiles(args[0])
+                   .OrderBy(f => int.Parse(f.Split("/").Last().Split(".")[0]))
+                   .ToArray();
+var decodedImages =
+  imageFiles.Select(path => QoiDecoder.Decode(File.ReadAllBytes(path)));
 
 var firstImg = decodedImages.First();
-var header = new QoiImage(Array.Empty<byte>(), firstImg.Width, firstImg.Height, firstImg.Channels, firstImg.ColorSpace);
+var header = new QoiImage(Array.Empty<byte>(),
+                          firstImg.Width,
+                          firstImg.Height,
+                          firstImg.Channels,
+                          firstImg.ColorSpace);
 
-var pixels = decodedImages.SelectMany(
-  img => img.Data
-            .Chunk(3)
-            // ARGB
-            .Select(pixChunk => pixChunk[2] + (pixChunk[1] << 8) + (pixChunk[0] << 16) + (0xFF << 24))
-  );
+// ARGB
+uint ArgbFromChunk(IReadOnlyList<byte> chunk)
+    => chunk[2] + ((uint) chunk[1] << 8) + ((uint) chunk[0] << 16) + ((uint) 0xFF << 24);
 
-// test
-foreach (var pix in pixels.Take(1000))
-	Console.Write($"{pix:X} ");
+var pixels =
+  decodedImages.SelectMany(img => img.Data.Chunk(3).Select(ArgbFromChunk));
 ```
 
-Now, for the encoding part. We're going to have to tweak the QoiSharp encoder here, as it's not designed for what we want.
-I'll start by copying the [QoiEncoder](https://github.com/NUlliiON/QoiSharp/blob/main/src/QoiSharp/QoiEncoder.cs) code into our file to play with.
+Now, for the encoding part. We're going to have to tweak
+[the QoiSharp encoder](https://github.com/NUlliiON/QoiSharp/blob/61d9218/src/QoiSharp/QoiEncoder.cs#L17-L172)
+here, as it's not designed for what we want, but it's a good base to work off of.
 
-From now on, a lot of code may be presented as diffs.
-I will start by changing the function to take the bytes lazily and separate from the `QoiImage` class,
-and to take a `Stream` and return void (and remove the return):
+Let's make a new class in another file, just to clean things up a little:
 
-```diff
--byte[] Encode(QoiImage image)
-+void Encode(QoiImage image, IEnumerable<int> imagePixels, Stream output)
-@@ @@
--return bytes[..p];
+```csharp
+using QoiSharp;
+
+namespace qolv_encoder;
+
+public static class Encoder
+{
+    public static void Encode(Stream output,
+                              IEnumerable<int> pixels,
+                              QoiImage metadata,
+                              uint fCount,
+                              double fRate)
+    {
+    }
+
+    // QOLV decoder left as an exercise to the reader
+    public static (IEnumerable<int>, QoiImage, uint, double) Decode(Stream input)
+        => throw new NotImplementedException();
+}
 ```
 
-And make the `bytes` array be written to a `StreamWriter` (`bytes` is renamed to `headBytes` too).
-Also this will have the wrong header, let's write the correct one:
+Let's also write some quick helper functions to make things easier:
+```csharp
+public static void WriteUInt(this Stream s, uint v) => s.Write(
+  new[]
+  {
+      (byte) (v >> 24), (byte) (v >> 16), (byte) (v >> 8), (byte) (v)
+  });
 
-```diff
-+var sw = new StreamWriter(output);
--var headBytes = new byte[QoiCodec.HeaderSize + QoiCodec.Padding.Length + (width * height * channels)];
-+var headBytes = new byte[QoiCodec.HeaderSize];
-@@ @@
-headBytes[13] = colorSpace;
-+sw.Write(headBytes);
+public static void WriteInt(this    Stream s, int    v) => s.WriteUInt((uint) v);
+public static void WriteDouble(this Stream s, double v) => s.WriteUInt((uint) BitConverter.DoubleToUInt64Bits(v));
 ```
 
-```diff
-+var sw = new StreamWriter(output);
--var headBytes = new byte[QoiCodec.HeaderSize + QoiCodec.Padding.Length + (width * height * channels)];
+The first thing the original encoder does is a load of error checking, which we will skip and just #YOLO it.
 
--headBytes[0] = (byte) (QoiCodec.Magic >> 24);
--headBytes[1] = (byte) (QoiCodec.Magic >> 16);
--headBytes[2] = (byte) (QoiCodec.Magic >> 8);
--headBytes[3] = (byte) QoiCodec.Magic;
-+sw.Write("qolv");
+The next thing it does is write the header, so let's do that!
 
--headBytes[4] = (byte) (width >> 24);
--headBytes[5] = (byte) (width >> 16);
--headBytes[6] = (byte) (width >> 8);
--headBytes[7] = (byte) width;
-+sw.Write(width);
-
--headBytes[8]  = (byte) (height >> 24);
--headBytes[9]  = (byte) (height >> 16);
--headBytes[10] = (byte) (height >> 8);
--headBytes[11] = (byte) height;
-+sw.Write(height);
-
-+sw.Write(imageFiles.Length);
-+sw.Write(60.0);
-+sw.Write(imageFiles.Length / 60.0);
-
--headBytes[12] = channels;
-+sw.Write(channels);
--headBytes[13] = colorSpace;
-+sw.Write(colorSpace);
+```csharp
+// output.Write(new byte[] { 0x71, 0x6F, 0x6C, 0x76 });
+output.Write("qolv"u8);
+output.WriteInt(metadata.Width);
+output.WriteInt(metadata.Height);
+output.WriteUInt(fCount);
+output.WriteDouble(fRate);
+output.WriteDouble(fCount / fRate);
+output.WriteInt((int) metadata.Channels);
+output.WriteInt((int) metadata.ColorSpace);
 ```
 
-Now, at a lot of points, this code does something like `bytes[p++] = (byte) /* thing */`.
-We will go through and replace those with `sr.Write(/* thing */)`.
+And C# syntax I didn't know existed until now - yeah, you can use `"str"u8` to get a byte array!
 
-```diff
+Now, we need some basic state, and the original code does some fancy stuff to loop over 3/4 at once, but we've already handled that!:
+```csharp
+byte prevR = 0, prevG = 0, prevB = 0, prevA = 255;
+var run = 0;
 
+foreach (var pixel in pixels)
+{
+    var a = (byte) (pixel >> 24);
+    var r = (byte) (pixel >> 16);
+    var g = (byte) (pixel >> 8);
+    var b = (byte) pixel;
 ```
-//TODO
+
+Now, we process run-length-encoding:
+```csharp
+    if ((a, r, g, b) == (prevA, prevR, prevG, prevB))
+    {
+        run++;
+        if (run == 62)
+        {
+            output.WriteByte((byte) (QoiCodec.Run | (run - 1)));
+            run = 0;
+        }
+    }
+    else
+    {
+        if (run > 0)
+        {
+            output.WriteByte((byte) (QoiCodec.Run | (run - 1)));
+            run = 0;
+        }
+```
+
+Then, we need to implement indexing:
+```csharp
+        var idxPos = QoiCodec.CalculateHashTableIndex(r, g, b, a);
+
+        if ((a, r, g, b) == (index[idxPos], index[idxPos + 1], index[idxPos + 2], index[idxPos + 3]))
+            output.WriteByte((byte) (QoiCodec.Index | (idxPos / 4)));
+        else
+        {
+            index[idxPos]     = a;
+            index[idxPos + 1] = r;
+            index[idxPos + 2] = g;
+            index[idxPos + 3] = b;
+```
+
+And now the diffing chunks:
+```csharp
+            if (a == prevA)
+            {
+                int vr = r = prevR;
+                int vg = g = prevG;
+                int vb = b = prevB;
+
+                var vgr = vr - vg;
+                var vgb = vb - vg;
+
+                if (vr is > -3 and < 2 && vg is > -3 and < 2 && vb is > -3 and < 2)
+                    output.WriteByte((byte) (QoiCodec.Diff | (vr + 2) << 4 | (vg + 2) << 2 | (vb + 2)));
+                else if (vgr is > -9 and < 8 && vg is > -33 and < 32 && vgb is > -9 and < 8)
+                    output.Write(
+                        new[]
+                        {
+                            (byte) (QoiCodec.Luma  | (vg  + 32)),
+                            (byte) ((vgr + 8) << 4 | (vgb + 8))
+                        });
+                else output.Write(new[] { QoiCodec.Rgb, r, g, b });
+            }
+            else output.Write(new[] { QoiCodec.Rgba, r, g, b, a });
+```
+
+And just some finishing touches:
+```csharp
+        }
+    }
+
+    prevA = a;
+    prevR = r;
+    prevG = g;
+    prevB = b;
+}
+
+// write terminator
+output.Write(QoiCodec.Padding);
+```
+
+## Wew, thats a lotta code
+
+...well, quite modest for being an entire ~~image~~ video encoding format.
+
+Let's take a quick break, here, have a picture of two of my cats:
+
+<img src="/sink/quiet_qopv/izzy_and_pebbles.jpg" class="max-w-100 w-full" />
+
+Now, let's hook this puppy up! (back to `Program.cs`, where we were reading files):
+
+```csharp
+using var stream = File.Create(args[1]);
+
+var sw = System.Diagnostics.Stopwatch.StartNew();
+
+qolv_encoder.Encoder.Encode(stream, pixels, header, (uint) imageFiles.Length, 60);
+
+sw.Stop();
+
+Console.WriteLine($"Encoded {imageFiles.Length} frames in {sw.Elapsed.TotalSeconds} seconds");
+```
+
+Now let's try it!
+
+Note that when running this, the memory usage stayed basically constant at roughly 122MB,
+which shows that the use of `IEnumerable` and `Stream`, even if reducing performance,
+is having the intended RAM use effect, as opposed to loading an entire video into RAM.
+
+```sh
+$ dotnet run ../qoi ../out.qolv
+Encoded 109574 frames in 274.900761 seconds
+```
+
+This works out to a very fun 398.59 fps, for essentially decoding and re-encoding QOI.
+
+Now, the proof is in the pudding...
+```sh
+$ ls -l out.qolv
+.rw-r--r--  588M cain  2 Mar 17:45  ../out.qolv
+```
+
+Holy crap, we beat the 1080p webm, and its lossless!
+
+## What about audio tho
+
+IDK use [QOA](https://qoaformat.org/).
+
+## Conclusion
+
+So yeah, there's a lossless compressed format that appears to work well for pixel art.
+
+If you want to download a copy of the file, [here you go](https://f.yellows.ink/quiet_system_no_mana.qolv).
+
+This is utterly useless, but see you back here soon!  
+  -- Yellowsink

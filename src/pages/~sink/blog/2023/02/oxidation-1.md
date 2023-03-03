@@ -390,4 +390,4 @@ Cya next time!
  -- Yellowsink
 
 [*Previous*](oxidation-0)
-~~*Next*~~
+[*Next*](oxidation-1)

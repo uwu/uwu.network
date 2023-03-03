@@ -390,4 +390,4 @@ Cya next time!
  -- Yellowsink
 
 [*Previous*](oxidation-0)
-[*Next*](oxidation-1)
+[*Next*](../../2023/03/oxidation-2)

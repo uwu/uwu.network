@@ -221,5 +221,5 @@ TokenStream::default()
 
 And there we go! Add `#[derive(Ast)]` to our stuff, and we get automatic type conversions 🎉!
 
-[*Previous*](oxidation-1)
+[*Previous*](../../2023/02/oxidation-1)
 ~~*Next*~~

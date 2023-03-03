@@ -26,6 +26,7 @@ const { frontmatter } = posts.find(
   ogpDescription={frontmatter.description}
 >
   <meta slot="head" property="og:title" content={frontmatter.title + " - Quiet System"} />
+  <meta slot="head" property="og:image" content="/sink/silent.png" />
   <meta slot="head" property="article:author" content="Yellowsink" />
   <meta slot="head" property="article:published_time" content={frontmatter.pubDate} />
 

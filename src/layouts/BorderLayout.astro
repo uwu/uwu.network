@@ -10,8 +10,13 @@ const titleSuffix = `${titleName} on uwu`;
 const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
 ---
 
-<BaseLayout title={resolvedTitle} class={`${bodyClass ?? "" } bg-black font-plex text-white h-screen p-8px`}>
+<BaseLayout
+  title={resolvedTitle}
+  class={`${bodyClass ?? ""} bg-black font-plex text-white h-screen p-8px`}
+  {...Object.fromEntries(Object.entries(getProps(Astro.props)).filter(e => e[0].startsWith("ogp")))}
+>
   <IbmPlexSans slot="head" />
+  <slot name="head" slot="head" />
 
   <div class="border border-white p-4px h-full">
     <main class={"border border-white p-6 h-full " + (scroll ? "of-auto" : "")}>

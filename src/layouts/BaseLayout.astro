@@ -5,7 +5,7 @@ import "@res/css/preflight.css";
 // THIS IS THE MAIN LAYOUT
 // your layout should import THIS
 
-const { title, class: className } = Astro.props;
+const { title, class: className, ogpType, ogpSiteName, ogpDescription } = Astro.props;
 ---
 
 <html lang="en">
@@ -13,9 +13,9 @@ const { title, class: className } = Astro.props;
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
-	<meta property="og:type" content="website">
-	<meta property="og:site_name" content="uwu.network">
-	<meta property="og:description" content="a group of people building projects that won't change the world">
+	<meta property="og:type" content={ogpType ?? "website"}>
+	<meta property="og:site_name" content={ogpSiteName ?? "uwu.network"}>
+	<meta property="og:description" content={ogpDescription ?? "a group of people building projects that won't change the world"}>
 	<title>{title}</title>
 	<slot name="head" />
 </head>

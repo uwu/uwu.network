@@ -21,7 +21,14 @@ const { frontmatter } = posts.find(
   footerOride={"YELLOWSINK @ UWUNET " + frontmatter.pubDate.split("T")[0]}
   mainHref="/~sink/blog"
   scroll
+  ogpType="article"
+  ogpSiteName="Quiet System"
+  ogpDescription={frontmatter.description}
 >
+  <meta slot="head" property="og:title" content={frontmatter.title + " - Quiet System"} />
+  <meta slot="head" property="article:author" content="Yellowsink" />
+  <meta slot="head" property="article:published_time" content={frontmatter.pubDate} />
+
   <div id="quiet">
     <slot />
   </div>

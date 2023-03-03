@@ -6,6 +6,8 @@ pubDate: "2023-03-03T20:47:00"
 tags: ["RUST", "OXIDATION"]
 ---
 
+<img src="/sink/quiet_oxidation_banner.svg" class="max-w-200" />
+
 # the_oxidation[2]: Bending Rust to my will
 
 So this post isn't actually on Paramin, its based on another Rust project, yallvm.

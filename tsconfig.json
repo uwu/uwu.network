@@ -55,11 +55,11 @@
       "</*": ["public/xirreal/*"],
 
       // kasimir
-      "~components/*": ["src/components/xirreal/*"],
-      "~layouts/*": ["src/layouts/xirreal/*"],
-      "~css/*": ["src/res/css/xirreal/*"],
-      "~js/*": ["src/res/js/xirreal/*"],
-      "~/*": ["public/xirreal/*"]
+      "~components/*": ["src/components/kasimir/*"],
+      "~layouts/*": ["src/layouts/kasimir/*"],
+      "~css/*": ["src/res/css/kasimir/*"],
+      "~js/*": ["src/res/js/kasimir/*"],
+      "~/*": ["public/kasimir/*"]
     },
     // Add type definitions for our Vite runtime.
     "types": ["vite/client", "@types/node"]

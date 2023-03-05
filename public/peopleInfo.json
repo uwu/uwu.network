@@ -71,9 +71,9 @@
     },
     {
         "header": "kasimir",
-        "body": "good at reading what is not meant to be read",
+        "body": "backup janitor",
         "img":  {
-            "src": "/kasimir/img/logo.png",
+            "src": "/kasimir/img/logo.svg",
             "link": "https://k6.tf"
         },
         "headLink": "/~kasimir",

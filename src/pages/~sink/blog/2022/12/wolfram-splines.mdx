@@ -194,7 +194,7 @@ DeCasteljau construction for <K>t</K>:
   cells={[
     `Collect[dcjBezier, t]`,
     `
-          P0 
+          P0
 +   t (-3 P0 + 3 P1)
 + t^2 ( 3 P0 - 6 P1 + 3 P2)
 + t^3 (  -P0 + 3 P1 - 3 P2 + P3) `
@@ -352,14 +352,14 @@ No idea why.
   cells={[
     `
 FullSimplify[
- cubicbezier[P0, P1, P2, P3, t] == 
+ cubicbezier[P0, P1, P2, P3, t] ==
   cubicbezierMatrix[P0, P1, P2, P3, t]]
 FullSimplify[
- Equivalent[cubicbezier[P0, P1, P2, P3, t], 
+ Equivalent[cubicbezier[P0, P1, P2, P3, t],
   cubicbezierMatrix[P0, P1, P2, P3, t]]]
 FullSimplify[
- ForAll[{P0, P1, P2, P3, t}, 
-  cubicbezier[P0, P1, P2, P3, t] == 
+ ForAll[{P0, P1, P2, P3, t},
+  cubicbezier[P0, P1, P2, P3, t] ==
    cubicbezierMatrix[P0, P1, P2, P3, t]]]`,
     `P0 t == 0`,
     `
@@ -693,7 +693,7 @@ Simplify[
 />
 
 The result it has given us is the constraint for <K>C^1</K> continuity,
-which can be rearranged to <K>{`P_4=\\frac{2P_3}{P_2}`}</K>,
+which can be rearranged to <K>{`P_4=2P_3 -P_2`}</K>,
 or if you prefer, <K>{`\\frac{P_2+P_4}{2}=P_3`}</K>: <K>P_3</K> is the mean of <K>P_2</K> and <K>P_4</K> -
 in the middle of them!
 
@@ -704,13 +704,10 @@ If we want <K>C^2</K> continuity, however, we lose a lot more control:
     `
 Simplify[
   D[cubicbezier[P0, P1, P2, P3, t], {t, 2}] ==
-  D[cubicbezier[P3, P4, P5, P6, t - 1], {t, 2}],
-  {
-    t == 1,
-    P2 + P4 == 2 P3
-  }
+  D[cubicbezier[P3, 2 P3 - P2, P5, P6, t - 1], {t, 2}],
+  {t == 1}
   ]`,
-  `P1 + 4 P4 == 4 P3 + P5`
+  `P1 + 4 P3 == 4 P2 + P5`
   ]}
 />
 
@@ -720,7 +717,7 @@ The geometric intuition for this constraint is a lot less useful,
 but we now only have control over the end points of each Beziér,
 plus the control points of the first curve.
 
-The constraint is more usefully rearranged to: <K>P_5=P_1-4P_3+4P_4</K>.
+The constraint is more usefully rearranged to: <K>P_5=P_1+4P_3-4P_2</K>.
 
 If you watch the relevant part of *The Continuity of Splines*,
 it is quite convincingly and satisfying shown that going higher,
@@ -746,60 +743,56 @@ with the control points <K>P_0, P_1, P_2, P_3, P_4, P_5, P_6</K>.
 
 And construct these in Mathematica and enforce <K>C^3</K> continuity:
 
-<NotebookCell 
+<NotebookCell
   cells={[
     `
 Simplify[
   D[cubicbezier[P0, P1, P2, P3, t], {t, 3}] ==
-  D[cubicbezier[P3, P4, P5, P6, t - 1], {t, 3}],
-  {
-    t == 1,
-    P2 + P4 == 2 P3,
-    P1 + 4 P4 == 4 P3 + P5
-  }
+  D[cubicbezier[P3, 2 P3 - P2, P1 + 4 P3 - 4 P2, P6, t - 1], {t, 3}],
+  {t == 1}
   ]`,
-  `P0 + 12 P4 + P6 == 8 P3 + 6 P5`
+  `P0 + 12 P2 + P6 == 6 P1 + 8 P3`
   ]}
 />
 
 If we now consider our rules:
-- <K>P_2 + P_4 = 2P_3</K>
-- <K>P_1 + 4 P_4 = 4 P_3 + P_5</K>
-- <K>P_0 + 12 P_4 + P_6 = 8 P_3 + 6 P_5</K>
+- <K>P_4 = 2P_3-P_2</K>
+- <K>P_5 = P_1 + 4P_3 - 4P_2</K>
+- <K>P_0 + 12 P_4 + P_6 = 6 P_1 + 6 P_5</K>
 
-And put all of the first curve's points on the right,
-and the second curve's points on the left:
+And put them in terms of <K>P_4</K>, <K>P_5</K>, and <K>P_6</K>:
 
-- <K>P_4=P_2-2P_3</K>
-- <K>4P_4-P_5=4P_3-P_1</K>
-- <K>12P_4+P_6-6P_5=8P_3-P_0</K>
+- <K>P_4 = 2P_3-P_2</K>
+- <K>P_5 = P_1 + 4P_3 - 4P_2</K>
+- <K>P_6 = 6 P_1 + 6P_5 - P_0 - 12 P_4</K>
 
 And solve for individual points:
 
 <NotebookCell
   cells={[
     `
-proofP4 = proofP2 - 2 proofP3
-proofP5 = SolveValues[
-  4 proofP4 - P5 == 4 proofP3 - proofP1,
-  P5
-  ][[1]]
-proofP6 = SolveValues[
-  12 proofP4 + P6 - 6 proofP5 == 8 proofP3 - proofP0,
-  P6
-  ][[1]]`,
-  `proofP2 - 2 proofP3`,
-  `proofP1 + 4 proofP2 - 12 proofP3`,
-  `-proofP0 + 6 proofP1 + 12 proofP2 - 40 proofP3`
+proofP4 = 2 proofP3 - proofP2                          // FullSimplify
+proofP5 = proofP1 + 4 proofP3 - 4 proofP2              // FullSimplify
+proofP6 = 6 proofP1 + 6 proofP5 - proofP0 - 12 proofP4 // FullSimplify`,
+  `-proofP2 + 2 proofP3`,
+  `proofP1 - 4 proofP2 + 4 proofP3`,
+  `-proofP0 + 12 (proofP1 - proofP2)`
   ]}
 />
 
 So the points of the second Beziér curve are fully constrained by the first curve:
-- <K>P_4=P_2-2P_3</K>
-- <K>P_5=P_1+4P_2-12P_3</K>
-- <K>P_6=-P_0+6P_1+12P_2-40P_3</K>
+- <K>P_4=2P_3-P_2</K>
+- <K>P_5=P_1+4P_3-4P_2</K>
+- <K>P_6=12P_1-12P_2-P_0</K>
 
-// TODO help this is VERY VERY VERY wrong help must fix
+And if we draw a Beziér with these constraints:
+
+<img src="/sink/quiet_beziers/continuity_4_cinf.svg" class="max-w-130" />
+
+Well, it may be *really fucking big*, but it sure looks smooth as butter!
+
+Now to prove that this is equivalent to increasing <K>t>1</K>...
+Well I don't actually have any idea how to do this. //TODO?
 
 ## TODO:
 - hermite splines and catmull-rom and b-spline

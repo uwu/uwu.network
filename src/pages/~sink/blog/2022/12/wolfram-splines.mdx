@@ -791,8 +791,57 @@ And if we draw a Beziér with these constraints:
 
 Well, it may be *really fucking big*, but it sure looks smooth as butter!
 
-Now to prove that this is equivalent to increasing <K>t>1</K>...
-Well I don't actually have any idea how to do this. //TODO?
+So now, we have our constraints, so its time to prove that this implies <K>C^\infty</K>.
+
+I will do this by showing that it is equivalent to continuing the original curve for <K>1 \le t \le 2</K>,
+and since its the same curve, it must be continuous with itself!
+
+So let's start with our constrained second half, and reduce it to the Bernstein form (it's just more compact):
+
+<NotebookCell
+  cells={[
+    `cubicbezier[
+  P3,
+  2 P3 - P2,
+  P1 + 4 P3 - 4 P2,
+  12 P1 - 12 P2 - P0,
+  t
+] // Expand;
+Collect[%, {P0, P1, P2, P3}]`,
+    `- P0                      t^3
++ P1 (          3 t^2 + 9 t^3)
++ P2 (  - 3 t - 6 t^2 - 3 t^3)
++ P3 (1 + 3 t + 3 t^2 - 7 t^3)`
+  ]}
+/>
+
+And now try our original bezier curve, but with <K>t+1</K> instead of <K>t</K>
+(so when we evaluate at <K>0.5</K>, thats not halfway along our curve, its <K>t=0.5+1=1.5</K>,
+beyond the bounds of our curve):
+
+<NotebookCell
+  cells={[
+    `cubicbezier[P0, P1, P2, P3, t + 1] // Expand;
+Collect[%, {P0, P1, P2, P3}]`,
+    `- P0                      t^3
++ P1 (          3 t^2 + 3 t^3)
++ P2 (  - 3 t - 6 t^2 - 3 t^3)
++ P3 (1 + 3 t + 3 t^2 +   t^3)`
+  ]}
+/>
+
+Hold on a second... Those don't match!
+
+Indeed:
+
+<NotebookCell
+  cells={[
+    `Reduce[%48 == %49]`,
+    `P1 == (4 P3)/3 || t == 0`
+  ]}
+/>
+
+This does not reduce to `True`.
 
 ## TODO:
 - hermite splines and catmull-rom and b-spline

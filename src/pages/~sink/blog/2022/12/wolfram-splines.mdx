@@ -808,7 +808,7 @@ So let's start with our constrained second half, and reduce it to the Bernstein 
   t
 ] // Expand;
 Collect[%, {P0, P1, P2, P3}]`,
-    `- P0                      t^3
+    `  P0 (                -   t^3)
 + P1 (          3 t^2 + 9 t^3)
 + P2 (  - 3 t - 6 t^2 - 3 t^3)
 + P3 (1 + 3 t + 3 t^2 - 7 t^3)`
@@ -823,25 +823,25 @@ beyond the bounds of our curve):
   cells={[
     `cubicbezier[P0, P1, P2, P3, t + 1] // Expand;
 Collect[%, {P0, P1, P2, P3}]`,
-    `- P0                      t^3
+    `  P0 (                -   t^3)
 + P1 (          3 t^2 + 3 t^3)
 + P2 (  - 3 t - 6 t^2 - 3 t^3)
 + P3 (1 + 3 t + 3 t^2 +   t^3)`
   ]}
 />
 
-Hold on a second... Those don't match!
+Hold on a second... Those don't match, the <K>t^3</K> coeffs for <K>P_1, P_3</K> are off!
 
 Indeed:
 
 <NotebookCell
   cells={[
     `Reduce[%48 == %49]`,
-    `P1 == (4 P3)/3 || t == 0`
+    `P1 == 4/3 P3 || t == 0`
   ]}
 />
 
-This does not reduce to `True`.
+This does not reduce to `True`, and suggests a missing interaction between <K>P_1</K> and <K>P_3</K>.
 
 ## TODO:
 - hermite splines and catmull-rom and b-spline

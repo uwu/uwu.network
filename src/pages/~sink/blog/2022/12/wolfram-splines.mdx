@@ -748,8 +748,12 @@ And construct these in Mathematica and enforce <K>C^3</K> continuity:
     `
 Simplify[
   D[cubicbezier[P0, P1, P2, P3, t], {t, 3}] ==
-  D[cubicbezier[P3, 2 P3 - P2, P1 + 4 P3 - 4 P2, P6, t - 1], {t, 3}],
-  {t == 1}
+  D[cubicbezier[P3, P4, P5, P6, t - 1], {t, 3}],
+  {
+    t == 1,
+    P4 == 2 P3 - P2,
+    P5 == P1 + 4 P2 - 4 P3
+  }
   ]`,
   `P0 + 12 P2 + P6 == 6 P1 + 8 P3`
   ]}
@@ -758,32 +762,15 @@ Simplify[
 If we now consider our rules:
 - <K>P_4 = 2P_3-P_2</K>
 - <K>P_5 = P_1 + 4P_3 - 4P_2</K>
-- <K>P_0 + 12 P_4 + P_6 = 6 P_1 + 6 P_5</K>
+- <K>P_0 + 12P_2 + P_6 = 6 P_1 + 8 P_3</K>
 
 And put them in terms of <K>P_4</K>, <K>P_5</K>, and <K>P_6</K>:
 
 - <K>P_4 = 2P_3-P_2</K>
 - <K>P_5 = P_1 + 4P_3 - 4P_2</K>
-- <K>P_6 = 6 P_1 + 6P_5 - P_0 - 12 P_4</K>
+- <K>P_6 = 6 P_1 + 8 P_3 - P_0 - 12 P_2</K>
 
-And solve for individual points:
-
-<NotebookCell
-  cells={[
-    `
-proofP4 = 2 proofP3 - proofP2                          // FullSimplify
-proofP5 = proofP1 + 4 proofP3 - 4 proofP2              // FullSimplify
-proofP6 = 6 proofP1 + 6 proofP5 - proofP0 - 12 proofP4 // FullSimplify`,
-  `-proofP2 + 2 proofP3`,
-  `proofP1 - 4 proofP2 + 4 proofP3`,
-  `-proofP0 + 12 (proofP1 - proofP2)`
-  ]}
-/>
-
-So the points of the second Beziér curve are fully constrained by the first curve:
-- <K>P_4=2P_3-P_2</K>
-- <K>P_5=P_1+4P_3-4P_2</K>
-- <K>P_6=12P_1-12P_2-P_0</K>
+So the points of the second Beziér curve are fully constrained by the first curve!
 
 And if we draw a Beziér with these constraints:
 
@@ -804,14 +791,14 @@ So let's start with our constrained second half, and reduce it to the Bernstein 
   P3,
   2 P3 - P2,
   P1 + 4 P3 - 4 P2,
-  12 P1 - 12 P2 - P0,
+  6 P1 + 8 P3 - P0 - 12 P2,
   t
 ] // Expand;
 Collect[%, {P0, P1, P2, P3}]`,
     `  P0 (                -   t^3)
-+ P1 (          3 t^2 + 9 t^3)
++ P1 (          3 t^2 + 3 t^3)
 + P2 (  - 3 t - 6 t^2 - 3 t^3)
-+ P3 (1 + 3 t + 3 t^2 - 7 t^3)`
++ P3 (1 + 3 t + 3 t^2 +   t^3)`
   ]}
 />
 
@@ -830,18 +817,19 @@ Collect[%, {P0, P1, P2, P3}]`,
   ]}
 />
 
-Hold on a second... Those don't match, the <K>t^3</K> coeffs for <K>P_1, P_3</K> are off!
+These look the same to me!
 
 Indeed:
 
 <NotebookCell
   cells={[
-    `Reduce[%48 == %49]`,
-    `P1 == 4/3 P3 || t == 0`
+    `Reduce[%45 == %46]`,
+    `True`
   ]}
 />
 
-This does not reduce to `True`, and suggests a missing interaction between <K>P_1</K> and <K>P_3</K>.
+There! Increasing <K>t>1</K> is equivalent to adding more curves of <K>C^3</K>,
+and as Beziérs are <K>C^\infty</K> with *themselves*, this means that <K>C^3 => C^\infty \square</K>.
 
 ## TODO:
 - hermite splines and catmull-rom and b-spline

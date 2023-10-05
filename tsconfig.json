@@ -24,12 +24,12 @@
       "+js/*": ["src/res/js/toonlink/*"],
       "+/*": ["public/toonlink/*"],
 
-      // Beef
-      "%components/*": ["src/components/beef/*"],
-      "%layouts/*": ["src/layouts/beef/*"],
-      "%css/*": ["src/res/css/beef/*"],
-      "%js/*": ["src/res/js/beef/*"],
-      "%/*": ["public/beef/*"],
+      // maisy
+      "%components/*": ["src/components/maisy/*"],
+      "%layouts/*": ["src/layouts/maisy/*"],
+      "%css/*": ["src/res/css/maisy/*"],
+      "%js/*": ["src/res/js/maisy/*"],
+      "%/*": ["public/maisy/*"],
 
       // Phorcys
       "§components/*": ["src/components/phorcys/*"],

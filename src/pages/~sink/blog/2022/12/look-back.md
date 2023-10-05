@@ -219,7 +219,7 @@ and if you're in the Discord server, the announcements follow from
 [here](https://discord.com/channels/824921608560181258/824923929138954241/1024255149016895528).
 
 I say a hundred hours of my work, but countless more work from other highly talented people
-including link, kasi, beef, alyxia, cynthia, etc also die at this point.
+including link, kasi, maisy, alyxia, cynthia, etc also die at this point.
 
 The day after, shelter would be announced.
 

@@ -47,8 +47,8 @@ const { content } = Astro.props;
 <FilesLayout>
     <div class="flex md:(flex-row) lt-md:(flex-col) h-full p-4 gap-4">
         <FilesPanel>
-            <File name=".." path="/~beef/" />
-            {files.map(i => <File name={i} path={`/~beef/files/${i}`} />)}
+            <File name=".." path="/~maisy/" />
+            {files.map(i => <File name={i} path={`/~maisy/files/${i}`} />)}
         </FilesPanel>
         <FilesPanel>
             <Fragment set:html={content} />

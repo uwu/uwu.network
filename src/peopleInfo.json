@@ -31,17 +31,18 @@
         "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPAiA4XAKgn3RWQNDIA4TITrC5giGQ17/IoC99M1Rk+"
     },
     {
-        "header": "Beef",
+        "header": "maisy",
         "body": "uwu.network janitor, local TypeScript enthusiast",
         "img": {
-            "src": "/beef/img/logo.png",
-            "link": "https://beefers.dev"
+            "src": "/maisy/img/logo.png",
+            "link": "https://maisy.moe"
         },
-        "headLink": "/~beef",
+        "headLink": "/~maisy",
         "links": {
-            "[github]": "https://github.com/Beefers",
-            "[twitter]": "https://twitter.com/Beef_ers",
-            "[email]": "mailto:beefers@riseup.net"
+            "[discord]": "https://discord.com/users/257109471589957632",
+            "[github]": "https://github.com/maisymoe",
+            "[fedi]": "https://wetdry.world/@maisy",
+            "[email]": "mailto:maisymoe@riseup.net"
         }
     },
     {

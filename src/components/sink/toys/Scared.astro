@@ -6,17 +6,17 @@
 
 <script>
   import { EASE } from "crossani";
-  import { v2degBtw, v2add, v2sub, v2mag, v2smul } from "^js/math";
+  import { Vec2D, v2degBtw, v2add, v2sub, v2mag, v2smul } from "^js/math";
 
-  let mousePos = [0, 0];
+  let mousePos: Vec2D = [0, 0];
   window.addEventListener("mousemove", e => {
     mousePos = [e.clientX, e.clientY];
   });
 
   const scared = document.getElementById("scared");
 
-  const origin = [scared.offsetLeft + (scared.clientWidth / 2), scared.offsetTop + (scared.clientHeight / 2)];
-  let currentTranslate = [0, 0];
+  const origin: Vec2D = [scared.offsetLeft + (scared.clientWidth / 2), scared.offsetTop + (scared.clientHeight / 2)];
+  let currentTranslate: Vec2D = [0, 0];
 
   (async () => {
 

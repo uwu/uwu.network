@@ -26,23 +26,23 @@
   const btm = document.getElementById("btm");
   const top = document.getElementById("top");
 
-  btm.transitions = [
-    {
-      state: { "stroke-dashoffset": 0 },
+  btm.transitions = {
+    "main": {
+      state: { "stroke-dashoffset": "0" },
       ms: 2000,
       easing: EASE.in
     }
-  ];
+  };
 
-  top.transitions = [
-    {
-      state: { "stroke-dashoffset": 0 },
+  top.transitions = {
+    "main": {
+      state: { "stroke-dashoffset": "0" },
       // gotta keep a consistent speed :)
       ms: 2000 * (106 / 55),
       easing: EASE.out
     }
-  ];
+  };
 
-  btm.doTransition(0)
-    .then(() => top.doTransition(0));
+  btm.doTransition("main")
+    .then(() => top.doTransition("main"));
 </script>

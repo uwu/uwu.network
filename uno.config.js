@@ -1,7 +1,5 @@
 // @ts-check
-import { defineConfig, presetWind } from "unocss";
-import variantGroups from "@unocss/transformer-variant-group";
-import directives from "@unocss/transformer-directives";
+import { defineConfig, presetWind, transformerVariantGroup, transformerDirectives } from "unocss";
 
 export default defineConfig({
   transformers: [
@@ -28,8 +26,8 @@ export default defineConfig({
         }
       },
     },
-    variantGroups(),
-    directives()
+    transformerVariantGroup(),
+    transformerDirectives()
   ],
   presets: [presetWind()],
   theme: {
@@ -42,5 +40,4 @@ export default defineConfig({
       quiet: ["13pt", "17pt"]
     }
   },
-  configFile: false,
 });

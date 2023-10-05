@@ -5,13 +5,13 @@
 
 <script>
   import "@crossani/spring";
-  import { v2sub, v2smul } from "^js/math";
+  import { Vec2D, v2sub, v2smul } from "^js/math";
 
   const container = document.getElementById("springy-container");
-  const ball = container.firstElementChild;
+  const ball = container.firstElementChild as HTMLDivElement;
 
-  const containerPos = () => [container.offsetLeft, container.offsetTop];
-  const containerSize = () => [container.clientWidth, container.clientHeight];
+  const containerPos = (): Vec2D => [container.offsetLeft, container.offsetTop];
+  const containerSize = (): Vec2D => [container.clientWidth, container.clientHeight];
   const centerVec = () => v2smul(containerSize(), .5);
 
   let mousePos = [0, 0];

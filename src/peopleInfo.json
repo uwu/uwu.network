@@ -1,88 +1,71 @@
 [
-    {
-        "header": "toonlink",
-        "body": "i'm proficient in making things do things that they aren't supposed to do",
-        "img": {
-            "src": "/toonlink/ssemblem.png",
-            "link": "https://toony.link"
-        },
-        "pixelated": true,
-        "headLink": "/~toonlink",
-        "links": {
-            "[keybase]": "https://keybase.io/twnlink",
-            "[github]": "https://github.com/twnlink",
-            "[twitter]": "https://twitter.com/twnlink"
-        },
-        "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINbMQsMpuAx3H8V2/XJZjHFlmIO4Kvz7zRQKsVWC51ZK"
+  {
+    "header": "toonlink",
+    "body": "i'm proficient in making things do things that they aren't supposed to do",
+    "img": {
+      "src": "/toonlink/ssemblem.png",
+      "link": "https://toony.link"
     },
-    {
-        "header": "Yellowsink",
-        "body": "When awful ideas and free time collide.",
-        "img": {
-            "src": "/sink/bw-pfp.svg",
-            "link": "https://yellows.ink"
-        },
-        "headLink": "/~sink",
-        "links": {
-            "[githu🅱️]": "https://github.com/yellowsink",
-            "[twattter]": "https://twitter.com/CainAtkin",
-            "[peemail]": "mailto:yellowsink@riseup.net"
-        },
-        "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPAiA4XAKgn3RWQNDIA4TITrC5giGQ17/IoC99M1Rk+"
+    "pixelated": true,
+    "headLink": "/~toonlink",
+    "links": {
+      "[keybase]": "https://keybase.io/twnlink",
+      "[github]": "https://github.com/twnlink",
+      "[twitter]": "https://twitter.com/twnlink"
     },
-    {
-        "header": "maisy",
-        "body": "uwu.network janitor, local TypeScript enthusiast",
-        "img": {
-            "src": "/maisy/img/logo.png",
-            "link": "https://maisy.moe"
-        },
-        "headLink": "/~maisy",
-        "links": {
-            "[discord]": "https://discord.com/users/257109471589957632",
-            "[github]": "https://github.com/maisymoe",
-            "[fedi]": "https://wetdry.world/@maisy",
-            "[email]": "mailto:maisymoe@riseup.net"
-        }
+    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINbMQsMpuAx3H8V2/XJZjHFlmIO4Kvz7zRQKsVWC51ZK"
+  },
+  {
+    "header": "Yellowsink",
+    "body": "When awful ideas and free time collide.",
+    "img": { "src": "/sink/bw-pfp.svg", "link": "https://yellows.ink" },
+    "headLink": "/~sink",
+    "links": {
+      "[githu🅱️]": "https://github.com/yellowsink",
+      "[twattter]": "https://twitter.com/CainAtkin",
+      "[peemail]": "mailto:yellowsink@riseup.net"
     },
-    {
-        "header": "Phorcys",
-        "body": "i'm toonlink",
-        "img": {
-            "src": "/phorcys/pfp.png",
-            "link": "https://phorcys.net"
-        },
-        "headLink": "/~phorcys",
-        "links": {
-            "[github]": "https://github.com/phorcys420"
-        }
-    },
-    {
-        "header": "xirreal",
-        "body": "train rights 🏳️‍⚧️",
-        "img": {
-            "src": "/xirreal/pfp.jpg",
-            "link": "https://xirreal.dev"
-        },
-        "headLink": "/~xirreal",
-        "links": {
-            "[github]": "https://github.xirreal.dev/",
-            "[email]": "mailto:me@xirreal.dev"
-        }
-    },
-    {
-        "header": "kasimir",
-        "body": "backup janitor",
-        "img":  {
-            "src": "/kasimir/img/logo.svg",
-            "link": "https://k6.tf"
-        },
-        "headLink": "/~kasimir",
-        "links": {
-            "[github]": "https://github.com/redstonekasi",
-            "[twitter]": "https://twitter.com/redstonekasi",
-            "[email]": "mailto:kasi@hanneskann.de"
-        },
-        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnqIcBUmOccuzIfU41vsexIvQJCuIE9JFUt7zOFd57dJKywdFF/RZQDXS8xMijCNksskm0kaZsNOMATECvY4F6cyu5rnt3y96FCdvwZnUf2FKt6LtvGjdsnWCDARPizHM1jEYyJfKoNd7ncZt4BWrlF/vcm64rd0IaRe1gJ6vn1w0vWW8bJX8/wq7tklSac0/olLEJMjO4n1J0o4dG1fjcjx2/kVDMp30fbHCIpixtNjmvi8mfJDYmUj3okaruQgVafJtOcznjxwWt+5QrneJjI3EY08mA/cBZr5nDe2l4RBNnHIM+pj9ONEUHLJTcFAOzkABFzMRTt8JzXBi1ieecs3AMPT6WqJcJGd0agnJTLDhq4B9du9PV3sOa5moiBnzienfYzbLWhptvWw193tNO/0TuSZE5T6e6O/6w1H4HyJSQVrD7Wb0+nM56pK9nv3NMeRZ39XQWCICevxc/t/ul76+r82nnhmq05ov5rtXTl8zeXQOR4Ch2NOz9bVONH3s="
+    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPAiA4XAKgn3RWQNDIA4TITrC5giGQ17/IoC99M1Rk+"
+  },
+  {
+    "header": "maisy",
+    "body": "uwu.network janitor, local TypeScript enthusiast",
+    "img": { "src": "/maisy/img/logo.png", "link": "https://maisy.moe" },
+    "headLink": "/~maisy",
+    "links": {
+      "[discord]": "https://discord.com/users/257109471589957632",
+      "[github]": "https://github.com/maisymoe",
+      "[fedi]": "https://wetdry.world/@maisy",
+      "[email]": "mailto:maisymoe@riseup.net"
     }
+  },
+  {
+    "header": "Phorcys",
+    "body": "i'm toonlink",
+    "img": { "src": "/phorcys/pfp.png", "link": "https://phorcys.net" },
+    "headLink": "/~phorcys",
+    "links": { "[github]": "https://github.com/phorcys420" }
+  },
+  {
+    "header": "xirreal",
+    "body": "graphics and backend developer",
+    "img": { "src": "/xirreal/pfp.png", "link": "https://xirreal.dev" },
+    "headLink": "/~xirreal",
+    "links": {
+      "[github]": "https://github.xirreal.dev/",
+      "[email]": "mailto:me@xirreal.dev"
+    }
+  },
+  {
+    "header": "kasimir",
+    "body": "backup janitor",
+    "img": { "src": "/kasimir/img/logo.svg", "link": "https://k6.tf" },
+    "headLink": "/~kasimir",
+    "links": {
+      "[github]": "https://github.com/redstonekasi",
+      "[twitter]": "https://twitter.com/redstonekasi",
+      "[email]": "mailto:kasi@hanneskann.de"
+    },
+    "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnqIcBUmOccuzIfU41vsexIvQJCuIE9JFUt7zOFd57dJKywdFF/RZQDXS8xMijCNksskm0kaZsNOMATECvY4F6cyu5rnt3y96FCdvwZnUf2FKt6LtvGjdsnWCDARPizHM1jEYyJfKoNd7ncZt4BWrlF/vcm64rd0IaRe1gJ6vn1w0vWW8bJX8/wq7tklSac0/olLEJMjO4n1J0o4dG1fjcjx2/kVDMp30fbHCIpixtNjmvi8mfJDYmUj3okaruQgVafJtOcznjxwWt+5QrneJjI3EY08mA/cBZr5nDe2l4RBNnHIM+pj9ONEUHLJTcFAOzkABFzMRTt8JzXBi1ieecs3AMPT6WqJcJGd0agnJTLDhq4B9du9PV3sOa5moiBnzienfYzbLWhptvWw193tNO/0TuSZE5T6e6O/6w1H4HyJSQVrD7Wb0+nM56pK9nv3NMeRZ39XQWCICevxc/t/ul76+r82nnhmq05ov5rtXTl8zeXQOR4Ch2NOz9bVONH3s="
+  }
 ]

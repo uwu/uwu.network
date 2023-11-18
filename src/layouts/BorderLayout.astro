@@ -12,7 +12,7 @@ const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
 
 <BaseLayout
   title={resolvedTitle}
-  class={`${bodyClass ?? ""} bg-black font-plex text-white h-screen p-8px`}
+  class={`${bodyClass ?? ""} bg-black font-plex text-white h-screen p-8px relative`}
   {...Object.fromEntries(Object.entries(getProps(Astro.props)).filter(e => e[0].startsWith("ogp")))}
 >
   <IbmPlexSans slot="head" />

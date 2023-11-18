@@ -19,7 +19,7 @@ const CONTAINER_ID = "gol",
   CLEAR_B_ID = "gol-clear",
   RAND_THRES = 0.8;
 
-const container = document.getElementById(CONTAINER_ID);
+const container = document.getElementById(CONTAINER_ID)!;
 
 class Grid2D {
   store: boolean[][] = [];
@@ -165,21 +165,21 @@ export default (cellWidth: number, cellHeight: number) => {
     renderCells();
   }, 100);
 
-  document.getElementById(SIMPLE_B_ID).onclick = () =>
+  document.getElementById(SIMPLE_B_ID)!.onclick = () =>
     container.classList.toggle(SIMPLE_CLASS);
 
-  document.getElementById(RAND_B_ID).onclick = () => {
+  document.getElementById(RAND_B_ID)!.onclick = () => {
     grid.randomize();
     renderCells();
   };
 
-  const pauseButton = document.getElementById(PAUSE_B_ID);
+  const pauseButton = document.getElementById(PAUSE_B_ID)!;
   pauseButton.onclick = () => {
     tickingPaused = !tickingPaused;
     pauseButton.innerText = pauseButton.innerText === "play" ? "pause" : "play";
   };
 
-  document.getElementById(CLEAR_B_ID).onclick = () => {
+  document.getElementById(CLEAR_B_ID)!.onclick = () => {
     grid.resize(0, 0);
     makeGrid();
   };

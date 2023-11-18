@@ -8,7 +8,7 @@
 import "crossani";
 
 export function show(x: number, y: number, dur = 200) {
-  const elem = document.getElementById(`${x}-${y}`);
+  const elem = document.getElementById(`${x}-${y}`)!;
   elem.doTransition({
     state: { opacity: "1" },
     ms: 50,

@@ -18,7 +18,7 @@ const CONTAINER_ID = "raytracer",
   HIDEUI_B_ID = "raytracer-ui",
   NAME_DIV_ID = "user";
 
-const container = document.getElementById(CONTAINER_ID);
+const container = document.getElementById(CONTAINER_ID)!;
 
 let bitDepth = 6;
 let colors = 2 ** bitDepth;
@@ -328,15 +328,15 @@ export default () => {
   let rendering = true;
   let uiHidden = false;
 
-  const pauseButton = document.getElementById(PAUSE_B_ID);
+  const pauseButton = document.getElementById(PAUSE_B_ID)!;
   pauseButton.onclick = () => {
     rendering = !rendering;
     pauseButton.innerText =
       pauseButton.innerText === "resume" ? "pause" : "resume";
   };
 
-  const nameBar = document.getElementById(NAME_DIV_ID);
-  const uiButton = document.getElementById(HIDEUI_B_ID);
+  const nameBar = document.getElementById(NAME_DIV_ID)!;
+  const uiButton = document.getElementById(HIDEUI_B_ID)!;
   uiButton.onclick = () => {
     uiHidden = !uiHidden;
     if (uiHidden) {
@@ -348,14 +348,14 @@ export default () => {
     }
   };
 
-  const groundButton = document.getElementById(GROUND_B_ID);
+  const groundButton = document.getElementById(GROUND_B_ID)!;
   groundButton.onclick = () => {
     moving = (moving + 1) % 2;
     groundButton.innerText =
       moving === 1.0 ? "moving ground: true" : "moving ground: false";
   };
 
-  const depthButton = document.getElementById(DEPTH_B_ID);
+  const depthButton = document.getElementById(DEPTH_B_ID)!;
   depthButton.onclick = () => {
     bitDepth++;
     if (bitDepth == 9) bitDepth = 1;

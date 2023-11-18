@@ -4,8 +4,8 @@ const audio1 = document.getElementById("audio-1") as HTMLAudioElement;
 const audio2 = document.getElementById("audio-2") as HTMLAudioElement;
 const audio3 = document.getElementById("audio-3") as HTMLAudioElement;
 
-const chunkPlaceholder = document.getElementById("chunk-placeholder");
-const codecPlaceholder = document.getElementById("codec-placeholder");
+const chunkPlaceholder = document.getElementById("chunk-placeholder")!;
+const codecPlaceholder = document.getElementById("codec-placeholder")!;
 
 audio1.onplay = () => {
   audio2.pause();

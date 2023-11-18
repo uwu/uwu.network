@@ -8,49 +8,48 @@
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@res/*": ["src/res/*"],
-      "/*": ["public/*"],
 
       // Sink
       "^components/*": ["src/components/sink/*"],
       "^layouts/*": ["src/layouts/sink/*"],
       "^css/*": ["src/res/css/sink/*"],
       "^js/*": ["src/res/js/sink/*"],
-      "^/*": ["public/sink/*"],
+      "^/*": ["/sink/*"],
 
       // toonlink
       "+components/*": ["src/components/toonlink/*"],
       "+layouts/*": ["src/layouts/toonlink/*"],
       "+css/*": ["src/res/css/toonlink/*"],
       "+js/*": ["src/res/js/toonlink/*"],
-      "+/*": ["public/toonlink/*"],
+      "+/*": ["/toonlink/*"],
 
       // maisy
       "%components/*": ["src/components/maisy/*"],
       "%layouts/*": ["src/layouts/maisy/*"],
       "%css/*": ["src/res/css/maisy/*"],
       "%js/*": ["src/res/js/maisy/*"],
-      "%/*": ["public/maisy/*"],
+      "%/*": ["/maisy/*"],
 
       // Phorcys
       "§components/*": ["src/components/phorcys/*"],
       "§layouts/*": ["src/layouts/phorcys/*"],
       "§css/*": ["src/res/css/phorcys/*"],
       "§js/*": ["src/res/js/phorcys/*"],
-      "§/*": ["public/phorcys/*"],
+      "§/*": ["/phorcys/*"],
 
       // xirreal
       "<components/*": ["src/components/xirreal/*"],
       "<layouts/*": ["src/layouts/xirreal/*"],
       "<css/*": ["src/res/css/xirreal/*"],
       "<js/*": ["src/res/js/xirreal/*"],
-      "</*": ["public/xirreal/*"],
+      "</*": ["/xirreal/*"],
 
       // kasimir
       "~components/*": ["src/components/kasimir/*"],
       "~layouts/*": ["src/layouts/kasimir/*"],
       "~css/*": ["src/res/css/kasimir/*"],
       "~js/*": ["src/res/js/kasimir/*"],
-      "~/*": ["public/kasimir/*"]
+      "~/*": ["/kasimir/*"]
     },
     // Astro's tsconfig sets this, and while I personally have no issue with it, the others might :>
     "verbatimModuleSyntax": false,

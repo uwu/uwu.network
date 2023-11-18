@@ -1,7 +1,7 @@
 ---
 import SinkLayout from "^layouts/SinkLayout.astro";
-import silent from "^/silent.svg";
-import rss from "^/rss.svg";
+import silent from "^/silent.svg?url";
+import rss from "^/rss.svg?url";
 
 const posts = [
   ...(await Astro.glob("/src/pages/~sink/blog/**/*.md")), 
@@ -20,7 +20,7 @@ const compareFn = (m1, m2) =>
   <div
     class="grid grid-cols-[repeat(3,max-content)] <sm:grid-cols-[auto_max-content_max-content] grid-rows-2"
   >
-    <img class="h-40 <sm:h-0 row-span-2 mr-5" src={silent.src} />
+    <img class="h-40 <sm:h-0 row-span-2 mr-5" src={silent} />
 
     <h1 class="spaced mb-0 self-end">Quiet System</h1>
 
@@ -29,7 +29,7 @@ const compareFn = (m1, m2) =>
     </p>
 
     <a href="quiet.rss" class="col-start-3 row-start-1 self-end m-2">
-      <img class="h-[calc(1.75rem*.8)]" src={rss.src} />
+      <img class="h-[calc(1.75rem*.8)]" src={rss} />
     </a>
   </div>
 

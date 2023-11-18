@@ -1,5 +1,5 @@
 ---
-import takodachi from "^/takodachi_smol.webp";
+import takodachi from "^/takodachi_smol.webp?url";
 ---
 
 <style>
@@ -8,7 +8,7 @@ import takodachi from "^/takodachi_smol.webp";
   }
 </style>
 
-<img src={takodachi.src} id="takodachi"
+<img src={takodachi} id="takodachi"
   class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0 image-render-edge">
 
 <script>

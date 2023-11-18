@@ -81,4 +81,5 @@ In case you wanted to critique my method, you can find the project file and audi
 Hope to see you back here soon!<br/>
   -- Yellowsink
 
+<!-- This not being properly loaded is seemingly related to https://github.com/withastro/astro/issues/7761 -->
 <script src="^js/quiet_codecs.ts"></script>

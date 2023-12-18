@@ -3,7 +3,7 @@ layout: "^layouts/QuietLayout.astro"
 title: Sorting my local music collection
 description: How to fix egregious disk overuse
 pubDate: "2023-12-16T16:47:00"
-tags: []
+tags: ["MUSIC"]
 ---
 
 # Sorting my local music collection

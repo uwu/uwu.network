@@ -3,7 +3,7 @@ layout: "^layouts/QuietLayout.astro"
 title: "A not-retrospective: 2023"
 description: A year...
 pubDate: "2023-12-09T23:47:00"
-tags: []
+tags: ["WELLBEING"]
 ---
 
 # A not-retrospective: 2023

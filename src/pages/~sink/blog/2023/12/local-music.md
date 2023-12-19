@@ -3,7 +3,7 @@ layout: "^layouts/QuietLayout.astro"
 title: How I consume music
 description: The ins and outs of my local music library
 pubDate: "2023-12-19T16:01:00"
-tags: ["MUSIC"]
+tags: ["AUDIO"]
 ---
 
 # How I consume music

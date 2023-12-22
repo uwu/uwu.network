@@ -35,8 +35,9 @@ Amplifiers are [unnecessary](https://youtu.be/a3moaaOpYZM) unless your headphone
 I make no real claims on fancy DACs but I use the DACs in my laptop, PC, Sony headphones, and KZ AZ09s and don't find
 them an issue.
 
-The DAC in the AZ09s has a noticeable noise floor, and while I have experienced noise on my laptop, I'm 90% sure this is
-a software issue to do with Pipewire or ALSA as enabling "Auto-Mute Mode" in alsamixer fixes that just fine.
+I have experienced noise on my laptop, and I'm 90% sure this is a software issue to do with Pipewire or ALSA as
+enabling "Auto-Mute Mode" in alsamixer fixes that just fine.
+The KZs have the best DAC of any of my devices as far as I'm aware. No noticeable noise floor at all.
 
 The DAC in my portable CD player (A cheap Arafuna model) has horrid noise, so yes, cheap DACs can be shit, but let's be
 real here. The Truthear Shio has two Cirrus Logic CS43198 chips.
@@ -94,7 +95,6 @@ My audio hardware consists of:
  - The Truthear x Crinacle Zero as the wired IEM of my choice, when I want something that sounds good or has no latency,
    and I don't have to worry about bluetooth and battery etc. It is relatively low end but sounds pretty great anyway!
  - The KZ AZ09, a low end bluetooth IEM adapter, which I used to use for listening on my IEMs with my phone.
-   The DAC isn't the greatest but honestly it's pretty decent. It's good enough.
  - A cheap Arafuna portable CD player: sometimes a man just wants to put a physical disc of polycarbonate into a
    physical piece of machinery, press a physical button, then hear music. That's all I ask.
    The noise floor is horrendous but for involved listening I'm usually listening on my laptop anyway.

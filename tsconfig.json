@@ -49,7 +49,14 @@
       "~layouts/*": ["src/layouts/kasimir/*"],
       "~css/*": ["src/res/css/kasimir/*"],
       "~js/*": ["src/res/js/kasimir/*"],
-      "~/*": ["/kasimir/*"]
+      "~/*": ["/kasimir/*"],
+
+      // ioj4
+      ">components/*": ["src/components/ioj4/*"],
+      ">layouts/*": ["src/layouts/ioj4/*"],
+      ">css/*": ["src/res/css/ioj4/*"],
+      ">js/*": ["src/res/js/ioj4/*"],
+      ">/*": ["/ioj4/*"],
     },
     // Astro's tsconfig sets this, and while I personally have no issue with it, the others might :>
     "verbatimModuleSyntax": false,

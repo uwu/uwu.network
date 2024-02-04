@@ -2,6 +2,8 @@
 import ">css/global.sass";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import IbmPlexSans from "@components/IbmPlex.astro";
+
+const { class: addClass } = Astro.props;
 ---
 
 <BaseLayout
@@ -11,7 +13,7 @@ import IbmPlexSans from "@components/IbmPlex.astro";
 
   <IbmPlexSans slot="head" />
   <div>
-    <main class="flex flex-col items-center justify-center h-screen px-8">
+    <main class={`flex flex-col items-center justify-center h-screen px-8 ${addClass}`}>
         <slot />
     </main>
   </div>

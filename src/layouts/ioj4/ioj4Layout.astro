@@ -1,0 +1,28 @@
+---
+import ">css/global.sass";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import IbmPlexSans from "@components/IbmPlex.astro";
+---
+
+<BaseLayout
+  title={"ioj4 on uwu"}
+  class="bg-black font-plex text-white"
+>
+
+  <IbmPlexSans slot="head" />
+  <div>
+    <main class="flex flex-col items-center justify-center h-screen px-8">
+        <slot />
+    </main>
+  </div>
+
+</BaseLayout>
+
+<style>
+    div {
+        background-size: 4% 4%;
+        background-image:
+            linear-gradient(to right, rgb(5, 15, 5) 1px, transparent 1px),
+            linear-gradient(to bottom, rgb(10, 20, 10) 1px, transparent 1px);
+    }
+</style>

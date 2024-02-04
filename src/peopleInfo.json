@@ -17,15 +17,16 @@
   },
   {
     "header": "Yellowsink",
-    "body": "When awful ideas and free time collide.",
+    "body": "I wrote software that was occasionally cool.",
     "img": { "src": "/sink/bw-pfp.svg", "link": "https://yellows.ink" },
     "headLink": "/~sink",
     "links": {
-      "[githu🅱️]": "https://github.com/yellowsink",
-      "[twattter]": "https://twitter.com/CainAtkin",
-      "[peemail]": "mailto:yellowsink@riseup.net"
+      "[git]": "https://github.com/yellowsink",
+      "[fedi]": "https://lethallava.land/@sink",
+      "[twitter]": "https://twitter.com/CainAtkin",
+      "[email]": "mailto:yellowsink@riseup.net"
     },
-    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPAiA4XAKgn3RWQNDIA4TITrC5giGQ17/IoC99M1Rk+"
+    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKUrqQFmpD+NUPeLqc6Gp+Wd+ZZJRKp1a5e9KWHKy3Ye"
   },
   {
     "header": "maisy",

@@ -55,7 +55,8 @@
     "links": {
       "[github]": "https://github.xirreal.dev/",
       "[email]": "mailto:me@xirreal.dev"
-    }
+    },
+    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWKuK0VsqVoF6wRirM5WLJj0b+MLRtdQ9YQgXTmejsl"
   },
   {
     "header": "kasimir",

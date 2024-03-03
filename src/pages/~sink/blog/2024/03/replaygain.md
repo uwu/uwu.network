@@ -25,7 +25,7 @@ So, here's how ReplayGain works.
     ([measurement method](https://wiki.hydrogenaud.io/index.php?title=ReplayGain_specification#Loudness_measurement))
     and peak volume are written to the audio file's metadata tags (ID3, Vorbis comment, etc.)
  3. If the player understands the tags, it will read off the overall volume of the file, and adjust it to a target.
-   * This target depends on the player, and the (confusingly named) "preamp" setting changes this target level.
+    * This target depends on the player, and the (confusingly named) "preamp" setting changes this target level.
  4. If the player also has a clipping prevention setting, it will make sure not to boost the file to more than 0dB peak.
 
 ## Minutae
@@ -43,12 +43,12 @@ are stored in different tags!
 
 ### Tags: ReplayGain spec
 
-| tag | value | format |
-|-|-|
-| REPLAYGAIN_TRACK_GAIN | The overall volume of this track in dB | (-)x.yy dB |
-| REPLAYGAIN_TRACK_PEAK | The peak sample volume of this track, 1.000000 == full scale | x.yyyyyy |
-| REPLAYGAIN_ALBUM_GAIN | The overall volume of the whole album in dB | (-)x.yy dB |
-| REPLAYGAIN_ALBUM_PEAK | The peak sample volume of the whole album | x.yyyyyy |
+| tag                   | value                                                        | format     |
+| --------------------- | ------------------------------------------------------------ | ---------- |
+| REPLAYGAIN_TRACK_GAIN | The overall volume of this track in dB                       | (-)x.yy dB |
+| REPLAYGAIN_TRACK_PEAK | The peak sample volume of this track, 1.000000 == full scale | x.yyyyyy   |
+| REPLAYGAIN_ALBUM_GAIN | The overall volume of the whole album in dB                  | (-)x.yy dB |
+| REPLAYGAIN_ALBUM_PEAK | The peak sample volume of the whole album                    | x.yyyyyy   |
 
 ### Tags: R128
 
@@ -60,8 +60,8 @@ Poweramp does not support REPLAYGAIN_ tags in Opus, only R128_.
 
 This technically is *not* ReplayGain, but it works the same way and gets lumped in.
 
-| tag | value | format |
-|-|-|
+| tag             | value                                      | format  |
+| --------------- | ------------------------------------------ | ------- |
 | R128_TRACK_GAIN | The dB shift needed to normalize the track | (-)xxxx |
 | R128_ALBUM_GAIN | The dB shift needed to normalize the album | (-)xxxx |
 

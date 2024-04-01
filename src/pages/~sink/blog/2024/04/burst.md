@@ -1,6 +1,6 @@
 ---
 layout: "^layouts/QuietLayout.astro"
-title: Burst Mode: Accurate or Awful?
+title: "Burst Mode: Accurate or Awful?"
 description: An investigation into the EAC modes.
 pubDate: "2024-04-01T15:34:00"
 tags: ["AUDIO"]

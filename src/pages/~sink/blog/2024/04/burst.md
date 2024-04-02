@@ -70,6 +70,8 @@ was off for the next two tests.
 \*Now & Them was a second hand CD, badly scratched, and was ripping so slow I chose to give up on Secure Mode for track
 1, only using it for others. The first track would not consistently rip or anything but oh well.
 
+UPDATE: Ripping track 1 of Now & Them in secure mode took 17 minutes and found a read & sync error.
+
 This supports what I mentioned earlier that matching burst CRCs predict matching a secure CRC.
 
 For ripping *good condition* (undamaged and clean) CDs, I will be using burst mode in future, though I suggest using

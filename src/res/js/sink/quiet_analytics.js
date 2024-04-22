@@ -26,13 +26,11 @@
 
 // GoatCounter: https://www.goatcounter.com
 
-const GOATCOUNTER_SETTINGS = {
-  //no_onload: false,
-  //no_events: false,
-  allow_local: true,
-  //allow_frame: false,
-  endpoint: "https://qsgcount.yellows.ink/count"
-};
+const GC_NO_ONLOAD = false; // default
+const GC_NO_EVENTS = false; // default
+const GC_ALLOW_LOCAL = false; // default
+const GC_ALLOW_FRAME = false; // default
+const GC_ENDPOINT = "https://qsgcount.yellows.ink/count";
 
 const enc = encodeURIComponent;
 
@@ -125,11 +123,11 @@ const on_load = f => {
 export const filter = () => {
   if ('visibilityState' in document && document.visibilityState === 'prerender')
     return 'visibilityState'
-  if (!GOATCOUNTER_SETTINGS.allow_frame && location !== parent.location)
+  if (!GC_ALLOW_FRAME && location !== parent.location)
     return 'frame'
-  if (!GOATCOUNTER_SETTINGS.allow_local && location.hostname.match(/(localhost$|^127\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.|^192\.168\.|^0\.0\.0\.0$)/))
+  if (!GC_ALLOW_LOCAL && location.hostname.match(/(localhost$|^127\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.|^192\.168\.|^0\.0\.0\.0$)/))
     return 'localhost'
-  if (!GOATCOUNTER_SETTINGS.allow_local && location.protocol === 'file:')
+  if (!GC_ALLOW_LOCAL && location.protocol === 'file:')
     return 'localfile'
   if (localStorage && localStorage.getItem('skipgc') === 't')
     return 'disabled with #toggle-goatcounter'
@@ -143,7 +141,7 @@ export const url = vars => {
     return
   data.rnd = Math.random().toString(36).substr(2, 5)  // Browsers don't always listen to Cache-Control.
 
-  const endpoint = GOATCOUNTER_SETTINGS.endpoint;
+  const endpoint = GC_ENDPOINT;
   if (!endpoint)
     return warn('no endpoint found')
 
@@ -201,7 +199,7 @@ export const visit_count = function(opt) {
     opt.path   = opt.path   || get_path()
     opt.attr   = opt.attr   || {width: '200', height: (opt.no_branding ? '60' : '80')}
 
-    opt.attr['src'] = GOATCOUNTER_SETTINGS.endpoint + 'er/' + enc(opt.path) + '.' + enc(opt.type) + '?'
+    opt.attr['src'] = GC_ENDPOINT + 'er/' + enc(opt.path) + '.' + enc(opt.type) + '?'
     if (opt.no_branding) opt.attr['src'] += '&no_branding=1'
     if (opt.style)       opt.attr['src'] += '&style=' + enc(opt.style)
     if (opt.start)       opt.attr['src'] += '&start=' + enc(opt.start)
@@ -227,6 +225,12 @@ export const visit_count = function(opt) {
   })
 }
 
+// directly fetches the visitor count -- sink
+export const fetchVisitCountAsync = () =>
+    fetch(`${GC_ENDPOINT}er/${encodeURIComponent(location.pathname)}.json`)
+        .then(r => r.json())
+        .then(j => j.count);
+
 // Make it easy to skip your own views.
 if (location.hash === '#toggle-goatcounter') {
   if (localStorage.getItem('skipgc') === 't') {
@@ -239,7 +243,7 @@ if (location.hash === '#toggle-goatcounter') {
   }
 }
 
-if (!GOATCOUNTER_SETTINGS.no_onload)
+if (!GC_NO_ONLOAD)
   on_load(function() {
     // 1. Page is visible, count request.
     // 2. Page is not yet visible; wait until it switches to 'visible' and count.
@@ -256,6 +260,6 @@ if (!GOATCOUNTER_SETTINGS.no_onload)
       document.addEventListener('visibilitychange', f)
     }
 
-    if (!GOATCOUNTER_SETTINGS.no_events)
+    if (!GC_NO_EVENTS)
       bind_events()
   })

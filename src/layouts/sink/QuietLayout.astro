@@ -3,7 +3,7 @@ import "^css/global.sass";
 import BorderLayout from "@layouts/BorderLayout.astro";
 
 const posts = [
-  ...(await Astro.glob("/src/pages/~sink/blog/**/*.md")), 
+  ...(await Astro.glob("/src/pages/~sink/blog/**/*.md")),
   ...(await Astro.glob("/src/pages/~sink/blog/**/*.mdx"))
 ];
 
@@ -33,11 +33,15 @@ const { frontmatter } = posts.find(
   <div id="quiet">
     <slot />
   </div>
+
+  <script>
+    import "^js/quiet_analytics.js"; // astro will bundle this
+  </script>
 </BorderLayout>
 
 <style lang="sass" is:global>
   // scroll shutters so that the top middle block and bottom right block don't look odd when scrolling
-  
+
   $OSET: 14px
 
   main::before, main::after
@@ -47,10 +51,10 @@ const { frontmatter } = posts.find(
       height: 10px
       left: $OSET
       right: $OSET
-    
+
   main::before
     top: $OSET
-  
+
   main::after
     bottom: $OSET
 </style>

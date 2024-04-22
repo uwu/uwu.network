@@ -1,0 +1,21 @@
+---
+const {date} = Astro.props;
+const shouldShowNote = new Date(date) < new Date("2024-04-22Z");
+---
+
+<div id="gcr" class="opacity-60 text-sm italic font-plex -mt-2 -mb-1.4 -ml-3" style="visibility: hidden">
+    <span id="gch"></span> read<span id="gcp">s</span> {shouldShowNote ? "(since 2024-04-22)" : ""}
+</div>
+
+<script>
+    import {fetchVisitCountAsync} from "^js/quiet_analytics";
+
+    fetchVisitCountAsync().then(
+        r => {
+            document.getElementById("gch").innerText = r.toLocaleString();
+            document.getElementById("gcr").style.visibility = "";
+            if (r == 1) document.getElementById("gcp").remove();
+        },
+        (e) => console.warn("loading hit count failed. CSP errors with 404 usually mean 0 hits. reason:\n", e?.stack || e)
+    );
+</script>

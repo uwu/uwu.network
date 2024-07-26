@@ -32,7 +32,7 @@ const { frontmatter } = posts.find(
   <meta slot="head" property="article:published_time" content={frontmatter.pubDate} />
 
   <div id="quiet">
-    <Hits date={frontmatter.pubDate} />
+    <Hits date={frontmatter.physPubDate ?? frontmatter.pubDate} />
     <slot />
   </div>
 

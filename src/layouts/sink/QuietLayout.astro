@@ -40,23 +40,3 @@ const { frontmatter } = posts.find(
     import "^js/quiet_analytics.js"; // astro will bundle this
   </script>
 </BorderLayout>
-
-<style lang="sass" is:global>
-  // scroll shutters so that the top middle block and bottom right block don't look odd when scrolling
-
-  $OSET: 14px
-
-  main::before, main::after
-      content: ""
-      position: fixed
-      background: black
-      height: 10px
-      left: $OSET
-      right: $OSET
-
-  main::before
-    top: $OSET
-
-  main::after
-    bottom: $OSET
-</style>

@@ -219,10 +219,11 @@ This is the URL that users will set as the coordination/login server URL in thei
 listen_addr: 0.0.0.0:8080
 metrics_listen_addr: 0.0.0.0:9090
 grpc_listen_addr: 0.0.0.0:50443
-grpc_allow_insecure: false
+grpc_allow_insecure: true
 ```
 
 These are the addresses and ports headscale will listen for connections on.
+gRPC must accept insecure connections for ouroboros to work. They are secured by Caddy anyway.
 
 ```yml
 noise:
@@ -409,7 +410,7 @@ All these things would require manual intervention from a sysadmin without this.
 Ouroboros, when used in docker, is configured entirely through environment variables:
 ```yml
 ouroboros:
-  image: yellosink/ouroboros:0.2.1 # look mom! my own software! on my server!
+  image: yellosink/ouroboros:0.3.1 # look mom! my own software! on my server!
   environment:
     - HS_IS_REMOTE=true
     - HS_ADDRESS=michiscale.yellows.ink:443 # going to the container directly doesn't work for some reason, just go to caddy.

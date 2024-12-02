@@ -23,4 +23,14 @@ const { title, class: className, ogpType, ogpSiteName, ogpDescription } = Astro.
   <slot />
 </body>
 
+<script async>
+  if (window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    const l = document.head.appendChild(document.createElement("link"));
+    l.rel = "icon";
+    l.href = "/favicon-white.ico";
+  }
+
+</script>
+
 </html>

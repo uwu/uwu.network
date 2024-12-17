@@ -2,7 +2,6 @@
   id="bouncy-container"
   class="border border-t-0 border-white relative place-self-stretch"
 >
-  <p class="text-center">hi, the bouncy broke when i did a janitor update - maisy</p>
   <div id="bouncy-mingine-container"></div>
 </div>
 
@@ -15,7 +14,7 @@
     createScene,
     forceModels,
     v,
-    vo
+    vo,
   } from "mingine-engine";
 
   const renderScale = 50;
@@ -23,7 +22,8 @@
   const container = document.getElementById("bouncy-container");
   const mingineRoot = document.getElementById("bouncy-mingine-container");
 
-  let mousePos, mousePressed = false;
+  let mousePos,
+    mousePressed = false;
   container.onmousedown = () => (mousePressed = true);
   window.addEventListener(
     "mousemove",
@@ -83,10 +83,9 @@
           height: 2,
           width: 50,
           mass: Infinity,
-          momentOfInertia: Infinity,
+          momentOfInertia: Infinity, // shouldn't be necessary, actually, hmm
           pos: v(0, -1),
           collide: true,
-          angle: 0.01,
         }),
         createRect({
           id: "LEFT_WALL",
@@ -125,9 +124,7 @@
 
           restitutionCoeff: 0.8, // we want a fair bit of bounce
 
-          forces: [
-            forceModels.weight(consts.earthGravity)
-          ],
+          forces: [forceModels.weight(consts.earthGravity)],
         }),
       ],
     })

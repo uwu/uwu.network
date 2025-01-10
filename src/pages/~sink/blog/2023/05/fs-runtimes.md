@@ -145,6 +145,7 @@ Versions:
 ## Results
 
 <div class="overflow-x-auto children:w-max mb-2">
+    
 | Runtime    | binarytrees (ms) | edigits (ms) | fannkuch-redux (ms) | binarytrees (%) | edigits (%) | fannkuch-redux (%) |
 | ---------- | ---------------: | -----------: | ------------------: | --------------: | ----------: | -----------------: |
 | .NET 7     |              6.4 |         16.5 |                 2.6 |               0 |           0 |                  0 |

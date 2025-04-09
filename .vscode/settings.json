@@ -1,11 +1,31 @@
 {
-    "windicss.includeLanguages": {
-        "astro": "html"
-    },
-    "//": "use the uno extension for this, windi one is just setup for autocomplete",
-    "windicss.enableHoverPreview": false,
-    "windicss.enableColorDecorators": false,
-    "editor.quickSuggestions": {
-        "strings": true
-    },
+  "windicss.includeLanguages": {
+    "astro": "html"
+  },
+  "//": "use the uno extension for this, windi one is just setup for autocomplete",
+  "windicss.enableHoverPreview": false,
+  "windicss.enableColorDecorators": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  // Use dprint for formatting astro, markdown, and html
+  "editor.formatOnSave": true,
+  "[astro]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  }
 }

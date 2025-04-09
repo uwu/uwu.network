@@ -1,0 +1,59 @@
+---
+import "☆css/global.scss";
+import Layout from "@layouts/tasky/Layout.astro";
+
+const posts = [
+  ...(await Astro.glob("/src/pages/~tasky/blog/**/*.md")),
+  // ...(await Astro.glob("/src/pages/~tasky/blog/**/*.mdx"))
+];
+
+const compareFn = (m1: any, m2: any) =>
+  new Date(m2.frontmatter.pubDate).getTime()
+  - new Date(m1.frontmatter.pubDate).getTime();
+---
+
+<Layout
+  titleName="taskylizard"
+  headerName="tasky/blog"
+  mainHref="/~tasky"
+  currentPath="~/blog"
+>
+  <div class="command-line mb-2">
+    <span class="lambda">λ</span>
+    <span class="text-white command-text"> ls -la ~/blog</span>
+  </div>
+  <div class="response mb-6">
+    <div class="grid grid-cols-1 gap-3">
+      {
+        posts.sort(compareFn).map((
+          { url, frontmatter },
+        ) => (
+          <div class="blog-item p-2 hover:bg-opacity-10 hover:bg-white rounded transition-colors">
+            <div class="flex flex-col md:flex-row gap-2">
+              <div class="text-gray-400 min-w-[100px]">
+                {frontmatter.pubDate}
+              </div>
+              <div class="flex flex-col">
+                <a
+                  href={url}
+                  class="text-blue-300 hover:underline font-medium"
+                >{frontmatter.title}</a>
+                <div class="text-gray-300 mt-1 text-sm">
+                  {frontmatter.description}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="command-line mb-2">
+    <span class="lambda">λ</span>
+    <span class="text-white command-text"> cd ..</span>
+  </div>
+  <div class="response mb-4">
+    <a href="/~tasky" class="text-blue-300 hover:underline">← Back to home</a>
+  </div>
+</Layout>

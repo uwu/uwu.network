@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, presetWind, transformerVariantGroup, transformerDirectives } from "unocss";
+import { defineConfig, presetWebFonts, presetWind, transformerDirectives, transformerVariantGroup } from "unocss";
 
 export default defineConfig({
   transformers: [
@@ -27,9 +27,21 @@ export default defineConfig({
       },
     },
     transformerVariantGroup(),
-    transformerDirectives()
+    transformerDirectives(),
   ],
-  presets: [presetWind()],
+  presets: [
+    presetWind(),
+    presetWebFonts({
+      provider: "google",
+      fonts: {
+        pacifico: {
+          name: "Pacifico",
+          weights: [400],
+          italic: true,
+        },
+      },
+    }),
+  ],
   theme: {
     fontFamily: {
       plex: "IBM Plex Mono, monospace",
@@ -37,7 +49,7 @@ export default defineConfig({
       jbmono: "JetBrains Mono, monospace",
     },
     fontSize: {
-      quiet: ["13pt", "17pt"]
-    }
+      quiet: ["13pt", "17pt"],
+    },
   },
 });

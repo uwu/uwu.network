@@ -1,0 +1,63 @@
+---
+---
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Mono:ital,wght@0,100..700;1,100..700"
+/>
+
+<div id="quiet-style-picker" class="mb-2 p-2 block w-[max-content] grid grid-cols-3">
+  <span class="mr-2">visual style:</span>
+
+  <button id="btn-uwunet" class="px-1 active">uwu.network</button>
+
+  <button id="btn-ysnk" class="px-1">yellows.ink</button>
+</div>
+
+<noscript>
+  <style>#quiet-style-picker { display: none; }</style>
+</noscript>
+
+<style>
+  #quiet-style-picker, #quiet-style-picker > button.active {
+    border-color: white;
+    border-width: 1px;
+  }
+</style>
+
+<script>
+  import stylesheet from "^css/quiet_ysnk.sass?inline";
+
+  const btnUwuN = document.getElementById("btn-uwunet");
+  const btnYsnk = document.getElementById("btn-ysnk");
+
+  const styleElemTemplate = document.createElement("style");
+  styleElemTemplate.append(new Text(stylesheet));
+
+  let styleElem: undefined | HTMLStyleElement;
+
+  let overriding = false;
+
+  const set = (override: boolean) => {
+    if (overriding && !override) {
+      // use uwunet style
+      styleElem?.remove();
+      styleElem = undefined;
+
+      btnUwuN?.classList.toggle("active");
+      btnYsnk?.classList.toggle("active");
+    }
+    if (!overriding && override) {
+      // use ysnk style
+      styleElem = styleElemTemplate.cloneNode(true) as HTMLStyleElement;
+      document.head.append(styleElem);
+      btnUwuN?.classList.toggle("active");
+      btnYsnk?.classList.toggle("active");
+    }
+
+    overriding = override;
+  };
+
+  btnUwuN?.addEventListener("click", () => set(false));
+  btnYsnk?.addEventListener("click", () => set(true));
+</script>

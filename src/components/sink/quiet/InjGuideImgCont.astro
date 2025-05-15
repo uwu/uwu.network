@@ -1,0 +1,22 @@
+---
+---
+
+<div>
+  <slot />
+</div>
+
+<style>
+  * {
+    display: flex;
+    flex-flow: row wrap;
+    width: fit-content;
+  }
+
+  * :is(img, video) {
+    height: 20rem;
+  }
+
+  * :is(img, video, p) {
+    margin: 0 !important;
+  }
+</style>

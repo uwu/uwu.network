@@ -1,0 +1,28 @@
+// emulate yellows.ink visual style on quiet system
+
+//@import url(https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&display=swap)
+
+body, .floater
+  background: #f1f3f5 !important
+  color: #212121 !important
+
+body, #quiet
+  font-family: IBM Plex Serif, serif !important
+
+#quiet :is(h1, h2, h3)
+  font-family: Roboto Mono, IBM Plex Sans, monospace !important
+  font-weight: 300
+
+#quiet p
+  margin-top: .5rem
+  margin-bottom: 1rem
+
+main > div
+  border-color: #f1f3f5 !important
+
+#quiet-style-picker, #quiet-style-picker > button.active, body > div, main
+  border-color: #212121 !important
+
+a
+  color: #296abb
+  text-decoration: underline currentColor !important

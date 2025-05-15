@@ -2,27 +2,16 @@
 layout: "^layouts/QuietLayout.astro"
 title: How to perform a HRT injection
 description: A beginner's guide on injecting hormones for trans people
-pubDate: "2025-05-14T22:53:00"
+pubDate: "2025-05-15T22:43:00"
 tags: ["LGBTQ+", "HEALTH"]
 ---
 
-<style>
-  .imgcont {
-    display: flex;
-    flex-flow: row wrap;
-    width: fit-content;
-  }
-
-  .imgcont :is(img, video) {
-    height: 20rem;
-  }
-
-  .imgcont :is(img, video, p) {
-    margin: 0 !important;
-  }
-</style>
+import ImgCont from "^components/quiet/InjGuideImgCont.astro";
+import VisualsPicker from "^components/quiet/VisualsPicker.astro";
 
 # Hazel's Trans Injection Guide
+
+<VisualsPicker />
 
 As many trans individuals in the world do, I take my HRT as a subcutaneous injection. I was disappointed not to find many great resources on how exactly one goes about doing this when I was starting, and now that I've been doing this for a while, I want to share both my process and some advice on the topic.
 
@@ -30,39 +19,57 @@ A quick word on what this is not: I will not be giving advice on which kind of H
 
 I would like to make a video version of this guide to better visually demonstrate the method, and show you what an HRT injection looks like following this guide, but absolutely no promises here, sorry.
 
-I'll link it here if and when I make that, but until then the best guide I'm aware of (and the resource that got me started) was Dr. Jerrica Kirkley's video for Plume, here: [Subcutaneous injection tutorial for trans people](https://www.youtube.com/watch?v=TmlFCss-hkQ) and here: [Intramuscular injection tutorial for trans people](https://www.youtube.com/watch?v=r-Zd7c-qySM). This method and mine diverge in some places, but it's a good, well produced guide that I think is great for *just watching someone perform an injection*.
+I'll link it here if and when I make that, but until then the best guide I'm aware of (and the resource that got me started) was Dr. Jerrica Kirkley's video for Plume, here: [Subcutaneous injection tutorial for trans people](https://www.youtube.com/watch?v=TmlFCss-hkQ) and here: [Intramuscular injection tutorial for trans people](https://www.youtube.com/watch?v=r-Zd7c-qySM). This method and mine diverge in some places, but it's a good, well produced guide that I think is great for _just watching someone perform an injection_.
 
-<div class="imgcont">
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/TmlFCss-hkQ?si=06-s5TfnEGZJqQ0o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/r-Zd7c-qySM?si=OunsvkiST9CpXJOJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
+<ImgCont>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube-nocookie.com/embed/TmlFCss-hkQ?si=06-s5TfnEGZJqQ0o"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube-nocookie.com/embed/r-Zd7c-qySM?si=OunsvkiST9CpXJOJ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+</ImgCont>
 
 Even if you prefer to follow these videos' method, because they are clearly far more professional than this blog post, I still would ask you to read my advice section at the end of this page, as there are things I know now that I wish I knew when I was following these!
 
-In addition, while my tutorial does *not* cover the injection method for an intramuscular injection, I still believe my preparation to be a better method. I defer to the video linked for the IM method as I have never injected intramuscularly.
+In addition, while my tutorial does _not_ cover the injection method for an intramuscular injection, I still believe my preparation to be a better method. I defer to the video linked for the IM method as I have never injected intramuscularly.
 
 ## Three Injection PSAs
 
-Yes, the PSAs are boring / a chore to read, but if I'm going to be telling and showing you how to do an injection, I want you to be doing it safely, and *you* need yourself to be doing it safely. Please read this carefully and do your best to stay safe out there. It's worth the time. Also keep a level head, if you get a little more soreness than usual or a bit more blood than usual it's not the end of the world for a subcutaneous injection, try not to freak out, you'll be okay, and beating yourself up will hurt your confidence for next time around.
+Yes, the PSAs are boring / a chore to read, but if I'm going to be telling and showing you how to do an injection, I want you to be doing it safely, and _you_ need yourself to be doing it safely. Please read this carefully and do your best to stay safe out there. It's worth the time. Also keep a level head, if you get a little more soreness than usual or a bit more blood than usual it's not the end of the world for a subcutaneous injection, try not to freak out, you'll be okay, and beating yourself up will hurt your confidence for next time around.
 
 One: you are injecting a substance into your body. As such, preventing infection is very important, and we do this by being sterile.
 
 - Don't forget to use alcohol swabs on the vial and injection site to sterilise them before use.
 
-- You must use new/fresh needles and syringes each time. This ensures that there are no contaminants inside the syringe left over from last time. If you have to reuse a syringe for some reason, you can find instructions on syringe cleaning [here](https://cloudfront.exchangesupplies.org/pdfs/F722_LDS.pdf). *Never* reuse a needle. They are one-use-only.
+- You must use new/fresh needles and syringes each time. This ensures that there are no contaminants inside the syringe left over from last time. If you have to reuse a syringe for some reason, you can find instructions on syringe cleaning [here](https://cloudfront.exchangesupplies.org/pdfs/F722_LDS.pdf). _Never_ reuse a needle. They are one-use-only.
 
-  - If you are considering cleaning reusing a syringe due to inability to afford injection equipment, I would urge you to *first* consider using a single-needle injection technique in which you use an injection-suitable needle to draw and then inject without a needle swap. This is a much lesser risk than reusing syringes, and I explain how to adapt this method for a single needle in the advice section at the end.
+  - If you are considering cleaning reusing a syringe due to inability to afford injection equipment, I would urge you to _first_ consider using a single-needle injection technique in which you use an injection-suitable needle to draw and then inject without a needle swap. This is a much lesser risk than reusing syringes, and I explain how to adapt this method for a single needle in the advice section at the end.
 
 - You should keep the cap on the needle whenever possible, for general safety (it's sharp!) and to protect it, but also to prevent it from getting contaminated by contact with anything that isn't the inside of the cap, the vial, or your injection site.
 
-Two: needles *are sharp*, so don't spike yourself, and they *must be sharp*. A blunt needle is more dangerous than a sharp needle, just like a blunt kitchen knife is more dangerous than a sharp kitchen knife.
+Two: needles _are sharp_, so don't spike yourself, and they _must be sharp_. A blunt needle is more dangerous than a sharp needle, just like a blunt kitchen knife is more dangerous than a sharp kitchen knife.
 
 - Again, keep a cap on the needle whenever possible, so you don't spike yourself or something else.
 
 - When you recap the needle after using it, do NOT put the cap onto the needle with your hands, instead, place the cap on a desk, move your hands away from it, and slide the needle into the cap and kind of hook it up onto it, then you can press it onto the needle until it clicks into place. If that description is hard to follow, see the videos linked previously to see someone doing exactly this, or look at the pictures of me doing it. This method prevents the most likely point for you to accidentally stab your hand.
 
- - When a needle is sharp, it has a very clean sharp point that will cleanly pierce the skin, and can do so with the minimal possible damage. When a needle is used, that point experiences a very high pressure (because science!), and so it rolls over a little. It will end up forming a kind of hook shape that will certainly do more damage on both the way in and out as compared to a fresh needle. You cannot see this with the naked eye. You'll feel this as increased pain as you push into the skin and as increased soreness post injection.
-   * In addition, you should rotate (change between many) injection sites to allow them more time to heal and recover from the inevitable tissue damage that occurs due to an injection.
+- When a needle is sharp, it has a very clean sharp point that will cleanly pierce the skin, and can do so with the minimal possible damage. When a needle is used, that point experiences a very high pressure (because science!), and so it rolls over a little. It will end up forming a kind of hook shape that will certainly do more damage on both the way in and out as compared to a fresh needle. You cannot see this with the naked eye. You'll feel this as increased pain as you push into the skin and as increased soreness post injection.
+  - In addition, you should rotate (change between many) injection sites to allow them more time to heal and recover from the inevitable tissue damage that occurs due to an injection.
 
 ![](https://web.archive.org/web/20230606130806im_/https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/72007420933/original/X9irtc0aaIeQph7IHcX87oXMRJUrNSftdA.jpeg?1651841647)
 
@@ -70,29 +77,29 @@ Three: Keep Steady. You do not cause very much pain and damage by just inserting
 
 ## Miscellaneous Terminology
 
-The *needle* is the part of the total assembly that is sharp - the metal piece and generally a plastic Luer connection.
+The _needle_ is the part of the total assembly that is sharp - the metal piece and generally a plastic Luer connection.
 
-The *syringe* is the part with a plunger and measurements on it, usually either plastic or glass.
+The _syringe_ is the part with a plunger and measurements on it, usually either plastic or glass.
 There is no word that refers to the assembly of the syringe and needle, so unfortunately there is a bit of
 ambiguity in the language there.
 
-Syringes which have a needle permanently affixed to them are known as *fixed-needle syringes* or *insulin syringes*.
+Syringes which have a needle permanently affixed to them are known as _fixed-needle syringes_ or _insulin syringes_.
 
-*Drawing* (or *drawing up*) is the process of pulling the injection from the vial into the syringe. A *drawing needle* is a needle that is being used purely to draw up.
+_Drawing_ (or _drawing up_) is the process of pulling the injection from the vial into the syringe. A _drawing needle_ is a needle that is being used purely to draw up.
 
-Needle *Gauge* describes the diameter of the needle. The *higher* the gauge number, the *thinner* the needle - yes, this is confusing! A 30G needle is thinner than a 20G needle.
+Needle _Gauge_ describes the diameter of the needle. The _higher_ the gauge number, the _thinner_ the needle - yes, this is confusing! A 30G needle is thinner than a 20G needle.
 
-*Dead Space* is the volume inside the needle that would retain the medication after the injection or removal of the needle. Needles generally come in either a standard kind which are just a plastic Luer connection bonded to a metal needle, or a *low dead space* variant in which the metal needle actually pokes through the syringe's hole back inside it to reduce the dead space.
+_Dead Space_ is the volume inside the needle that would retain the medication after the injection or removal of the needle. Needles generally come in either a standard kind which are just a plastic Luer connection bonded to a metal needle, or a _low dead space_ variant in which the metal needle actually pokes through the syringe's hole back inside it to reduce the dead space.
 
-*Luer Lock* and *Luer Slip* refer to standardised connection types for needles to syringes. Any Luer needle should work with any Luer syringe. Luer Slip needles just push (or slip!) onto the syringe and stay in place with friction. A Luer Lock needle on a Luer Lock syringe pushes in *and screws on clockwise* as you attach it, then will not come off without being unscrewed anticlockwise.
+_Luer Lock_ and _Luer Slip_ refer to standardised connection types for needles to syringes. Any Luer needle should work with any Luer syringe. Luer Slip needles just push (or slip!) onto the syringe and stay in place with friction. A Luer Lock needle on a Luer Lock syringe pushes in _and screws on clockwise_ as you attach it, then will not come off without being unscrewed anticlockwise.
 
-A *subcutaneous* or *subq* injection is one in which you inject into the layer of fat below the skin. These are generally done either on your tummy or thigh (I'll discuss how to find your site later). This guide covers subcutaneous injections.
+A _subcutaneous_ or _subq_ injection is one in which you inject into the layer of fat below the skin. These are generally done either on your tummy or thigh (I'll discuss how to find your site later). This guide covers subcutaneous injections.
 
-An *intramuscular* or *IM* injection is one in which you inject into a muscle, generally on your thighs for the case of HRT. This is done with a longer and thicker needle, and you're more likely to see just a little blood, but it can reduce initial post-injection soreness.
+An _intramuscular_ or _IM_ injection is one in which you inject into a muscle, generally on your thighs for the case of HRT. This is done with a longer and thicker needle, and you're more likely to see just a little blood, but it can reduce initial post-injection soreness.
 
-*Air-Locking* is an injection technique in which you purposefully let a little air follow your HRT down to help prevent it from pushing up back out of your injection site or from being left in the needle. It is not something I do on purpose, and I don't recommend you do it in this guide, but it is a technique many people perform and is generally safe. If you get a small air bubble in your syringe that can actually be helpful to your injection for exactly this reason. This is safe for subcutaneous and intramuscular injections *but very dangerous for intravenous (into the bloodstream) injections!*
+_Air-Locking_ is an injection technique in which you purposefully let a little air follow your HRT down to help prevent it from pushing up back out of your injection site or from being left in the needle. It is not something I do on purpose, and I don't recommend you do it in this guide, but it is a technique many people perform and is generally safe. If you get a small air bubble in your syringe that can actually be helpful to your injection for exactly this reason. This is safe for subcutaneous and intramuscular injections _but very dangerous for intravenous (into the bloodstream) injections!_
 
-*Coring* is when a hole is made in the rubber stopper on a vial, generally by using a needle that is too thick, by drawing from the *exact* same spot every single time, or wiggling around the needle too much while it is in the vial. This is very bad as it means that the stopper no longer forms an airtight seal to the outside world, and contaminants can find their way into your medication.
+_Coring_ is when a hole is made in the rubber stopper on a vial, generally by using a needle that is too thick, by drawing from the _exact_ same spot every single time, or wiggling around the needle too much while it is in the vial. This is very bad as it means that the stopper no longer forms an airtight seal to the outside world, and contaminants can find their way into your medication.
 
 ## Stuff You'll Need
 
@@ -104,7 +111,7 @@ Some people perform their injections with only needle, and I'll talk about that 
 
 For a drawing needle (the needle used to pull the hormones up into the syringe) pretty much anything goes, but a wider gauge is useful as it reduces resistance. I personally use 22-gauge needles that are 1+1/4 inch long to draw, because I can get these cheap in bulk. Try not to go too thick, though, as the thicker the needle, the more likely you are to core your vial.
 
-I recommend looking for *Luer Lock* needles, and buying those. Same for syringes. If you're worried about minimising wastage of your medication, it may be more economical to get all low dead space needles or even fixed-needle syringes (insulin syringes), depending on availability and the cost difference.
+I recommend looking for _Luer Lock_ needles, and buying those. Same for syringes. If you're worried about minimising wastage of your medication, it may be more economical to get all low dead space needles or even fixed-needle syringes (insulin syringes), depending on availability and the cost difference.
 
 For a syringe, the main requirement is the capacity. You want a syringe that only has capacity of 1ml to help you get much greater accuracy (down to 0.01ml!) for the relatively small quantities at play with HRT injections. 3ml can work but you ideally want 1ml.
 
@@ -125,72 +132,79 @@ Many needle brands will colour code their needles by gauge, which is helpful to 
 
 I suggest you read the entire method once before starting, so you know what's ahead, but absolutely feel free to follow it step-by-step as you go, it's intended to be followed step-by-step.
 
-So, you've got your medication <input type="checkbox">, your syringe <input type="checkbox">, your two needles <input type="checkbox"> <input type="checkbox">, your two alcohol swabs <input type="checkbox"> <input type="checkbox">, and your sharps bin <input type="checkbox"> out on your desk, a clear work space <input type="checkbox">, and either are alone for privacy or have a trusted friend to help keep you calm (or even deliver the injection for you if you're too nervous and shaky! That's totally okay, especially if it's your first time!). You know what your dose is <input type="checkbox">. Let's do this.
+So, you've got your medication <input type="checkbox"/>, your syringe <input type="checkbox"/>, your two needles <input type="checkbox"/> <input type="checkbox"/>, your two alcohol swabs <input type="checkbox"/> <input type="checkbox"/>, and your sharps bin <input type="checkbox"/> out on your desk, a clear work space <input type="checkbox"/>, and either are alone for privacy or have a trusted friend to help keep you calm (or even deliver the injection for you if you're too nervous and shaky! That's totally okay, especially if it's your first time!). You know what your dose is <input type="checkbox"/>. Let's do this.
 
-<div class="imgcont">
+<ImgCont>
 
-  ![](/sink/quiet_injection/PXL_20250428_145552586.jpg)
-</div>
+![](/sink/quiet_injection/PXL_20250428_145552586.jpg)
+
+</ImgCont>
 
 ### Prep: Drawing up
 
-The first step I do is sterilising the vial because, to be totally honest, otherwise I might forget. So take one of your two alcohol swabs, and wipe it left to right across the top of the vial *once*. Do not wipe back and forth repeatedly like you might be accustomed to for cleaning, as then you'd be wiping any contaminants that you just picked up on the swab back over the rubber stopper again! One movement is enough. Place the swab and its packaging to the side (you'll likely end up with a little trash pile at the end of this, or you can throw stuff straight in the bin, whatever works for you).
+The first step I do is sterilising the vial because, to be totally honest, otherwise I might forget. So take one of your two alcohol swabs, and wipe it left to right across the top of the vial _once_. Do not wipe back and forth repeatedly like you might be accustomed to for cleaning, as then you'd be wiping any contaminants that you just picked up on the swab back over the rubber stopper again! One movement is enough. Place the swab and its packaging to the side (you'll likely end up with a little trash pile at the end of this, or you can throw stuff straight in the bin, whatever works for you).
 
 Next we'll prep the drawing needle. Take your drawing needle and syringe out of the blister pack, and lock them together. Make sure you keep the needle's cap on. If you have a luer lock syringe, you need to twist on the needle until its secure. The cap and needle are designed such that twisting the cap will twist the needle, so you can and should do this with the cap on.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_145745895.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_145858168.jpg)
-</div>
+
+</ImgCont>
 
 Now to draw up. Before we actually draw, we're going to inject some air into the vial to reduce the pressure differential caused by removing some medication. You want to inject about as much air as the total volume you'll be removing at the end (too much air here is better than not enough!), so draw in around 0.5ml of air, and then slide the cap off the needle and place it on the desk with the opening facing you. Hold the vial steady, and holding the syringe like a dart, push the needle straight through the rubber.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150050896.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_150126372.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_150130081.jpg)
-</div>
 
-Inject the air *above* the medication, not into it, you don't really want to put air bubbles your medication, then pick up the vial and syringe and invert it, so that the vial is above the syringe, and rotate the syringe such that you can see the scale, and push it in/out so that the needle tip is in the medication.
+</ImgCont>
 
-<div class="imgcont">
+Inject the air _above_ the medication, not into it, you don't really want to put air bubbles your medication, then pick up the vial and syringe and invert it, so that the vial is above the syringe, and rotate the syringe such that you can see the scale, and push it in/out so that the needle tip is in the medication.
+
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150150677.jpg)
-</div>
+
+</ImgCont>
 
 Now, pull back on the syringe, and you'll see some air come in, then the medication will start to come into the syringe and sit at the bottom by the plunger. Pull back until you clearly have comfortably more there than your dosage (you need to have enough for your dosage plus the dead space!)
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150205271.jpg)
-</div>
+
+</ImgCont>
 
 then, push back up to where your dosage is.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150227733.jpg)
-</div>
+
+</ImgCont>
 
 If you have more dead space in your drawing needle than your injecting needle, then once you have done this a few times, you'll get a feel for how much extra you get here and can compensate for that. For your first time or if you're not sure, just go to where your dosage is.
 
-Now, this is where this guide diverges from the Plume guide. Push the syringe into the vial and get the end of the needle into the *air* space in the vial, and just pull some of this in, so your syringe looks pretty much the same as before you dialed the amount in, but now it contains exactly your dosage + the dead space. You want to pull in so that the reading on the syringe is the same as before you injected air into the vial (this guide recommended 0.5ml earlier).
+Now, this is where this guide diverges from the Plume guide. Push the syringe into the vial and get the end of the needle into the _air_ space in the vial, and just pull some of this in, so your syringe looks pretty much the same as before you dialed the amount in, but now it contains exactly your dosage + the dead space. You want to pull in so that the reading on the syringe is the same as before you injected air into the vial (this guide recommended 0.5ml earlier).
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150314735.jpg)
-</div>
+
+</ImgCont>
 
 The reason to do this instead of just switching needles directly from the dialed in stage is that it makes it easier to get air bubbles out by allowing all the air to form together at the top, and makes learning the dead space delta between your two needles easier.
 
 Now, you can flip the vial and syringe over, doing your best not to wiggle them around too much in relation to each other as this increases coring. Now, holding the vial still, pull the syringe smoothly up and out of it, then push the needle carefully into the cap and hook it upwards onto it, allowing you to click it down safely into place.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150348738.jpg)
 
@@ -199,7 +213,8 @@ Now, you can flip the vial and syringe over, doing your best not to wiggle them 
 ![](/sink/quiet_injection/PXL_20250428_150412069.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_150414295.jpg)
-</div>
+
+</ImgCont>
 
 Congrats! You've drawn up. This is the longest stage of needle prep.
 
@@ -207,45 +222,49 @@ You can now put your medication vial away, and you'll be able to discard the dra
 
 ### Prep: The Injecting Needle
 
-Take your injection needle out of its blister package, take off the drawing needle and discard it *into the sharps bin*, and put the injection needle onto the syringe.
+Take your injection needle out of its blister package, take off the drawing needle and discard it _into the sharps bin_, and put the injection needle onto the syringe.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150508505.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_150552498.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_150557617.jpg)
-</div>
+
+</ImgCont>
 
 If you don't know what the difference is, visually, between a low dead space and standard needle, take a moment to look at the pictures here (the orange one is the low-dead-space). You can use a low dead space needle for one, the other, both, none, it does not matter, but you can see how they look and how they interface with the syringe here :)
 
 Now, holding the syringe needle-side-up and securely at around the midpoint, flick the top side of the syringe or the needle cap to encourage any air bubbles that may be in the medication up and towards the top to merge with the air gap. You can do this with reasonable force!
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150650733.jpg)
-</div>
 
-Now for the step where you get your dosage just perfect: push the syringe in until you hit the dosage you want on the syringe. You may lose some medication out of the end of the needle in this step. That's fine, that's the difference in dead space between the first and second needle. *After you've done this a few times and are comfortable with the process,* you can study when exactly that happens and account for it.
+</ImgCont>
 
-<div class="imgcont">
+Now for the step where you get your dosage just perfect: push the syringe in until you hit the dosage you want on the syringe. You may lose some medication out of the end of the needle in this step. That's fine, that's the difference in dead space between the first and second needle. _After you've done this a few times and are comfortable with the process,_ you can study when exactly that happens and account for it.
+
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150748587.jpg)
-</div>
 
-Note: You may see an air bubble push back into the syringe no matter how hard you try to keep it out. *This is okay, don't sweat it*, assuming its ~pretty small. I'm not going to cover airlocking here, but a little air actually doesn't hurt at all and *can* even be used to your advantage. The warnings you may hear about injecting air being potentially lethal are referring only to intravenous (into the bloodstream) injections, and are true, but not relevant for HRT injections, so *don't sweat it*. You need to be as calm as you can manage for the injection! So being reassured about things that might *just happen* as you prep is good. The bubble pictured is totally chill:
+</ImgCont>
 
-<div class="imgcont">
+Note: You may see an air bubble push back into the syringe no matter how hard you try to keep it out. _This is okay, don't sweat it_, assuming its ~pretty small. I'm not going to cover airlocking here, but a little air actually doesn't hurt at all and _can_ even be used to your advantage. The warnings you may hear about injecting air being potentially lethal are referring only to intravenous (into the bloodstream) injections, and are true, but not relevant for HRT injections, so _don't sweat it_. You need to be as calm as you can manage for the injection! So being reassured about things that might _just happen_ as you prep is good. The bubble pictured is totally chill:
+
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_150814450.jpg)
-</div>
+
+</ImgCont>
 
 ### Prep: The Injection Site
 
-Now, you need to find your injection site. For intramuscular injections (which this guide is not about!) you should watch the Plume IM video linked above, as you really need to *watch someone do this* I think. For subcutaneous injections, your injection sites are the tummy and thighs. On your tummy, you go from your belly button down one inch and to the left/right one inch. On your thighs, you basically just want anywhere you can grab a good fold of fatty skin. I find that I just kinda go for a suitable spot on my thighs naturally, so see where on my thigh I'm doing it in these pictures:
+Now, you need to find your injection site. For intramuscular injections (which this guide is not about!) you should watch the Plume IM video linked above, as you really need to _watch someone do this_ I think. For subcutaneous injections, your injection sites are the tummy and thighs. On your tummy, you go from your belly button down one inch and to the left/right one inch. On your thighs, you basically just want anywhere you can grab a good fold of fatty skin. I find that I just kinda go for a suitable spot on my thighs naturally, so see where on my thigh I'm doing it in these pictures:
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151025015.jpg)
 
@@ -254,41 +273,49 @@ Now, you need to find your injection site. For intramuscular injections (which t
 ![](/sink/quiet_injection/PXL_20250428_151100531.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_151107141.jpg)
-</div>
 
-You'll want to rotate sites each time - so if you did the left side last time do the right side this time, or perhaps rotate between tummy and thigh. *My personal recommendation is not to bother with the tummy, it's less lenient to find your spot, and it hurts and bleeds more if you mess up*.
+</ImgCont>
+
+You'll want to rotate sites each time - so if you did the left side last time do the right side this time, or perhaps rotate between tummy and thigh. _My personal recommendation is not to bother with the tummy, it's less lenient to find your spot, and it hurts and bleeds more if you mess up_.
 
 Now, grab a fold of skin, like I have in the picture above. You want it to be as much as you can manage to grab really, it needs to be enough to put the needle into the site and it to stay entirely within the fold you have grabbed. Now, to give yourself a clear visual target, take the syringe and needle STILL IN ITS CAP and push it relatively hard into the fold of skin as shown in the picture. Yes, this step will hurt a bit, actually more than the injection itself, but the point here is to leave a nice clear circular mark so that you can see exactly where your injection site is. This is harmless as long as you don't go overboard!
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151252738.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_151255885.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_151258784.jpg)
-</div>
+
+</ImgCont>
 
 Now you can let go of the fold of skin and put your syringe down. Take the second alcohol swab out of its packet, and you want to do a single spiral motion outwards from the middle of the site. Watch the videos linked at the top of the page for a proper demo of this.
 
-<div class="imgcont">
-<video src="/sink/quiet_injection/PXL_20250428_151317424.LS.mp4" muted autoplay loop></video>
-</div>
+<ImgCont>
+  <video
+    src="/sink/quiet_injection/PXL_20250428_151317424.LS.mp4"
+    muted
+    autoplay
+    loop
+  ></video>
+</ImgCont>
 
 Finally, get a plaster ready to go. Take it out of its packaging, maybe peel back some of the backing paper and have it ready on the desk to put on after you've done your injection.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151405064.jpg)
-</div>
+
+</ImgCont>
 
 Now your injection site is sterilised, take a deep breath, get yourself calm, put on piano music if you need to, because it's time for the big moment.
 
 ### Injecting
 
-*A quick note before I start this step*: I was a little silly and misread when I was buying needle supplies last, so my injection needles are about twice as long as I actually want for injecting. As a result of this, when you look at the pictures of me injecting here, you'll see about half the length of the needle still outside the skin. **You should not copy that** assuming your needles are the size recommended in the "Stuff You'll Need" section. Your needles should go all the way down to the skin as you inject, like you see in the Plume demonstration video linked at the top of the page.
+_A quick note before I start this step_: I was a little silly and misread when I was buying needle supplies last, so my injection needles are about twice as long as I actually want for injecting. As a result of this, when you look at the pictures of me injecting here, you'll see about half the length of the needle still outside the skin. **You should not copy that** assuming your needles are the size recommended in the "Stuff You'll Need" section. Your needles should go all the way down to the skin as you inject, like you see in the Plume demonstration video linked at the top of the page.
 
-*And a final reminder:* this guide is not for intramuscular (IM) injections. If you are not injecting subcutaneously, please watch the Plume video and then skip to "Post-Injection Routine".
+_And a final reminder:_ this guide is not for intramuscular (IM) injections. If you are not injecting subcutaneously, please watch the Plume video and then skip to "Post-Injection Routine".
 
 Alright! You've got your fresh needle and syringe with the perfect amount of medication in it all prepped, you've found, marked, and sterilised your injection site, make sure you've calmed your nerves as much as possible (again, feel free to hand off this part of the guide to a trusted friend to deliver your injection if you are too nervous or otherwise shaky to bear to do this for yourself, especially if it's your first time). It's time to inject.
 
@@ -296,69 +323,76 @@ Take the cap off your needle, and make sure that you put the syringe down so tha
 
 Before you pick up the syringe, just FYI, you're going to be injecting the needle at a 45-degree angle to the skin. If you're not sure what I mean exactly, look at this picture.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151543600.jpg)
-</div>
+
+</ImgCont>
 
 Now, pick up the syringe between your index and middle finger, around halfway down or even nearer the needle end, whatever feels comfortable and secure, with the plunger on the inside of your hand, and rotate it such that the pointy side of the needle tip is closest to your skin (look closely, the needle tip is cut diagonally). Hold the syringe almost like a pen for stability.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151504309.jpg)
-</div>
+
+</ImgCont>
 
 Brace your hand against your body for stability, and hold the needle above the centre of the mark you made earlier, at a 45-degree angle to the skin. See the pictures below for reference.
 
 Now, in as smooth of a single motion as you can manage, push the needle into your injection site, in a straight line into your body.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151551698.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_151605605.jpg)
-</div>
+
+</ImgCont>
 
 Trying to move the needle as little as possible, reposition your hand so that you have your index and middle fingers either side of the syringe and your thumb free, and slide your hand up the syringe so that your fingers are under the plastic braces, and you can get your thumb over the plunger.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151605605.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_151611102.jpg)
-</div>
+
+</ImgCont>
 
 Gently press down on the plunger to push the medication into your body until it bottoms out.
 Depending on needle gauge and the oil type in your medication, this may take a while, into the tens of seconds even! - be patient.
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151611102.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_151619632.jpg)
-</div>
+
+</ImgCont>
 
 Now, as smoothly as you can, slide the needle back out in a straight line, just like it went in, and then you can put it on the desk (don't spike anything), let go of the skin fold, and put the plaster on (this is the most high-speed part of the process, only because of getting the plaster on nice and fast in case you bleed a little bit). It's not a big issue if you put the needle down on the desk uncapped as you do this as long as it's not at risk of hurting anyone. It doesn't need to stay sterile any more!
 
-<div class="imgcont">
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151622024.jpg)
 
 ![](/sink/quiet_injection/PXL_20250428_151644974.jpg)
-</div>
 
-If you get a bit of your medication that fires out the end of the needle as you release it from the skin, or some medication pushes back up out of the injection site, that's not the end of the world. It's not ideal, and it's what a small amount of air *can* help with if you're careful, but it's not a biiiig deal either. Think of it as a similar kind of loss-in-the-process as dead space is. It is ideal for an injection to not bleed but one or two drops are totally fine, especially on the tummy! If you bleed more than that, it's not great, but not the end of the world, so get that plaster on to stop it from bleeding too much!
+</ImgCont>
 
-Now, you just need to tidy up. Safely pick the syringe up, and cap it just like you did the drawing needle: keep your hands away, push it into the cap, then rotate it up to hook the cap onto the needle, then push it on until it clicks. Then disconnect the needle and put it *in the sharps bin*.
+If you get a bit of your medication that fires out the end of the needle as you release it from the skin, or some medication pushes back up out of the injection site, that's not the end of the world. It's not ideal, and it's what a small amount of air _can_ help with if you're careful, but it's not a biiiig deal either. Think of it as a similar kind of loss-in-the-process as dead space is. It is ideal for an injection to not bleed but one or two drops are totally fine, especially on the tummy! If you bleed more than that, it's not great, but not the end of the world, so get that plaster on to stop it from bleeding too much!
 
-<div class="imgcont">
+Now, you just need to tidy up. Safely pick the syringe up, and cap it just like you did the drawing needle: keep your hands away, push it into the cap, then rotate it up to hook the cap onto the needle, then push it on until it clicks. Then disconnect the needle and put it _in the sharps bin_.
+
+<ImgCont>
 
 ![](/sink/quiet_injection/PXL_20250428_151708913.jpg)
-</div>
+
+</ImgCont>
 
 Now, you can just throw away the packaging of the injection supplies, and you're done!
 
-Well done! If that's new to you, as I assume it is given you're reading this, take a moment to be excited if you're excited, or take a moment to calm down if you're nervous and shaken. The nerves go away with time, and especially with repeated *successful* injections.
+Well done! If that's new to you, as I assume it is given you're reading this, take a moment to be excited if you're excited, or take a moment to calm down if you're nervous and shaken. The nerves go away with time, and especially with repeated _successful_ injections.
 
 If you're starting HRT, congratulations on starting your HRT journey :)
 
@@ -402,7 +436,7 @@ Sometimes I find that I do have to come back to this diary just to remember whic
 
   - It is best if you can collect all the tiny bubbles that may be in the medication into a larger one, or the larger quantity of air at the top of the syringe while you're changing needles, as it's not ideal to inject a bunch of tiny air bubbles alongside the medication. Quite often, air bubbles will just stick to the side of the syringe and wouldn't go into you anyway though.
 
-  - There is a technique known as *airlocking* in which you purposefully allow a small amount of air to follow the medication down as you inject. Again this can increase bruising if you do too much, but it does flush out the dead space, and it helps keep the medication in, instead of pushing back up and out when you remove the needle.
+  - There is a technique known as _airlocking_ in which you purposefully allow a small amount of air to follow the medication down as you inject. Again this can increase bruising if you do too much, but it does flush out the dead space, and it helps keep the medication in, instead of pushing back up and out when you remove the needle.
 
   - I do not purposefully airlock (though again, I'm not concerned about injecting a small air bubble after my medication is in either!) but you can try it out once you've got used to doing injections, and see if it works for you.
 
@@ -410,7 +444,7 @@ Sometimes I find that I do have to come back to this diary just to remember whic
 
 - You can use a single needle for both drawing and injection if you are tight on funds, have difficulty getting the right needles, or you have fixed-needle syringes. This also means you lose less medication to dead space. Please be aware that this will mean a slightly sharper pain on piercing the skin and an increased level of bruising due to the needle blunting a little during drawing. If you choose to do this, I would adapt my method as follows:
 
-  - Instead of pulling excess air into the syringe, instead flick out all the air to the top and then push it into the vial such that you get exactly your dosage in that one step. That is - so the needle is in the vial still, and the syringe and needle contain *only* medication, to the right dose.
+  - Instead of pulling excess air into the syringe, instead flick out all the air to the top and then push it into the vial such that you get exactly your dosage in that one step. That is - so the needle is in the vial still, and the syringe and needle contain _only_ medication, to the right dose.
 
   - Then, you can pull the needle out of the vial, cap it, prep your injection site, and just inject with that
 
@@ -419,9 +453,10 @@ Sometimes I find that I do have to come back to this diary just to remember whic
   - Fixed needle syringes are sometimes available with colour coding which may be helpful if you share your medication with a housemate and keep them together, but have different gauge/length preferences for your injections.
 
 - Do your damn blood tests.
-  * You should be getting (for HRT) your E2 and T levels checked: before you start HRT if you haven't yet started, and three months after any change to your regimen (different ester, different dosage, different medium, etc.)
-  * Once you're on HRT, do your blood tests at the end of your cycle, when the levels are lowest (so, either on the day of or the day before your injection).
-  * If your levels are well within range and you're just doing the same thing as before, you can probably just leave it, but if you do any changes you should absolutely do a blood test after 3 months settling time.
+
+  - You should be getting (for HRT) your E2 and T levels checked: before you start HRT if you haven't yet started, and three months after any change to your regimen (different ester, different dosage, different medium, etc.)
+  - Once you're on HRT, do your blood tests at the end of your cycle, when the levels are lowest (so, either on the day of or the day before your injection).
+  - If your levels are well within range and you're just doing the same thing as before, you can probably just leave it, but if you do any changes you should absolutely do a blood test after 3 months settling time.
 
 - It's okay to be nervous, it's okay to be shaky. This is natural for giving yourself an injection at the start, and it is natural if you are the same after one that doesn't go quite as you planned. Try your best to be steady, as it will reduce bruising, and prioritise being safe, but you don't have to be dead still and zen. If you are struggling, and you have a friend, family member, or otherwise who you trust and are comfortable helping, ask them to help you. You could:
 
@@ -442,11 +477,12 @@ Sometimes I find that I do have to come back to this diary just to remember whic
 This guide is based on internet research, my personal experience and experimentation being a trans person injecting my hormones, and on the experience of those I've had proofread for me.
 
 I hope it can help someone else to have a smoother start to HRT. If you have any suggestions to improve this guide, questions about the process to ask me, or want to get in touch for any other reason, you can find my socials [here](https://yellows.ink/accounts), but in particular:
- - you can email me at yellowsink@riseup.net
- - you can message me on Signal [@hazel.01](https://signal.me/#eu/kynE2AuPZNK6J25CQO3OYnOno8jFFa7H_FN0Q0Bb_1bol8fK4IJAQ4F3Qvhatlj6)
- - and Telegram [@hazeler_la](https://t.me/hazeler_la).
- - If you share a server with me on Discord also feel free to message me @yellowsink, but don't randomly friend request me, please.
+
+- you can email me at yellowsink@riseup.net
+- you can message me on Signal [@hazel.01](https://signal.me/#eu/kynE2AuPZNK6J25CQO3OYnOno8jFFa7H_FN0Q0Bb_1bol8fK4IJAQ4F3Qvhatlj6)
+- and Telegram [@hazeler_la](https://t.me/hazeler_la).
+- If you share a server with me on Discord also feel free to message me @yellowsink, but don't randomly friend request me, please.
 
 Please say that you are contacting in relation to this guide in your initial DM, so that I know to accept your message request :)
 
- \-- Hazel Atkinson, 2025, hereby released to the public domain under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) <img src="/sink/CC0.svg" style="height: 1em; display: inline; margin: 0; translate: 0 -.1em">.
+\-- Hazel Atkinson, 2025, hereby released to the public domain under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) <img src="/sink/CC0.svg" style="height: 1em; display: inline; margin: 0; translate: 0 -.1em"/>.

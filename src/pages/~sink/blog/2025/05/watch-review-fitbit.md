@@ -1,6 +1,6 @@
 ---
 layout: "^layouts/QuietLayout.astro"
-title: A Retroactive Watch Review: Two Fitbits
+title: "A Retroactive Watch Review: Two Fitbits"
 description: I am nerdy about smartwatches, hehe, let's review some old Fitbits.
 pubDate: "2025-05-22T20:43:00"
 tags: ["SMARTWATCHES"]

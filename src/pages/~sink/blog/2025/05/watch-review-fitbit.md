@@ -89,3 +89,5 @@ This probably isn't very useful since nobody is buying a 2019 Fitbit anymore, bu
 I am very excited to see how the Core Time compares when I get my paws on that, I'll definitely have fun with that, and hey if I get impatient and get a PineTime to play with or anything like that I'll have to see how it stacks up :p
 Thanks for reading! I'll drop a link to any other watch reviews I write here in future heh.
  \-- Hazel
+
+[Review: Huawei Watch GT 3](/~sink/blog/2025/07/watch-review-gt3)

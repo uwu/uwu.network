@@ -12,11 +12,11 @@
     width: fit-content;
   }
 
-  * :is(img, video) {
-    height: 20rem;
+  * :global(:is(img, video)) {
+    height: 25rem;
   }
 
-  * :is(img, video, p) {
+  * :global(:is(img, video, p)) {
     margin: 0 !important;
   }
 </style>

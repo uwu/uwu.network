@@ -1,23 +1,24 @@
 {
-  "typescript": {
-  },
-  "json": {
-  },
-  "markdown": {
-  },
-  "malva": {
-  },
-  "markup": {
-  },
-  "excludes": [
-    "**/node_modules",
-    "**/*-lock.json",
-  ],
-  "plugins": [
-    "https://plugins.dprint.dev/typescript-0.94.0.wasm",
-    "https://plugins.dprint.dev/json-0.20.0.wasm",
-    "https://plugins.dprint.dev/markdown-0.18.0.wasm",
-    "https://plugins.dprint.dev/g-plane/malva-v0.11.2.wasm",
-    "https://plugins.dprint.dev/g-plane/markup_fmt-v0.19.1.wasm",
-  ],
+	"$schema": "https://dprint.dev/schemas/v0.json",
+	// regrettably dprint does not support editorconfig
+	"lineWidth": 120,
+	"useTabs": true,
+	"indentWidth": 2,
+	"markdown": {
+		"emphasisKind": "asterisks",
+	},
+	"excludes": [
+		"**/node_modules",
+		"**/*-lock.json",
+	],
+	"plugins": [
+		"https://plugins.dprint.dev/typescript-0.94.0.wasm",
+		"https://plugins.dprint.dev/json-0.20.0.wasm",
+		"https://plugins.dprint.dev/markdown-0.18.0.wasm",
+		"https://plugins.dprint.dev/g-plane/malva-v0.11.2.wasm",
+    // note markup_fmt cannot deal with <style lang="sass"> in Astro, so we don't have automatic formatting enabled yet.
+    // https://github.com/g-plane/markup_fmt/issues/141
+    // only prettier correctly handles Astro currently, and ew, prettier.
+		"https://plugins.dprint.dev/g-plane/markup_fmt-v0.23.1.wasm",
+	],
 }

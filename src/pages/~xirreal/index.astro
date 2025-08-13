@@ -16,45 +16,45 @@ const title = `
 ---
 
 <IndexLayout>
-  <div class="place-items-center font-plex h-full grid children:(col-start-1 row-start-1 col-end-2 row-end-2)">
+	<div class="place-items-center font-plex h-full grid children:(col-start-1 row-start-1 col-end-2 row-end-2)">
 
-    <div id="raytracer"></div>
+		<div id="raytracer"></div>
 
-    <div id="raytracer-buttons" class="absolute bottom-2 right-2 flex gap-2 transition-opacity duration-500 z-10">
-      <button id="raytracer-ui">hide</button>
-      <button id="raytracer-stop">pause</button>
-      <button id="raytracer-ground">moving ground: false</button>
-      <button id="raytracer-bitdepth">bitdepth: 6</button>
-    </div>
+		<div id="raytracer-buttons" class="absolute bottom-2 right-2 flex gap-2 transition-opacity duration-500 z-10">
+			<button id="raytracer-ui">hide</button>
+			<button id="raytracer-stop">pause</button>
+			<button id="raytracer-ground">moving ground: false</button>
+			<button id="raytracer-bitdepth">bitdepth: 6</button>
+		</div>
 
-    <div id="user" class="absolute bottom-2 items-stretch gap-2 z-1 w-[800px] children:(bg-black p-5 border border-white)">
-      <div>
-        <pre class="text-center">{title}</pre>
-        <pre class="text-center">I do graphics and JS.</pre>
-      </div>
-    </div>
-  </div>
+		<div id="user" class="absolute bottom-2 items-stretch gap-2 z-1 w-[800px] children:(bg-black p-5 border border-white)">
+			<div>
+				<pre class="text-center">{title}</pre>
+				<pre class="text-center">I do graphics and JS.</pre>
+			</div>
+		</div>
+	</div>
 </IndexLayout>
 
 <style is:global>
-  .raytracer-row {
-    display: flex;
-  }
+	.raytracer-row {
+		display: flex;
+	}
 
-  .raytracer-cell {
-    width: 12px;
-    height: 12px;
-    background: transparent;
-  }
+	.raytracer-cell {
+		width: 12px;
+		height: 12px;
+		background: transparent;
+	}
 
-  #raytracer-buttons > * {
-    background: black;
-    border: 1px solid white;
-    padding: .25rem;
-  }
+	#raytracer-buttons > * {
+		background: black;
+		border: 1px solid white;
+		padding: .25rem;
+	}
 </style>
 
 <script>
-  import raytracer from "<js/raytracer";
-  raytracer();
+	import raytracer from "<js/raytracer";
+	raytracer();
 </script>

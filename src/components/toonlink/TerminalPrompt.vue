@@ -1,17 +1,17 @@
 <script setup>
 defineProps({
-  caretClass: String,
-  value: String,
-  hideCaret: Boolean
+	caretClass: String,
+	value: String,
+	hideCaret: Boolean
 })
 </script>
 
 <template>
-  <div class="flex justify-between">
-    <div>
-      toonlink@<span class="underline">home</span>>{{ value
-      }}<span v-if="!hideCaret" class="term-caret font-bold">_</span>
-    </div>
-    <div class="text-green-400">~</div>
-  </div>
+	<div class="flex justify-between">
+		<div>
+			toonlink@<span class="underline">home</span>>{{ value
+			}}<span v-if="!hideCaret" class="term-caret font-bold">_</span>
+		</div>
+		<div class="text-green-400">~</div>
+	</div>
 </template>

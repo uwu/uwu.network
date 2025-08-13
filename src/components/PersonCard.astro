@@ -5,20 +5,20 @@ const linkEntries = Object.entries<string>(links);
 ---
 
 <div class="<md:(flex flex-col) border-double border-white border-4 p-3 grid grid-cols-[auto_1fr] grid-rows-2 gap-x-6">
-  <a href={imgLink} class="row-span-2 place-self-center">
-    <img src={imgSrc} class="w-28" style={pixelated && "image-rendering: pixelated" } />
-  </a>
+	<a href={imgLink} class="row-span-2 place-self-center">
+		<img src={imgSrc} class="w-28" style={pixelated && "image-rendering: pixelated" } />
+	</a>
 
-  <div class="flex flex-wrap gap-2 text-sm md:text-xl items-center <md:justify-center">
-    <a href={headLink} class="text-4xl text-center <md:(text-xl w-full)">
-      <slot name="header" />
-    </a>
-    {linkEntries.map(
-    ([label, link]) => (<a href={link}>{label}</a>)
-    )}
-  </div>
+	<div class="flex flex-wrap gap-2 text-sm md:text-xl items-center <md:justify-center">
+		<a href={headLink} class="text-4xl text-center <md:(text-xl w-full)">
+			<slot name="header" />
+		</a>
+		{linkEntries.map(
+		([label, link]) => (<a href={link}>{label}</a>)
+		)}
+	</div>
 
-  <div class="md:text-2xl">
-    <slot />
-  </div>
+	<div class="md:text-2xl">
+		<slot />
+	</div>
 </div>

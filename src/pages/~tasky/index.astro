@@ -5,96 +5,96 @@ import Pronouns from "☆components/Pronouns.vue";
 import Layout from "☆layouts/Layout.astro";
 
 const posts = [
-  ...(await Astro.glob("../~tasky/blog/**/*.md")),
-  //  ...(await Astro.glob("../~tasky/blog/**/*.mdx"))
+	...(await Astro.glob("../~tasky/blog/**/*.md")),
+	//  ...(await Astro.glob("../~tasky/blog/**/*.mdx"))
 ];
 
 const compareFn = (m1: any, m2: any) =>
-  new Date(m2.frontmatter.pubDate).getTime()
-  - new Date(m1.frontmatter.pubDate).getTime();
+	new Date(m2.frontmatter.pubDate).getTime()
+	- new Date(m1.frontmatter.pubDate).getTime();
 ---
 
 <Layout
-  titleName="taskylizard"
-  headerName="tasky"
-  mainHref="/~tasky"
-  currentPath="~"
+	titleName="taskylizard"
+	headerName="tasky"
+	mainHref="/~tasky"
+	currentPath="~"
 >
-  <div class="terminal-content flex-1 overflow-auto">
-    <div class="mb-6">
-      <div class="command-line mb-2">
-        <span class="lambda">λ</span>
-        <span class="text-white command-text"> Hi, I'm</span>
-        <span
-          class="from-indigo-300 to-rose-300 bg-gradient-to-r bg-clip-text text-transparent font-bold"
-        >tasky</span>
-      </div>
-    </div>
+	<div class="terminal-content flex-1 overflow-auto">
+		<div class="mb-6">
+			<div class="command-line mb-2">
+				<span class="lambda">λ</span>
+				<span class="text-white command-text"> Hi, I'm</span>
+				<span
+					class="from-indigo-300 to-rose-300 bg-gradient-to-r bg-clip-text text-transparent font-bold"
+				>tasky</span>
+			</div>
+		</div>
 
-    <div class="command-line mb-2">
-      <span class="lambda">λ</span>
-      <span class="text-white command-text">whoami</span>
-    </div>
-    <div class="response mb-4">
-      I love writing software that scales, design systems, and try to have fun
-      in everyday challenges. Music is love. Shitposter by day, programmer by
-      night. <Pronouns client:load />
-    </div>
+		<div class="command-line mb-2">
+			<span class="lambda">λ</span>
+			<span class="text-white command-text">whoami</span>
+		</div>
+		<div class="response mb-4">
+			I love writing software that scales, design systems, and try to have fun
+			in everyday challenges. Music is love. Shitposter by day, programmer by
+			night. <Pronouns client:load />
+		</div>
 
-    <div class="command-line mb-2">
-      <span class="lambda">λ</span>
-      <span class="text-white command-text">ls -la ~/blog</span>
-    </div>
-    <div class="response mb-4">
-      <div class="grid grid-cols-1 gap-2">
-        {
-          posts.slice(0, 3).sort(compareFn).map((
-            { url, frontmatter },
-          ) => (
-            <div class="blog-item hover:bg-opacity-10 hover:bg-white rounded p-2 transition-colors">
-              <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <span class="text-gray-400 min-w-[100px] text-sm">{
-                  frontmatter.pubDate
-                }</span>
-                <a href={url} class="text-blue-300 hover:underline ml-2">{
-                  frontmatter.title
-                }</a>
-              </div>
-            </div>
-          ))
-        }
-        <div class="mt-2">
-          <a href="/~tasky/blog" class="text-pink-300 hover:underline"
-          >View all posts →</a>
-        </div>
-      </div>
-    </div>
+		<div class="command-line mb-2">
+			<span class="lambda">λ</span>
+			<span class="text-white command-text">ls -la ~/blog</span>
+		</div>
+		<div class="response mb-4">
+			<div class="grid grid-cols-1 gap-2">
+				{
+					posts.slice(0, 3).sort(compareFn).map((
+						{ url, frontmatter },
+					) => (
+						<div class="blog-item hover:bg-opacity-10 hover:bg-white rounded p-2 transition-colors">
+							<div class="flex flex-col sm:flex-row sm:items-center gap-1">
+								<span class="text-gray-400 min-w-[100px] text-sm">{
+									frontmatter.pubDate
+								}</span>
+								<a href={url} class="text-blue-300 hover:underline ml-2">{
+									frontmatter.title
+								}</a>
+							</div>
+						</div>
+					))
+				}
+				<div class="mt-2">
+					<a href="/~tasky/blog" class="text-pink-300 hover:underline"
+					>View all posts →</a>
+				</div>
+			</div>
+		</div>
 
-    <div class="command-line mb-2">
-      <span class="lambda">λ</span>
-      <span class="text-white command-text">contact --info</span>
-    </div>
+		<div class="command-line mb-2">
+			<span class="lambda">λ</span>
+			<span class="text-white command-text">contact --info</span>
+		</div>
 
-    <div class="response mb-6">
-      <div class="contact-info border border-dashed border-gray-600 p-3">
-        <div><span class="text-pink-300">Email:</span> tasky@fmhy.net</div>
-        <div>
-          <span class="text-pink-300">GitHub:</span>
-          <a
-            href="https://github.com/taskylizard"
-            target="_blank"
-            class="text-blue-300"
-          >github.com/taskylizard</a>
-        </div>
-        <div>
-          <span class="text-pink-300">Bluesky:</span>
-          <a
-            href="https://bsky.app/profile/tasky.nuxt.dev"
-            target="_blank"
-            class="text-blue-300"
-          >bsky.app/profile/tasky.nuxt.dev</a>
-        </div>
-      </div>
-    </div>
-  </div>
+		<div class="response mb-6">
+			<div class="contact-info border border-dashed border-gray-600 p-3">
+				<div><span class="text-pink-300">Email:</span> tasky@fmhy.net</div>
+				<div>
+					<span class="text-pink-300">GitHub:</span>
+					<a
+						href="https://github.com/taskylizard"
+						target="_blank"
+						class="text-blue-300"
+					>github.com/taskylizard</a>
+				</div>
+				<div>
+					<span class="text-pink-300">Bluesky:</span>
+					<a
+						href="https://bsky.app/profile/tasky.nuxt.dev"
+						target="_blank"
+						class="text-blue-300"
+					>bsky.app/profile/tasky.nuxt.dev</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </Layout>

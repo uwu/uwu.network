@@ -42,12 +42,12 @@ open System.Diagnostics
 open benchmarks
 
 Runner.runAll
-    Stopwatch.StartNew
-    (fun sw ->
-        sw.Stop()
-        sw.Elapsed.TotalMilliseconds)
-    ignore
-    (printfn "%s")
+	Stopwatch.StartNew
+	(fun sw ->
+		sw.Stop()
+		sw.Elapsed.TotalMilliseconds)
+	ignore
+	(printfn "%s")
 ```
 
 And then just had to bind it to all runtimes!:
@@ -60,13 +60,13 @@ open benchmarks
 
 [<EntryPoint>]
 let main _ =
-    Runner.runAll
-        (fun() -> DateTime.Now.Ticks)
-        (fun sw -> float (DateTime.Now.Ticks - sw) / 10_000.)
-        ignore
-        (printfn "%s")
+	Runner.runAll
+		(fun() -> DateTime.Now.Ticks)
+		(fun sw -> float (DateTime.Now.Ticks - sw) / 10_000.)
+		ignore
+		(printfn "%s")
 
-    0
+	0
 ```
 
 ```fsharp
@@ -75,10 +75,10 @@ open Browser.Performance
 open benchmarks
 
 Runner.runAll
-    performance.now
-    (fun sw -> performance.now() - sw)
-    ignore
-    (printfn "%s")
+	performance.now
+	(fun sw -> performance.now() - sw)
+	ignore
+	(printfn "%s")
 ```
 
 ```fsharp
@@ -89,10 +89,10 @@ open benchmarks
 let timer = time.monotonic >> (*) 1000.
 
 Runner.runAll
-    timer
-    (fun sw -> timer() - sw)
-    ignore
-    (printfn "%s")
+	timer
+	(fun sw -> timer() - sw)
+	ignore
+	(printfn "%s")
 ```
 
 ## Problems I faced
@@ -145,7 +145,7 @@ Versions:
 ## Results
 
 <div class="overflow-x-auto children:w-max mb-2">
-    
+
 | Runtime    | binarytrees (ms) | edigits (ms) | fannkuch-redux (ms) | binarytrees (%) | edigits (%) | fannkuch-redux (%) |
 | ---------- | ---------------: | -----------: | ------------------: | --------------: | ----------: | -----------------: |
 | .NET 7     |              6.4 |         16.5 |                 2.6 |               0 |           0 |                  0 |

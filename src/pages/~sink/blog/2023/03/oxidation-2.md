@@ -19,13 +19,13 @@ So to start with, I got some basics going:
 ```rs
 #[derive(Debug, Clone)]
 pub enum Expr {
-  StrLit(StrLitExpr)
+	StrLit(StrLitExpr)
 }
 
 #[derive(Debug, Clone)]
 pub struct StrLitExpr {
-  pub span: Span,
-  pub value: Vec<StrLitPart>,
+	pub span: Span,
+	pub value: Vec<StrLitPart>,
 }
 
 #[derive(Debug, Clone)]
@@ -50,21 +50,21 @@ But what about converting the `StrLitExpr` into an `Expr`?
 Well we can simply implement it:
 ```rs
 impl From<StrLitExpr> for Expr {
-  #[inline(always)]
-  fn from(item: StrLitExpr) -> Expr {
-    Expr::StrLit(item)
-  }
+	#[inline(always)]
+	fn from(item: StrLitExpr) -> Expr {
+		Expr::StrLit(item)
+	}
 }
 ```
 
 And to make it easy to box at the same time, let's add another:
 ```rs
 impl From<StrLitExpr> for Box<Expr> {
-  #[inline(always)]
-  fn from(item: StrLitExpr) -> Box<Expr> {
-    // this into() references the previously written trait
-    Box::new(item.into())
-  }
+	#[inline(always)]
+	fn from(item: StrLitExpr) -> Box<Expr> {
+		// this into() references the previously written trait
+		Box::new(item.into())
+	}
 }
 ```
 
@@ -99,7 +99,7 @@ use syn::{parse_macro_input, DeriveInput, Ident};
 
 #[proc_macro_derive(Ast)]
 pub fn derive_ast_node(input: TokenStream) -> TokenStream {
-  TokenStream::default()
+	TokenStream::default()
 }
 ```
 
@@ -114,9 +114,9 @@ Here's a really basic example of using quote:
 ```rs
 let helo = Ident::new("hello_there", ...);
 let quoteTokStream = quote! {
-  pub fn #helo() -> i32 {
-    42069
-  }
+	pub fn #helo() -> i32 {
+		42069
+	}
 };
 let rustTokStream: TokStream = quoteTokStream.into();
 ```
@@ -124,7 +124,7 @@ let rustTokStream: TokStream = quoteTokStream.into();
 Which creates the following code when expanded:
 ```rs
 pub fn hello_there() -> i32 {
-  42069
+	42069
 }
 ```
 
@@ -133,25 +133,25 @@ pub fn hello_there() -> i32 {
 The first thing to write is a list of enums we care about, which we can do at the top level:
 ```rs
 const ENUMS: &[(&str, &str)] = &[
-  // crate::stmts::Stmt
-  ("Stmt", "stmts"),
-  ("Expr", "exprs"),
-  ("Member", "classes"),
-  ("CollectionItem", "exprs"),
+	// crate::stmts::Stmt
+	("Stmt", "stmts"),
+	("Expr", "exprs"),
+	("Member", "classes"),
+	("CollectionItem", "exprs"),
 ];
 ```
 
 And a utility function, just because it'll be useful easier:
 ```rs
 fn remove_last_chars(amt: usize, s: &String) -> Option<String> {
-  let len = s.chars().count();
-  let mut s = s.clone();
-  if amt > len {
-    None
-  } else {
-    s.drain(len - amt..len);
-    Some(s)
-  }
+	let len = s.chars().count();
+	let mut s = s.clone();
+	if amt > len {
+		None
+	} else {
+		s.drain(len - amt..len);
+		Some(s)
+	}
 }
 ```
 
@@ -165,9 +165,9 @@ let name_str = name_ident.to_string();
 And now loop over all of the enums, and also check now for only the ones we care about:
 ```rs
 for (enum_name, submod_name) in ENUMS {
-  if !name_str.ends_with(enum_name) {
-    continue;
-  }
+	if !name_str.ends_with(enum_name) {
+		continue;
+	}
 }
 ```
 
@@ -175,12 +175,12 @@ Now, we can trim the enum name to get the name of the enum case (`StrLitExpr` - 
 ```rs
 let trimmed_name = remove_last_chars(enum_name.len(), &name_str);
 let trimmed_name = match trimmed_name {
-  Some(s) => s,
-  None => continue,
+	Some(s) => s,
+	None => continue,
 };
 
 if trimmed_name.is_empty() {
-  continue;
+	continue;
 }
 ```
 
@@ -194,21 +194,21 @@ let submod_name = Ident::new(submod_name, Span::call_site().into());
 And finally, we'll construct the relevant `From<>` impls from before:
 ```rs
 return quote! {
-  #[automatically_derived]
-  impl From<#name_ident> for crate::#submod_name::#enum_name {
-    #[inline(always)]
-    fn from(item: #name_ident) -> crate::#submod_name::#enum_name {
-      crate::#submod_name::#enum_name::#trimmed_name(item)
-    }
-  }
+	#[automatically_derived]
+	impl From<#name_ident> for crate::#submod_name::#enum_name {
+		#[inline(always)]
+		fn from(item: #name_ident) -> crate::#submod_name::#enum_name {
+			crate::#submod_name::#enum_name::#trimmed_name(item)
+		}
+	}
 
-  #[automatically_derived]
-  impl From<#name_ident> for Box<crate::#submod_name::#enum_name> {
-    #[inline(always)]
-    fn from(item: #name_ident) -> Box<crate::#submod_name::#enum_name> {
-      Box::new(item.into())
-    }
-  }
+	#[automatically_derived]
+	impl From<#name_ident> for Box<crate::#submod_name::#enum_name> {
+		#[inline(always)]
+		fn from(item: #name_ident) -> Box<crate::#submod_name::#enum_name> {
+			Box::new(item.into())
+		}
+	}
 }
 .into();
 ```

@@ -1,135 +1,135 @@
 <div
-  id="bouncy-container"
-  class="border border-t-0 border-white relative place-self-stretch"
+	id="bouncy-container"
+	class="border border-t-0 border-white relative place-self-stretch"
 >
-  <div id="bouncy-mingine-container"></div>
+	<div id="bouncy-mingine-container"></div>
 </div>
 
 <script>
-  import {
-    consts,
-    createCircle,
-    createEngine,
-    createRect,
-    createScene,
-    forceModels,
-    v,
-    vo,
-  } from "mingine-engine";
+	import {
+		consts,
+		createCircle,
+		createEngine,
+		createRect,
+		createScene,
+		forceModels,
+		v,
+		vo,
+	} from "mingine-engine";
 
-  const renderScale = 50;
+	const renderScale = 50;
 
-  const container = document.getElementById("bouncy-container");
-  const mingineRoot = document.getElementById("bouncy-mingine-container");
+	const container = document.getElementById("bouncy-container");
+	const mingineRoot = document.getElementById("bouncy-mingine-container");
 
-  let mousePos,
-    mousePressed = false;
-  container.onmousedown = () => (mousePressed = true);
-  window.addEventListener(
-    "mousemove",
-    (ev) => (mousePos = [ev.clientX, ev.clientY])
-  );
-  window.addEventListener("mouseup", () => (mousePressed = false));
+	let mousePos,
+		mousePressed = false;
+	container.onmousedown = () => (mousePressed = true);
+	window.addEventListener(
+		"mousemove",
+		(ev) => (mousePos = [ev.clientX, ev.clientY])
+	);
+	window.addEventListener("mouseup", () => (mousePressed = false));
 
-  const getLocalMousePos = () => {
-    if (!mousePos) return;
-    const oset = v(mousePos[0], mousePos[1]).sub(
-      v(container.offsetLeft, container.offsetTop)
-    );
-    const flipped = v(
-      oset.x,
-      container.offsetTop + container.clientHeight - oset.y
-    );
-    return flipped.scdiv(renderScale);
-  };
+	const getLocalMousePos = () => {
+		if (!mousePos) return;
+		const oset = v(mousePos[0], mousePos[1]).sub(
+			v(container.offsetLeft, container.offsetTop)
+		);
+		const flipped = v(
+			oset.x,
+			container.offsetTop + container.clientHeight - oset.y
+		);
+		return flipped.scdiv(renderScale);
+	};
 
-  let lastMouse;
-  setInterval(() => {
-    lastMouse = mousePressed ? getLocalMousePos() : undefined;
-  }, 100);
+	let lastMouse;
+	setInterval(() => {
+		lastMouse = mousePressed ? getLocalMousePos() : undefined;
+	}, 100);
 
-  const engine = createEngine(
-    createScene({
-      canvasSize: v(1, 1), // this will be instantly overwritten lol
-      scale: renderScale,
+	const engine = createEngine(
+		createScene({
+			canvasSize: v(1, 1), // this will be instantly overwritten lol
+			scale: renderScale,
 
-      postTickHooks: [
-        ([s]) => {
-          s.canvasSize = v(container.clientWidth, container.clientHeight).scdiv(
-            renderScale
-          );
+			postTickHooks: [
+				([s]) => {
+					s.canvasSize = v(container.clientWidth, container.clientHeight).scdiv(
+						renderScale
+					);
 
-          s.getObjects().find((o) => o.id === "RIGHT_WALL").physicsObj.pos.x =
-            container.clientWidth / renderScale + 1;
-        },
+					s.getObjects().find((o) => o.id === "RIGHT_WALL").physicsObj.pos.x =
+						container.clientWidth / renderScale + 1;
+				},
 
-        ([s]) => {
-          const g = s.getObjects().find((o) => o.id === "BALL").physicsObj;
+				([s]) => {
+					const g = s.getObjects().find((o) => o.id === "BALL").physicsObj;
 
-          if (!mousePressed) return [vo(), 0];
+					if (!mousePressed) return [vo(), 0];
 
-          const localMousePos = getLocalMousePos();
-          g.pos = localMousePos;
+					const localMousePos = getLocalMousePos();
+					g.pos = localMousePos;
 
-          if (lastMouse) {
-            g.velocity = localMousePos.sub(lastMouse).scale(1000 / 100);
-          }
-        },
-      ],
+					if (lastMouse) {
+						g.velocity = localMousePos.sub(lastMouse).scale(1000 / 100);
+					}
+				},
+			],
 
-      objects: [
-        createRect({
-          id: "FLOOR",
-          height: 2,
-          width: 50,
-          mass: Infinity,
-          momentOfInertia: Infinity, // shouldn't be necessary, actually, hmm
-          pos: v(0, -1),
-          collide: true,
-        }),
-        createRect({
-          id: "LEFT_WALL",
-          height: 50,
-          width: 2,
-          mass: Infinity,
-          momentOfInertia: Infinity,
-          pos: v(-1, 25.1),
-          collide: true,
-        }),
-        createRect({
-          id: "RIGHT_WALL",
-          height: 50,
-          width: 2,
-          mass: Infinity,
-          momentOfInertia: Infinity,
-          pos: v(2, 25.1), // also instantly overwritten lol
-          collide: true,
-        }),
+			objects: [
+				createRect({
+					id: "FLOOR",
+					height: 2,
+					width: 50,
+					mass: Infinity,
+					momentOfInertia: Infinity, // shouldn't be necessary, actually, hmm
+					pos: v(0, -1),
+					collide: true,
+				}),
+				createRect({
+					id: "LEFT_WALL",
+					height: 50,
+					width: 2,
+					mass: Infinity,
+					momentOfInertia: Infinity,
+					pos: v(-1, 25.1),
+					collide: true,
+				}),
+				createRect({
+					id: "RIGHT_WALL",
+					height: 50,
+					width: 2,
+					mass: Infinity,
+					momentOfInertia: Infinity,
+					pos: v(2, 25.1), // also instantly overwritten lol
+					collide: true,
+				}),
 
-        createCircle({
-          id: "BALL",
-          mass: 0.5, // kg
-          // (m r^2) / 2
-          momentOfInertia: (0.5 * (Math.PI * 0.3 * 0.3)) / 2,
-          radius: 0.2, // 20cm
-          pos: v(0.2, 3),
-          velocity: v(3, 0),
-          styles: {
-            border: "1px solid white",
-            borderRadius: "999999px",
-            width: `${0.2 * 2 * renderScale}px`,
-            height: `${0.2 * 2 * renderScale}px`,
-          },
-          collide: true,
+				createCircle({
+					id: "BALL",
+					mass: 0.5, // kg
+					// (m r^2) / 2
+					momentOfInertia: (0.5 * (Math.PI * 0.3 * 0.3)) / 2,
+					radius: 0.2, // 20cm
+					pos: v(0.2, 3),
+					velocity: v(3, 0),
+					styles: {
+						border: "1px solid white",
+						borderRadius: "999999px",
+						width: `${0.2 * 2 * renderScale}px`,
+						height: `${0.2 * 2 * renderScale}px`,
+					},
+					collide: true,
 
-          restitutionCoeff: 0.8, // we want a fair bit of bounce
+					restitutionCoeff: 0.8, // we want a fair bit of bounce
 
-          forces: [forceModels.weight(consts.earthGravity)],
-        }),
-      ],
-    })
-  );
+					forces: [forceModels.weight(consts.earthGravity)],
+				}),
+			],
+		})
+	);
 
-  engine.mount(mingineRoot);
-  engine.start();
+	engine.mount(mingineRoot);
+	engine.start();
 </script>

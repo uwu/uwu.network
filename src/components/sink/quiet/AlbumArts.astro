@@ -6,49 +6,49 @@ const { img1, img2, name, name2, artist, highlight1, highlight2, video2 } = Astr
 ---
 
 <div class="grid grid-cols-2 w-[min(45rem,100%)] mb-4 p-2 gap-2 children:(w-full lt-sm:col-span-2) bg-dark-9 group">
-  <div class="i">
-    <img src={img1} />
-    {highlight1 && (
-      <>
-        <div class="group-hover:(bg-black bg-opacity-40) transition-colors w-full h-full" />
-        <img src={highlight1} class="ds transform transition-all" />
-      </>
-    )}
-  </div>
-  <div class="i">
-    {video2
-      ? (<video src={img2} autoplay muted loop playsinline />)
-      : (<img src={img2} />)}
-    {highlight2 && (
-      <>
-        <div class="group-hover:(bg-black bg-opacity-40) transition-colors w-full h-full" />
-        <img src={highlight2} class="ds transform transition-all" />
-      </>
-    )}
-  </div>
+	<div class="i">
+		<img src={img1} />
+		{highlight1 && (
+			<>
+				<div class="group-hover:(bg-black bg-opacity-40) transition-colors w-full h-full" />
+				<img src={highlight1} class="ds transform transition-all" />
+			</>
+		)}
+	</div>
+	<div class="i">
+		{video2
+			? (<video src={img2} autoplay muted loop playsinline />)
+			: (<img src={img2} />)}
+		{highlight2 && (
+			<>
+				<div class="group-hover:(bg-black bg-opacity-40) transition-colors w-full h-full" />
+				<img src={highlight2} class="ds transform transition-all" />
+			</>
+		)}
+	</div>
 
-  <div class="<sm:(row-start-2 text-center)">
-    {name}<br/>
-    by {artist}
-  </div>
-  <div class="text-right <sm:text-center">{name2}</div>
+	<div class="<sm:(row-start-2 text-center)">
+		{name}<br/>
+		by {artist}
+	</div>
+	<div class="text-right <sm:text-center">{name2}</div>
 </div>
 
 <style lang="sass">
-  .i
-    @apply relative
-  
-    &>*
-      @apply absolute top-0 left-0
-      margin: 0 !important
+	.i
+		@apply relative
 
-    &>:first-child
-      position: unset
-    
-  .group:hover .ds
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))
-  
-  *
-    transition-duration: 500ms !important
-    transition-timing-function: ease-in-out
+		&>*
+			@apply absolute top-0 left-0
+			margin: 0 !important
+
+		&>:first-child
+			position: unset
+
+	.group:hover .ds
+		filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))
+
+	*
+		transition-duration: 500ms !important
+		transition-timing-function: ease-in-out
 </style>

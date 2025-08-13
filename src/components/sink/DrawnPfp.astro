@@ -1,31 +1,31 @@
 <svg class={Astro.props.class} width="160px" height="160px"  version="1.1" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-  <path id="btm" d="m0 160h160v-40l-40 40v-40l-40 40v-40l-40 40v-40z" />
-  <path id="top" d="m0 120h80v-80h40v40l40-40h-40l40-40h-40l-40 40v-40l-40 40h40l-40 40h40l-40 40v-120h-40z" />
+	<path id="btm" d="m0 160h160v-40l-40 40v-40l-40 40v-40l-40 40v-40z" />
+	<path id="top" d="m0 120h80v-80h40v40l40-40h-40l40-40h-40l-40 40v-40l-40 40h40l-40 40h40l-40 40v-120h-40z" />
 </svg>
 
 <style lang="scss">
-  @use "sass:math";
+	@use "sass:math";
 
-  path {
-    fill: none;
-    stroke: white;
-  }
+	path {
+		fill: none;
+		stroke: white;
+	}
 
-  @keyframes no-dash-oset {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
+	@keyframes no-dash-oset {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
 
-  #btm {
-    stroke-dasharray: 547px;
-    stroke-dashoffset: 547px;
-    animation: no-dash-oset 2s ease-in forwards;
-  }
+	#btm {
+		stroke-dasharray: 547px;
+		stroke-dashoffset: 547px;
+		animation: no-dash-oset 2s ease-in forwards;
+	}
 
-  #top {
-    stroke-dasharray: 1165px;
-    stroke-dashoffset: 1165px;
-    animation: no-dash-oset #{2000 * math.div(106, 55)}ms 2s ease-out forwards;
-  }
+	#top {
+		stroke-dasharray: 1165px;
+		stroke-dashoffset: 1165px;
+		animation: no-dash-oset #{2000 * math.div(106, 55)}ms 2s ease-out forwards;
+	}
 </style>

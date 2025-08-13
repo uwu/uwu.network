@@ -20,16 +20,16 @@ const { title, class: className, ogpType, ogpSiteName, ogpDescription } = Astro.
 </head>
 
 <body class={className}>
-  <slot />
+	<slot />
 </body>
 
 <script async>
-  if (window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    const l = document.head.appendChild(document.createElement("link"));
-    l.rel = "icon";
-    l.href = "/favicon-white.ico";
-  }
+	if (window.matchMedia &&
+			window.matchMedia("(prefers-color-scheme: dark)").matches) {
+		const l = document.head.appendChild(document.createElement("link"));
+		l.rel = "icon";
+		l.href = "/favicon-white.ico";
+	}
 
 </script>
 

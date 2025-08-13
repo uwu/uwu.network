@@ -103,9 +103,9 @@ For this reason it is also not inlined in F#.
 
 ```fsharp
 let rec (@) list1 list2 =
-  match list1 with
-  | [] -> list2
-  | head::tail -> head::(tail @ list2)
+	match list1 with
+	| [] -> list2
+	| head::tail -> head::(tail @ list2)
 ```
 
 This is a very inefficient version of the code, which does not
@@ -164,9 +164,9 @@ myVal :?> MyType // { foo: "bar" }
 type MyType = { foo: string }
 
 let toMyTypeOrDefault (maybeMyType: obj) =
-  match maybeMyType with
-  | :? MyType as mt -> mt
-  | _ -> { foo = "bar" }
+	match maybeMyType with
+	| :? MyType as mt -> mt
+	| _ -> { foo = "bar" }
 
 { foo = "test" } :> obj |> toMyTypeOrDefault // { foo: "test" }
 "this is totally valid" |> toMyTypeOrDefault // { foo: "bar" }

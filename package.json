@@ -1,38 +1,38 @@
 {
-  "name": "@example/minimal",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
-  },
-  "devDependencies": {
-    "@astrojs/mdx": "^1.1.5",
-    "@astrojs/rss": "^3.0.0",
-    "@astrojs/sitemap": "^3.0.3",
-    "@astrojs/vue": "^3.0.4",
-    "@crossani/spring": "^1.1.0",
-    "@types/katex": "^0.16.7",
-    "@types/node": "^20.9.1",
-    "@unocss/astro": "^0.57.5",
-    "astro": "^3.5.5",
-    "crossani": "^1.3.3",
-    "dprint": "^0.49.1",
-    "katex": "^0.16.9",
-    "mingine-engine": "1.1.3",
-    "sass": "^1.69.5",
-    "unocss": "^0.57.5",
-    "vue": "^3.3.8"
-  },
-  "type": "module",
-  "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "dprint",
-      "esbuild",
-      "sharp"
-    ]
-  }
+	"name": "@example/minimal",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview"
+	},
+	"devDependencies": {
+		"@astrojs/mdx": "^1.1.5",
+		"@astrojs/rss": "^3.0.0",
+		"@astrojs/sitemap": "^3.0.3",
+		"@astrojs/vue": "^3.0.4",
+		"@crossani/spring": "^1.1.0",
+		"@types/katex": "^0.16.7",
+		"@types/node": "^20.9.1",
+		"@unocss/astro": "^0.57.5",
+		"astro": "^3.5.5",
+		"crossani": "^1.3.3",
+		"dprint": "^0.49.1",
+		"katex": "^0.16.9",
+		"mingine-engine": "1.1.3",
+		"sass": "^1.69.5",
+		"unocss": "^0.57.5",
+		"vue": "^3.3.8"
+	},
+	"type": "module",
+	"packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"dprint",
+			"esbuild",
+			"sharp"
+		]
+	}
 }

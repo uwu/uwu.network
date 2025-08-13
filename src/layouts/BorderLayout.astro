@@ -11,30 +11,30 @@ const resolvedTitle = title ? `${title} - ${titleSuffix}` : titleSuffix;
 ---
 
 <BaseLayout
-  title={resolvedTitle}
-  class={`${bodyClass ?? ""} bg-black font-plex text-white p-8px relative`}
-  {...Object.fromEntries(Object.entries(getProps(Astro.props)).filter(e => e[0].startsWith("ogp")))}
+	title={resolvedTitle}
+	class={`${bodyClass ?? ""} bg-black font-plex text-white p-8px relative`}
+	{...Object.fromEntries(Object.entries(getProps(Astro.props)).filter(e => e[0].startsWith("ogp")))}
 >
-  <IbmPlexSans slot="head" />
-  <slot name="head" slot="head" />
+	<IbmPlexSans slot="head" />
+	<slot name="head" slot="head" />
 
-  <div class="border border-white p-4px h-full">
-    <main class={"border border-white h-full"}>
-      <div class={"border-t-10 border-b-10 border-black p-6 py-[calc(1.5rem-10px)] h-full " + (scroll ? "of-auto" : "")}>
-        <slot />
-      </div>
-    </main>
-  </div>
+	<div class="border border-white p-4px h-full">
+		<main class={"border border-white h-full"}>
+			<div class={"border-t-10 border-b-10 border-black p-6 py-[calc(1.5rem-10px)] h-full " + (scroll ? "of-auto" : "")}>
+				<slot />
+			</div>
+		</main>
+	</div>
 
-  <a href={mainHref}
-    class="floater absolute px-2 bg-black top-0 left-1/2 transform -translate-x-1/2">{headerName?.toUpperCase()}</a>
+	<a href={mainHref}
+		class="floater absolute px-2 bg-black top-0 left-1/2 transform -translate-x-1/2">{headerName?.toUpperCase()}</a>
 
-  <a href="/" class="floater absolute px-2 bg-black right-[15px] bottom-0">{footerOride ?? "UWU.NETWORK"}</a>
+	<a href="/" class="floater absolute px-2 bg-black right-[15px] bottom-0">{footerOride ?? "UWU.NETWORK"}</a>
 </BaseLayout>
 
 <style lang="sass">
-  // don't just use h-[100dvh] as it might not work on some older browsers, so fallback:
-  body
-    height: 100vh
-    height: 100dvh
+	// don't just use h-[100dvh] as it might not work on some older browsers, so fallback:
+	body
+		height: 100vh
+		height: 100dvh
 </style>

@@ -45,19 +45,19 @@ Windows asks for my Yubikey's PIN, then to touch my key.
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/win_setup.png)
+	![](/sink/quiet_webauthn/win_setup.png)
 
-  ![](/sink/quiet_webauthn/win_pin.png)
+	![](/sink/quiet_webauthn/win_pin.png)
 
-  ![](/sink/quiet_webauthn/win_touch.png)
+	![](/sink/quiet_webauthn/win_touch.png)
 </div>
 
 Now, signing in:
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/win_pin_signin.png)
+	![](/sink/quiet_webauthn/win_pin_signin.png)
 
-  ![](/sink/quiet_webauthn/win_touch_signin.png)
+	![](/sink/quiet_webauthn/win_touch_signin.png)
 </div>
 
 Finally, this is all I got on Bitwarden:
@@ -87,30 +87,30 @@ First - registering:
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/chr_register_1.png)
+	![](/sink/quiet_webauthn/chr_register_1.png)
 
-  ![](/sink/quiet_webauthn/chr_register_2.png)
+	![](/sink/quiet_webauthn/chr_register_2.png)
 
-  ![](/sink/quiet_webauthn/chr_register_3.png)
+	![](/sink/quiet_webauthn/chr_register_3.png)
 
-  ![](/sink/quiet_webauthn/chr_register_4.png)
+	![](/sink/quiet_webauthn/chr_register_4.png)
 </div>
 
 And signing in:
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/chr_signin_1.png)
+	![](/sink/quiet_webauthn/chr_signin_1.png)
 
-  ![](/sink/quiet_webauthn/chr_signin_2.png)
+	![](/sink/quiet_webauthn/chr_signin_2.png)
 </div>
 
 Finally, Bitwarden:
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/chr_signin_bw_1.png)
+	![](/sink/quiet_webauthn/chr_signin_bw_1.png)
 
-  ![](/sink/quiet_webauthn/chr_signin_bw_2.png)
+	![](/sink/quiet_webauthn/chr_signin_bw_2.png)
 </div>
 
 ## Linux / Firefox
@@ -148,9 +148,9 @@ I did manage to sign in to Bitwarden blind though!
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/safari_1.png)
+	![](/sink/quiet_webauthn/safari_1.png)
 
-  ![](/sink/quiet_webauthn/safari_2.png)
+	![](/sink/quiet_webauthn/safari_2.png)
 </div>
 
 ## macOS Ventura / Firefox
@@ -162,9 +162,9 @@ I hear that Firefox 113.0 beta improves FIDO2 USB support on Linux and macOS
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/mac_ff_register.png)
+	![](/sink/quiet_webauthn/mac_ff_register.png)
 
-  ![](/sink/quiet_webauthn/mac_ff_signin.png)
+	![](/sink/quiet_webauthn/mac_ff_signin.png)
 </div>
 
 ## macOS Ventura / Chromium
@@ -176,13 +176,13 @@ and offered to turn on Bluetooth before anything else, which was new.
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/mac_chrome_passkey_prompt.png)
+	![](/sink/quiet_webauthn/mac_chrome_passkey_prompt.png)
 
-  ![](/sink/quiet_webauthn/mac_chrome_2_bluetooth.png)
+	![](/sink/quiet_webauthn/mac_chrome_2_bluetooth.png)
 
-  ![](/sink/quiet_webauthn/mac_chrome_3.png)
+	![](/sink/quiet_webauthn/mac_chrome_3.png)
 
-  ![](/sink/quiet_webauthn/mac_chrome_4_signin.png)
+	![](/sink/quiet_webauthn/mac_chrome_4_signin.png)
 </div>
 
 ## iOS (14)
@@ -194,17 +194,17 @@ Registering:
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/ios_register_1.jpg)
+	![](/sink/quiet_webauthn/ios_register_1.jpg)
 
-  ![](/sink/quiet_webauthn/ios_register_2.jpg)
+	![](/sink/quiet_webauthn/ios_register_2.jpg)
 </div>
 
 Signing in:
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-  ![](/sink/quiet_webauthn/ios_signin_1.jpg)
+	![](/sink/quiet_webauthn/ios_signin_1.jpg)
 
-  ![](/sink/quiet_webauthn/ios_signin_2.jpg)
+	![](/sink/quiet_webauthn/ios_signin_2.jpg)
 </div>
 
 And Bitwarden:

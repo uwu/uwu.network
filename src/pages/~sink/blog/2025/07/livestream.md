@@ -82,22 +82,22 @@ Well the way I have this implemented is that we connect and start getting bytes 
 // note Ogg headers are little-endian
 
 enum PageType : byte {
-    Continued     = 0b001,
-    StartOfStream = 0b010,
-    EndOfStream   = 0b100,
+	Continued     = 0b001,
+	StartOfStream = 0b010,
+	EndOfStream   = 0b100,
 }
 
 struct OggPage {
-    ubyte[4] magicBytes, // "OggS"
-    ubyte    version_, // 0
-    PageType pageType,
-    ulong    granulePosition,
-    uint     bitstreamSerialNumber,
-    uint     crc,
-    ubyte    segmentTableLength,
-    // contains lengths of each segment
-    ubyte[]  segmentTable,
-    ubyte[]  segments,
+	ubyte[4] magicBytes, // "OggS"
+	ubyte    version_, // 0
+	PageType pageType,
+	ulong    granulePosition,
+	uint     bitstreamSerialNumber,
+	uint     crc,
+	ubyte    segmentTableLength,
+	// contains lengths of each segment
+	ubyte[]  segmentTable,
+	ubyte[]  segments,
 }
 ```
 
@@ -120,27 +120,27 @@ An Opus Ogg stream starts with two pages, the identification header and comment 
 ```d
 // ogg page needs type.StartOfStream set
 struct IdHeader {
-    ubyte[8] magicBytes, // "OpusHead"
-    ubyte    version_, // 1
-    ubyte    channelCount,
-    ushort   preSkip,
-    uint     sampleRate,
-    ushort   outputGain,
-    ubyte    channelMappingFamily,
-    ubyte[]  channelMappingTable
+	ubyte[8] magicBytes, // "OpusHead"
+	ubyte    version_, // 1
+	ubyte    channelCount,
+	ushort   preSkip,
+	uint     sampleRate,
+	ushort   outputGain,
+	ubyte    channelMappingFamily,
+	ubyte[]  channelMappingTable
 }
 
 struct CommentHeader {
-    ubyte[8]      magicBytes, // "OpusTags"
-    uint          vendorStringLength,
-    char[]        vendorString,
-    uint          userCommentLength;
-    UserComment[] userComments;
+	ubyte[8]      magicBytes, // "OpusTags"
+	uint          vendorStringLength,
+	char[]        vendorString,
+	uint          userCommentLength;
+	UserComment[] userComments;
 }
 
 struct UserComment {
-    uint   strLen;
-    char[] str;
+	uint   strLen;
+	char[] str;
 }
 ```
 
@@ -159,27 +159,27 @@ Next checksums. Ogg uses CRC32, but its a weird CRC32 implementation. This took 
 ```cs
 static uint Crc32(Span<byte> page)
 {
-    uint crc = 0;
+	uint crc = 0;
 
-    foreach (var b in page)
-        crc = (crc << 8) ^ OggCrcLookup[((crc >> 24) & 0xff) ^ b];
+	foreach (var b in page)
+		crc = (crc << 8) ^ OggCrcLookup[((crc >> 24) & 0xff) ^ b];
 
-    return crc & 0xFFFFFFFF;
+	return crc & 0xFFFFFFFF;
 }
 
 static uint OggCrcLookupVal(ulong idx)
 {
-    var r = idx << 24;
+	var r = idx << 24;
 
-    for (var i = 0; i < 8; i++)
-    {
-        if ((r & 0x80000000) != 0)
-            r = (r << 1) ^ 0x04c11db7;
-        else
-            r <<= 1;
-    }
+	for (var i = 0; i < 8; i++)
+	{
+		if ((r & 0x80000000) != 0)
+			r = (r << 1) ^ 0x04c11db7;
+		else
+			r <<= 1;
+	}
 
-    return (uint) (r & 0xffffffff);
+	return (uint) (r & 0xffffffff);
 }
 
 static readonly uint[] OggCrcLookup;
@@ -198,27 +198,27 @@ Now let's look at the actual code looks like for streaming to a new client:
 ```cs
 async Task StreamToResponse(HttpResponse resp)
 {
-    resp.Headers.ContentType = "audio/ogg";
+	resp.Headers.ContentType = "audio/ogg";
 
-    await resp.StartAsync();
+	await resp.StartAsync();
 
-    var pipe = new Pipe();
+	var pipe = new Pipe();
 
-    var writerStream = pipe.Writer.AsStream();
-    Fanout.Add(writerStream);
+	var writerStream = pipe.Writer.AsStream();
+	Fanout.Add(writerStream);
 
-    resp.RegisterForDispose(new Helpers.OnDispose(() => Fanout.Remove(writerStream)));
+	resp.RegisterForDispose(new Helpers.OnDispose(() => Fanout.Remove(writerStream)));
 
-    const uint serialNumber = 0x55575552; // "UWUR"
+	const uint serialNumber = 0x55575552; // "UWUR"
 
-    await resp.BodyWriter.WriteAsync(Ogg.BuildOpusIdHeader(serialNumber, 2, 3840, 48000, 0));
-    await resp.BodyWriter.WriteAsync(Ogg.BuildOpusCommentHeader(serialNumber));
+	await resp.BodyWriter.WriteAsync(Ogg.BuildOpusIdHeader(serialNumber, 2, 3840, 48000, 0));
+	await resp.BodyWriter.WriteAsync(Ogg.BuildOpusCommentHeader(serialNumber));
 
-    await foreach (var page in new Ogg.PageEnumerable(pipe.Reader.AsStream()))
-    {
-        Ogg.SetSerialNumberAndSum(page, serialNumber);
-        await resp.BodyWriter.WriteAsync(page);
-    }
+	await foreach (var page in new Ogg.PageEnumerable(pipe.Reader.AsStream()))
+	{
+		Ogg.SetSerialNumberAndSum(page, serialNumber);
+		await resp.BodyWriter.WriteAsync(page);
+	}
 }
 ```
 

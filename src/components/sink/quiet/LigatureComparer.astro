@@ -3,21 +3,21 @@ const ops = Astro.props.ops/* .replaceAll("<", "&lt;") */.split(" ");
 ---
 
 <div class="comparer">
-  {ops.map(op => (
-    <div class="ligature">{op}</div>
-    <div class="raw ligature">{op}</div>
-  ))}
+	{ops.map(op => (
+		<div class="ligature">{op}</div>
+		<div class="raw ligature">{op}</div>
+	))}
 </div>
 
 <style lang="sass">
-  .comparer
-    display: grid
-    grid-auto-flow: column
-    grid-template-rows: repeat(2, auto)
-    row-gap: 1rem
+	.comparer
+		display: grid
+		grid-auto-flow: column
+		grid-template-rows: repeat(2, auto)
+		row-gap: 1rem
 
-  .ligature
-    font-family: "Jetbrains Mono", "Roboto Mono", monospace
-    &.raw
-      font-variant-ligatures: none
+	.ligature
+		font-family: "Jetbrains Mono", "Roboto Mono", monospace
+		&.raw
+			font-variant-ligatures: none
 </style>

@@ -3,55 +3,55 @@ import "☆css/blog.scss";
 import Layout from "@layouts/tasky/Layout.astro";
 
 const posts = [
-  ...(await Astro.glob("/src/pages/~tasky/blog/**/*.md")),
-  // ...(await Astro.glob("/src/pages/~tasky/blog/**/*.mdx"))
+	...(await Astro.glob("/src/pages/~tasky/blog/**/*.md")),
+	// ...(await Astro.glob("/src/pages/~tasky/blog/**/*.mdx"))
 ];
 
 const { frontmatter } = posts.find(
-  (p) =>
-    Astro.request.url.endsWith(p.url!)
-    || Astro.request.url.slice(0, -1).endsWith(p.url!),
+	(p) =>
+		Astro.request.url.endsWith(p.url!)
+		|| Astro.request.url.slice(0, -1).endsWith(p.url!),
 ) as unknown as any;
 ---
 <Layout
-  title={frontmatter.title}
-  titleName="tasky's blog"
-  headerName="tasky/blog"
-  footerOride={"taskylizard @ uwu.network " + frontmatter.pubDate.split("T")[0]}
-  mainHref="/~tasky/blog"
-  scroll
-  ogpType="article"
-  ogpSiteName="tasky"
-  ogpDescription={frontmatter.description}
+	title={frontmatter.title}
+	titleName="tasky's blog"
+	headerName="tasky/blog"
+	footerOride={"taskylizard @ uwu.network " + frontmatter.pubDate.split("T")[0]}
+	mainHref="/~tasky/blog"
+	scroll
+	ogpType="article"
+	ogpSiteName="tasky"
+	ogpDescription={frontmatter.description}
 >
-  <div class="command-line mb-2">
-    <span class="lambda">λ</span>
-    <span class="text-white command-text"> cat {frontmatter.slug}.md</span>
-  </div>
+	<div class="command-line mb-2">
+		<span class="lambda">λ</span>
+		<span class="text-white command-text"> cat {frontmatter.slug}.md</span>
+	</div>
 
-  <div class="response mb-6">
-    <h1 class="text-2xl font-bold text-pink-300 mb-2">{frontmatter.title}</h1>
-    <div class="flex flex-col md:flex-row md:items-center gap-2 mb-4">
-      <div class="text-gray-400">{frontmatter.pubDate}</div>
-      {
-        frontmatter.description
-          && (
-          <div class="text-gray-300">• {frontmatter.description}</div>
-        )
-      }
-    </div>
+	<div class="response mb-6">
+		<h1 class="text-2xl font-bold text-pink-300 mb-2">{frontmatter.title}</h1>
+		<div class="flex flex-col md:flex-row md:items-center gap-2 mb-4">
+			<div class="text-gray-400">{frontmatter.pubDate}</div>
+			{
+				frontmatter.description
+					&& (
+					<div class="text-gray-300">• {frontmatter.description}</div>
+				)
+			}
+		</div>
 
-    <div class="blog-content prose prose-invert max-w-none">
-      <slot />
-    </div>
-  </div>
+		<div class="blog-content prose prose-invert max-w-none">
+			<slot />
+		</div>
+	</div>
 
-  <div class="command-line mb-2 mt-6">
-    <span class="lambda">λ</span>
-    <span class="text-white command-text"> cd ..</span>
-  </div>
-  <div class="response mb-4">
-    <a href="/~tasky/blog" class="text-blue-300 hover:underline"
-    >← Back to all posts</a>
-  </div>
+	<div class="command-line mb-2 mt-6">
+		<span class="lambda">λ</span>
+		<span class="text-white command-text"> cd ..</span>
+	</div>
+	<div class="response mb-4">
+		<a href="/~tasky/blog" class="text-blue-300 hover:underline"
+		>← Back to all posts</a>
+	</div>
 </Layout>

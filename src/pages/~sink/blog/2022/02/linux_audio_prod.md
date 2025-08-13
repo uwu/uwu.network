@@ -14,64 +14,64 @@ tags: ["MIGRATED"]
 ### The setup
 
 <table>
-  <tbody>
-    <tr>
-      <td>Distro</td>
-      <td>EndeavourOS rolling</td>
-    </tr>
-    <tr>
-      <td>Linux Kernel</td>
-      <td>linux-zen 5.15.6-zen2-1-zen</td>
-    </tr>
-    <tr>
-      <td>ALSA versions</td>
-      <td>
-        alsa-card-profiles 1:0.3.40-1
-        <br />
-        alsa-firmware 1.2.4-2
-        <br />
-        alsa-lib 1.2.5.1-3
-        <br />
-        alsa-plugins 1:1.2.5-2
-        <br />
-        alsa-topology-conf 1.2.5.1-1
-        <br />
-        alsa-ucm-conf 1.2.5.1-1
-        <br />
-        alsa-utils 1.2.5.1-1
-        <br />
-        lib32-alsa-lib 1.2.5.1-1
-        <br />
-        lib32-alsa-plugins 1.2.5-1
-      </td>
-    </tr>
-    <tr>
-      <td>Pipewire versions</td>
-      <td>
-        gst-plugin-pipewire 1:0.3.40-1
-        <br />
-        pipewire 1:0.3.40-1
-        <br />
-        pipewire-alsa 1:0.3.40-1
-        <br />
-        pipewire-jack 1:0.3.40-1
-        <br />
-        pipewire-pulse 1:0.3.40-1
-        <br />
-        wireplumber 0.4.5-2
-      </td>
-    </tr>
-    <tr>
-      <td>Wine versions</td>
-      <td>
-        wine-gecko 2.47.2-2
-        <br />
-        wine-mono 7.0.0-1
-        <br />
-        wine-staging 6.22-1
-      </td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr>
+			<td>Distro</td>
+			<td>EndeavourOS rolling</td>
+		</tr>
+		<tr>
+			<td>Linux Kernel</td>
+			<td>linux-zen 5.15.6-zen2-1-zen</td>
+		</tr>
+		<tr>
+			<td>ALSA versions</td>
+			<td>
+				alsa-card-profiles 1:0.3.40-1
+				<br />
+				alsa-firmware 1.2.4-2
+				<br />
+				alsa-lib 1.2.5.1-3
+				<br />
+				alsa-plugins 1:1.2.5-2
+				<br />
+				alsa-topology-conf 1.2.5.1-1
+				<br />
+				alsa-ucm-conf 1.2.5.1-1
+				<br />
+				alsa-utils 1.2.5.1-1
+				<br />
+				lib32-alsa-lib 1.2.5.1-1
+				<br />
+				lib32-alsa-plugins 1.2.5-1
+			</td>
+		</tr>
+		<tr>
+			<td>Pipewire versions</td>
+			<td>
+				gst-plugin-pipewire 1:0.3.40-1
+				<br />
+				pipewire 1:0.3.40-1
+				<br />
+				pipewire-alsa 1:0.3.40-1
+				<br />
+				pipewire-jack 1:0.3.40-1
+				<br />
+				pipewire-pulse 1:0.3.40-1
+				<br />
+				wireplumber 0.4.5-2
+			</td>
+		</tr>
+		<tr>
+			<td>Wine versions</td>
+			<td>
+				wine-gecko 2.47.2-2
+				<br />
+				wine-mono 7.0.0-1
+				<br />
+				wine-staging 6.22-1
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ### Setting up audio apps - The natives

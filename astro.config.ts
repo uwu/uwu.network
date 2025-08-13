@@ -6,6 +6,6 @@ import uno from "@unocss/astro";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), sitemap(), mdx(), uno()],
-  site: "https://uwu.network",
+	integrations: [vue(), sitemap(), mdx(), uno()],
+	site: "https://uwu.network",
 });

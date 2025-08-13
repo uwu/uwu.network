@@ -98,14 +98,14 @@ We may use a number system where each digit represents a power of ten, but for c
 See this diagram, where we show the number on the bottom, as *how many of each place value* makes it up.
 ```
 human:
-  p.v.:  100 10 1
-  count: 4   5  6
-  value = (6 * 1) + (5 * 10) + (4 * 100) = 456
+	p.v.:  100 10 1
+	count: 4   5  6
+	value = (6 * 1) + (5 * 10) + (4 * 100) = 456
 
 computer:
-  p.v.:  256 128 64 32 16 8 4 2 1
-  count: 1   1   1  0  0  1 0 0 0
-  value = (1 * 8) + (1 * 64) + (1 * 128) + (1 * 256) = 456
+	p.v.:  256 128 64 32 16 8 4 2 1
+	count: 1   1   1  0  0  1 0 0 0
+	value = (1 * 8) + (1 * 64) + (1 * 128) + (1 * 256) = 456
 ```
 
 Now, what happens if we have small numbers? Well, the digits to the left are 0, just like in decimal.

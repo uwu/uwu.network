@@ -263,14 +263,14 @@ This means that when `_start` begins running, it can access them from there. Thi
 // ILLUSTRATIVE PURPOSES ONLY
 void _secret_os_entrypoint()
 {
-    char* envp_null = NULL;
-    char*[env_length] envp;
-    char* argv_null = NULL;
-    char*[arg_length] argv;
-    // initalize envp and argv here somehow
-    uint64_t argc = arg_length;
+	char* envp_null = NULL;
+	char*[env_length] envp;
+	char* argv_null = NULL;
+	char*[arg_length] argv;
+	// initalize envp and argv here somehow
+	uint64_t argc = arg_length;
 
-    _start();
+	_start();
 }
 ```
 
@@ -290,8 +290,8 @@ Let's investigate!
 
 ```c
 extern weak hidden
-    void (*const __init_array_start)(void),
-    (*const __init_array_end)(void);
+	void (*const __init_array_start)(void),
+	(*const __init_array_end)(void);
 
 static void dummy(void) {}
 weak_alias(dummy, _init); // fun macro
@@ -452,25 +452,25 @@ Well, looking at our functions:
 ```c
 /* fake illustrative def */ void _start()
 {
-    // do magic assembly stuff from chapters 2 and 3
-    _start_c(magic);
+	// do magic assembly stuff from chapters 2 and 3
+	_start_c(magic);
 }
 
 hidden void _start_c(long *p)
 {
-    // --- cut ---
-    __libc_start_main(main, argc, argv, _init, _fini, 0);
+	// --- cut ---
+	__libc_start_main(main, argc, argv, _init, _fini, 0);
 }
 
 int __libc_start_main(/* lots of args */)
 {
-    // --- cut ---
-    return stage2(main, argc, argv);
+	// --- cut ---
+	return stage2(main, argc, argv);
 }
 
 static int libc_start_main_stage2(/* lots of args */)
 {
-    // --- cut ---
+	// --- cut ---
 	exit(main(argc, argv, envp));
 	return 0;
 }

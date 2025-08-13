@@ -3,12 +3,12 @@ import { Route } from "%js/types";
 import NavBarItem from "%components/NavBarItem.astro";
 
 export interface Props {
-    routes: Route[];
+	routes: Route[];
 }
 
 const { routes } = Astro.props;
 ---
 
 <div class="p-2 flex flex-row justify-center gap-4">
-    {routes.map((route: Route) => <NavBarItem name={route.name} href={route.path} /> )}
+	{routes.map((route: Route) => <NavBarItem name={route.name} href={route.path} /> )}
 </div>

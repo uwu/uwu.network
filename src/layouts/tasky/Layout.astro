@@ -3,51 +3,51 @@ import "☆css/global.scss";
 import BorderLayout from "@layouts/BorderLayout.astro";
 
 const {
-  title,
-  titleName = "taskylizard",
-  headerName = "tasky",
-  footerOride,
-  mainHref = "/~tasky",
-  scroll = false,
-  ogpType,
-  ogpSiteName,
-  ogpDescription,
-  currentPath = "~/blog",
+	title,
+	titleName = "taskylizard",
+	headerName = "tasky",
+	footerOride,
+	mainHref = "/~tasky",
+	scroll = false,
+	ogpType,
+	ogpSiteName,
+	ogpDescription,
+	currentPath = "~/blog",
 } = Astro.props;
 ---
 
 <BorderLayout
-  title={title}
-  titleName={titleName}
-  headerName={headerName}
-  footerOride={footerOride}
-  mainHref={mainHref}
-  scroll={scroll}
-  ogpType={ogpType}
-  ogpSiteName={ogpSiteName}
-  ogpDescription={ogpDescription}
+	title={title}
+	titleName={titleName}
+	headerName={headerName}
+	footerOride={footerOride}
+	mainHref={mainHref}
+	scroll={scroll}
+	ogpType={ogpType}
+	ogpSiteName={ogpSiteName}
+	ogpDescription={ogpDescription}
 >
-  <div class="terminal-container flex flex-col h-full">
-    <div class="terminal-header flex items-center gap-2 mb-4">
-      <div class="w-3 h-3 rounded-full bg-red-500"></div>
-      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-      <div class="w-3 h-3 rounded-full bg-green-500"></div>
-      <div class="ml-2 text-xs">
-        taskylizard<span class="text-green-300 font-bold">@</span>uwu.network:
-        <span class="text-pink-300 font-bold">{currentPath}</span>
-      </div>
-    </div>
+	<div class="terminal-container flex flex-col h-full">
+		<div class="terminal-header flex items-center gap-2 mb-4">
+			<div class="w-3 h-3 rounded-full bg-red-500"></div>
+			<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+			<div class="w-3 h-3 rounded-full bg-green-500"></div>
+			<div class="ml-2 text-xs">
+				taskylizard<span class="text-green-300 font-bold">@</span>uwu.network:
+				<span class="text-pink-300 font-bold">{currentPath}</span>
+			</div>
+		</div>
 
-    <div class="terminal-content flex-1 overflow-auto">
-      <slot />
+		<div class="terminal-content flex-1 overflow-auto">
+			<slot />
 
-      <div id="typing-line" class="typing-line">
-        <span class="lambda">λ</span>
-        <span id="typing-text" class="typing-text"></span>
-        <span class="cursor">█</span>
-      </div>
-    </div>
-  </div>
+			<div id="typing-line" class="typing-line">
+				<span class="lambda">λ</span>
+				<span id="typing-text" class="typing-text"></span>
+				<span class="cursor">█</span>
+			</div>
+		</div>
+	</div>
 </BorderLayout>
 
 <script>

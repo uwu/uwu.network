@@ -24,14 +24,14 @@ For the sake of demonstration, that looks something like this:
 
 ```js
 webpackChunkdiscord_app.push([
-  [Symbol()],
-  {},
-  (e) => {
-    for (const k in e.c) {
-      const m = e.c[k].exports;
-      if (m?.default?.getChannel) console.log(m.default);
-    }
-  },
+	[Symbol()],
+	{},
+	(e) => {
+		for (const k in e.c) {
+			const m = e.c[k].exports;
+			if (m?.default?.getChannel) console.log(m.default);
+		}
+	},
 ]);
 ```
 
@@ -55,7 +55,7 @@ Here is an example input:
 const channelId = "PUT_CHANNEL_ID_HERE";
 
 hlccInject([hlccByProps("getChannel", 1)], (channelModule) =>
-  console.log(channelModule.getChannel(channelId).name)
+	console.log(channelModule.getChannel(channelId).name)
 );
 ```
 
@@ -64,23 +64,23 @@ And the corresponding output:
 ```js
 const channelId = "PUT_CHANNEL_ID_HERE";
 {
-  const _w = webpackChunkdiscord_app;
-  let channelModule;
-  _w.push([
-    [Symbol()],
-    {},
-    (e) => {
-      let _i0 = 0;
-      for (const k in e.c) {
-        const m = e.c[k].exports;
-        const mDef = m?.default && m.__esModule ? m.default : m;
-        if (mDef?.getChannel && _i0++ === 1) channelModule = mDef;
-      }
-    },
-  ]);
-  _w.pop();
-  console.log(channelModule.getChannel(channelId).name);
-  void 0;
+	const _w = webpackChunkdiscord_app;
+	let channelModule;
+	_w.push([
+		[Symbol()],
+		{},
+		(e) => {
+			let _i0 = 0;
+			for (const k in e.c) {
+				const m = e.c[k].exports;
+				const mDef = m?.default && m.__esModule ? m.default : m;
+				if (mDef?.getChannel && _i0++ === 1) channelModule = mDef;
+			}
+		},
+	]);
+	_w.pop();
+	console.log(channelModule.getChannel(channelId).name);
+	void 0;
 }
 ```
 
@@ -131,30 +131,30 @@ Some code for that may look something like this:
 const channelId = "PUT_CHANNEL_ID_HERE";
 
 hlccInject([
-  hlccByProps("getChannel", 1, (m) =>
-    console.log(m.getChannel(channelId).name)
-  ),
+	hlccByProps("getChannel", 1, (m) =>
+		console.log(m.getChannel(channelId).name)
+	),
 ]);
 ```
 
 ```js
 {
-  const _w = webpackChunkdiscord_app;
-  _w.push([
-    [Symbol()],
-    {},
-    (e) => {
-      let _i0 = 0;
-      for (const k in e.c) {
-        const m = e.c[k].exports;
-        const mDef = m?.default && m.__esModule ? m.default : m;
-        if (mDef?.getChannel && _i0++ === 1)
-          // IIFE is less code than shadowing in a block with a let or const
-          ((m) => console.log(m.getChannel(channelId).name))(mDef);
-      }
-    },
-  ]);
-  _w.pop();
-  void 0;
+	const _w = webpackChunkdiscord_app;
+	_w.push([
+		[Symbol()],
+		{},
+		(e) => {
+			let _i0 = 0;
+			for (const k in e.c) {
+				const m = e.c[k].exports;
+				const mDef = m?.default && m.__esModule ? m.default : m;
+				if (mDef?.getChannel && _i0++ === 1)
+					// IIFE is less code than shadowing in a block with a let or const
+					((m) => console.log(m.getChannel(channelId).name))(mDef);
+			}
+		},
+	]);
+	_w.pop();
+	void 0;
 }
 ```

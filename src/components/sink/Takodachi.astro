@@ -3,57 +3,57 @@ import takodachi from "^/takodachi_smol.webp?url";
 ---
 
 <style>
-  * {
-    filter: grayscale() brightness(1.5) contrast(4) invert();
-  }
+	* {
+		filter: grayscale() brightness(1.5) contrast(4) invert();
+	}
 </style>
 
 <img src={takodachi} id="takodachi"
-  class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0 image-render-edge">
+	class="absolute w-10 h-10 -z-1 pointer-events-none transition-opacity duration-500 opacity-0 image-render-edge">
 
 <script>
-  /* 
-  I spent a god-damn age writing this wretched thing.
-  If you use, please credit. thanks.
-  -- sink
-  */
-  import { v2add, v2mag, v2norm, v2smul, v2sub } from "^js/math";
-  const speed = 2;
-  const snapThreshold = 5; // px
+	/*
+	I spent a god-damn age writing this wretched thing.
+	If you use, please credit. thanks.
+	-- sink
+	*/
+	import { v2add, v2mag, v2norm, v2smul, v2sub } from "^js/math";
+	const speed = 2;
+	const snapThreshold = 5; // px
 
-  let mousePos;
-  window.addEventListener("mousemove", e => {
-    mousePos = [e.clientX, e.clientY];
-  });
-  window.addEventListener("touchstart", e => {
-    mousePos = [e.touches[0].clientX, e.touches[0].clientY];
-  })
+	let mousePos;
+	window.addEventListener("mousemove", e => {
+		mousePos = [e.clientX, e.clientY];
+	});
+	window.addEventListener("touchstart", e => {
+		mousePos = [e.touches[0].clientX, e.touches[0].clientY];
+	})
 
-  const chaser = document.getElementById("takodachi");
-  setTimeout(() => {
-    chaser.classList.remove("opacity-0");
-  }, 1000)
+	const chaser = document.getElementById("takodachi");
+	setTimeout(() => {
+		chaser.classList.remove("opacity-0");
+	}, 1000)
 
-  let target;
-  const offset = v2smul([chaser.clientWidth, chaser.clientHeight], .5);
+	let target;
+	const offset = v2smul([chaser.clientWidth, chaser.clientHeight], .5);
 
-  setInterval(() => {
-    if (!mousePos) return;
+	setInterval(() => {
+		if (!mousePos) return;
 
-    const currentPos = v2add([chaser.offsetLeft, chaser.offsetTop], offset);
+		const currentPos = v2add([chaser.offsetLeft, chaser.offsetTop], offset);
 
-    target ??= currentPos;
+		target ??= currentPos;
 
-    const diff = v2sub(mousePos, currentPos);
+		const diff = v2sub(mousePos, currentPos);
 
-    target =
-      v2mag(diff) < snapThreshold
-        ? mousePos
-        : v2add(target, v2smul(v2norm(diff), speed));
+		target =
+			v2mag(diff) < snapThreshold
+				? mousePos
+				: v2add(target, v2smul(v2norm(diff), speed));
 
-    const finalVec = v2sub(target, offset);
+		const finalVec = v2sub(target, offset);
 
-    chaser.style.left = finalVec[0] + "px";
-    chaser.style.top = finalVec[1] + "px";
-  }, 10);
+		chaser.style.left = finalVec[0] + "px";
+		chaser.style.top = finalVec[1] + "px";
+	}, 10);
 </script>

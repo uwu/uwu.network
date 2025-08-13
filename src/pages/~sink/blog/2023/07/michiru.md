@@ -51,27 +51,27 @@ version: "3"
 services:
 
 # --- Caddy ---
-  caddy:
-    container_name: caddy
-    image: caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    networks:
-      - caddynet
-    volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-      - ./www:/www
-      - ./caddy/data:/data
-      - ./caddy/config:/config
-    cap_add:
-      - NET_ADMIN
+	caddy:
+		container_name: caddy
+		image: caddy
+		restart: unless-stopped
+		ports:
+			- "80:80"
+			- "443:443"
+			- "443:443/udp"
+		networks:
+			- caddynet
+		volumes:
+			- ./caddy/Caddyfile:/etc/caddy/Caddyfile
+			- ./www:/www
+			- ./caddy/data:/data
+			- ./caddy/config:/config
+		cap_add:
+			- NET_ADMIN
 
 
 networks:
-  - caddynet
+	- caddynet
 ```
 
 There is a LOT to unpack here, so let's go bit by bit.
@@ -108,10 +108,10 @@ Now start editing the Caddyfile:
 ```nginx
 # your domains here
 michiru.yellows.ink, 107.189.3.111 {
-  encode zstd gzip
+	encode zstd gzip
 
-  root * /www
-  file_server
+	root * /www
+	file_server
 }
 ```
 
@@ -129,22 +129,22 @@ At this point you have a static site :)
 I'll add a container to the `services` in `docker-compose.yml`:
 
 ```yaml
-  qbottorrent:
-    container_name: qbittorrent
-    image: cr.hotio.dev/hotio/qbittorrent
-    restart: unless-stopped
-    networks:
-      - caddynet
-    volumes:
-      - ./qbittorrent/config:/config
-      - ./qbittorrent/torrents:/data
+	qbottorrent:
+		container_name: qbittorrent
+		image: cr.hotio.dev/hotio/qbittorrent
+		restart: unless-stopped
+		networks:
+			- caddynet
+		volumes:
+			- ./qbittorrent/config:/config
+			- ./qbittorrent/torrents:/data
 ```
 
 Now, in the Caddyfile, between the encode line, and root:
 ```diff
 redir /qbittorrent /qbittorrent/ 301
 handle_path /qbittorrent/* {
-  reverse_proxy * qbittorrent:8080
+	reverse_proxy * qbittorrent:8080
 }
 ```
 
@@ -170,12 +170,12 @@ Add this into your Caddyfile:
 
 ```nginx
 handle_path /torrents/* {
-  basicauth {
-    michiru $2a$14$.Z2Go6n5d3435zN31lC0yOGf4xYP49FTpyPzrcicUYNl9Xm8J81RO
-  }
+	basicauth {
+		michiru $2a$14$.Z2Go6n5d3435zN31lC0yOGf4xYP49FTpyPzrcicUYNl9Xm8J81RO
+	}
 
-  root * /torrents
-  file_server browse
+	root * /torrents
+	file_server browse
 }
 ```
 
@@ -188,52 +188,52 @@ These will want a network of their own:
 
 ```yaml
 networks:
-  - caddynet
-  - arrnet
+	- caddynet
+	- arrnet
 ```
 
 And container setups:
 ```yaml
 # --- arr ---
 
-  radarr:
-    container_name: radarr
-    image: cr.hotio.dev/hotio/radarr
-    restart: unless-stopped
-    logging:
-      driver: json-file
-    ports: ["7878:7878"]
-    networks:
-      - arrnet
-      - caddynet
-    volumes:
-      - ./arr/config/radarr:/config
-      - ./arr/data:/data
+	radarr:
+		container_name: radarr
+		image: cr.hotio.dev/hotio/radarr
+		restart: unless-stopped
+		logging:
+			driver: json-file
+		ports: ["7878:7878"]
+		networks:
+			- arrnet
+			- caddynet
+		volumes:
+			- ./arr/config/radarr:/config
+			- ./arr/data:/data
 
-  sonarr:
-    container_name: sonarr
-    image: cr.hotio.dev/hotio/sonarr
-    restart: unless-stopped
-    logging:
-      driver: json-file
-    ports: ["8989:8989"]
-    networks:
-      - arrnet
-      - caddynet
-    volumes:
-      - ./arr/config/sonarr:/config
-      - ./arr/data:/data
+	sonarr:
+		container_name: sonarr
+		image: cr.hotio.dev/hotio/sonarr
+		restart: unless-stopped
+		logging:
+			driver: json-file
+		ports: ["8989:8989"]
+		networks:
+			- arrnet
+			- caddynet
+		volumes:
+			- ./arr/config/sonarr:/config
+			- ./arr/data:/data
 
-  arr-qbittorrent:
-    container_name: arr-qbittorrent
-    image: cr.hotio.dev/hotio/qbittorrent
-    restart: unless-stopped
-    ports: ["8080:8080"] # DANGER, follow the text carefully.
-    networks:
-      - arrnet
-    volumes:
-      - ./arr/config/qbittorrent:/config
-      - ./arr/data:/data
+	arr-qbittorrent:
+		container_name: arr-qbittorrent
+		image: cr.hotio.dev/hotio/qbittorrent
+		restart: unless-stopped
+		ports: ["8080:8080"] # DANGER, follow the text carefully.
+		networks:
+			- arrnet
+		volumes:
+			- ./arr/config/qbittorrent:/config
+			- ./arr/data:/data
 ```
 
 Now start this setup, and login to your server at port 8080.
@@ -297,22 +297,22 @@ Komga is a manga server.
 Let's create a container, and expose qBittorrent's output to it:
 
 ```yaml
-  komga:
-    container_name: komga
-    image: gotson/komga
-    restart: unless-stopped
-    networks:
-      - caddynet
-    volumes:
-      - ./komga:/config
-      - ./qbittorrent/torrents:/data
+	komga:
+		container_name: komga
+		image: gotson/komga
+		restart: unless-stopped
+		networks:
+			- caddynet
+		volumes:
+			- ./komga:/config
+			- ./qbittorrent/torrents:/data
 ```
 
 Make a file `komga/application.yml` with this config:
 ```yaml
 server:
-  servlet:
-    context-path: /komga
+	servlet:
+		context-path: /komga
 ```
 
 and expose it in caddy:

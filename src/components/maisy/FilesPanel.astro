@@ -1,11 +1,11 @@
 ---
 export interface Props {
-    center?: boolean;
+	center?: boolean;
 }
 
 const { center } = Astro.props;
 ---
 
 <div class={`flex flex-col w-full h-full bg-white bg-opacity-5 p-4 rounded-md overflow-y-auto ${center && "justify-center text-center"}`}>
-    <slot />
+	<slot />
 </div>

@@ -1,115 +1,115 @@
 [
-  {
-    "header": "toonlink",
-    "body": "i'm proficient in making things do things that they aren't supposed to do",
-    "img": {
-      "src": "/toonlink/ssemblem.png",
-      "link": "https://toon.link"
-    },
-    "pixelated": true,
-    "headLink": "/~toonlink",
-    "links": {
-      "[keybase]": "https://keybase.io/twnlink",
-      "[github]": "https://github.com/twnlink",
-      "[twitter]": "https://twitter.com/twnlink"
-    },
-    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINbMQsMpuAx3H8V2/XJZjHFlmIO4Kvz7zRQKsVWC51ZK"
-  },
-  {
-    "header": "Yellowsink",
-    "body": "I wrote software that was occasionally cool.",
-    "img": {
-      "src": "/sink/bw-pfp.svg",
-      "link": "https://yellows.ink"
-    },
-    "headLink": "/~sink",
-    "links": {
-      "[git]": "https://github.com/yellowsink",
-      "[fedi]": "https://lethallava.land/@sink",
-      "[twitter]": "https://twitter.com/_hazeler",
-      "[email]": "mailto:yellowsink@riseup.net"
-    },
-    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKUrqQFmpD+NUPeLqc6Gp+Wd+ZZJRKp1a5e9KWHKy3Ye"
-  },
-  {
-    "header": "maisy",
-    "body": "uwu.network janitor, local TypeScript enthusiast",
-    "img": {
-      "src": "/maisy/img/logo.png",
-      "link": "https://maisy.moe"
-    },
-    "headLink": "/~maisy",
-    "links": {
-      "[discord]": "https://discord.com/users/257109471589957632",
-      "[github]": "https://github.com/maisymoe",
-      "[fedi]": "https://wetdry.world/@maisy",
-      "[email]": "mailto:maisymoe@riseup.net"
-    }
-  },
-  {
-    "header": "Phorcys",
-    "body": "i'm toonlink",
-    "img": {
-      "src": "/phorcys/pfp.png",
-      "link": "https://phorcys.net"
-    },
-    "headLink": "/~phorcys",
-    "links": {
-      "[github]": "https://github.com/phorcys420"
-    }
-  },
-  {
-    "header": "xirreal",
-    "body": "graphics and backend developer",
-    "img": {
-      "src": "/xirreal/pfp.png",
-      "link": "https://xirreal.dev"
-    },
-    "headLink": "/~xirreal",
-    "links": {
-      "[github]": "https://github.xirreal.dev/",
-      "[email]": "mailto:me@xirreal.dev"
-    },
-    "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWKuK0VsqVoF6wRirM5WLJj0b+MLRtdQ9YQgXTmejsl"
-  },
-  {
-    "header": "kasimir",
-    "body": "backup janitor",
-    "img": {
-      "src": "/kasimir/img/logo.svg",
-      "link": "https://k6.tf"
-    },
-    "headLink": "/~kasimir",
-    "links": {
-      "[github]": "https://github.com/redstonekasi",
-      "[twitter]": "https://twitter.com/redstonekasi",
-      "[email]": "mailto:kasi@hanneskann.de"
-    },
-    "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnqIcBUmOccuzIfU41vsexIvQJCuIE9JFUt7zOFd57dJKywdFF/RZQDXS8xMijCNksskm0kaZsNOMATECvY4F6cyu5rnt3y96FCdvwZnUf2FKt6LtvGjdsnWCDARPizHM1jEYyJfKoNd7ncZt4BWrlF/vcm64rd0IaRe1gJ6vn1w0vWW8bJX8/wq7tklSac0/olLEJMjO4n1J0o4dG1fjcjx2/kVDMp30fbHCIpixtNjmvi8mfJDYmUj3okaruQgVafJtOcznjxwWt+5QrneJjI3EY08mA/cBZr5nDe2l4RBNnHIM+pj9ONEUHLJTcFAOzkABFzMRTt8JzXBi1ieecs3AMPT6WqJcJGd0agnJTLDhq4B9du9PV3sOa5moiBnzienfYzbLWhptvWw193tNO/0TuSZE5T6e6O/6w1H4HyJSQVrD7Wb0+nM56pK9nv3NMeRZ39XQWCICevxc/t/ul76+r82nnhmq05ov5rtXTl8zeXQOR4Ch2NOz9bVONH3s="
-  },
-  {
-    "header": "ioj4",
-    "body": "shelter fan grill",
-    "img": {
-      "src": "/ioj4/img/ioj4-pfp.jpg",
-      "link": "https://ioj4.net"
-    },
-    "headLink": "/~ioj4",
-    "links": {
-      "[github]": "https://github.com/ioj4"
-    },
-    "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuEC/SbR3JFl6Y7hS4RHm3Ydd4NHxlWg5BtLJehBwSgQ06kLAaB5t/ewgl10i6UrfK/2DdiQpzP5FmQemUhOza7n2JH/AJL4XCOezdtaE6vTaxIkmaS2lmErKVUPMaC3fdYLDJXVqXHkKGo30bD8OtJEmVhTDtNattiYGPY6vB97JfRGpGHK9jPSU/MyFRgpp3sHqkJdqKh+oKCRx4KabfhDH4BH4lH6q+xCeJSY8PfRwxDl5Dko1DYDFTqbWw8Gfb5mxMI8BBYoPygxEWYyX3QIKDCXLL1NwE1OLVquFY6Aspu/lIC6PCGiWUylCrvVbIGuuQzw2IgD5HGOTtgPFpexN34dT6BJGri2gLmNekid4b+u7ptgphnhQiGLgk0up4X0aY8KTVUvzNHsqIVOzR9ydOGTnCsW2SrloXr1wj/vEER/1I246g1dGLSJIWIJC27XE/JIWyncwWO0m35lRObMEh2vpZMLgRVKd7FOJn+dCvLYQ/00Ah65S9czracWM="
-  },
-  {
-    "header": "taskylizard",
-    "body": "professional keyboard smasher and coffee addict",
-    "headLink": "/~tasky",
-    "img": {
-      "src": "https://github.com/taskylizard.png",
-      "link": "https://github.com/taskylizard"
-    },
-    "links": {
-      "[github]": "https://github.com/taskylizard"
-    }
-  }
+	{
+		"header": "toonlink",
+		"body": "i'm proficient in making things do things that they aren't supposed to do",
+		"img": {
+			"src": "/toonlink/ssemblem.png",
+			"link": "https://toon.link"
+		},
+		"pixelated": true,
+		"headLink": "/~toonlink",
+		"links": {
+			"[keybase]": "https://keybase.io/twnlink",
+			"[github]": "https://github.com/twnlink",
+			"[twitter]": "https://twitter.com/twnlink"
+		},
+		"publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINbMQsMpuAx3H8V2/XJZjHFlmIO4Kvz7zRQKsVWC51ZK"
+	},
+	{
+		"header": "Yellowsink",
+		"body": "I wrote software that was occasionally cool.",
+		"img": {
+			"src": "/sink/bw-pfp.svg",
+			"link": "https://yellows.ink"
+		},
+		"headLink": "/~sink",
+		"links": {
+			"[git]": "https://github.com/yellowsink",
+			"[fedi]": "https://lethallava.land/@sink",
+			"[twitter]": "https://twitter.com/_hazeler",
+			"[email]": "mailto:yellowsink@riseup.net"
+		},
+		"publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKUrqQFmpD+NUPeLqc6Gp+Wd+ZZJRKp1a5e9KWHKy3Ye"
+	},
+	{
+		"header": "maisy",
+		"body": "uwu.network janitor, local TypeScript enthusiast",
+		"img": {
+			"src": "/maisy/img/logo.png",
+			"link": "https://maisy.moe"
+		},
+		"headLink": "/~maisy",
+		"links": {
+			"[discord]": "https://discord.com/users/257109471589957632",
+			"[github]": "https://github.com/maisymoe",
+			"[fedi]": "https://wetdry.world/@maisy",
+			"[email]": "mailto:maisymoe@riseup.net"
+		}
+	},
+	{
+		"header": "Phorcys",
+		"body": "i'm toonlink",
+		"img": {
+			"src": "/phorcys/pfp.png",
+			"link": "https://phorcys.net"
+		},
+		"headLink": "/~phorcys",
+		"links": {
+			"[github]": "https://github.com/phorcys420"
+		}
+	},
+	{
+		"header": "xirreal",
+		"body": "graphics and backend developer",
+		"img": {
+			"src": "/xirreal/pfp.png",
+			"link": "https://xirreal.dev"
+		},
+		"headLink": "/~xirreal",
+		"links": {
+			"[github]": "https://github.xirreal.dev/",
+			"[email]": "mailto:me@xirreal.dev"
+		},
+		"publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWKuK0VsqVoF6wRirM5WLJj0b+MLRtdQ9YQgXTmejsl"
+	},
+	{
+		"header": "kasimir",
+		"body": "backup janitor",
+		"img": {
+			"src": "/kasimir/img/logo.svg",
+			"link": "https://k6.tf"
+		},
+		"headLink": "/~kasimir",
+		"links": {
+			"[github]": "https://github.com/redstonekasi",
+			"[twitter]": "https://twitter.com/redstonekasi",
+			"[email]": "mailto:kasi@hanneskann.de"
+		},
+		"publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnqIcBUmOccuzIfU41vsexIvQJCuIE9JFUt7zOFd57dJKywdFF/RZQDXS8xMijCNksskm0kaZsNOMATECvY4F6cyu5rnt3y96FCdvwZnUf2FKt6LtvGjdsnWCDARPizHM1jEYyJfKoNd7ncZt4BWrlF/vcm64rd0IaRe1gJ6vn1w0vWW8bJX8/wq7tklSac0/olLEJMjO4n1J0o4dG1fjcjx2/kVDMp30fbHCIpixtNjmvi8mfJDYmUj3okaruQgVafJtOcznjxwWt+5QrneJjI3EY08mA/cBZr5nDe2l4RBNnHIM+pj9ONEUHLJTcFAOzkABFzMRTt8JzXBi1ieecs3AMPT6WqJcJGd0agnJTLDhq4B9du9PV3sOa5moiBnzienfYzbLWhptvWw193tNO/0TuSZE5T6e6O/6w1H4HyJSQVrD7Wb0+nM56pK9nv3NMeRZ39XQWCICevxc/t/ul76+r82nnhmq05ov5rtXTl8zeXQOR4Ch2NOz9bVONH3s="
+	},
+	{
+		"header": "ioj4",
+		"body": "shelter fan grill",
+		"img": {
+			"src": "/ioj4/img/ioj4-pfp.jpg",
+			"link": "https://ioj4.net"
+		},
+		"headLink": "/~ioj4",
+		"links": {
+			"[github]": "https://github.com/ioj4"
+		},
+		"publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuEC/SbR3JFl6Y7hS4RHm3Ydd4NHxlWg5BtLJehBwSgQ06kLAaB5t/ewgl10i6UrfK/2DdiQpzP5FmQemUhOza7n2JH/AJL4XCOezdtaE6vTaxIkmaS2lmErKVUPMaC3fdYLDJXVqXHkKGo30bD8OtJEmVhTDtNattiYGPY6vB97JfRGpGHK9jPSU/MyFRgpp3sHqkJdqKh+oKCRx4KabfhDH4BH4lH6q+xCeJSY8PfRwxDl5Dko1DYDFTqbWw8Gfb5mxMI8BBYoPygxEWYyX3QIKDCXLL1NwE1OLVquFY6Aspu/lIC6PCGiWUylCrvVbIGuuQzw2IgD5HGOTtgPFpexN34dT6BJGri2gLmNekid4b+u7ptgphnhQiGLgk0up4X0aY8KTVUvzNHsqIVOzR9ydOGTnCsW2SrloXr1wj/vEER/1I246g1dGLSJIWIJC27XE/JIWyncwWO0m35lRObMEh2vpZMLgRVKd7FOJn+dCvLYQ/00Ah65S9czracWM="
+	},
+	{
+		"header": "taskylizard",
+		"body": "professional keyboard smasher and coffee addict",
+		"headLink": "/~tasky",
+		"img": {
+			"src": "https://github.com/taskylizard.png",
+			"link": "https://github.com/taskylizard"
+		},
+		"links": {
+			"[github]": "https://github.com/taskylizard"
+		}
+	}
 ]

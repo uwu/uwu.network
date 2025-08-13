@@ -1,43 +1,43 @@
 <div class="inline-grid place-items-center children:(row-start-1 col-start-1 row-end-2 col-end-2)">
-  <div id="scared" class="rounded-1 w-15px h-15px border border-white" />
-  <div class="w-15px h-px bg-white" />
-  <div class="h-15px w-px bg-white" />
+	<div id="scared" class="rounded-1 w-15px h-15px border border-white" />
+	<div class="w-15px h-px bg-white" />
+	<div class="h-15px w-px bg-white" />
 </div>
 
 <script>
-  import { EASE } from "crossani";
-  import { Vec2D, v2degBtw, v2add, v2sub, v2mag, v2smul } from "^js/math";
+	import { EASE } from "crossani";
+	import { Vec2D, v2degBtw, v2add, v2sub, v2mag, v2smul } from "^js/math";
 
-  let mousePos: Vec2D = [0, 0];
-  window.addEventListener("mousemove", e => {
-    mousePos = [e.clientX, e.clientY];
-  });
+	let mousePos: Vec2D = [0, 0];
+	window.addEventListener("mousemove", e => {
+		mousePos = [e.clientX, e.clientY];
+	});
 
-  const scared = document.getElementById("scared");
+	const scared = document.getElementById("scared");
 
-  const origin: Vec2D = [scared.offsetLeft + (scared.clientWidth / 2), scared.offsetTop + (scared.clientHeight / 2)];
-  let currentTranslate: Vec2D = [0, 0];
+	const origin: Vec2D = [scared.offsetLeft + (scared.clientWidth / 2), scared.offsetTop + (scared.clientHeight / 2)];
+	let currentTranslate: Vec2D = [0, 0];
 
-  (async () => {
+	(async () => {
 
-    while (true) {
-      const currentPos = v2add(origin, currentTranslate);
+		while (true) {
+			const currentPos = v2add(origin, currentTranslate);
 
-      const vec = v2sub(mousePos, currentPos);
+			const vec = v2sub(mousePos, currentPos);
 
-      const dist = v2mag(vec);
+			const dist = v2mag(vec);
 
-      if (dist < 30)
-        currentTranslate = v2sub(currentTranslate, v2smul(vec, .5));
-      else if (dist > 60 || Math.abs(v2degBtw(vec, currentTranslate)) > 30)
-        currentTranslate = v2sub(currentTranslate, v2smul(currentTranslate, .3));
+			if (dist < 30)
+				currentTranslate = v2sub(currentTranslate, v2smul(vec, .5));
+			else if (dist > 60 || Math.abs(v2degBtw(vec, currentTranslate)) > 30)
+				currentTranslate = v2sub(currentTranslate, v2smul(currentTranslate, .3));
 
-      await scared.doTransition({
-        state: { transform: `translate(${currentTranslate[0]}px, ${currentTranslate[1]}px)` },
-        ms: 50,
-        easing: EASE.linear
-      });
-    }
+			await scared.doTransition({
+				state: { transform: `translate(${currentTranslate[0]}px, ${currentTranslate[1]}px)` },
+				ms: 50,
+				easing: EASE.linear
+			});
+		}
 
-  })()
+	})()
 </script>

@@ -16,8 +16,8 @@ The video I was using test images from is the [No Mana A/V set @ Gravity 2021](h
 Here were my playing around images for reference:
 
 <div class="flex flex-wrap gap-5">
-  <img src="/sink/quiet_qopv/test_large.png" class="max-w-384px w-full" />
-  <img src="/sink/quiet_qopv/test_large_2.png" class="max-w-384px w-full" />
+	<img src="/sink/quiet_qopv/test_large.png" class="max-w-384px w-full" />
+	<img src="/sink/quiet_qopv/test_large_2.png" class="max-w-384px w-full" />
 </div>
 
 ## Videos are just moving pictures
@@ -134,14 +134,14 @@ Also, we can't share the index between frames :(
 So, here's how the very official and not scuffed Quite Okay Lossless Video format will work:
 ```c
 qolv_header {
-  char     magic[4];   // qolv
-  uint32_t width;      // big endian
-  uint32_t height;     // big endian
-  uint32_t frames;     // big endian
-  double   framerate;
-  double   lensecs;    // no guarantee to be correct, just metadata
-  uint8_t  channels;   // 3 or 4
-  uint8_t  colorspace; // 0=srgb, 1=linear rgb
+	char     magic[4];   // qolv
+	uint32_t width;      // big endian
+	uint32_t height;     // big endian
+	uint32_t frames;     // big endian
+	double   framerate;
+	double   lensecs;    // no guarantee to be correct, just metadata
+	uint8_t  channels;   // 3 or 4
+	uint8_t  colorspace; // 0=srgb, 1=linear rgb
 };
 ```
 
@@ -400,9 +400,9 @@ $ ls -l no_mana_lossless.mp4
 ```
 
 <div class="flex flex-wrap gap-5">
-  <img src="/sink/quiet_qopv/h264_lossless_1.png" class="max-w-384px w-full" />
-  <img src="/sink/quiet_qopv/h264_lossless_2.png" class="max-w-384px w-full" />
-  <img src="/sink/quiet_qopv/h264_lossless_3.png" class="max-w-384px w-full" />
+	<img src="/sink/quiet_qopv/h264_lossless_1.png" class="max-w-384px w-full" />
+	<img src="/sink/quiet_qopv/h264_lossless_2.png" class="max-w-384px w-full" />
+	<img src="/sink/quiet_qopv/h264_lossless_3.png" class="max-w-384px w-full" />
 </div>
 
 Now, this looks fine, and weighs in smaller than QOLV!
@@ -410,8 +410,8 @@ Now, this looks fine, and weighs in smaller than QOLV!
 However, what's the catch? Well simply, here's what it looks like in VLC:
 
 <div class="flex flex-wrap gap-5">
-  <img src="/sink/quiet_qopv/vlc_1.png" class="max-w-384px w-full" />
-  <img src="/sink/quiet_qopv/vlc_2.png" class="max-w-384px w-full" />
+	<img src="/sink/quiet_qopv/vlc_1.png" class="max-w-384px w-full" />
+	<img src="/sink/quiet_qopv/vlc_2.png" class="max-w-384px w-full" />
 </div>
 
 Yikes.
@@ -422,5 +422,5 @@ So yeah, there's a lossless compressed format that appears to work well for pixe
 
 If you want to download a copy of the file, [here you go](https://f.yellows.ink/quiet_system_no_mana.qolv).
 
-This is utterly useless, but see you back here soon!  
+This is utterly useless, but see you back here soon!
   -- Yellowsink

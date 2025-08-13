@@ -59,12 +59,12 @@ Two things run under the root user: backups, and emails. See the end for informa
 Docker compose is responsible for management of the services running. All have a form like the following:
 ```yml
 myservice:
-  container_name: myservice
-  restart: unless-stopped
-  user: "1001:1001"
-  environment:
-    - PUID=1001
-    - PGID=1001
+	container_name: myservice
+	restart: unless-stopped
+	user: "1001:1001"
+	environment:
+		- PUID=1001
+		- PGID=1001
 ```
 
 Anything else are extras.
@@ -73,11 +73,11 @@ When container configurations are listed from this point on, these settings will
 Containers are organised into groups that need to be networked to each other, and are connected only to those necessary:
 ```yml
 networks:
-  calcnet:
-  arrnet:
-  caddynet:
-  hedgenet:
-  monicanet:
+	calcnet:
+	arrnet:
+	caddynet:
+	hedgenet:
+	monicanet:
 ```
 
 - `calcnet` - unused, previously for connecting Calckey to its DB and Meilisearch instance
@@ -100,77 +100,77 @@ The docker configuration for this looks like the following:
 
 ```yml
 caddy:
-  image: caddy
-  ports:
-    - "80:80"
-    - "443:443"
-    - "443:443/udp"
-  networks: ["caddynet"]
-  volumes:
-    - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-    - ./www:/www
-    - /mnt/slab/arr:/arrdata
-    - ./caddy/data:/data
-    - ./caddy/config:/config
-    - /mnt/slab/torrents:/torrents
-  cap_add: ["NET_ADMIN"]
+	image: caddy
+	ports:
+		- "80:80"
+		- "443:443"
+		- "443:443/udp"
+	networks: ["caddynet"]
+	volumes:
+		- ./caddy/Caddyfile:/etc/caddy/Caddyfile
+		- ./www:/www
+		- /mnt/slab/arr:/arrdata
+		- ./caddy/data:/data
+		- ./caddy/config:/config
+		- /mnt/slab/torrents:/torrents
+	cap_add: ["NET_ADMIN"]
 ```
 
 This is configured via a Caddyfile, similar to the following, but with some repetition removed:
 ```caddyfile
 (tailscale_guard) {
-  # all traffic (v4 and v6) from taiilscale gets sent to this address when inside of docker.
-  @public not remote_ip 172.20.0.1
-  abort @public
+	# all traffic (v4 and v6) from taiilscale gets sent to this address when inside of docker.
+	@public not remote_ip 172.20.0.1
+	abort @public
 }
 
 michiflare.yellows.ink, michiru.yellows.ink, http://107.189.3.111, http://michiru.hs.yellows.ink, http://michiru {
-  encode zstd gzip
+	encode zstd gzip
 
-  redir /sonarr /sonarr/ 301 # etc
+	redir /sonarr /sonarr/ 301 # etc
 
-  # route stops caddy from reordering directives, else `templates` would be applied to reverse_proxy responses.
-  route {
-    reverse_proxy /sonarr/* sonarr:8989 # etc
+	# route stops caddy from reordering directives, else `templates` would be applied to reverse_proxy responses.
+	route {
+		reverse_proxy /sonarr/* sonarr:8989 # etc
 
-    # strip off the leading part of the path before reverse proxying
-    handle_path /qbittorrent/* {
-      reverse_proxy qbittorrent:8080
-    }
+		# strip off the leading part of the path before reverse proxying
+		handle_path /qbittorrent/* {
+			reverse_proxy qbittorrent:8080
+		}
 
-    handle_path /torrents/* {
-      basicauth {
-        michiru xxxxxxxxxxxxxxxxxx
-      }
-      root * /torrents
-      file_server browse
-    }
+		handle_path /torrents/* {
+			basicauth {
+				michiru xxxxxxxxxxxxxxxxxx
+			}
+			root * /torrents
+			file_server browse
+		}
 
-    root * /www
-    templates
-    file_server
-  }
+		root * /www
+		templates
+		file_server
+	}
 }
 
 michiscale.yellows.ink {
-  @grpc protocol grpc
-  handle @grpc {
-    # h2c is HTTP/2 Cleartext
-    reverse_proxy h2c://headscale:50433
-  }
+	@grpc protocol grpc
+	handle @grpc {
+		# h2c is HTTP/2 Cleartext
+		reverse_proxy h2c://headscale:50433
+	}
 
-  redir / /ouroboros/ 301
+	redir / /ouroboros/ 301
 
-  reverse_proxy /ouroboros/* ouroboros:8080
-  reverse_proxy /register/*  ouroboros:8080
+	reverse_proxy /ouroboros/* ouroboros:8080
+	reverse_proxy /register/*  ouroboros:8080
 
-  reverse_proxy headscale:8080
+	reverse_proxy headscale:8080
 }
 
 # VPN-private service, inaccessible to the public internet
 monica.yellows.ink {
-  import tailscale_guard
-  reverse_proxy monica:80
+	import tailscale_guard
+	reverse_proxy monica:80
 }
 ```
 
@@ -198,12 +198,12 @@ firewall circumvention.
 The docker configuration looks like the following
 ```yml
 headscale:
-  image: headscale/headscale:0.23.0
-  ports: [3478:3478] # derp stun port
-  command: serve
-  volumes:
-    - ./headscale/config:/etc/headscale/
-  networks: [caddynet]
+	image: headscale/headscale:0.23.0
+	ports: [3478:3478] # derp stun port
+	command: serve
+	volumes:
+		- ./headscale/config:/etc/headscale/
+	networks: [caddynet]
 ```
 
 And the configuration file looks like the following, which I'll walk through step by step
@@ -227,20 +227,20 @@ gRPC must accept insecure connections for ouroboros to work. They are secured by
 
 ```yml
 noise:
-  # The Noise private key is used to encrypt the
-  # traffic between headscale and Tailscale clients when
-  # using the new Noise-based protocol.
-  private_key_path: /etc/headscale/noise_private.key
+	# The Noise private key is used to encrypt the
+	# traffic between headscale and Tailscale clients when
+	# using the new Noise-based protocol.
+	private_key_path: /etc/headscale/noise_private.key
 ```
 
 Configuration for wireguard stuff, doesn't need tweaking.
 
 ```yml
 prefixes:
-  v6: fd7a:115c:a1e0::/48
-  v4: 100.64.0.0/10
+	v6: fd7a:115c:a1e0::/48
+	v4: 100.64.0.0/10
 
-  allocation: sequential
+	allocation: sequential
 ```
 
 These prefixes can only be set to these, or more restrictive. These are the ranges Headscale will allocate IPs from.
@@ -250,28 +250,28 @@ The other option is random allocation, where each device is given a random IP at
 
 ```yml
 derp:
-  server:
-    enabled: true
+	server:
+		enabled: true
 
-    region_id: 999
+		region_id: 999
 
-    region_code: mru
-    region_name: Michiru DERP
+		region_code: mru
+		region_name: Michiru DERP
 
-    stun_listen_addr: 0.0.0.0:3478
+		stun_listen_addr: 0.0.0.0:3478
 
-    private_key_path: /etc/headscale/derp_server_private.key
+		private_key_path: /etc/headscale/derp_server_private.key
 
-    automatically_add_embedded_derp_region: true
+		automatically_add_embedded_derp_region: true
 
-    ipv4: 107.189.3.111
-    ipv6: 2605:6400:30::1
+		ipv4: 107.189.3.111
+		ipv6: 2605:6400:30::1
 
-  urls: []
-  # - https://controlplane.tailscale.com/derpmap/default
-  paths: []
-  auto_update_enabled: true
-  update_frequency: 24h
+	urls: []
+	# - https://controlplane.tailscale.com/derpmap/default
+	paths: []
+	auto_update_enabled: true
+	update_frequency: 24h
 ```
 
 This section configures the DERP protocol (proxies wireguard traffic over HTTP for firewall circumvention).
@@ -295,12 +295,12 @@ Some misc stuff related to headscale updates, and checking that nodes are still 
 
 ```yml
 database:
-  type: sqlite
+	type: sqlite
 
-  sqlite:
-    path: /etc/headscale/db.sqlite
-    # https://www.sqlite.org/wal.html
-    write_ahead_log: true
+	sqlite:
+		path: /etc/headscale/db.sqlite
+		# https://www.sqlite.org/wal.html
+		write_ahead_log: true
 ```
 
 This section tells Headscale where to find its database, and enables the SQLite write-ahead-log to improve performance.
@@ -321,49 +321,49 @@ TLS configuration options. Not used as headscale is proxied through Caddy.
 
 ```yml
 log:
-  format: text # or json
-  level: info
+	format: text # or json
+	level: info
 
 policy:
-  mode: file
-  path: ""
+	mode: file
+	path: ""
 ```
 
 Logs are plaintext and at info level, and ACLs are not used.
 
 ```yml
 dns:
-  # Force clients to use this config
-  override_local_dns: true
+	# Force clients to use this config
+	override_local_dns: true
 
-  nameservers:
-    global:
-        # cf
-        - 1.1.1.1
-        - 1.0.0.1
-        - 2606:4700:4700::1111
-        - 2606:4700:4700::1001
-        # quad9, my preference for DNS
-        - 9.9.9.9
-        - 149.112.112.112
-        - 2620:fe::fe
-        - 2620:fe::9
+	nameservers:
+		global:
+			# cf
+			- 1.1.1.1
+			- 1.0.0.1
+			- 2606:4700:4700::1111
+			- 2606:4700:4700::1001
+			# quad9, my preference for DNS
+			- 9.9.9.9
+			- 149.112.112.112
+			- 2620:fe::fe
+			- 2620:fe::9
 
-    split: {}
+		split: {}
 
-  search_domains: []
+	search_domains: []
 
-  extra_records:
-    - name: monica.yellows.ink
-      type: A
-      value: 100.64.0.2
-    - name: monica.yellows.ink
-      type: AAAA
-      value: fd7a:115c:a1e0::2
+	extra_records:
+		- name: monica.yellows.ink
+			type: A
+			value: 100.64.0.2
+		- name: monica.yellows.ink
+			type: AAAA
+			value: fd7a:115c:a1e0::2
 
-  magic_dns: true
+	magic_dns: true
 
-  base_domain: hs.yellows.ink
+	base_domain: hs.yellows.ink
 ```
 
 Clients have their nameservers list forced to as follows
@@ -384,7 +384,7 @@ For the headscale CLI. Used only for administation tasks.
 
 ```yml
 logtail:
-  enabled: false
+	enabled: false
 
 randomize_client_port: false
 ```
@@ -410,16 +410,16 @@ All these things would require manual intervention from a sysadmin without this.
 Ouroboros, when used in docker, is configured entirely through environment variables:
 ```yml
 ouroboros:
-  image: yellosink/ouroboros:0.3.1 # look mom! my own software! on my server!
-  environment:
-    - HS_IS_REMOTE=true
-    - HS_ADDRESS=michiscale.yellows.ink:443 # going to the container directly doesn't work for some reason, just go to caddy.
-    - HS_API_KEY=REDACTED
-    - HS_LOGIN_URL=michiscale.yellows.ink
-    - GH_CLIENT_ID=REDACTED
-    - GH_CLIENT_SECRET=REDACTED
-    - 'USER_MAP={ "19270622": "sink", "0000": "REDACTED" }'
-  networks: [caddynet]
+	image: yellosink/ouroboros:0.3.1 # look mom! my own software! on my server!
+	environment:
+		- HS_IS_REMOTE=true
+		- HS_ADDRESS=michiscale.yellows.ink:443 # going to the container directly doesn't work for some reason, just go to caddy.
+		- HS_API_KEY=REDACTED
+		- HS_LOGIN_URL=michiscale.yellows.ink
+		- GH_CLIENT_ID=REDACTED
+		- GH_CLIENT_SECRET=REDACTED
+		- 'USER_MAP={ "19270622": "sink", "0000": "REDACTED" }'
+	networks: [caddynet]
 ```
 
 - `HS_IS_REMOTE` tells ouroboros that Headscale is over a network, not directly accessible (I could technically expose a socket to both containers)
@@ -442,13 +442,13 @@ users can only see the media drive.
 
 ```yml
 filebrowser:
-  image: filebrowser/filebrowser:v2.30.0-s6
-  volumes:
-    - ./filebrowser/database.db:/database/filebrowser.db
-    - ./filebrowser/config.json:/config/settings.json
-    - /mnt/slab:/srv/slab
-    - /home/services:/srv/services
-  networks: [caddynet]
+	image: filebrowser/filebrowser:v2.30.0-s6
+	volumes:
+		- ./filebrowser/database.db:/database/filebrowser.db
+		- ./filebrowser/config.json:/config/settings.json
+		- /mnt/slab:/srv/slab
+		- /home/services:/srv/services
+	networks: [caddynet]
 ```
 
 ## Services: qBittorrent
@@ -461,12 +461,12 @@ I set up a directory on my media drive, `/mnt/slab/torrents`, and a container li
 
 ```yml
 qbittorrent:
-  image: ghcr.io/hotio/qbittorrent
-  ports: ["6432:6432"]
-  networks: ["caddynet"]
-  volumes:
-    - ./qbittorrent/config:/config
-    - /mnt/slab/torrents:/data
+	image: ghcr.io/hotio/qbittorrent
+	ports: ["6432:6432"]
+	networks: ["caddynet"]
+	volumes:
+		- ./qbittorrent/config:/config
+		- /mnt/slab/torrents:/data
 ```
 
 And in terms of actual configuration, I set it to use the VueTorrent dashboard, its much nicer.
@@ -496,47 +496,47 @@ I have them set in docker as so:
 
 ```yml
 radarr:
-  image: ghcr.io/hotio/radarr
-  logging:
-    driver: json-file
-  networks:
-    - arrnet
-    - caddynet
-  volumes:
-    - ./arr/config/radarr:/config
-    - /mnt/slab/arr:/data
+	image: ghcr.io/hotio/radarr
+	logging:
+		driver: json-file
+	networks:
+		- arrnet
+		- caddynet
+	volumes:
+		- ./arr/config/radarr:/config
+		- /mnt/slab/arr:/data
 
 sonarr:
-  image: ghcr.io/hotio/sonarr
-  logging:
-    driver: json-file
-  networks:
-    - arrnet
-    - caddynet
-  volumes:
-    - ./arr/config/sonarr:/config
-    - /mnt/slab/arr:/data
+	image: ghcr.io/hotio/sonarr
+	logging:
+		driver: json-file
+	networks:
+		- arrnet
+		- caddynet
+	volumes:
+		- ./arr/config/sonarr:/config
+		- /mnt/slab/arr:/data
 
 arr-qbittorrent:
-  image: ghcr.io/hotio/qbittorrent
-  networks:
-    - arrnet
-  volumes:
-    - ./arr/config/qbittorrent:/config
-    - /mnt/slab/arr:/data
+	image: ghcr.io/hotio/qbittorrent
+	networks:
+		- arrnet
+	volumes:
+		- ./arr/config/qbittorrent:/config
+		- /mnt/slab/arr:/data
 
 jackett:
-  image: ghcr.io/hotio/jackett
-  networks:
-    - arrnet
-    - caddynet
-  volumes:
-    - ./arr/config/jackett:/config
+	image: ghcr.io/hotio/jackett
+	networks:
+		- arrnet
+		- caddynet
+	volumes:
+		- ./arr/config/jackett:/config
 
 flaresolverr:
-  image: ghcr.io/flaresolverr/flaresolverr
-  networks:
-    - arrnet
+	image: ghcr.io/flaresolverr/flaresolverr
+	networks:
+		- arrnet
 ```
 
 Now for configuration.
@@ -609,11 +609,11 @@ Simple: use Jellyfin.
 
 ```yml
 jellyfin:
-  image: ghcr.io/hotio/jellyfin
-  networks: ["caddynet"]
-  volumes:
-    - ./jellyfin:/config
-    - /mnt/slab/arr/media:/data
+	image: ghcr.io/hotio/jellyfin
+	networks: ["caddynet"]
+	volumes:
+		- ./jellyfin:/config
+		- /mnt/slab/arr/media:/data
 ```
 
 I set up a few users, all with transcoding turned off.
@@ -649,9 +649,9 @@ Sign into open subtitles.
 
 ```yml
 microsocks:
-  image: heywoodlh/microsocks
-  ports: ["1080:1080"]
-  command: '-u michiru -P REDACTED'
+	image: heywoodlh/microsocks
+	ports: ["1080:1080"]
+	command: '-u michiru -P REDACTED'
 ```
 
 ## Services: Hedgedoc
@@ -660,36 +660,36 @@ Hedgedoc is a realtime markdown collaboration platform.
 
 ```yml
 uwuhedgedocdb:
-  image: postgres:13.4-alpine
-  environment:
-    - POSTGRES_USER=hedgedoc
-    - POSTGRES_PASSWORD=REDACTED
-    - POSTGRES_DB=hedgedoc
-  volumes:
-    - ./hedgedoc/db:/var/lib/postgresql/data
-  networks:
-    - hedgenet
+	image: postgres:13.4-alpine
+	environment:
+		- POSTGRES_USER=hedgedoc
+		- POSTGRES_PASSWORD=REDACTED
+		- POSTGRES_DB=hedgedoc
+	volumes:
+		- ./hedgedoc/db:/var/lib/postgresql/data
+	networks:
+		- hedgenet
 
 uwuhedgedoc:
-  image: quay.io/hedgedoc/hedgedoc:1.9.9
-  environment:
-    - CMD_DB_URL=postgres://hedgedoc:REDACTED@uwuhedgedocdb:5432/hedgedoc
-    - CMD_DOMAIN=doc.uwu.network
-    - CMD_PROTOCOL_USESSL=true
-    - CMD_EMAIL=false
-    - CMD_ALLOW_ANONYMOUS=false
-    - CMD_TOOBUSY_LAG=1000 # at the default 70 we keep getting "too busy" responses
-    - CMD_ALLOW_FREEURL=true
-    - CMD_SESSION_SECRET=REDACTED
-    - CMD_GITHUB_CLIENTID=REDACTED
-    - CMD_GITHUB_CLIENTSECRET=REDACTED
-  volumes:
-    - ./hedgedoc/uploads:/hedgedoc/public/uploads
-  networks:
-    - hedgenet
-    - caddynet
-  depends_on:
-    - uwuhedgedocdb
+	image: quay.io/hedgedoc/hedgedoc:1.9.9
+	environment:
+		- CMD_DB_URL=postgres://hedgedoc:REDACTED@uwuhedgedocdb:5432/hedgedoc
+		- CMD_DOMAIN=doc.uwu.network
+		- CMD_PROTOCOL_USESSL=true
+		- CMD_EMAIL=false
+		- CMD_ALLOW_ANONYMOUS=false
+		- CMD_TOOBUSY_LAG=1000 # at the default 70 we keep getting "too busy" responses
+		- CMD_ALLOW_FREEURL=true
+		- CMD_SESSION_SECRET=REDACTED
+		- CMD_GITHUB_CLIENTID=REDACTED
+		- CMD_GITHUB_CLIENTSECRET=REDACTED
+	volumes:
+		- ./hedgedoc/uploads:/hedgedoc/public/uploads
+	networks:
+		- hedgenet
+		- caddynet
+	depends_on:
+		- uwuhedgedocdb
 ```
 
 ## Services: Goatcounter
@@ -698,10 +698,10 @@ I run an instance of the privacy friendly analytics service [Goatcounter](https:
 
 ```yml
 qsgoatcounter:
-  image: joeygennari/goatcounter:latest
-  volumes:
-    - ./goatcounter/:/home/user/db/
-  networks: [caddynet]
+	image: joeygennari/goatcounter:latest
+	volumes:
+		- ./goatcounter/:/home/user/db/
+	networks: [caddynet]
 ```
 
 "Your Site", uwu.network.
@@ -722,31 +722,31 @@ This is currently the one service in the set that is tailnet-private, to protect
 
 ```yml
 monica:
-  #image: monica:fpm
-  image: monica:4.1.2-apache
-  depends_on: [monicadb]
-  volumes:
-    - ./monica:/var/www/html/storage
-  environment:
-    - APP_KEY=REDACTED
-    - APP_URL=https://monica.yellows.ink
-    - APP_ENV=production
-    #- APP_FORCE_URL=true
-    - DB_HOST=monicadb
-    - DB_USERNAME=monica
-    - DB_PASSWORD=REDACTED
-  networks: [caddynet, monicanet]
+	#image: monica:fpm
+	image: monica:4.1.2-apache
+	depends_on: [monicadb]
+	volumes:
+		- ./monica:/var/www/html/storage
+	environment:
+		- APP_KEY=REDACTED
+		- APP_URL=https://monica.yellows.ink
+		- APP_ENV=production
+		#- APP_FORCE_URL=true
+		- DB_HOST=monicadb
+		- DB_USERNAME=monica
+		- DB_PASSWORD=REDACTED
+	networks: [caddynet, monicanet]
 
 monicadb:
-  image: mariadb:11.4.2 # DO NOT UPGRADE THIS CONTAINER
-  volumes:
-    - ./monica/mysql:/var/lib/mysql
-  environment:
-    - MARIADB_RANDOM_ROOT_PASSWORD=true
-    - MARIADB_DATABASE=monica
-    - MARIADB_USER=monica
-    - MARIADB_PASSWORD=REDACTED
-  networks: [monicanet]
+	image: mariadb:11.4.2 # DO NOT UPGRADE THIS CONTAINER
+	volumes:
+		- ./monica/mysql:/var/lib/mysql
+	environment:
+		- MARIADB_RANDOM_ROOT_PASSWORD=true
+		- MARIADB_DATABASE=monica
+		- MARIADB_USER=monica
+		- MARIADB_PASSWORD=REDACTED
+	networks: [monicanet]
 ```
 
 And that's all the services!
@@ -779,48 +779,48 @@ Then created my `/root/profiles.toml` file:
 version = "1"
 
 [global]
-  # see ionice(1)
-  ionice = true
-  ionice-class = 2 # best-effort
-  ionice-level = 6 # 0-7, low number is more priority
+	# see ionice(1)
+	ionice = true
+	ionice-class = 2 # best-effort
+	ionice-level = 6 # 0-7, low number is more priority
 
-  priority = "low" # cpu nice
+	priority = "low" # cpu nice
 
-  # require some headroom before doing anything
-  min-memory = 100 # MB
+	# require some headroom before doing anything
+	min-memory = 100 # MB
 
-  scheduler = "crond"
+	scheduler = "crond"
 
 [default]
-  repository = "s3:s3.us-west-004.backblazeb2.com/michibak-services"
-  password-file = "restic_password.txt"
-  initialize = false
+	repository = "s3:s3.us-west-004.backblazeb2.com/michibak-services"
+	password-file = "restic_password.txt"
+	initialize = false
 
-  # mutex execution, handled by rprofile not restic
-  lock = "/tmp/resticprofile-services.lock"
+	# mutex execution, handled by rprofile not restic
+	lock = "/tmp/resticprofile-services.lock"
 
-  # generate a status file for inspection later if the log isnt enough
-  status-file = "services-status.json"
+	# generate a status file for inspection later if the log isnt enough
+	status-file = "services-status.json"
 
-  [default.env]
-    AWS_ACCESS_KEY_ID = "REDACTED"
-    AWS_SECRET_ACCESS_KEY = "REDACTED"
+	[default.env]
+		AWS_ACCESS_KEY_ID = "REDACTED"
+		AWS_SECRET_ACCESS_KEY = "REDACTED"
 
-  [default.backup]
-    verbose = true
-    source = [ "/home/services" ]
+	[default.backup]
+		verbose = true
+		source = [ "/home/services" ]
 
-    schedule = "04:00:00" # every 4am
-    schedule-permission = "system"
-    schedule-lock-wait = "1h"
-    schedule-log = "/root/resticprofile-schedule-services.log"
+		schedule = "04:00:00" # every 4am
+		schedule-permission = "system"
+		schedule-lock-wait = "1h"
+		schedule-log = "/root/resticprofile-schedule-services.log"
 
-    # automatically bring down docker services first so databases are flushed et
-    run-before = "docker compose -f /home/services/docker-compose.yml stop"
-    run-after = "docker compose -f /home/services/docker-compose.yml start"
+		# automatically bring down docker services first so databases are flushed et
+		run-before = "docker compose -f /home/services/docker-compose.yml stop"
+		run-after = "docker compose -f /home/services/docker-compose.yml start"
 
-    # oh no! don't bring docker back up, and send me an email.
-    run-after-fail = "/root/email-restic-services-alert.sh"
+		# oh no! don't bring docker back up, and send me an email.
+		run-after-fail = "/root/email-restic-services-alert.sh"
 ```
 
 Piece by piece:
@@ -857,36 +857,36 @@ The email failure script looks like this:
 # - message body
 
 safecat() {
-    [ -f "$1" ] && cat "$1"
+	[ -f "$1" ] && cat "$1"
 }
 
 ./email-send.sh \
-    'Michiru Restic Alerts' \
-    'Hazel Atkinson <yellowsink@riseup.net>' \
-    '**ERROR** Restic Failure Report' \
-    'Content-Type: text/html; charset=ISO-8859-1' \
-    "<h1>Restic Failure Report</h1>
+	'Michiru Restic Alerts' \
+	'Hazel Atkinson <yellowsink@riseup.net>' \
+	'**ERROR** Restic Failure Report' \
+	'Content-Type: text/html; charset=ISO-8859-1' \
+	"<h1>Restic Failure Report</h1>
 
-    <p>The scheduled Restic backup run <strong><span style='color: red'>failed</span></strong>.
-    <p>The contents of the status file are:</p>
+	<p>The scheduled Restic backup run <strong><span style='color: red'>failed</span></strong>.
+	<p>The contents of the status file are:</p>
 
-    <code>
-    <pre>
-    $(safecat services-status.json)
-    </pre>
-    </code>
+	<code>
+	<pre>
+	$(safecat services-status.json)
+	</pre>
+	</code>
 
-    <p>And the contents of the log file are:</p>
+	<p>And the contents of the log file are:</p>
 
-    <code>
-    <pre>
-    $(safecat resticprofile-schedule-services.log)
-    </pre>
-    </code>
+	<code>
+	<pre>
+	$(safecat resticprofile-schedule-services.log)
+	</pre>
+	</code>
 
-    <p>Due to the failure, the docker containers have not been restarted.</p>
+	<p>Due to the failure, the docker containers have not been restarted.</p>
 
-    <p>This email was automatically generated at $(date) by <i>Hazel's magic email scripts:tm:</i> on <a href="https://michiru.yellows.ink">Michiru</a>.</p>"
+	<p>This email was automatically generated at $(date) by <i>Hazel's magic email scripts:tm:</i> on <a href="https://michiru.yellows.ink">Michiru</a>.</p>"
 ```
 
 This is a busybox ash compatible shell script using my email sender noted below.

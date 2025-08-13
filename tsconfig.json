@@ -1,71 +1,71 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "baseUrl": ".",
-    // Module aliases
-    "paths": {
-      // Generic paths
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@res/*": ["src/res/*"],
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"baseUrl": ".",
+		// Module aliases
+		"paths": {
+			// Generic paths
+			"@components/*": ["src/components/*"],
+			"@layouts/*": ["src/layouts/*"],
+			"@res/*": ["src/res/*"],
 
-      // Sink
-      "^components/*": ["src/components/sink/*"],
-      "^layouts/*": ["src/layouts/sink/*"],
-      "^css/*": ["src/res/css/sink/*"],
-      "^js/*": ["src/res/js/sink/*"],
-      "^/*": ["/sink/*"],
+			// Sink
+			"^components/*": ["src/components/sink/*"],
+			"^layouts/*": ["src/layouts/sink/*"],
+			"^css/*": ["src/res/css/sink/*"],
+			"^js/*": ["src/res/js/sink/*"],
+			"^/*": ["/sink/*"],
 
-      // toonlink
-      "+components/*": ["src/components/toonlink/*"],
-      "+layouts/*": ["src/layouts/toonlink/*"],
-      "+css/*": ["src/res/css/toonlink/*"],
-      "+js/*": ["src/res/js/toonlink/*"],
-      "+/*": ["/toonlink/*"],
+			// toonlink
+			"+components/*": ["src/components/toonlink/*"],
+			"+layouts/*": ["src/layouts/toonlink/*"],
+			"+css/*": ["src/res/css/toonlink/*"],
+			"+js/*": ["src/res/js/toonlink/*"],
+			"+/*": ["/toonlink/*"],
 
-      // maisy
-      "%components/*": ["src/components/maisy/*"],
-      "%layouts/*": ["src/layouts/maisy/*"],
-      "%css/*": ["src/res/css/maisy/*"],
-      "%js/*": ["src/res/js/maisy/*"],
-      "%/*": ["/maisy/*"],
+			// maisy
+			"%components/*": ["src/components/maisy/*"],
+			"%layouts/*": ["src/layouts/maisy/*"],
+			"%css/*": ["src/res/css/maisy/*"],
+			"%js/*": ["src/res/js/maisy/*"],
+			"%/*": ["/maisy/*"],
 
-      // Phorcys
-      "§components/*": ["src/components/phorcys/*"],
-      "§layouts/*": ["src/layouts/phorcys/*"],
-      "§css/*": ["src/res/css/phorcys/*"],
-      "§js/*": ["src/res/js/phorcys/*"],
-      "§/*": ["/phorcys/*"],
+			// Phorcys
+			"§components/*": ["src/components/phorcys/*"],
+			"§layouts/*": ["src/layouts/phorcys/*"],
+			"§css/*": ["src/res/css/phorcys/*"],
+			"§js/*": ["src/res/js/phorcys/*"],
+			"§/*": ["/phorcys/*"],
 
-      // xirreal
-      "<components/*": ["src/components/xirreal/*"],
-      "<layouts/*": ["src/layouts/xirreal/*"],
-      "<css/*": ["src/res/css/xirreal/*"],
-      "<js/*": ["src/res/js/xirreal/*"],
-      "</*": ["/xirreal/*"],
+			// xirreal
+			"<components/*": ["src/components/xirreal/*"],
+			"<layouts/*": ["src/layouts/xirreal/*"],
+			"<css/*": ["src/res/css/xirreal/*"],
+			"<js/*": ["src/res/js/xirreal/*"],
+			"</*": ["/xirreal/*"],
 
-      // kasimir
-      "~components/*": ["src/components/kasimir/*"],
-      "~layouts/*": ["src/layouts/kasimir/*"],
-      "~css/*": ["src/res/css/kasimir/*"],
-      "~js/*": ["src/res/js/kasimir/*"],
-      "~/*": ["/kasimir/*"],
+			// kasimir
+			"~components/*": ["src/components/kasimir/*"],
+			"~layouts/*": ["src/layouts/kasimir/*"],
+			"~css/*": ["src/res/css/kasimir/*"],
+			"~js/*": ["src/res/js/kasimir/*"],
+			"~/*": ["/kasimir/*"],
 
-      // ioj4
-      ">components/*": ["src/components/ioj4/*"],
-      ">layouts/*": ["src/layouts/ioj4/*"],
-      ">css/*": ["src/res/css/ioj4/*"],
-      ">js/*": ["src/res/js/ioj4/*"],
-      ">/*": ["/ioj4/*"],
+			// ioj4
+			">components/*": ["src/components/ioj4/*"],
+			">layouts/*": ["src/layouts/ioj4/*"],
+			">css/*": ["src/res/css/ioj4/*"],
+			">js/*": ["src/res/js/ioj4/*"],
+			">/*": ["/ioj4/*"],
 
-      // tasky
-      "☆components/*": ["src/components/tasky/*"],
-      "☆layouts/*": ["src/layouts/tasky/*"],
-      "☆css/*": ["src/res/css/tasky/*"],
-      "☆js/*": ["src/res/js/tasky/*"],
-      "☆/*": ["/tasky/*"]
-    },
-    // Astro's tsconfig sets this, and while I personally have no issue with it, the others might :>
-    "verbatimModuleSyntax": false
-  }
+			// tasky
+			"☆components/*": ["src/components/tasky/*"],
+			"☆layouts/*": ["src/layouts/tasky/*"],
+			"☆css/*": ["src/res/css/tasky/*"],
+			"☆js/*": ["src/res/js/tasky/*"],
+			"☆/*": ["/tasky/*"]
+		},
+		// Astro's tsconfig sets this, and while I personally have no issue with it, the others might :>
+		"verbatimModuleSyntax": false
+	}
 }

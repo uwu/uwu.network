@@ -56,11 +56,11 @@ We see that there are more links this time:
 
 ```sh
 ldd basic_test
-    /lib/ld-musl-x86_64.so.1 (0x787defc91000)
-    libdruntime-ldc-shared.so.103 => /usr/lib/libdruntime-ldc-shared.so.103 (0x787defb46000)
-    libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x787defb22000)
-    libc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x787defc91000)
-    libunwind.so.1 => /usr/lib/libunwind.so.1 (0x787defb13000)
+	/lib/ld-musl-x86_64.so.1 (0x787defc91000)
+	libdruntime-ldc-shared.so.103 => /usr/lib/libdruntime-ldc-shared.so.103 (0x787defb46000)
+	libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x787defb22000)
+	libc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x787defc91000)
+	libunwind.so.1 => /usr/lib/libunwind.so.1 (0x787defb13000)
 ```
 
 We have the dynamic linking runtime, `libdruntime-ldc`, which has a promising name, `libgcc_s`, libc, and libunwind. `libgcc_s` just contains some helper functions that the compiler uses, and [libunwind](https://github.com/libunwind/libunwind) is a common library for providing exceptions.
@@ -177,10 +177,10 @@ void _Dmain()
 }
 
 {
-    int _Dmain(string[]);
-    int _d_run_main(int argc, char** argv, void* mainFunc);
+	int _Dmain(string[]);
+	int _d_run_main(int argc, char** argv, void* mainFunc);
 
-    int main(int argc, char** argv) => _d_run_main(argc, argv, &_Dmain);
+	int main(int argc, char** argv) => _d_run_main(argc, argv, &_Dmain);
 }
 ```
 
@@ -202,8 +202,8 @@ void example.test():
 	ret
 
 _Dmain:
-    xor     eax, eax
-    ret
+	xor     eax, eax
+	ret
 ```
 
 Bingo! For `_Dmain`, LDC inserts a zero return even though we have specified `void`, whereas for any other `void` function with D linkage, it doesn't bother, it just leaves `eax` undefined.
@@ -235,17 +235,17 @@ extern (C) int _d_run_main(int argc, char** argv, MainFunc mainFunc)
 	_cArgs.argc = argc;
 	_cArgs.argv = argv;
 
-    // Allocate args[] on the stack
-    char[][] args = (cast(char[]*) alloca(argc * (char[]).sizeof))[0 .. argc];
+	// Allocate args[] on the stack
+	char[][] args = (cast(char[]*) alloca(argc * (char[]).sizeof))[0 .. argc];
 
-    size_t totalArgsLength = 0;
-    foreach (i, ref arg; args)
-    {
-        arg = argv[i][0 .. strlen(argv[i])];
-        totalArgsLength += arg.length;
-    }
+	size_t totalArgsLength = 0;
+	foreach (i, ref arg; args)
+	{
+		arg = argv[i][0 .. strlen(argv[i])];
+		totalArgsLength += arg.length;
+	}
 
-    return _d_run_main2(args, totalArgsLength, mainFunc);
+	return _d_run_main2(args, totalArgsLength, mainFunc);
 }
 ```
 
@@ -260,7 +260,7 @@ private extern (C) int _d_run_main2(char[][] args, size_t totalArgsLength, MainF
 {
 	int result;
 
-    /* Create a copy of args[] on the stack to be used for main, so that rt_args()
+	/* Create a copy of args[] on the stack to be used for main, so that rt_args()
 	 * cannot be modified by the user.
 	 * Note that when this function returns, _d_args will refer to garbage.
 	 */
@@ -435,11 +435,11 @@ private immutable long[__traits(allMembers, ClockType).length] _ticksPerSecond;
 
 extern(C) void _d_initMonoTime() @nogc nothrow
 {
-    // we can't just init `_ticksPerSecond` from a static this(){} as we need monotime available earlier.
-    // so we use a cast here to remove the `immutable`, to be able to actually initialize it
+	// we can't just init `_ticksPerSecond` from a static this(){} as we need monotime available earlier.
+	// so we use a cast here to remove the `immutable`, to be able to actually initialize it
 	auto tps = cast(long[])_ticksPerSecond[];
 
-    timespec ts;
+	timespec ts;
 	foreach (i, typeStr; __traits(allMembers, ClockType))
 		static if (typeStr != "second")
 		{
@@ -488,12 +488,12 @@ I don't particularly feel like digging into exactly how the D threading system w
 ```d
 void main()
 {
-    // called by runAll in _d_run_main2
+	// called by runAll in _d_run_main2
 }
 
 static this()
 {
-    // called by rt_moduleCtor, from rt_init, from runAll!
+	// called by rt_moduleCtor, from rt_init, from runAll!
 }
 ```
 

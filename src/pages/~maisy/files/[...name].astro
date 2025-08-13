@@ -9,35 +9,35 @@ import File from "%components/File.astro";
 
 // Replicate __dirname, because we're in ESM.
 const files = Object.keys(import.meta.glob("./_files/**/*", {
-    as: "raw",
+	as: "raw",
 })).map((path) => path.split("/").pop());
 
 export function getStaticPaths() {
-    const files = import.meta.glob("./_files/**/*", {
-        eager: true,
-        as: "raw",
-    });
+	const files = import.meta.glob("./_files/**/*", {
+		eager: true,
+		as: "raw",
+	});
 
-    return [
-        // Default route, incase the user goes to /files/
-        {
-            params: {
-                name: undefined,
-            },
-            props: {
-                content: "welcome to my file list :)"
-            }
-        },
-        // Other routes, generated dynamically from files
-        ...Object.keys(files).map((path) => ({
-            params: {
-                name: path.split("/").pop(),
-            },
-            props: {
-                content: files[path],
-            },
-        })),
-    ]
+	return [
+		// Default route, incase the user goes to /files/
+		{
+			params: {
+				name: undefined,
+			},
+			props: {
+				content: "welcome to my file list :)"
+			}
+		},
+		// Other routes, generated dynamically from files
+		...Object.keys(files).map((path) => ({
+			params: {
+				name: path.split("/").pop(),
+			},
+			props: {
+				content: files[path],
+			},
+		})),
+	]
 }
 
 const { name } = Astro.params;
@@ -45,13 +45,13 @@ const { content } = Astro.props;
 ---
 
 <FilesLayout>
-    <div class="flex md:(flex-row) lt-md:(flex-col) h-full p-4 gap-4">
-        <FilesPanel>
-            <File name=".." path="/~maisy/" />
-            {files.map(i => <File name={i} path={`/~maisy/files/${i}`} />)}
-        </FilesPanel>
-        <FilesPanel>
-            <Fragment set:html={content} />
-        </FilesPanel>
-    </div>
+	<div class="flex md:(flex-row) lt-md:(flex-col) h-full p-4 gap-4">
+		<FilesPanel>
+			<File name=".." path="/~maisy/" />
+			{files.map(i => <File name={i} path={`/~maisy/files/${i}`} />)}
+		</FilesPanel>
+		<FilesPanel>
+			<Fragment set:html={content} />
+		</FilesPanel>
+	</div>
 </FilesLayout>

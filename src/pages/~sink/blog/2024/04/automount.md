@@ -109,16 +109,16 @@ fi
 and this waybar config:
 ```json
 "custom/ssdmnt": {
-    "format": "SSD mount: {} ",
-    "exec": "$HOME/.config/waybar/mount.sh /ssd y n 2> /dev/null",
-    "interval": 4, // should be >2, see fstab
-    "tooltip": false
+	"format": "SSD mount: {} ",
+	"exec": "$HOME/.config/waybar/mount.sh /ssd y n 2> /dev/null",
+	"interval": 4, // should be >2, see fstab
+	"tooltip": false
 },
 "custom/osumnt": {
-    "format": "osu: {} ",
-    "exec": "$HOME/.config/waybar/mount.sh /osu-portable y n 2> /dev/null",
-    "interval": 4, // should be >2, see fstab
-    "tooltip": false
+	"format": "osu: {} ",
+	"exec": "$HOME/.config/waybar/mount.sh /osu-portable y n 2> /dev/null",
+	"interval": 4, // should be >2, see fstab
+	"tooltip": false
 },
 ```
 

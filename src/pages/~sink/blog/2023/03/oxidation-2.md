@@ -6,7 +6,7 @@ pubDate: "2023-03-03T20:47:00"
 tags: ["RUST", "OXIDATION"]
 ---
 
-<img src="/sink/quiet_oxidation_banner.svg" class="max-w-200" />
+<img src="/sink/quiet_oxidation_banner.svg" class="max-w-200" alt="Quiet System: The Oxidation banner" />
 
 # the_oxidation[2]: Bending Rust to my will
 

@@ -6,7 +6,7 @@ pubDate: "2023-02-10T19:39:11"
 tags: ["RUST", "OXIDATION"]
 ---
 
-<img src="/sink/quiet_oxidation_banner.svg" class="max-w-200" />
+<img src="/sink/quiet_oxidation_banner.svg" class="max-w-200" alt="Quiet System: The Oxidation banner" />
 
 # the_oxidation[1]: The Reference Dance
 
@@ -386,7 +386,7 @@ to improve my code now or in the future, please do not hesitate to reach out on
 [Mastodon](https://noc.social/@yellowsink),
 [Twitter](https://twitter.com/cainatkin), Discord, or [by email](mailto:yellowsink@riseup.net)!
 
-Cya next time!  
+Cya next time!
  -- Yellowsink
 
 [*Previous*](oxidation-0)

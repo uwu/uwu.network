@@ -53,7 +53,7 @@ So I did!
 And with a running iTunes, bang, first thing I'm asked, "Sign in to iTunes Match".
 Yes please!!!!
 
-![](/sink/quiet_it2_matchsignin.png)
+![A UI telling me that Sign-in is required, to add this computer to iTunes Match, and Apple ID and password boxes.](/sink/quiet_it2_matchsignin.png)
 
 I was quite surprised to see iTunes pick up the Apple TV in the room downstairs just fine.
 
@@ -71,8 +71,8 @@ I downloaded 12.6.4.3, fully expecting the graphics to be screwed (see my previo
 
 Surprisingly, the graphics worked fine, and there we go!
 
-![](/sink/quiet_it2_newertunes.png)
-![](/sink/quiet_it2_auth.png)
+![A screenshot of iTunes open with a large splash screen featuring a picture of apple music running on a Macbook Pro](/sink/quiet_it2_newertunes.png)
+![A dialog telling me that computer authorisation was successful, with an ok button.](/sink/quiet_it2_auth.png)
 
 I decided that now was the time to try uploading, even though my library was empty.
 
@@ -80,7 +80,7 @@ I downloaded Haunted House in ALAC format and dragged it on...
 
 It happily took it, but how to make it upload?
 
-![](/sink/quiet_it2_hh.png)
+![A screenshot showing Haunted House in my iTunes library with all art and metadata intact.](/sink/quiet_it2_hh.png)
 
 As it wasn't uploading, I removed the files and then tried dragging them onto the iTunes UI.
 I had read about an "Upload to iCloud" button, but it wasn't there.
@@ -92,11 +92,11 @@ It started crashing a lot, so I went back.
 
 After some more messing about, I found the secret sauce! File > Library > Update iTunes Music Library!
 
-![](/sink/quiet_it2_upload.png)
+![A screenshot of the iTunes progress dialog, showing "waiting to upload songs" with a spinner](/sink/quiet_it2_upload.png)
 
 An hour and a half later, it was uploading :)
 
-![](/sink/quiet_it2_downloaded.png)
+![A picture of Haunted House in my library, with a big red box drawn around text reading "DOWNLOADED"](/sink/quiet_it2_downloaded.png)
 
 Well that was an hour and a half dubiously spent... Hope to see ya back here soon!
 

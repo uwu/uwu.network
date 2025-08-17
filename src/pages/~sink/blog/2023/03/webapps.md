@@ -43,7 +43,7 @@ The way I intend to measure this is to use our good friend [htop](https://htop.d
 
 In case you've never encountered it, here's an explanation via screenshot form:
 
-![](/sink/quiet_htop.png)
+![A screenshot of a text listing of running processes on a system. Metrics are highlighted: CPU use, memory use, and priority.](/sink/quiet_htop.png)
 
 Now the obvious metric to focus on is how much %CPU it tends to use over its lifetime,
 but this is a continuously changing and unreliable metric.
@@ -53,7 +53,7 @@ It is a pretty good measure of how much time that process has to spend "doing wo
 
 Let's sort and have a look! (paths of processes turned off for ease of reading)
 
-![](/sink/quiet_htop_sorted.png)
+![A list of processes sorted by CPU use. The list starts with Firefox, then VS Code, then Discord, then Java.](/sink/quiet_htop_sorted.png)
 ![](/sink/quiet_htop_sorted_2.png)
 
 Now this is very raw data, it's not immediately useful, but let's unpick it a bit.

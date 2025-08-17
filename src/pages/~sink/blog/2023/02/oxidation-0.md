@@ -6,7 +6,7 @@ pubDate: "2023-02-10T17:26:20"
 tags: ["RUST", "OXIDATION"]
 ---
 
-<img src="/sink/quiet_oxidation_banner.svg" class="max-w-200" />
+<img src="/sink/quiet_oxidation_banner.svg" class="max-w-200" alt="Quiet System: The Oxidation banner" />
 
 # the_oxidation[0]: Intro
 
@@ -52,7 +52,7 @@ about early lessons in ownership, and weaving my way around the borrow checker!
 
 I'll shove next and previous links at the bottom of each post in this series, hows about that ;)
 
-Hopefully you find this series interesting, and I hope to see you back here soon!  
+Hopefully you find this series interesting, and I hope to see you back here soon!
  -- Yellowsink
 
 ~~*Previous*~~

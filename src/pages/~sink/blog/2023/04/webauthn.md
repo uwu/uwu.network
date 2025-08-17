@@ -45,24 +45,24 @@ Windows asks for my Yubikey's PIN, then to touch my key.
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/win_setup.png)
+![A dialog asking me to "Set up my security key to sign in to webauthn.io as testing", with OK and cancel buttons.](/sink/quiet_webauthn/win_setup.png)
 
-	![](/sink/quiet_webauthn/win_pin.png)
+![A dialog with a large heading "You'll need to create a PIN for this security key", a text box and a confirm box, and OK and cancel buttons.](/sink/quiet_webauthn/win_pin.png)
 
-	![](/sink/quiet_webauthn/win_touch.png)
+![A dialog containing an icon of a usb drive and the text "Touch your security key."](/sink/quiet_webauthn/win_touch.png)
 </div>
 
 Now, signing in:
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/win_pin_signin.png)
+![A dialog asking me to enter my security key PIN, with a text entry box and OK and cancel buttons](/sink/quiet_webauthn/win_pin_signin.png)
 
-	![](/sink/quiet_webauthn/win_touch_signin.png)
+![A dialog asking me to touch my security key, with a cancel button.](/sink/quiet_webauthn/win_touch_signin.png)
 </div>
 
 Finally, this is all I got on Bitwarden:
 
-<img src="/sink/quiet_webauthn/win_signin.png" class="max-w-100 w-full" />
+<img src="/sink/quiet_webauthn/win_signin.png" class="max-w-100 w-full" alt="A dialog asking me to touch my security key, with a cancel button." />
 
 ## Windows 10 / Edge
 
@@ -71,13 +71,14 @@ I chose to test Edge as it is Chromium based and comes with Windows.
 The UI I was given was basically the same as Chromium under Linux, and interestingly on registering,
 it presented me with a QR code to scan (my iPhone did not recognise this code as useful):
 
-<img src="/sink/quiet_webauthn/edge_1.png" class="max-w-100 w-full" />
+<img src="/sink/quiet_webauthn/edge_1.png" class="max-w-100 w-full" alt="A popup prompting me to create a passkey on another device,
+telling me i can scan this QR code on the device where I want to make the passkey, and a large QR code. There's a button to try another way, and a cancel button." />
 
 But after clicking back to see a page almost identical to the first image from Linux Chromium (see below),
 but with more Microsoft styling, and choosing to use a hardware key,
 I was dropped straight back into Windows Hello, so I didn't bother with any more testing.
 
-<img src="/sink/quiet_webauthn/edge_2.png" class="max-w-100 w-full" />
+<img src="/sink/quiet_webauthn/edge_2.png" class="max-w-100 w-full" alt="A dialog titled 'security key setup' with just OK and Cancel buttons." />
 
 ## Linux / Chromium
 
@@ -87,30 +88,32 @@ First - registering:
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/chr_register_1.png)
+![A popup asking how I want to create a passkey, with an option for a usb security key, or a different device.](/sink/quiet_webauthn/chr_register_1.png)
 
-	![](/sink/quiet_webauthn/chr_register_2.png)
+![A popup titled "use your security key with webauthn.io" telling me to insert my security key and touch it.
+It has a try another way button, and a cancel button.](/sink/quiet_webauthn/chr_register_2.png)
 
-	![](/sink/quiet_webauthn/chr_register_3.png)
+![A popup titled "PIN required" with a text entry box, and cancel and next buttons.](/sink/quiet_webauthn/chr_register_3.png)
 
-	![](/sink/quiet_webauthn/chr_register_4.png)
+![A popup asking me to "touch my security key again" with a cancel button.](/sink/quiet_webauthn/chr_register_4.png)
 </div>
 
 And signing in:
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/chr_signin_1.png)
+![A popup titled "PIN required" with just a text box, cancel, and ok buttons.](/sink/quiet_webauthn/chr_signin_1.png)
 
-	![](/sink/quiet_webauthn/chr_signin_2.png)
+![A popup asking me to "touch my security key again" with a cancel button.](/sink/quiet_webauthn/chr_signin_2.png)
 </div>
 
 Finally, Bitwarden:
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/chr_signin_bw_1.png)
+![A popup asking me which device has the passkey for vault.bitwarden.com,
+with options for a USB security key or a different device.](/sink/quiet_webauthn/chr_signin_bw_1.png)
 
-	![](/sink/quiet_webauthn/chr_signin_bw_2.png)
+![A popup asking me to insert my security key and touch it, with a cancel button.](/sink/quiet_webauthn/chr_signin_bw_2.png)
 </div>
 
 ## Linux / Firefox
@@ -122,11 +125,14 @@ This includes no support for PINs, a more basic UI, and no support for Apple Tou
 
 Here's what registering looks like:
 
-<img src="/sink/quiet_webauthn/ff_register.png" class="max-w-100 w-full" />
+<img src="/sink/quiet_webauthn/ff_register.png" class="max-w-100 w-full" alt="A popup under the Firefox URL bar
+telling me that webauthn.io wants to register an account with a security key, and that I can connect one now, or cancel.
+The popup is under an icon of a fingerprint." />
 
 And logging in is the same on webauthn.io and Bitwarden due to lack of PIN:
 
-<img src="/sink/quiet_webauthn/ff_signin.png" class="max-w-100 w-full" />
+<img src="/sink/quiet_webauthn/ff_signin.png" class="max-w-100 w-full"
+alt="Another popup under the URL bar telling me that webauthn.io wants to authenticate with a registered security key." />
 
 I personally quite like this UI - it follows the browser theme, it's unobtrusive, and, almost uniquely,
 requires no extra interaction to use, just touch your key and go!
@@ -137,7 +143,9 @@ If your security key requires a PIN though, you will hit issues.
 
 Time to fire up my macOS virtual machine!:
 
-<img src="/sink/quiet_webauthn/problem.png" class="max-w-100 w-full" />
+<img src="/sink/quiet_webauthn/problem.png" class="max-w-100 w-full" alt="A screenshot of two macOS error popups.
+One tells me I shut down my computer because of a problem, and asks if I want to open the applications that were open before then.
+The other tells me my computer restarted because of a problem, with ignore and report buttons." />
 
 So I had issues testing Safari, as it has severe rendering bugs (website elements or even entire sites just go white)
 in my macOS virtual machine,
@@ -148,9 +156,10 @@ I did manage to sign in to Bitwarden blind though!
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/safari_1.png)
+![A popup titled sign in with a cancel button. It has a large icon of a key and asks me to choose how to sign in to vault.bitwarden.com.
+The options are an iPhone, iPad, or Android device, or a Security Key.](/sink/quiet_webauthn/safari_1.png)
 
-	![](/sink/quiet_webauthn/safari_2.png)
+![A popup with a large icon of a USB drive, telling me to "insert and activate my security key".](/sink/quiet_webauthn/safari_2.png)
 </div>
 
 ## macOS Ventura / Firefox
@@ -162,9 +171,13 @@ I hear that Firefox 113.0 beta improves FIDO2 USB support on Linux and macOS
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/mac_ff_register.png)
+![A dialog of a popup under the firefox URL bar, visibly on macOS,
+informing me that webauthn.io wants to register an account with one of my security keys.
+](/sink/quiet_webauthn/mac_ff_register.png)
 
-	![](/sink/quiet_webauthn/mac_ff_signin.png)
+![A dialog of a popup under the firefox URL bar, visibly on macOS,
+informing me that webauthn.io wants to authenticate with a registered security key.
+](/sink/quiet_webauthn/mac_ff_signin.png)
 </div>
 
 ## macOS Ventura / Chromium
@@ -176,13 +189,15 @@ and offered to turn on Bluetooth before anything else, which was new.
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/mac_chrome_passkey_prompt.png)
+![A popover under a username text box, prompting me to "use a passkey on a different device"
+](/sink/quiet_webauthn/mac_chrome_passkey_prompt.png)
 
-	![](/sink/quiet_webauthn/mac_chrome_2_bluetooth.png)
+![A popup with a bluetooth icon with a line through it, asking if i want to turn on bluetooth, to be able to use it on a different device.
+](/sink/quiet_webauthn/mac_chrome_2_bluetooth.png)
 
-	![](/sink/quiet_webauthn/mac_chrome_3.png)
+![A popup prompting me to create a passkey, with options to use a phone or tablet, or a security key.](/sink/quiet_webauthn/mac_chrome_3.png)
 
-	![](/sink/quiet_webauthn/mac_chrome_4_signin.png)
+![A prompt to insert my security key and touch it.](/sink/quiet_webauthn/mac_chrome_4_signin.png)
 </div>
 
 ## iOS (14)
@@ -194,21 +209,25 @@ Registering:
 
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/ios_register_1.jpg)
+![A popover with a blurred glassy background, asking if I want to allow webauthn.io to start using a security key to sign in.
+It tells me in grayed out text to insert and activate it or to bring it near the top of my iPhone. There's a cancel button in the top right
+](/sink/quiet_webauthn/ios_register_1.jpg)
 
-	![](/sink/quiet_webauthn/ios_register_2.jpg)
+![A similar popover asking if I want to allow them to start using a security key, prompting me to enter a PIN, with a big continue button.](/sink/quiet_webauthn/ios_register_2.jpg)
 </div>
 
 Signing in:
 <div class="flex flex-wrap gap-5 children:(max-w-100 w-full)">
 
-	![](/sink/quiet_webauthn/ios_signin_1.jpg)
+![A popover asking if I want to sign into webauthn.io using a security key, asking me to insert it or bring it near my iPhone.
+](/sink/quiet_webauthn/ios_signin_1.jpg)
 
-	![](/sink/quiet_webauthn/ios_signin_2.jpg)
+![A similar popover, prompting me to enter a PIN, with a big continue button.](/sink/quiet_webauthn/ios_signin_2.jpg)
 </div>
 
 And Bitwarden:
-<img src="/sink/quiet_webauthn/ios_signin_bw.jpg" class="max-w-100 w-full" />
+<img src="/sink/quiet_webauthn/ios_signin_bw.jpg" class="max-w-100 w-full"
+alt="Yet another similar popover, asking if I want to allow vault.bitwarden.com to sign in with a security key." />
 
 # Conclusion
 idk there you go that's all of them

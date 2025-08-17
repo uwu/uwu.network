@@ -42,7 +42,7 @@ Well, because above this frequency, the audio can oscillate one way and back aga
 between two samples, so we have no way to know that it did so when we come to reconstruct
 the analog signal.
 
-![](/sink/quiet_ht_proj_audio/above_nyquist_reconstruction.svg)
+![A diagram of a sine wave, with points drawn on it at intervals, then another, lower frequency sine wave, drawn through those same points.](/sink/quiet_ht_proj_audio/above_nyquist_reconstruction.svg)
 
 Can you see this problem in this diagram?
 The sampling frequency here is 1Hz, and the frequency of this sine wave is 0.8Hz.
@@ -84,7 +84,8 @@ When we change to using mid/side encoding, notice that instead of storing two lo
 we store one loud signal, and one much quieter signal.
 A quieter signal will compress better because it will use much smaller values that can be squashed together better.
 
-![](/sink/quiet_ht_proj_audio/slands_midside.png)
+![A screenshot of four audio waveforms. The left and right waveforms are pretty much the same as the mid waveform,
+but the side channel waveform is noticeably smaller, and much more consistently random.](/sink/quiet_ht_proj_audio/slands_midside.png)
 
 ## Quick side note: A preference for small numbers
 
@@ -114,7 +115,8 @@ More importantly though, computers store a *fixed number of digits*.
 Here's a standard 16 bit audio signal (though I've flipped the negative values back positive, for ease of visualization),
 with the point at which each digit becomes zero marked at the start, and the *side* signal too:
 
-![](/sink/quiet_ht_proj_audio/saving_bits.svg)
+![A zoomed in view of the audio waveforms, mid in blue and side in orange, with green lines marking the heights on the graph where,
+if the entire waveform is below those lines, you can save a certain number of bits for storage.](/sink/quiet_ht_proj_audio/saving_bits.svg)
 
 This is a VERY busy graph, but look closely at it a bit, and notice how the vast majority of the side signal is below
 the saves two bits line.

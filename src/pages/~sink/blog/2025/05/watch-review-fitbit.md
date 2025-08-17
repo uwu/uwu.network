@@ -74,7 +74,7 @@ Writing apps or faces for it felt like of naff - the SDK was pretty annoying to 
 
 The software was pretty good but I didn't love the hardware. After about two years and 3 months, the rubber ring that held the loose part of the band down snapped, and since it was out of warranty by then I had to buy a replacement band (at the time I was super jealous of the Apple Watch Milanese Loop so I got a cheap knock off version of that for this watch... it was not great). Another 3 months later (~two and a half years in!), the screen entirely popped off while I was wearing it idly during the day, and to this day it is sat on my shelf with the screen just held on by a ribbon cable.
 
-![](https://i.yellows.ink/5b494c919.jpeg)
+![The watch on my wrist, with the screen detached from the watch and a roughly 1cm gap between the watch body and the screen](https://i.yellows.ink/5b494c919.jpeg)
 
 Honestly, it was pretty competent, and being from a large western manufacturer as Fitbit are is nice, 'cause current-me would very much like to have Fitbit Pay and it means there are plenty of companies you've *actually heard of* willing to write apps for it, but that said, I wouldn't buy one now. It's kind of mediocre.
 

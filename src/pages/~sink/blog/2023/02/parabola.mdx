@@ -15,7 +15,7 @@ import K from "^components/Katex.astro";
 There's a very good chance you've done this activity before: take a worksheet like the one below,
 and connect equally spaced intervals with lines.
 
-![](/sink/quiet_parabola_lines.webp)
+![A hand-drawn image of a parabola formed by a series of carefully placed straight lines](/sink/quiet_parabola_lines.webp)
 
 This, as you decrease the interval size, starts to resemble a curve, but which curve?
 
@@ -38,16 +38,17 @@ It's all fun and games to construct approximations of curve out of lines,
 but we do need to actually have an idea of what the curve *is*.
 
 <div class="flex flex-wrap">
-	<img src="/sink/quiet_parabola/approx_6.svg" />
-	<img src="/sink/quiet_parabola/approx_20.svg" />
-	<img src="/sink/quiet_parabola/approx_100.svg" />
+	<img src="/sink/quiet_parabola/approx_6.svg" aria-hidden="true" />
+	<img src="/sink/quiet_parabola/approx_20.svg" aria-hidden="true" />
+	<img src="/sink/quiet_parabola/approx_100.svg" aria-hidden="true" />
 </div>
 
 So an important thing to notice here is that, if we take any of these ones lines
 (see the one in red!), the point on that line that we want to actually be a part of our curve
 is tangent to said curve.
 
-![](/sink/quiet_parabola/approx_6_highlighted.svg)
+![A diagram of a parabola shape caused by a series of overlapped straight lines.
+One is highlighted in red, and you can see that it is tangent to the curve.](/sink/quiet_parabola/approx_6_highlighted.svg)
 
 Lets modify our construction just slightly so that we are constructing on diagonal lines,
 so each line will connect the points `(k, k)` and `(k-n, n-k)` for real `k` and constant `n`.
@@ -56,7 +57,9 @@ so each line will connect the points `(k, k)` and `(k-n, n-k)` for real `k` and 
 
 Finally, to allow us to increase n -> infinity, we need to add a scale factor of `/n`:
 
-![](/sink/quiet_parabola/kk_graph_normalised.svg)
+![A similar diagram to as before, but turned so that the parabola is facing upwards, and scaled to a 1 by 1 size.
+One line is highlighted, with the right-side coordinate marked (k, k) and the left side coordinate marked (k-n, n-k).
+](/sink/quiet_parabola/kk_graph_normalised.svg)
 
 Notice that this construction is actually very very similar to DeCasteljau's algorithm for
 computing Beziér curves.

@@ -49,15 +49,15 @@ WINEPREFIX=/home/sink/winepref_off2019 wine Office\ 2019\ ProPlus/Office/Setup32
 
 I got a "OfficeClickToRun.exe had to close" wine debugger dialog, but then, wow! The installer started!
 
-![](/sink/quiet_office/inst1.png)
+![A white window with a microsoft logo, the logos of the office suite apps, and a progress bar, without any text.](/sink/quiet_office/inst1.png)
 
 Except it doesn't actually go anywhere, it just sits forever there. Damn.
 
 Tried again and got this, ouch.
 
-![](/sink/quiet_office/inst2.png)
+![A popup with a microsoft logo telling me that Something went wrong, with an obscure error code.](/sink/quiet_office/inst2.png)
 
-![](/sink/quiet_office/inst2-d.png)
+![A wine debugger popup with a giant stack trace and not much useful info.](/sink/quiet_office/inst2-d.png)
 
 I decided to try the suggestion [here](https://appdb.winehq.org/objectManager.php?sClass=version&iId=33762&iTestingId=109718)
 and ran

@@ -1,0 +1,47 @@
+---
+import imageSize from "image-size";
+import { imageSizeFromFile } from "image-size/fromFile";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs"
+
+interface Props {
+	src: string,
+	alt?: string,
+	style?: string | Record<string, string>,
+	targetHeight?: number,
+}
+
+const { src, alt, style, targetHeight, ...otherProps } = Astro.props;
+
+const thisModulePath = fileURLToPath(import.meta.url);
+
+const cachePath = resolve(thisModulePath, "../../../node_modules/.cache/uwu/img-sizes");
+
+// first, look up in cache
+const cacheData = existsSync(cachePath) ? JSON.parse(readFileSync(cachePath).toString()) : {};
+let size = cacheData[src];
+
+if (!size) {
+	let isUrl = !!src.match(/^(http(s?))?:?\/\//);
+
+	size = isUrl
+		? imageSize(new Uint8Array(await fetch(src).then(r => r.arrayBuffer())))
+		: await imageSizeFromFile(resolve(thisModulePath, "../../../public/", src.slice(1)));
+
+	cacheData[src] = size;
+	mkdirSync(dirname(cachePath), { recursive: true })
+	writeFileSync(cachePath, JSON.stringify(cacheData));
+}
+
+const aspectRatio = `${size.width} / ${size.height}`;
+
+// default 25rem at 17.3333px font-size
+const scale = (targetHeight ?? 25 * 17.333333) / size.height;
+
+const newStyle = typeof style === "object"
+	? { ...style, 'aspect-ratio': aspectRatio, 'max-width': size.width * scale + 'px', width: "100%" }
+	: `${style ?? ''}; aspect-ratio: ${aspectRatio}; max-width: ${size.width * scale}px; width: 100%`;
+---
+
+<img src={src} alt={alt ?? ""} style={newStyle} {...otherProps} />

@@ -16,7 +16,11 @@ const { src, alt, style, targetHeight, ...otherProps } = Astro.props;
 
 const thisModulePath = fileURLToPath(import.meta.url);
 
-const cachePath = resolve(thisModulePath, "../../../node_modules/.cache/uwu/img-sizes");
+let rootPath = thisModulePath;
+while (!existsSync(resolve(rootPath, "package.json")) && rootPath.split("/").length > 1)
+	rootPath = dirname(rootPath);
+
+const cachePath = resolve(rootPath, "node_modules/.cache/uwu/img-sizes");
 
 // first, look up in cache
 const cacheData = existsSync(cachePath) ? JSON.parse(readFileSync(cachePath).toString()) : {};
@@ -27,7 +31,7 @@ if (!size) {
 
 	size = isUrl
 		? imageSize(new Uint8Array(await fetch(src).then(r => r.arrayBuffer())))
-		: await imageSizeFromFile(resolve(thisModulePath, "../../../public/", src.slice(1)));
+		: await imageSizeFromFile(resolve(rootPath, "public/", src.slice(1)));
 
 	cacheData[src] = size;
 	mkdirSync(dirname(cachePath), { recursive: true })

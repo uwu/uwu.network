@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import { formatDate } from "☆js/date";
+import siteConfig from "☆js/site.config";
+
+let perusal = siteConfig.persual;
+
+perusal = perusal.sort(
+	(prev, next) => next.date.valueOf() - prev.date.valueOf(),
+);
+---
+
+<ul class="!pl-0 dashed">
+	{
+		perusal.map((project) => (
+			<li>
+				{
+					project.url ? (
+						<a class="!decoration-none" href={project.url}>
+							{project.title}
+						</a>
+					) : <span>{project.title}</span>
+				}
+				<div class="dash" />
+				<div class="text-gray-11">
+					{project.author ?? formatDate(project.date)}
+				</div>
+			</li>
+		))
+	}
+</ul>

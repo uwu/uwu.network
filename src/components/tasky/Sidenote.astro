@@ -1,0 +1,29 @@
+---
+export type Props = {
+  side?: 'left' | 'right'
+}
+
+const { side = 'right' } = Astro.props
+---
+
+<aside class:list={['sidenote']}>
+  <div>
+    {
+      side === 'left' && (
+        <div>
+          <slot />
+        </div>
+      )
+    }
+  </div>
+  <div></div>
+  <div>
+    {
+      side === 'right' && (
+        <div>
+          <slot />
+        </div>
+      )
+    }
+  </div>
+</aside>

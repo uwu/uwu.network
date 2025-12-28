@@ -1,0 +1,87 @@
+---
+title: A proof that all roots of primes are irrational
+description: A little proof exercise I thought was neat
+pubDate: "2023-02-06"
+tags: ["MATH"]
+---
+
+<style>{`
+	#texlike h1, #texlike h2, #texlike h3, #texlike p { font-family: KaTeX_Main; }
+	#texlike p { font-size: 1.1em }`}</style>
+
+import K from "^components/Katex.astro";
+
+<div id="texlike" class="mb-8">
+
+# Prove that <K>\sqrt p</K> is irrational for all prime <K>p</K>
+
+Woah! What the hell happened to me, I'm all *serif* and *academic* ! ... huh.
+
+Well anyway, today I thought it'd be fun to share this little proof,
+plus try to pull off the TeX look just for the hell of it! :p
+
+I'm going to slow this off using proof by contradiction, by the way.
+
+## *Proof*
+Assume that <K>\sqrt p</K> is rational - that is <K>\sqrt p = \frac a b</K>,
+where <K>a</K> and <K>b</K> are coprime integers.
+
+<div class="ml-6">
+	*Author's note:* coprime means that they do not share any common factors.
+
+	It is a sensible part of the definition of rational, as it enforces that rational numbers
+	should be given in their simplest form, which should be simple-ish to do for all true
+	rational numbers.
+
+	No rational number must *necessarily* have coprime numerator and denominator.
+</div>
+
+<K D>p=\frac\{a^2}\{b^2}</K>
+<K D>p b^2=a^2</K>
+
+### If <K>a</K> divides by <K>p</K>:
+
+<K>a</K> is of the form <K>kp, k\in\mathbb Z</K>
+
+<K D>a^2=(kp)^2=k^2 p^2</K>
+<K D>pb^2=k^2 p^2</K>
+<K D>b^2=k^2 p</K>
+
+For this to be true, <K>b^2</K> must divide by <K>p</K>, <K>\therefore b</K> must divide by <K>p</K>.
+
+This would mean that <K>a</K>, <K>b</K> share factor <K>p</K>, so are not coprime! ↯
+
+### If <K>a</K> does not divide by <K>p</K>:
+
+<K>a</K> is of the form <K>kp+n, k\in\mathbb Z, n</K> does not divide by <K>p</K>.
+
+<K D>pb^2 = (kp+n)^2 = k^2 p^2 + 2nkp + n^2</K>
+<K D>b^2 = k^2 p + 2nk + \frac\{n^2} p</K>
+
+<K>n</K> does not divide by <K>p \therefore n^2</K> does not divide by <K>p</K>.
+
+<K>\therefore \frac\{n^2} p</K> is not an integer, <K>\therefore b^2</K> is not an integer,
+<K>\therefore b</K> is not an integer!	↯
+
+### Conclusion
+<K>a</K> cannot divide by <K>p</K>, but also cannot *not* divide by <K>p</K>.
+
+This is impossible, so <K>\sqrt p</K> cannot be rational!
+
+<K>\therefore \sqrt p</K> is irrational for all prime <K>p</K> <K>\square</K>
+
+</div>
+
+So, uh, back to normal!
+
+That was a proof that I managed to find earlier after a lot of playing,
+and I was very pleasantly surprised with how the second half pretty much just
+fell into place once I had the first half sorted.
+
+This was very fun to think about and devise, hopefully its not too dense
+/ different to what people were maybe expecting me to post about!
+
+Seems I'm drifting from tech and stuff towards math...
+
+Anywho, hope to cya back here soon!
+ -- Yellowsink

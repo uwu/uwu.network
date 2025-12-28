@@ -1,0 +1,6 @@
+## Set UTF-8 charset for all text files
+/*.txt
+  Content-Type: text/plain; charset=utf-8
+
+/uwus/*.txt
+  Content-Type: text/plain; charset=utf-8

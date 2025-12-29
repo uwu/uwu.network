@@ -2,57 +2,55 @@
 import SinkLayout from "^layouts/SinkLayout.astro";
 import silent from "^/silent.svg?url";
 import rss from "^/rss.svg?url";
+import { getCollection } from "astro:content";
 
-const posts = [
-  ...(await Astro.glob("/src/pages/~sink/blog/**/*.md")),
-  ...(await Astro.glob("/src/pages/~sink/blog/**/*.mdx"))
-];
+const posts = await getCollection("sink");
 
 const fmtTags = (tags) => tags.map((t) => `[${t.toUpperCase()}]`);
 
 // reverse chronological order
 const compareFn = (m1, m2) =>
-  new Date(m2.frontmatter.pubDate).getTime() -
-  new Date(m1.frontmatter.pubDate).getTime();
+	new Date(m2.data.pubDate).getTime() -
+	new Date(m1.data.pubDate).getTime();
 ---
 
 <SinkLayout title="Quiet System">
-  <div
-    class="grid grid-cols-[repeat(3,max-content)] <sm:grid-cols-[auto_max-content_max-content] grid-rows-2"
-  >
-    <img alt="Quiet System Logo" class="h-40 <sm:h-0 row-span-2 mr-5" src={silent} />
+	<div
+		class="grid grid-cols-[repeat(3,max-content)] <sm:grid-cols-[auto_max-content_max-content] grid-rows-2"
+	>
+		<img alt="Quiet System Logo" class="h-40 <sm:h-0 row-span-2 mr-5" src={silent} />
 
-    <h1 class="spaced mb-0 self-end">Quiet System</h1>
+		<h1 class="spaced mb-0 self-end">Quiet System</h1>
 
-    <p class="text-xl italic self-start justify-self-end col-start-2">
-      Yellowsink's blog
-    </p>
+		<p class="text-xl italic self-start justify-self-end col-start-2">
+			Yellowsink's blog
+		</p>
 
-    <a href="quiet.rss" class="col-start-3 row-start-1 self-end m-2">
-      <img alt="RSS Feed icon" class="h-[calc(1.75rem*.8)]" src={rss} />
-    </a>
-  </div>
+		<a href="quiet.rss" class="col-start-3 row-start-1 self-end m-2">
+			<img alt="RSS Feed icon" class="h-[calc(1.75rem*.8)]" src={rss} />
+		</a>
+	</div>
 
-  {
-    posts.sort(compareFn).map(({ url, frontmatter }) => (
-      <a href={url} class="block mt-2 p-2 border border-white no-underline">
-        <div class="flex justify-between mb-2 <md:flex-col">
-          <p class="text-xl">{frontmatter.title}</p>
-          <p class="text-lg text-right flex wrap justify-end gap-1">
-            {fmtTags(frontmatter.tags).map((t) => (
-              <span aria-hidden="true">{t}</span>
-            ))}
-            <span>{frontmatter.pubDate.split("T")[0]}</span>
-          </p>
-        </div>
+	{
+		posts.sort(compareFn).map((post) => (
+			<a href={`/~sink/blog/${post.id}`} class="block mt-2 p-2 border border-white no-underline">
+				<div class="flex justify-between mb-2 <md:flex-col">
+					<p class="text-xl">{post.data.title}</p>
+					<p class="text-lg text-right flex wrap justify-end gap-1">
+						{fmtTags(post.data.tags).map((t) => (
+							<span aria-hidden="true">{t}</span>
+						))}
+						<span>{post.data.pubDate.split("T")[0]}</span>
+					</p>
+				</div>
 
-        <p>{frontmatter.description}</p>
-      </a>
-    ))
-  }
+				<p>{post.data.description}</p>
+			</a>
+		))
+	}
 </SinkLayout>
 
 <style lang="sass">
-  .spaced
-    letter-spacing: .3rem
+	.spaced
+		letter-spacing: .3rem
 </style>

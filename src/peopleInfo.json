@@ -38,6 +38,7 @@
 			"src": "/maisy/img/logo.png",
 			"link": "https://maisy.moe"
 		},
+		"unlisted": true,
 		"headLink": "/~maisy",
 		"links": {
 			"[discord]": "https://discord.com/users/257109471589957632",

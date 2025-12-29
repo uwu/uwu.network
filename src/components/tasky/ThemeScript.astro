@@ -1,0 +1,89 @@
+<script is:inline>
+(function() {
+	try {
+		// Using variables to reduce final script size when it's minified.
+		const d = document.documentElement;
+		const ls = localStorage;
+		const appendChild = "appendChild";
+		const classList = "classList";
+		const addEventListener = "addEventListener";
+
+		// Run `fn` without css transitions.
+		// See https://paco.me/writing/disable-theme-transitions.
+		const withoutTransitions = (fn) => {
+			const styleTag = document.createElement("style");
+			styleTag[appendChild](
+				document.createTextNode(`*, *::before, *::after {
+-webkit-transition: none !important;
+-moz-transition: none !important;
+-o-transition: none !important;
+-ms-transition: none !important;
+transition: none !important;
+}`),
+			);
+			document.head[appendChild](styleTag);
+			fn();
+			const _ = window.getComputedStyle(styleTag).opacity;
+			document.head.removeChild(styleTag);
+		};
+
+		const appearanceKey = "data-appearance";
+		const appearanceOptions = ["light", "dark", "system"];
+		const resolvedAppearanceOptions = appearanceOptions.slice(0, -1);
+		let appearanceValue = undefined;
+
+		const query = "(prefers-color-scheme: dark)";
+		const matchMedia = window.matchMedia(query);
+		const getSystemAppearance = () =>
+			matchMedia.media !== query || matchMedia.matches
+				? appearanceOptions[1]
+				: appearanceOptions[0];
+
+		const applyAppearance = () => {
+			let resolvedValue = appearanceValue;
+
+			if (!appearanceValue || appearanceValue === "system") {
+				resolvedValue = getSystemAppearance();
+			}
+
+			if (!resolvedAppearanceOptions.includes(resolvedValue)) {
+				resolvedValue = appearanceOptions[0];
+			}
+
+			withoutTransitions(() => {
+				d.style.colorScheme = resolvedValue;
+
+				d[classList].add(resolvedValue);
+				d[classList].remove(
+					resolvedAppearanceOptions.filter((value) => value !== resolvedValue),
+				);
+			});
+		};
+
+		appearanceValue = ls.getItem(appearanceKey);
+		applyAppearance();
+
+		const handleUpdateEvents = ({ key, newValue }, updateStorage = false) => {
+			if (key === appearanceKey) {
+				if (updateStorage) ls.setItem(appearanceKey, newValue);
+				appearanceValue = newValue;
+				applyAppearance();
+			}
+		};
+
+		window[addEventListener]("storage", (event) => handleUpdateEvents(event));
+
+		window[addEventListener](
+			"set-appearance",
+			(event) =>
+				handleUpdateEvents(
+					{ key: appearanceKey, newValue: event.detail },
+					true,
+				),
+		);
+
+		matchMedia[addEventListener]("change", () => applyAppearance());
+		document.addEventListener("astro:after-swap", () => applyAppearance());
+	} catch (e) {}
+})();
+</script>

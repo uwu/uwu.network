@@ -1,18 +1,15 @@
 ---
 import "^css/global.sass";
+import "^css/shiki.css";
 import BorderLayout from "@layouts/BorderLayout.astro";
 import Hits from "^components/quiet/Hits.astro";
 
-const posts = [
-	...(await Astro.glob("/src/pages/~sink/blog/**/*.md")),
-	...(await Astro.glob("/src/pages/~sink/blog/**/*.mdx"))
-];
+interface Props {
+	post: any;
+}
 
-const { frontmatter } = posts.find(
-	(p) =>
-		Astro.request.url.endsWith(p.url) ||
-		Astro.request.url.slice(0, -1).endsWith(p.url)
-);
+const { post } = Astro.props;
+const frontmatter = post.data;
 ---
 
 <BorderLayout
@@ -37,6 +34,6 @@ const { frontmatter } = posts.find(
 	</div>
 
 	<script>
-		import "^js/quiet_analytics.js"; // astro will bundle this
+	import "^js/quiet_analytics.js"; // astro will bundle this
 	</script>
 </BorderLayout>

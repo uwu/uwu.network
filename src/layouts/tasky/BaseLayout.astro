@@ -1,0 +1,31 @@
+---
+import "☆css/base.css";
+
+import { ClientRouter } from "astro:transitions";
+import Fonts from "☆components/Fonts.astro";
+import LoadingIndicatorScript from "☆components/LoadingIndicatorScript.astro";
+import MetaTags, { type Props as MetaTagsProps } from "☆components/MetaTags.astro";
+import ThemeScript from "☆components/ThemeScript.astro";
+
+type Props = MetaTagsProps;
+const { ...meta } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" transition:name="root" transition:animate="none">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{meta.title}</title>
+		<ThemeScript />
+		<Fonts />
+		<ClientRouter />
+		<LoadingIndicatorScript />
+		<link rel="icon" href="/favicon.svg" sizes="32x32" />
+		<MetaTags {...meta} />
+		<slot name="head" />
+	</head>
+	<body class="font-serif antialiased text-[1.1875rem] sm:text-xl leading-normal bg-gray-1 text-gray-12 w-full h-full">
+		<slot />
+	</body>
+</html>

@@ -1,0 +1,224 @@
+---
+title: F# ops
+description: Operators in F#
+pubDate: "2022-04-09"
+physPubDate: "2024-07-26"
+tags: ["MIGRATED"]
+---
+
+import LigatureComparer from "^components/quiet/LigatureComparer.astro";
+
+*note: migrated over from my website at https://yellows.ink/fs_ops*
+
+# How F# ops work
+
+F# is full of funky functional operators. Here's how they all work!
+
+Note: this page uses Jetbrains Mono, which includes ligatures.
+This means that some unusual operators may be ligagurised in an
+unfamiliar way to some.
+
+<LigatureComparer ops="|> ||> |||> <| <|| <||| <>" />
+
+## Pipeline
+
+The pipe operator takes a value on the left and passes it through
+the function on the right. The function can be partially applied
+due to F# currying and still work.
+```fsharp
+// declaration
+let inline (|>) arg func = func arg
+// usage
+5 |> printfn "%i"
+// equivalent
+printfn "%i" 5
+```
+
+There is also a double pipe that takes a tuple of two args on the left.
+```fsharp
+// declaration
+let inline (||>) (arg1, arg2) func = func arg1 arg2
+// usage
+(5, 6) ||> printfn "%i %i"
+// equivalent
+printfn "%i %i" 5 6
+```
+
+And a triple:
+```fsharp
+// declaration
+let inline (|||>) (arg1, arg2, arg3) func = func arg1 arg2 arg3
+// usage
+(5, 6, 7) |||> printfn "%i %i"
+// equivalent
+printfn "%i %i %i" 5 6 7
+```
+
+I guess its worth mentioning the reverse pipes, which serve little
+purpose other than to help with keeping parenthesis use down.
+```fsharp
+printfn "%i"       <|   5
+printfn "%i %i"    <||  (5, 6)
+printfn "%i %i %i" <||| (5, 6, 7)
+```
+
+## Composition
+
+Composition is one of the most key functional concepts.
+You will come across it in the mathematical definition of functions,
+not just in function programming languages.
+It is the joining of two functions together to build a new one.
+
+It can actually be defined in terms of pipes, if youre so inclined:
+```fsharp
+let inline (>>) func1 func2 x = x |> func1 |> func2
+```
+
+But here is the definition in the actual F# stdlib.
+```fsharp
+// delcaration
+let inline (>>) func1 func2 x = func2 (func1 x)
+// usage
+let add1ThenDouble = add1 >> double
+(add1ThenDouble 5) = 12
+// equivalent
+let add1ThenDouble x = x |> add1 |> double
+(add1ThenDouble 5) = 12
+```
+
+There is also a reverse composition operator `<<` if thats your jam.
+```fsharp
+let add1ThenDouble = double << add1
+```
+
+## List concat operator
+
+List cons is not an operator, so will not be detailed here,
+but the list concatenation operator is.
+
+It combines two singly linked lists together, thus this one
+is more complex, and involves recursion.
+For this reason it is also not inlined in F#.
+
+```fsharp
+let rec (@) list1 list2 =
+	match list1 with
+	| [] -> list2
+	| head::tail -> head::(tail @ list2)
+```
+
+This is a very inefficient version of the code, which does not
+make use of tail recursion (the F# stdlib version actually uses
+mutation to make it as fast as it can possibly be), however it does
+provide a usable mental model of how it could work.
+
+Specifically, in continually removing the first element off list1,
+then placing all of them back on the front of list2.
+
+Here's a usage:
+```fsharp
+// usage
+[1; 2; 3] @ [4; 5; 6]
+// equivalent
+1::(2::(3::[4; 5; 6]))
+// or just
+[1; 2; 3; 4; 5; 6]
+```
+
+## Type casting operators
+There are two type casting operators in F#: The upcast and downcast.
+
+### Upcast operator
+
+The upcast operator casts a type to one of its base types.
+This is compile time checked, and if it compiles it will
+*ALWAYS* work at runtime.
+
+```fsharp
+// this is actually handled by the compiler
+// so no declaration here
+// usage
+type MyType = { foo: string }
+let myVal = { foo = "bar" }
+myVal :> obj // now a System.Object. Guaranteed to work.
+```
+
+### Downcast operator
+
+The downcast operator casts a type to an inherited type.
+This may not be compile time verified and is viable to fail at
+runtime, throwing an `InvalidCastException`.
+
+```fsharp
+// see above
+// usage
+type MyType = { foo: string }
+let myVal: obj = { foo = "bar" }
+// myVal is an object of unknown type now
+myVal :?> MyType // { foo: "bar" }
+```
+
+### Extra: safe downcasting
+```fsharp
+type MyType = { foo: string }
+
+let toMyTypeOrDefault (maybeMyType: obj) =
+	match maybeMyType with
+	| :? MyType as mt -> mt
+	| _ -> { foo = "bar" }
+
+{ foo = "test" } :> obj |> toMyTypeOrDefault // { foo: "test" }
+"this is totally valid" |> toMyTypeOrDefault // { foo: "bar" }
+```
+
+## Other fun things you may not be used to
+The following operators are equivalent (F# first, C# second)
+```fsharp
+=  // (in comparisons!)
+<>
+-> // (anonymous functions with the fun keyword)
+<- // assigning to a mutable variable
+(* comment *)
+[<Attribute>]
+&&& // bitwise and
+<<< // shift left
+>>> // shift right
+^^^ // bitwise xor
+||| // bitwise or
+~~~ // bitwise not
+```
+```csharp
+==
+!=
+=>
+=
+/* comment */
+[Attribute]
+&  // bitwise and
+<< // shift left
+>> // shift right
+^  // bitwise xor
+|  // bitwise or
+~  // bitwise not
+```
+
+F# lists are constructed out of heads (the first element)
+and tails (the rest of the list) - these are singly linked lists.
+This is done with the cons operator:
+```fsharp
+let list = [2; 3; 4]
+let fullList = 1::list
+fullList = [1; 2; 3; 4]
+```
+
+## Final note
+
+If you're still here, give F# a go.
+
+It's got some funky operators and things, sure,
+but its got a beautiful heart and you will never want to go back.
+
+For more info, and to hopefully inspire you a bit more to get
+started, here's
+[an article](https://fsharpforfunandprofit.com/why-use-fsharp/)
+and the wonderful longer [set to read on](https://fsharpforfunandprofit.com/series/why-use-fsharp/)

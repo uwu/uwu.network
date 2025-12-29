@@ -1,0 +1,23 @@
+.shiki,
+.astro-code,
+.shiki span {
+	background-color: var(--shiki-dark-bg) !important;
+}
+
+/* When dark mode is enabled, used --shiki-dark colors. */
+@media only screen and (prefers-color-scheme: dark) {
+	:root:not(.light) .shiki,
+	:root:not(.light) .shiki span,
+	:root:not(.light) .astro-code,
+	:root:not(.light) .astro-code span {
+		color: var(--shiki-dark) !important;
+		text-decoration: var(--shiki-dark-text-decoration) !important;
+	}
+}
+.dark .shiki,
+.dark .shiki span,
+.dark .astro-code,
+.dark .astro-code span {
+	color: var(--shiki-dark) !important;
+	text-decoration: var(--shiki-dark-text-decoration) !important;
+}

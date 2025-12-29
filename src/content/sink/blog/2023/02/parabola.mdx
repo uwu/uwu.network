@@ -1,0 +1,91 @@
+---
+title: Proving the parabola of connected intervals
+description: A worksheet oft used as an exercise for kids hides some elegant maths.
+pubDate: "2023-02-02"
+tags: ["MATH"]
+---
+
+import K from "^components/Katex.astro";
+
+# Proving the parabola of connected intervals
+
+## The exercise
+
+There's a very good chance you've done this activity before: take a worksheet like the one below,
+and connect equally spaced intervals with lines.
+
+![A hand-drawn image of a parabola formed by a series of carefully placed straight lines](/sink/quiet_parabola_lines.webp)
+
+This, as you decrease the interval size, starts to resemble a curve, but which curve?
+
+## My motivation
+
+Why am I here doing this?
+
+Well, the other day my math teacher (in a math/coding activity thing the college run)
+was showing off this as a coding exercise, using [p5js](https://p5js.org) to make the
+computer draw this.
+
+From there he asked what this curve might be, and we then spent a long chunk of time
+attempting to prove that it was a parabola.
+
+I wanted to complete, tidy up, and present that proof, so here I am!
+
+## Let's define the actual damn curve first
+
+It's all fun and games to construct approximations of curve out of lines,
+but we do need to actually have an idea of what the curve *is*.
+
+<div class="flex flex-wrap">
+	<img src="/sink/quiet_parabola/approx_6.svg" aria-hidden="true" />
+	<img src="/sink/quiet_parabola/approx_20.svg" aria-hidden="true" />
+	<img src="/sink/quiet_parabola/approx_100.svg" aria-hidden="true" />
+</div>
+
+So an important thing to notice here is that, if we take any of these ones lines
+(see the one in red!), the point on that line that we want to actually be a part of our curve
+is tangent to said curve.
+
+![A diagram of a parabola shape caused by a series of overlapped straight lines.
+One is highlighted in red, and you can see that it is tangent to the curve.](/sink/quiet_parabola/approx_6_highlighted.svg)
+
+Lets modify our construction just slightly so that we are constructing on diagonal lines,
+so each line will connect the points `(k, k)` and `(k-n, n-k)` for real `k` and constant `n`.
+
+![](/sink/quiet_parabola/kk_graph.svg)
+
+Finally, to allow us to increase n -> infinity, we need to add a scale factor of `/n`:
+
+![A similar diagram to as before, but turned so that the parabola is facing upwards, and scaled to a 1 by 1 size.
+One line is highlighted, with the right-side coordinate marked (k, k) and the left side coordinate marked (k-n, n-k).
+](/sink/quiet_parabola/kk_graph_normalised.svg)
+
+Notice that this construction is actually very very similar to DeCasteljau's algorithm for
+computing Beziér curves.
+
+In fact, if you look at this green line and think about its relation to the curve we want,
+you may notice that the point on the line that is on the curve moves from one end to the other.
+
+As it turns out, this point is linear - therefore DeCasteljau's construction of a quadratic
+Beziér perfectly works.
+
+If we have Mathematica crunch down this construction into a nicer form, we get that
+the final construction is <K>f(t)= \left( \begin\{matrix} 2t-1 \\\\ 2t^2-2t+1 \end\{matrix} \right)</K>.
+
+Finally, let's convert this from a parametric equation in terms of t into
+a y-x equation:
+
+<K>x=2t-1 \Leftrightarrow t=\frac\{x+1}\{2}</K>
+
+<K>y=2t^2-2t+1</K>
+<K>y=2 (\frac\{x+1}\{2})^2 -2 \frac\{x+1}\{2} +1</K>
+
+<K>y=\frac\{x^2+1}\{2}</K>
+
+![](/sink/quiet_parabola/final_graph.svg)
+
+So there it is, a parabola from the construction!
+Specifically, <K>\frac\{x^2}\{2} + \frac\{1}\{2}</K>.
+
+Hope to see ya back here soon
+-- Yellowsink

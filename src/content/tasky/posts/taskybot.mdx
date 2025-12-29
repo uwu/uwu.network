@@ -1,0 +1,98 @@
+---
+title: Fine-tuning an abomination based on myself
+description: This was so stupid
+date: 2025-08-13
+published: true
+tags: ['stupidity']
+---
+
+I chat on Discord a lot, and I mean, _a lot_. Most of my messaging happens on Discord, and over the years I've sent a large amount of messages. Now, I'm not the greatest AI engineer promising AGI, but I do know a lot of basics, and thought to myself: why not fine-tune a model on my messages?
+
+Now, I don't exactly have any super secretive messages to worry about, almost all my messages are shitposts or something cringe in all shitty formatting so this would make a fun afternoon project after all.
+
+:::alert{type="tip"}
+All the components—scraping, fine-tuning, inference and discord bot can run locally, and the code itself is open-source and available here: [taskylizard/taskybot](https://github.com/taskylizard/taskybot)
+
+You can easily customize the torchtune configuration, vLLM settings, and more. The code is very minimal.
+:::
+
+### Dataset and its juices
+
+I use Weights and Biases for logging and tracking fine-tuning runs. HuggingFace Hub for the model, and discord.py for the bot. You will need tokens for all of these. Meta also requires you to sign an agreement to use their model. It's a bit of a pain, but there are other models that are open anyway you can switch to.
+
+To begin fine-tuning, we need... well, data! Of course! Now, I'm **not** going to perform the immense pain, i.e: The Discord API™️, so I decided to export my data package from Discord itself and get my own messages.
+
+You can do this by going to your Discord settings, Data & Privacy, and clicking "Export Data", selecting only "Messages". It may take a day or two depending on your how fast the "wizards" at discord are working.
+
+![Image of Discord Export Data section in settings](/discord-data-export.png)
+
+You will get a email with a download link to the archive. It will contain a `Messages` folder of all your messages sent on discord. The folder contains channels formatted like `c{CHANNEL ID}` which will contain a `messages.json`.
+
+After this, we are off to the races.
+
+### Corpus generation and Jank
+
+The scraper is a bit of a jank work. But hey, it works, soooo....
+
+It excludes messages with:
+
+- certain keywords
+- only includes messages from a certain time period (`cutoff_days` in `scrape.py`)
+- processes them into the OpenAI chat format `user`/`assistant`/`system`)
+
+It runs on the `Messages` directory of the data export, and looks for the file like `Messages/c{CHANNEL_ID}/messages.json`. Finally after much preprocessing, it saves the converations to a JSON file in the `/corpus` folder.
+
+### Fine-tuning Magic Voodoo Work I Don't Understand
+
+Next, I use the conversations to fine-tune a language model. I chose Llama 3.1 because of its permissive license (haha no) and high quality relative to its small size.
+
+Fine-tuning is done using [Low-Rank Adaptation (LoRA)](https://arxiv.org/abs/2106.09685), a [parameter-efficient fine-tuning technique](https://huggingface.co/blog/peft) that produces a small adapter that can be merged with the base model when needed.
+
+The fine-tuning implementation uses [torchtune](https://github.com/pytorch/torchtune), a PyTorch library for easily configuring fine-tuning runs.
+
+Now, we begin the real deal, fine-tuning. Cranked up some `H100`s for this just to make this process meaningfully fast.
+
+Much of the code is already in the `finetune.py` file, but it basically:
+
+- Downloads the model from HuggingFace using your `HF_TOKEN` if it doesn't exist in path
+- Creates output directories and checks for your user
+- Starts finetuning using torchtune's `tune` cli, pointed to our `llama3_1_8B_lora.yaml` LoRA config, Weights & Biases args, and the checkpoint and output directories
+- Finally, it cleans everything up
+
+:::alert{type="danger" title="DONT DO THIS"}
+Don't provision too little disk space on your compute! Model weights **are big**. Checkpoints are big. You don't want to run out of space halfway through a run and waste a bunch of money and time. Just splurge for a few hundred GB for a couple hours. It's worth it, I swear.
+:::
+
+The end result will be in the specified output directory aka `/vol/model`.
+
+### Inference work aka wasting my money
+
+I use vLLM to run the fine-tuned model. It [supports](https://docs.vllm.ai/en/stable/features/lora.html) LoRA adapters out of the box. It can remain fast at `~25 tok/s` on a single A100 GPU, thanks to prefix caching and keeping its cache warm on a hard volume. You can put it in `L40S` or preferably `A100`s for good fast results.
+
+Important variables for that are:
+
+- `enforce_eager` disables both Torch compilation and CUDA graph capture
+- `enable_prefix_caching` allows the vLLM engine to reuse cached KV (key-value) pairs from previous prompts if a new query shares the same prefix
+- `tensor_parallel_size` is set to assume multiple GPUs are for splitting up large matrix multiplications.=
+
+See the `inference.py` file for the code that runs the model. It's not much to look at, but it's a good example of how to use vLLM progmatically using its `AsyncLLMEngine`. The `0.7` release of vLLM also brings a new [v1 Engine](https://blog.vllm.ai/2025/01/27/v1-alpha-release.html), bringing mad impressive speedups. You can enable it by setting `VLLM_USE_V1` to `1` in your environment.
+
+#### The bot
+
+It's nothing much, so here’s the gist, this bot is basically my own of me.
+
+It’s not some stock AI that just blurts out generic garbage; it’s a finetune trained on my messages, so when it talks, it actually sounds like me. And the cool part? it only wakes up when you call it out. Mention it, or reply to it, it’s in the conversation.
+
+Under the hood, the magic happens in the `on_message` event. That’s where all the “is this worth my time?” logic lives. It starts by ignoring itself (because, yeah, self-reply loops are a nightmare, funny!) and staying out of DMs, then checks if the channel even qualifies for a response based on a whitelist system (I won’t bore you with that rabbit hole). I didn't want the bot going on a rampage on every channel and DM it can access.
+
+Once it’s satisfied that it should speak up, it pulls together the context, not the entire channel history (because getting all messages from Discord is slow as balls), but the relevant thread of what’s going on. If you replied to someone, it grabs that original message so it knows what’s being talked about. Then it builds a conversation history in OpenAI’s chat format, complete with mapping every user’s display name so it knows who’s who.
+
+While that’s happening, the bot is literally “keeping typing” in the channel every 5 seconds it’s sending a typing indicator so it feels like it’s actually thinking. Then my finetuned model starts streaming its answer, chunk by chunk, until it’s got a complete thought. If it’s too long for Discord’s 2000-character limit, it neatly slices it up into digestible parts. And yeah, if it totally blanks, it’ll just throw in a thinking… to keep things human. I couldn't be bothered to fix that, so uhh yeah.
+
+### The result
+
+This is the abomination made:
+
+![taskybot shitposting](/taskybot-shitpost.png)
+
+..........yeah.

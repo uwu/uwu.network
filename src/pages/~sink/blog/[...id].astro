@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from "astro:content";
+import QuietLayout from "^layouts/QuietLayout.astro";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("sink");
+	return posts.map((post) => ({
+		params: { id: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<QuietLayout post={post}>
+	<Content />
+</QuietLayout>

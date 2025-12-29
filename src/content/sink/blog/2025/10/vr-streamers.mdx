@@ -1,0 +1,248 @@
+---
+title: "Comparing VR Streamers"
+description: A UX Comparison of Pico Connect, ALVR, and Steam Link.
+pubDate: "2025-10-17T22:37:00"
+tags: ["VR"]
+---
+
+import ImgCont from "^components/ImgCont.astro";
+import I from "@components/FlexImg.astro";
+
+# Comparing VR Streamers
+
+For playing PC VR games on standalone type headsets - Quest and Pico devices - you require some kind of application to
+emulate a tethered headset on the PC side, and an application to emulate a standalone VR game on the headset side,
+and pass the video and inputs back and forth.
+
+These applications are streamers, and there's plenty available! I wanted to compare them in terms of usability and
+functionality!
+
+I won't be diving too hard into display quality here, as while I have done some rudimentary testing of this
+before, it requires a lot of taking screenshots, comparing bitrate settings, and latency is hard to measure,
+and I just really don't feel like it right now! None of them are _exceptionally bad_, so I don't find quality a big
+issue here. Frankly my network can easily handle the bandwidth necessary to make even H.264 look fantastic,
+and my GPU is more of a bottleneck. Equally, the biggest latency bottleneck for me is AMD's GPU video encoder, which no
+streamer can do naught about.
+
+I will be comparing Pico Connect, ALVR, and Steam Link, in the context of a Pico 4 Ultra headset.
+
+Virtual Desktop is notably missing here. That is because it is $20, and I used my shot at a free trial of it about 6
+months ago when I compared it to Pico Connect for myself when I first got the headset. It was better at some things
+and worse at others on the quality front than Connect, and the UX is kinda quite a bit worse.
+Certainly any quality difference, if positive, wasn't enough to justify paying extra.
+It does also have display mirroring though!
+
+This is interesting when you consider that, for Quest users, Virtual Desktop is usually considered an unwritten
+necessity for using it for PCVR, as Oculus AirLink is generally regarded as shit.
+Virtual Desktop is also a gigabyte for some reason?
+
+Since it doesn't fit anywhere else, I'll also note that Virtual Desktop and Steam Link are the only two applications
+that offer relay servers to connect to your PC if it is not visible on your LAN. All I can say is that I strongly
+recommend you never try to play VR like this, even dropping from 250Mbps LAN to 90Mbps LAN made my experience choppy
+and my compression artefacts extremely visible. Playing over a remote relay server sounds horrifying, therefore I don't
+consider this an important distinction.
+
+I would also like to preemptively apologize for the audio in these recordings. I forgot to disable microphone in screen
+recordings, and well, the microphone is mounted quite close to where I am breathing. Like, to stay alive. Oops.
+
+## Pico Connect
+
+Pico Connect is Pico's first-party streaming application. It is currently what I use in the real world for playing games
+as I have not found any alternatives to be overall better.
+
+It is relatively feature rich, offering multiple codecs, bitrate choice, options for DLSS-style upscaling on the headset
+side, options for frame buffering and interpolation on the headset-side, options about where your audio will go when
+streaming, and so on.
+
+It also is uniquely well integrated into the Pico OS - if you sign into the headset and your PC with the same Pico
+account then whenever your Pico is on the same LAN as your PC and you start it up, your PC will just _automagically
+appear in the dock_ as if you had previously minimized the streaming (though, its not, it only starts streaming when
+you click on it!).
+
+Two complaints I have with Connect are that it requires administrator privileges, and that it won't let me push HEVC
+any higher than 150Mbps.
+
+Pico Connect works just fine in wired mode, which lets you push nice and high bandwidths without network latency
+(Tetris Effect, I'm looking at you).
+
+It is unique among the applications I'm comparing here in mirroring the desktop within the Pico OS home as well as just
+streaming a full VR environment. This is already a huge UX point for it, and as such it is also the only streamer here
+to let you temporarily leave your VR environment with SteamVR still running, and go back later, as the other streamers
+_don't have anything else to show you!_
+
+Pico Connect loads as a SteamVR plugin and through that is able to show Pico hardware in the status window, show Pico
+controller models in VR, and the SteamVR dashboard bar has options to fine-tune controller and tracker position,
+and if you have motion trackers paired, an icon will appear that immediately launches calibration on the headset side.
+
+Here is a video of me using Pico connect (note that in most cases I would not need to start connect manually, it
+would have already started on login):
+
+<video src="https://i.uwu.network/ae4402d6f.mp4" alt="Video of me using Pico Connect" controls></video>
+
+I will also note that the button on the top right of the streaming window shows "Launch SteamVR" if SteamVR/Steam is not
+currently running, and "Back to SteamVR" if SteamVR is running but not being streamed, either due to leaving VR from
+the headset, or due to opening SteamVR from the PC and not the Launch SteamVR button.
+
+## Steam Link
+
+Steam Link is Valve's streaming solution for VR. As I understand it is in beta for Pico hardware but I was able to find
+an APK for it [here](https://github.com/owomushi/Pico-Steamlink/blob/9-26-2025/Pico%20Steam%20link).
+
+The streamer side is built into Steam, and its built off the same infrastructure as non-VR Steam Link. Indeed, if you
+connect a game pad to your VR headset, you can play normal video games over Steam Link just as with your phone,
+if that's your jam! I don't see why it would be, but idk, I'm not you.
+
+Steam Link has pretty nice UX overall, it feels very polished. It has a nice UI, and opening it and interacting with it
+will play a variety of sounds lifted from Steam Big Picture mode; it feels almost wrong to hear sounds straight from a
+Steam Machine on my Pico headset, but sure.
+When you select your machine and click connect, it will automatically start SteamVR on your PC, and drop you straight
+into it.
+
+For display mirroring, it simply relies on the SteamVR built-in display view. This isn't really a feature of Steam Link
+per se since this is available in literally any streamer that uses SteamVR, but it works I suppose.
+
+I find Pico Connect to be slightly lower friction in terms of starting SteamVR as it starts on login and can launch
+Steam for me, whereas Steam Link needs Steam to be running - but that said, if you were using this primarily, you would
+probably have Steam open on login instead, so its a very moot point.
+
+Again, Steam Link will show your hardware in the status page and as 3D models, by nature of the client knowing what
+headset its on and the ability to integrate into SteamVR closely.
+
+Being closely integrated into Steam, you configure its settings within the SteamVR settings, as an extra tab.
+Also, the latency information is neatly added to the frametime graph on the SteamVR status window, instead of being
+a separate thing. Pico Connect has no graphs, but an option to show latency and other stats as a headset HUD,
+and ALVR has a wide array of graphs but only on the PC side inside the streamer window, so I like Steam Link's approach
+of adding the most relevant stat - network latency - to the same frametime graph you're already using.
+You can also open a more advanced stats and graphs page on your PC with toooooons of technical info.
+
+You cannot drop out of VR mode back into the Pico OS home using Steam Link like you can with Pico Connect.
+When you exit SteamVR via its UI, it will just disappear, though I found weirdly this broke my Pico OS Home passthrough.
+Odd but easily fixed by going into and out of full passthrough (headset double tap). This smells of a beta bug though.
+
+Steam Link offers foveated encoding - which is not that uncommon, ALVR has settings for it and I am _pretty_ sure
+Virtual Desktop does some form of it, but these are mostly static implementations that make the edge of your vision
+lower bitrate. Steam Link will, on eyetracking enabled headsets, which includes the Quest Pro and Pico 4 Enterprise/Pro,
+use your eye position to decide where to focus encoding effort, which is really exciting!!!
+It also appears to use headset inertia to kind of approximate where you might be looking (humans tend to look into /
+ahead of head movements) if that data isn't there.
+
+Sadly their method of doing this (presumably to allow them to relocate where the high quality part is on the fly)
+means that, unlike the other streamers, screenshots and recordings show a very clear quality boundary. This is not
+noticeable in VR to my eyes, but I will drop my one surviving Virtual Desktop screenshot after the video below, with
+arrows pointing to a low quality part near the edge and a high quality part near the centre.
+
+Again, a video of me using it:
+
+<video src="https://i.uwu.network/99587f0d2.mp4" alt="Video of me using Steam Link" controls></video>
+
+And that VD screenshot:
+
+![](https://i.uwu.network/58fe8b10b.webp)
+
+## ALVR
+
+ALVR is an open source streaming application. It somehow _feels_ very different to anything else I've used in this
+category, as it's less of a streamlined product and more of a tunable tweakable scrappy tool.
+
+It often seems to crash or break, _especially_ in wired mode, which needs to be pre-selected in the ALVR app, you can't
+just select it afterwards in the client.
+
+It has a looooooot of sliders and switches in the desktop side app, that lets you fuck with a bunch of stuff, including
+codec (including enabling codecs that will require software rendering!), bitrate, encoder settings, foveated encoding
+radius tweaks, forcing on HDR and 10bit even if the client doesn't claim to support it (this usually results in
+Interestingly Wrong Colours), et cetera.
+
+It requires VB-Cable to be installed to redirect your microphone while streaming, which is kind of annoying when Pico
+Connect _just works_ on this front, and works very seamlessly indeed. I can be in a Discord call, put on my headset and
+pull up my desktop streaming, and suddenly the call just jumps to the headset including my microphone, then I close
+streaming and take off my headset and it just pops back to the right place.
+ALVR is less seamless.
+
+Equally, when you open it, you get a passthrough limbo environment, which does nothing until the server (yes, really)
+notices a client it recognises and tries to start the stream. Then you get some basic status info and are dropped into
+SteamVR.
+
+Unlike Pico Connect or Steam Link, SteamVR seems entirely unaware of what hardware you are using. You will see 3D models
+of Quest 2 controllers, the SteamVR Status window shows a Quest 2 headset, and the Steam Input configuration page thinks
+you have Quest 2 controllers too. You also get no in-SteamVR configuration.
+
+Something that I think might be a side effect of the Quest-2-ification of the headset is that the lasers in the SteamVR
+UI feel like they come out of the controllers at a really uncomfy feeling angle. I know that this varies based on
+application, as every UI seems to reinvent its own VR interface - Pico OS, SteamVR, VRChat, Firefox Reality,
+OVR Toolkit, et cetera all have their own laser angles and renderings, their own keyboards, and their own bindings
+(for example, Pico Connect desktop mirroring maps A to left click and B to right click, whereas SteamVR mirroring maps
+A to right click, and OVRTK maps A to left click and long-holding A to right click).
+But even though it does vary per application, this particular case just feels bad and it only occurs with ALVR.
+
+I do find it to be quite unstable, but once its working, I can generally comfortably play a session on it. I just wish
+it was less unreliable and janky.
+
+When you exit SteamVR you don't get dropped back to Pico OS, but rather back into the passthrough limbo, which seems odd
+to me, but does kind of act as a blessing when the stream (and often SteamVR entirely) crashes, which it will, since
+this causes the streamer to then see the client again and automatically kick SteamVR up the butt to auto restart.
+
+It is also notable for being the main way to use a Quest or Pico with Linux SteamVR, but honestly using SteamVR on Linux
+is a weird proposition when WiVRn exists, as Linux SteamVR is really buggy, and WiVRn is much stabler. Also Steam Link
+probably works for this now anyway.
+
+Here's a video of me using ALVR. Note the crash. Lol. I tested like 5 times before this for playing with 10bit encoding
+and this happened like this every time. I have previously had sessions where it just worked:tm:, and sessions where I
+couldn't get it to go.
+
+<video src="https://i.uwu.network/9b3d8bb64.mp4" alt="Video of me using ALVR" controls></video>
+
+## Corollary: banding, colours, and breaking shit
+
+So, I was hanging out in a minimal VRChat world the other night, with a gradiented skybox, and noticed banding in the
+sky.
+
+I wanted to try out which streamer might reduce the banding the most, and tried all three of these.
+
+My conclusion was in fact that none of them did - despite a testimonial from a friend using Steam Link on his Pico 4
+Enterprise that "it noticeably fixes the banding".
+
+I took screenshots in all three with the same 250Mbps bitrate and as you can see, they all band. Interestingly I did
+notice minor variations in the colours of the final image:
+
+<I src="https://i.uwu.network/34220c560.png" />
+
+Pico Connect seems to have slightly more vibrant colours - not that I've ever noticed a difference switching between it
+and anything else without side-by-siding them. ALVR is a touch darker than Steam Link but barely. Notice all 3 band
+about the same amount, though Pico Connect's brighter colours do make the banding slightly more visible, I suppose.
+
+As a fix, I wanted to try enabling 10 bit colours or perhaps HDR in ALVR, but flipping these switches did nothing.
+Switching on the option to _force_ using 10bit even if the client doesn't tell the server it can accept it gave me the
+following... spicy!:
+
+<ImgCont>
+<I src="https://i.uwu.network/6b6150660.jpeg" />
+<I src="https://i.uwu.network/98c82adcd.jpeg" />
+</ImgCont>
+
+Forcing HDR on with 10 bit gives the following:
+
+<ImgCont>
+<I src="https://i.uwu.network/dbe2464e4.jpeg" />
+<I src="https://i.uwu.network/c4790dd2f.jpeg" />
+</ImgCont>
+
+and HDR with 8 bit as so:
+
+<ImgCont>
+<I src="https://i.uwu.network/df7a2ac84.jpeg" />
+<I src="https://i.uwu.network/629dd97c0.jpeg" />
+</ImgCont>
+
+## Conclusion
+
+I'm just gonna keep using Pico Connect. The display mirroring is worth it, and the OS integration is really nice.
+
+Steam Link is worth keeping an eye on though, especially if you have eyetracking. I might revisit it when I build an
+EyetrackVR, but I suspect it only really works with headset-side eyetracking, so feeding in ET data on the PC side might
+not work. Who knows.
+
+Sorry Virtual Desktop isn't here I guess. I talked about it a bit from memory at least!
+
+Hopefully some of you found this interesting, and I hope to see ya around here again later!
+
+ \-- Hazel

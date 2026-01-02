@@ -43,6 +43,7 @@
 		"remark-directive": "^4.0.0",
 		"remark-emoji": "^5.0.2",
 		"sass": "^1.69.5",
+		"sharp": "^0.34.5",
 		"shiki": "^3.13.0",
 		"unist-util-visit": "^5.0.0",
 		"unocss": "^66.5.11",

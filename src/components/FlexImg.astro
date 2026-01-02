@@ -1,5 +1,5 @@
 ---
-import { addToCache, cacheLookup, rootPath } from "@res/js/fleximg-cache";
+import { getSize, rootPath } from "@res/js/fleximg-impl";
 import imageSize from "image-size";
 import { imageSizeFromFile } from "image-size/fromFile";
 import { resolve } from "path";
@@ -13,22 +13,7 @@ interface Props {
 
 const { src, alt, style, targetHeight, ...otherProps } = Astro.props;
 
-// first, look up in cache
-let size = cacheLookup(src);
-
-if (!size) {
-	let isUrl = !!src.match(/^(http(s?))?:?\/\//);
-
-	if (isUrl) {
-		console.log(`[FlexImg] caching image ${src}...`);
-	}
-
-	size = isUrl
-		? imageSize(new Uint8Array(await fetch(src).then(r => r.arrayBuffer()) as ArrayBuffer))
-		: await imageSizeFromFile(resolve(rootPath, "public/", src.slice(1)));
-
-	addToCache(src, size);
-}
+const size = await getSize(src);
 
 const aspectRatio = `${size.width} / ${size.height}`;
 

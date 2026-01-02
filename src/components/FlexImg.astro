@@ -1,41 +1,33 @@
 ---
+import { addToCache, cacheLookup, rootPath } from "@res/js/fleximg-cache";
 import imageSize from "image-size";
 import { imageSizeFromFile } from "image-size/fromFile";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs"
+import { resolve } from "path";
 
 interface Props {
-	src: string,
-	alt?: string,
-	style?: string | Record<string, string>,
-	targetHeight?: number,
+	src: string;
+	alt?: string;
+	style?: string | Record<string, string>;
+	targetHeight?: number;
 }
 
 const { src, alt, style, targetHeight, ...otherProps } = Astro.props;
 
-const thisModulePath = fileURLToPath(import.meta.url);
-
-let rootPath = thisModulePath;
-while (!existsSync(resolve(rootPath, "package.json")) && rootPath.split("/").length > 1)
-	rootPath = dirname(rootPath);
-
-const cachePath = resolve(rootPath, "node_modules/.cache/uwu/img-sizes");
-
 // first, look up in cache
-const cacheData = existsSync(cachePath) ? JSON.parse(readFileSync(cachePath).toString()) : {};
-let size = cacheData[src];
+let size = cacheLookup(src);
 
 if (!size) {
 	let isUrl = !!src.match(/^(http(s?))?:?\/\//);
 
+	if (isUrl) {
+		console.log(`[FlexImg] caching image ${src}...`);
+	}
+
 	size = isUrl
-		? imageSize(new Uint8Array(await fetch(src).then(r => r.arrayBuffer())))
+		? imageSize(new Uint8Array(await fetch(src).then(r => r.arrayBuffer()) as ArrayBuffer))
 		: await imageSizeFromFile(resolve(rootPath, "public/", src.slice(1)));
 
-	cacheData[src] = size;
-	mkdirSync(dirname(cachePath), { recursive: true })
-	writeFileSync(cachePath, JSON.stringify(cacheData));
+	addToCache(src, size);
 }
 
 const aspectRatio = `${size.width} / ${size.height}`;
@@ -44,8 +36,8 @@ const aspectRatio = `${size.width} / ${size.height}`;
 const scale = (targetHeight ?? 25 * 17.333333) / size.height;
 
 const newStyle = typeof style === "object"
-	? { ...style, 'aspect-ratio': aspectRatio, 'max-width': size.width * scale + 'px', width: "100%" }
-	: `${style ?? ''}; aspect-ratio: ${aspectRatio}; max-width: ${size.width * scale}px; width: 100%`;
+	? { ...style, "aspect-ratio": aspectRatio, "max-width": size.width * scale + "px", width: "100%" }
+	: `${style ?? ""}; aspect-ratio: ${aspectRatio}; max-width: ${size.width * scale}px; width: 100%`;
 ---
 
 <img src={src} alt={alt ?? ""} style={newStyle} {...otherProps} />

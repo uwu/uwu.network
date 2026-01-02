@@ -1,0 +1,219 @@
+---
+title: Reflections on 2025
+description: The obligatory end of year retrospective
+pubDate: "2026-01-02T18:10:00"
+tags: []
+---
+
+import ImgCont from "^components/ImgCont.astro";
+import I from "@components/FlexImg.astro";
+
+# Reflections on 2025
+
+At this point, the end of year blog post is a bit of a tradition for me. It's nice to take a look back on the year and see all that I've done and accomplished, cause it's so easy to forget by the time you hit December! I wanted to take a look at my fulfilment of my resolutions to start here, but looking back it seems like I... didn't make any resolutions this year. Let's instead reflect on 2024's resolution, which was to journal every day. Since I switched to Monica in August 2024, there have been 505 days, and I have entered a journal entry on 415 of those days, which is 82%. Quite a success I think. This year I just need to get better hair...
+
+## Projects, Tech and Stuff I Made
+
+I wrote [a blog digging into the internals of D](/~sink/blog/2025/01/bits-dont-see-d), and I actually got an email from someone who works a lot on D with some more details, which was SUPER cool! I also got a couple of things implemented for shelter, including data import/export, the persistence helper utility, and a loooot of work on sheltupdate.
+
+My smartwatch's screen popped off, and I had to take it apart and superglue it back down. Worked great but was kinda scary. It wasn't in warranty any more but if it was, that definitely would have voided it. I pulled an old Kindle Fire HD8 (2017 / douglas) off my shelf and decided to spend an entire afternoon fucking with its bootloader, eventually getting TWRP and LineageOS 17.1 (Android 10) installed. Nice.
+
+I also embarked on a months long rabbit hole: I decided I wanted to setup a bunch of archival storage. I originally wrote a WIP blog post about this, but it never got finished before I had to abandon the entire thing. I bought a SAS controller card and a bunch of retired data centre hard drives and collecting movies, tv, personal data, youtube videos, etc to store offline on the drives, and kept at this for a good few months. Sadly those drives eventually went bad, and I had to take everything off onto random SSDs and hard drives I had lying around. Sigh.
+
+I was unsatisfied with the state of information for how to give injections for DIY HRT, so I wrote [a guide](/~sink/blog/2025/04/trans-injection-guide), and I'm super proud of it. I had a couple friends help with me with photography and peer review.
+
+I started working on a mod for my GPU to replace its loud ass OEM fans with Noctua NF-P12s. The mod did actually work, and I was super stoked, but then found out that the modded GPU is too phat to fit in my case. Aw. Damn it. The fans and printed mounts are still sat assembled in my closet unused because I haven't bought slimmer fans and tweaked the models. I did, however successfully mod 2 Noctua NF-A4x10s into my Ender 3 V2, which made it wayyyyy quieter.
+
+I wanted to build a little box that could send wake-on-LAN packets to devices its connected to, and expose that to a Tailscale network, so I bought a Milk-V Duo S for that purpose, but unfortunately I never ended up getting that working, and also realised I could simply use my OpenWRT router for this purpose. It works so I'm happy.
+
+<ImgCont>
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/98d45a41d.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/9d684d6bb.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/216e3a82e.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/e5a001317.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/86327b4d2.jpeg" />
+</ImgCont>
+
+Using a [random hosted Nextcloud instance](https://mark.nl.tab.digital) was starting to get slightly unnerving to me and I wanted to self host something. Sadly all the options kind of suck ass. Nextcloud and ownCloud Classic use like 50 bajillion % CPU and 700MB of ram, Seafile is old and dogshit and missing features, and ownCloud Infinite Scale is only marginally lighter weight if at all, and is missing a bunch of shit, but does at least sync at higher data rates than Nextcloud. I ended up self-hosting oCIS for now, but I don't like it. I started working on a custom ownCloud drop-in replacement server called Finite Scale, but it's not anywhere near done as yet. I don't have much time to code 😅. If i can get FS done, it should use way less resources and be considerably faster than oCIS. At least in theory.
+
+In July I got the chance to work on something actually super dope, and teamed up with link to make a fursuit reverse image search engine. It's pretty neat. That's basically all I've got to say here.
+
+and.... well... by early August that's actually kinda the last programming project I worked on this year. I became Very Busy TM with university and work, so I don't have much time for this qwq. Plus, the ADHD is very much not helping me.
+
+I guess it counts as a project to jankily get ethernet wired up all through the student house I'm renting - its across four floors and the WiFi only barely manages to reach everywhere, and certainly nobody is getting the gigabit speeds they're paying the ISP for, so I obtained something like 70 metres of ethernet cabling, three little cheap ugreen headless switches, and a roll of masking tape, and got to work running wires along the skirting boards and up the stairs, around door frames, and into people's rooms. It actually went pretty successfully, they aren't too intrusive (enough that when the landlord had a contractor check in on us a couple of months in they didn't notice it), and you absolutely get the speeds everywhere. Hehe nice.
+
+At the end of the year, I had a report due for math, an individual project on metric spaces. I had an absolute fucking blast doing this, this kind of math is the shit that gets me up in the morning and motivates me to do my degree. I'm very proud of it and you can read it [here](https://cloud.michi.tel/s/uYWzopzmjgyCCps). I don't know what grade I got on it yet. Oh, and the project briefing for context is [here](https://cloud.michi.tel/s/fpBmQamqBxPPExN), though I don't know if I'm meant to share that. Whatever. When have I ever cared about copyright? (Note to future Hazel, when I deploy Finite Scale and this link lapses, come fix it. Please. (She won't. She's too forgetful for that.))
+
+## Fulffyy
+
+It was a fateful morning... I woke up... and was a fluffy cat...... Okay in all seriousness yea I'm a furry! It's a community full of really cool people and there's a certain joy in seeing yourself embodied in a furry form that I can't quite explain. It's kinda like gender euphoria but a lot stronger. My character design and refsheet are by the amazing [dalas](https://x.com/dalasquil), and I am amazed by how much this design feels like _me_. She is me. :>
+
+<ImgCont>
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/ac8e4c537.png" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/278282304.png" />
+</ImgCont>
+
+I attended [FWA 2025](https://furryweekend.com/) and met [a bunch of cool furries](https://x.com/_hazeler/status/1920932403675050067/), went to a couple of fun parties, a rave or two, played some Jubeat, it was a lot of fun. I have a lot of thoughts about the con but I'm not sure this is the place for them. I also found it a very accepting safe space for me as a queer individual, and I felt accepted and welcome and part of the community while there. :)
+
+It was a really fun adventure for me, as it was the first time I've ever been abroad without my parents, and had to do a lot of the admin myself - book my flight, make sure I have accomodation, get myself to the airport, et cetera. Leaving my flat at 6AM and landing in America (the first time I've ever been!) at 8PM was just kinda wild - except it was 4PM there! I met up with my roommates in an airport hotel at around midnight (US time) that day, and we got some truly dogshite pizza, and I had a cosy great sleep in my King bed before moving to the con hotel where I'd be sharing =w=.
+
+I'm mad we don't have Chick-fil-A in the UK. :(
+
+<ImgCont>
+	<I src="https://i.uwu.network/c204470f7.jpeg" />
+	<I src="https://i.uwu.network/70347d2c6.jpeg" />
+	<I src="https://i.uwu.network/0881afa52.jpeg" />
+	<I src="https://i.uwu.network/052188c5a.jpeg" />
+</ImgCont>
+
+I really wanted to attend [NFC 2026](https://nordicfuzzcon.org/), but wasn't able to confirm if I'd be free or not in time to actually room with anyone - and indeed I turned out not be available. But none of my friends and people I wanted to meet up (a bunch of people I partied with at FWA were going) with got reg anyway, so it's not the biggest loss ever.
+
+Equally, I missed out on [39c3](https://events.ccc.de/congress/2025/infos/startpage.html) (though that's not a furry con, but this just is the most natural place to put this) because the dates were difficult around Christmas, and I found it hard to justify an overseas trip when I had just done FWA earlier in the year, and given my plans for 2026. It's a shame cause it seemed SUPERR cool and a few friends who were there kept mentioning really neat things that were going on (furry DJ rave in the bathroom anyone? custom sticker printing?) and like, EVERYOne cool is there.
+
+Either way there's something much cooler on the horizon, and I know that mentioning this publicly will doom it to never happen actually, but we at UWU.NETWORK are organising a tech conference. It's small and private, but it's gonna be so sick - we'll all meet up and give talks on our cool funny bullshit projects and then hang out. Hehe.
+
+## FUN Things I Did
+
+I'm usually pretty bad at keeping up with media - I don't play video games, forget to listen to new music, forget to remember to watch episodes of shows, et cetera. I let a movie sit downloaded on my phone for moooonnths. However, I've been better at it this year than last year, and I do enjoy playing games when I find a moment to.
+
+I watched a few movies, some with friends (Mamma Mia, lol), and some alone - I watched Casino which was pretty great. Also went to the cinema a couple times, to watch Spinal Tap 2 and Zootopia 2. I also got some anime series finished, Horimiya: The Missing Pieces is kinda cute and cosy and nice for when you don't feel like having a heavy story to keep track of. Also, I'm watching _peak_ with housemates (Breaking Bad). ✋😐️🤚
+
+I read more books this year than usual - I read the entire [Rain webcomic](https://rain.thecomicseries.com/), which I immediately got sucked into and spent allllllll night reading. These characters are so important to me and its such a good story. I guess its just relatable? idk. I also read Aroused by Randi Hutter Epstein, a book about endocrinology. It was weirdly fascinating.
+
+This was the year I finally fulfilled the autism prophecy and began playing Satisfactory and Factorio (Space Age) with friends. Very fun games that you can get absorbed into and spend hours in and forget to eat food. I do think Factorio is far more addictive and fun than Satisfactory, but there's always a chance that I'm doing it wrong. Plus Satisfactory runs reallllly badly. I also started playing Bomb Rush Cyberfunk, which is super fun and feels great to play. The soundtrack kills, everyone should give it a try. I'm very bad at it though lol.
+
+I also got into virtual reality, getting myself a PICO 4 Ultra and Motion Trackers to become a fluffy kitty cat in VRChat. I chose to make a customised version of the [Chalo](https://boothplorer.com/avatar/5201759) avatar, to match my fursona. This took hoooours of work (at least 11 just on retexturing), but it was super worth it :>. I often find myself spending 3~5 hours hanging out with my friends in VRC, it's a lot of fun. Since both link and marsh have got eye tracking (they both bought a PICO 4 Pro from China to get this working) I've become quite jealous of it - ET really makes you look super alive compared to having static eyes and a preprogrammed blink cycle, and since I now have a half decent soldering iron (a Pinecil!), I decided I was going to build an [EyetrackVR](https://www.eyetrackvr.dev/) setup. It might be a bit janky, but it should work, and it should be fun. And cheap compared to replacing my headset. I have realised I spend actually rather a lot of time in VRC, around 40 hours so far - certainly not as much as many players but still a lot of time. It's cool though, I get to hang out in a space and give my brain a good enough approximation of really being in the room with friends from places too far away to visit (regularly at least) for monetary, practical, or legal reasons. Hehe. Plus it really feels like I'm a weird fluffy cat anthro thing sometimes, brains are funny. I mean, I look down at my hands, and there aren't hands... there are BIG BAPPY PAWS WITH PURPLE BEANS :D
+
+<ImgCont>
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/427960443.webp" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/e2efdec76.png" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/2f65d756e.png" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/e835e066e.png" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/f4cb59336.png" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/b7d9a17f3.png" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/482d15134.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/d60366630.png" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/66325c755.png" />
+</ImgCont>
+
+(Can you tell I like dark environments?)
+
+I joined a society at my uni in February, playing board games / tabletop games and Blood on the Clocktower with a bunch of cool people. It's really fun and I have found a lot of friends through it, so I'm super glad I did join. I ended up buying my family a copy of Wingspan because it's just so fun. At the last meetup a friend bought a bright red mushroom hat with her and put it on my head - and yes, it really looked THAT red in person. It was kinda funny and silly.
+
+<I src="https://i.uwu.network/8dbc27177.jpeg" />
+
+In August I went with family to an activity park type place for a holiday. It was kinda nice, we got to stay in a caravan, chill in a hot tub, drink cocktails, throw axes, shoot arrows, and climb around suspended in the air (with all the harnesses etc that go with that). Here's a picture of me (on the left) unintentionally aura farming / just kinda being awesome with a bow and arrow :) I forgot to take my [Huawei GT 3](/~sink/blog/2025/08/watch-review-gt3) off while in the hot tub but was surprised to see that it still was working. So I left it on. Half an hour later it was irreversibly dead. When I opened it up later (a familiar process to me by now) I found the telltale blue-green of oxidised copper. I got it replaced with a Watch GT 4 that I never actually got around to writing a review of, despite planning to do that. oops.
+
+<ImgCont>
+	<I src="https://i.uwu.network/a5a3a0bc5.jpeg" />
+	<I src="https://i.uwu.network/3d415eb03.jpeg" />
+</ImgCont>
+
+A lifelong dream of mine finally got fulfilled - I saw Porter Robinson live. The SMILE &colon;D World Tour also included sections with Nurture and Worlds songs, which was super awesome, cause Nurture is my favourite album by him. I met up with [marsh](https://marsh.zone) while I was there and crashed with them, and got to hang out and chill a bit, fun!
+
+I also got to see comedian Paul Smith performing live, which was very funny.
+
+I got the chance to meet up with my friends - from uni, from online, and from before - multiple times this year, which made me happy. I got to go out clubbing in the Manchester gay bars on Halloween night as well, which was COOL AS FUCK. In October I met up with [Ducko](https://goose.icu/) and went to London to see Jane Remover performing live. It was pretty fun.
+
+As housemates, we all went out to do an escape room, which was actually totally a blast. We started chained to the floor and had to untie ourselves! Neat!
+
+In August, I went to the Leicester Pride event to like, be gay, and stuff. It was really quite fun, I got to dress up in queer paraphernalia, parade through the city streets with other queers, wear a collar and tail in public, meet a couple of furries for good measure, and buy some cool pins n stuff.
+
+<ImgCont>
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/165180ccf.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/c60a98424.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/4c5def039.jpeg" />
+</ImgCont>
+
+That yellow and blue kandi bracelet I'm wearing was a gift from someone I met at FWA. :>
+
+## More Personal/Boring Stuff I Guess
+
+I did a lot this year that feel like personal milestones but are otherwise less interesting. Right at the start of the year, following my name change last December, I got my driving licence and passport renewed, so my photo ID now matches my new name, and I could use that to help change my name everywhere else! The passport was also in preparation for FWA, hehehe.
+
+I moved back up to university to finish my first year. I also hit 3 months on HRT, which was cool because that is the point where I should do a blood test to verify my dosages are good. Indeed, my levels are welllll within ranges, nice! That term was mostly boring, just a lot of uni work and organisation for FWA (booking flights, hotels, insurance, et cetera).
+
+In April, I had this giant nosebleed out of nowhere that lasted hoooouuuurs. I spent something like 2-3 hours in the bathroom in the uni library trying to make it stop, while on the phone to NHS 111. Eventually I gave up and headed back to my flat, where I was able to get it to stop with a bag of frozen peas. It was a lil odd, and I had a couple very short nosebleeds the next couple of days, but after that nothing concerning happened again. Weird. Later on in the year I stood up one time and went to take some meds, and then a few minutes later out of nowhere fainted. I got back up and then fainted AGAIN. Very strange. It hasn't happened again, so I'm just not thinking about it™ but it is odd. Probably to do with me not eating enough, not drinking enough, and not sleeping properly.
+
+Exam week hit really hard - I had some stuff to catch up on after skiving off a week to go to FWA and just generally had to recap all the first year uni content before exams. ADHD also started hitting super hard here, and I drank enough monster energy to become very quickly resistant to the caffeine. Exams went fine though, and after the last one I met up with a bunch of friends to drink horrendous quantities of alcohol and attempt to complete math exam papers drunk. It was actually pretty fun.
+
+I saw that Pebble are alive again, and selling watches, so I immediately placed an order for a [Core Time 2](https://repebble.com/watch) because like, its COOOL as fuck. I'm looking forward to fucking around with it when it arrives. Good thing too given I managed to ~~kill~~ seriously damage two smartwatches this year...
+
+Speaking of June, I kinda didn't feel pride month at all this year. I was too distracted by shit to do, and my mind was heavily occupied by some horrible things going on in the world. I didn't feel particularly in the spirit for queer pride at all, so I didn't really bother going to any events. Some of my friends went to protests and stuff though. At least I got to go to an event later in August when my mind was less busy!! I got complimented on my tail many times then.
+
+I had to move out of uni for the end of year 1, which was actually really kinda sad. I was only renting the flat for the year anyway but still I kinda felt attached to it. It felt like my real home by this point and leaving it felt strange. Luckily I don't have to go anywhere nearby it around campus on the daily, so I don't ever see it and get weird feelings or anything. And my new place is cool too.
+
+On more HRT related notes, I started progesterone in mid-June, about 7 months into HRT, and took it for about 2 months, before giving it up because of seeing no effects and being informed that (based on anecdotal evidence, as everything is with prog), taking it on less than 12 months on estrogen can be bad for you. I later found out that you might need to take it for upwards of 90 days before seeing anything happen, oops?
+
+I restocked on injection supplies and estrogen, and about 11 months into HRT, finally finished my first vial, which feels like a bit of a milestone!!!. Yay. I need to do a blood test in a few weeks now. I can tell it'll be fine though because when I'm low on E, I can _feeeeel it_.
+
+<ImgCont>
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/fbb081ffb.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/2f2fa714f.jpeg" />
+</ImgCont>
+
+I went out on a couple big walks with family and our dog, Holly, which is always nice to do. I also moved as many accounts as possible away from my gmail account, (deadname)(lastname)98&zwnj;@gmail.com, to my current email. This then let me disable gmail entirely so that Google would stop deadnaming me. Mostly. ish.
+
+<ImgCont>
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/fe8817c4a.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/09c9013ce.jpeg" />
+</ImgCont>
+
+I had to go and visit extended family over the summer and ngl it was kinda terrible. But I gotta just go with it, and I got the chance to drive us there so that was kinda cool. I don't get the chance to drive so often because I don't have a car.
+
+I moved back into university, and NGL living with a group of my friends is kinda awesome. We're all queer, all neurodivergent, and all just kinda chill. I can talk about personal things with any of them in the room without feeling anxious or hiding things. It's nice. Halimede once said that ["a suitably comfortable trans women can spill tea on levels previously only reachable by gay men"](https://x.com/HalimedeMF/status/1964322665755242776?) and living with 5 other queer individuals of various types has me thinking that she's right.
+
+I decided to put my pins, both old ones ([that used to go on my lanyard](https://i.uwu.network/e109f9b28.jpeg)) and my new pins from the FWA dealer's den onto my bag. It looks great :) I also put trans flag laces on my shoes.
+
+<ImgCont>
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/06405283e.jpeg" />
+	<I targetHeight={17.3333 * 15} src="https://i.uwu.network/71eb31796.jpeg" />
+</ImgCont>
+
+Two BIG THINGS for me in October - firstly I GOT A JOB 🎉. I work ~~in the slop factory~~ as a C# API developer building AI powered services for my university. It's pretty nice, and I very much enjoy it, and enjoy _having money_, but it has contributed to the start of my second year of uni being EXTREMELY FUCKING BUSY / exhausting, and coding for work always sucks compared to coding for fun. More importantly though, I also got formally diagnosed with inattentive type ADHD, after suspecting I have it for about a year and pursuing diagnosis in March. I didn't tell them about the anxiety, but I am at this point a professional problem-ignorer 😎 so why not &colon;p. Hopefully I get my paws on some Concerta soon. bweh. Apparently they found "mild depressive symptoms" but again, I'm totally not gonna think about that &colon;p.
+
+Tangentially related, I've been off caffeine for about 4 months and I can heavily recommend it - at least to others with ADHD - I feel basically exactly as I did when I drank caffeine before, except now I don't get the cases where I would drink a coffee and then immediately have the energy taken _out_ of me (this will sound strange unless you have ADHD or discuss the topic with someone who has it. Caffeine often has the inverse effect on us at non-gigantic dosages. One of my dearest friends drinks the equivalent of like 7 coffees every day and another downs Celsius like water). And now I don't have to spend money on coffee while out at uni so often, or on energy drinks (they're so expensive??). I love the taste of coffee, but most cafés I visit tend to have half decent decaf, so whatever.
+
+In December, I managed to do something truly fully idiotic and smash my face into the floor at high speed. I was outside and ran for a bus, and tripped. My phone (which I've had since 2023 and use without a case or screen protector) was in my hand at the time (else it might have survived), and I hit the ground with my chin, right palm, left back of my hand (??? how), and knees. My phone was 2~3 metres in front of me, my 4-month-old otherwise pristine condition Huawei GT 4 smartwatch was scratched and smashed heavily, a keystrap that I bought at a castle in Wales had broken, my FWA 2025 keystrap had the paint scuffed off, and my trousers were torn and covered in mud.
+
+After my housemates saw to my wellbeing and I cleaned myself up and got my old iPhone 8 out of storage to use temporarily, I headed into university to play some board games. This misadventure led to me having to purchase a new phone (the upgrade to a Pixel 9 has been rather luxurious actually, so sure), which I absolutely have a case on this time, get my watch repaired, and spend many many weeks healing. I'm fine luckily. The only real damage done here is roughly 400 quid out of that month's paycheck and a pair of trousers that I liked. Good thing I have a job now?? I won't attach pictures because as much as I think I look really cool covered in blood, I don't assume readers want to see that. Have a picture of me with my cats instead.
+
+<I targetHeight={17.3333 * 15} src="https://i.uwu.network/feeac91c8.jpeg" />
+
+All I gotta do now is figure out how the fuck to get my data off my old phone. It's entirely functional except that the screen is all black and won't accept inputs. Note to self, leave USB Debugging always enabled on my new phone and disable authorization timeouts, and authorize my laptop and PC (and backup the authorization file), so that I can always shell back in and use scrcpy. I have a blog in progress on my attempts to recover my data, but no promises on when that'll release. Hopefully will drop whenever I figure out how the fuck to get my RSS feed list back out of this irritating black slab of technology. Google Drive backups are so incomplete - I now have [Swift Backup](https://www.swiftapps.org/) backing up all my apps and their data nightly to a B2 bucket.
+
+## Conclusion
+
+I think part of the reason I do these blogs is that its valuable to look back on your path every so often. It's really easy to hit the end of the year and think "wow, I haven't done anything." Indeed, that's how I felt before I started looking back through for this, but skimming my blog, looking through my photos, checking my Github, bullet point listing everything notable (even if too personal to make it into this blog) that happened is a good way to remind yourself of all the stuff you did, everything that happened, all those neat cool moments. It really goes hand in hand with journaling as a mental health tool. Though writing it up and sharing it with the world is unnecessary on that front.... I don't know. I just like sharing stuff I did. The psyche is weird, and I don't study it, so I can't tell you what's up there /shrug.
+
+I wanna finish up with a selection of random pics from my year that I like. I probably ought to buy a licence for Typora now that I've written all this in it.
+
+Thank you all, my friends, for a fantastic 2025, and I hope 2026 is a good year for you all.
+
+\-- Much Love, Hazel.
+
+<ImgCont>
+	<I src="https://i.uwu.network/eb12f6562.jpeg" />
+	<I src="https://i.uwu.network/08b4f8be3.jpeg" />
+	<I src="https://i.uwu.network/ff2aeabd9.jpeg" />
+	<I src="https://i.uwu.network/bb3f456b2.jpeg" />
+	<I src="https://i.uwu.network/017a8f251.jpeg" />
+	<I src="https://i.uwu.network/1a898db97.jpeg" />
+	<I src="https://i.uwu.network/7cc8b4211.jpeg" />
+	<I src="https://i.uwu.network/28b8fb8d0.jpeg" />
+	<I src="https://i.uwu.network/ce983b348.jpeg" />
+	<I src="https://i.uwu.network/cd16b4b0c.jpeg" />
+	<I src="https://i.uwu.network/3df37cfde.jpeg" />
+	<I src="https://i.uwu.network/bec4f40c1.jpeg" />
+	<I src="https://i.uwu.network/b98c91084.jpeg" />
+	<I src="https://i.uwu.network/33d5c6c6c.jpeg" />
+	<I src="https://i.uwu.network/557c21ce0.jpeg" />
+	<I src="https://i.uwu.network/bcbf6d599.jpeg" />
+	<I src="https://i.uwu.network/8d37b21be.jpeg" />
+	<I src="https://i.uwu.network/b3e29c6b9.jpeg" />
+	<I src="https://i.uwu.network/5836120a0.jpeg" />
+	<I src="https://i.uwu.network/de6828728.jpeg" />
+	<I src="https://i.uwu.network/e5f2620ee.jpeg" />
+	<I src="https://i.uwu.network/bb9a2bffd.jpeg" />
+	<I src="https://i.uwu.network/8ab1e817d.jpeg" />
+</ImgCont>

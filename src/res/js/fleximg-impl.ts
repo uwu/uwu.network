@@ -50,11 +50,27 @@ async function getSizeImpl(src: string) {
 	return size;
 }
 
-// only run one promise at a time to avoid timeouts
-let promise: Promise<unknown> = Promise.resolve();
+// only run one fetch at a time to avoid timeouts
+const queue: [string, (s: Size) => void][] = [];
+
+let isRunning = false;
+async function run() {
+	if (isRunning) return;
+	isRunning = true;
+
+	while (queue.length) {
+		const [src, res] = queue[0];
+
+		res(await getSizeImpl(src));
+		queue.shift();
+	}
+	isRunning = false;
+}
 
 export async function getSize(src: string) {
-	await promise;
-	return (promise = getSizeImpl(src));
+	return new Promise<Size>((res) => {
+		queue.push([src, res]);
+		run();
+	});
 }
 

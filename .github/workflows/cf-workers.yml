@@ -22,7 +22,9 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
       - name: Install deps
-        run: pnpm i
+        run: |
+          npm install -g pnpm
+          pnpm i
       - name: Build with Astro
         run: pnpm build
       - name: Deploy

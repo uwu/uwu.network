@@ -61,7 +61,7 @@
 	},
 	{
 		"header": "xirreal",
-		"body": "graphics and backend developer",
+		"body": "graphics, js and occasionally some rust",
 		"img": {
 			"src": "/xirreal/pfp.png",
 			"link": "https://xirreal.dev"
@@ -69,7 +69,8 @@
 		"headLink": "/~xirreal",
 		"links": {
 			"[github]": "https://github.xirreal.dev/",
-			"[email]": "mailto:me@xirreal.dev"
+			"[email]": "mailto:me@xirreal.dev",
+			"[gh_sponsors]": "https://github.com/sponsors/xirreal"
 		},
 		"publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWKuK0VsqVoF6wRirM5WLJj0b+MLRtdQ9YQgXTmejsl"
 	},

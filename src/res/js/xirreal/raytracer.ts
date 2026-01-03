@@ -1,369 +1,271 @@
-/*\
-|*| Simple raytracer
-|*| using just <div>s
-|*|
-|*| written by xirreal || 2022
-|*| for uwu.network
-|*|
-|*| *Based on Cain Atkinson's Game of Life using only divs!!*
-\*/
-
 // CONSTANTS
 const CONTAINER_ID = "raytracer",
-  ROW_CLASS = "raytracer-row",
-  CELL_CLASS = "raytracer-cell",
-  PAUSE_B_ID = "raytracer-stop",
-  GROUND_B_ID = "raytracer-ground",
-  DEPTH_B_ID = "raytracer-bitdepth",
-  HIDEUI_B_ID = "raytracer-ui",
-  NAME_DIV_ID = "user";
+	PAUSE_B_ID = "raytracer-stop",
+	GROUND_B_ID = "raytracer-ground",
+	DEPTH_B_ID = "raytracer-bitdepth",
+	HIDEUI_B_ID = "raytracer-ui",
+	NAME_DIV_ID = "user";
 
-const container = document.getElementById(CONTAINER_ID)!;
+const vertexShaderSource = `
+attribute vec2 a_position;
+void main() {
+    gl_Position = vec4(a_position, 0.0, 1.0);
+}
+`;
 
-let bitDepth = 6;
-let colors = 2 ** bitDepth;
-let moving = 0.0;
+const fragmentShaderSource = `
+precision highp float;
 
-type float = number;
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform float u_moving;
+uniform float u_bitDepth;
 
-class vec3 {
-  x: float;
-  y: float;
-  z: float;
+const vec3 UP_DIR = vec3(0.0, 1.0, 0.0);
+const vec3 SUN_DIR = normalize(vec3(-0.5, 0.7, -0.4));
+const float PLANE_Y = -1.0;
+const float BIAS = 0.001;
 
-  constructor(x: float, y: float, z: float) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
+// Standard 2x2 Bayer Matrix for Ordered Dithering
+// [ 0, 2 ]
+// [ 3, 1 ] * (1/4)
+float bayer2x2(vec2 position) {
+    int x = int(mod(position.x, 2.0));
+    int y = int(mod(position.y, 2.0));
 
-  sub(v: vec3) {
-    return new vec3(this.x - v.x, this.y - v.y, this.z - v.z);
-  }
-
-  subf(f: float) {
-    return new vec3(this.x - f, this.y - f, this.z - f);
-  }
-
-  add(v: vec3) {
-    return new vec3(this.x + v.x, this.y + v.y, this.z + v.z);
-  }
-
-  mul(v: vec3) {
-    return new vec3(this.x * v.x, this.y * v.y, this.z * v.z);
-  }
-
-  mulf(f: float) {
-    return new vec3(this.x * f, this.y * f, this.z * f);
-  }
-
-  divf(f: float) {
-    return new vec3(this.x / f, this.y / f, this.z / f);
-  }
-
-  dot(v: vec3) {
-    return this.x * v.x + this.y * v.y + this.z * v.z;
-  }
-
-  reflect(n: vec3) {
-    return this.sub(n.mulf(n.dot(this) * 2.0));
-  }
-
-  distance(v: vec3) {
-    return Math.sqrt(
-      Math.pow(this.x - v.x, 2) +
-        Math.pow(this.y - v.y, 2) +
-        Math.pow(this.z - v.z, 2)
-    );
-  }
-
-  length() {
-    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
-  }
-
-  normalize() {
-    return this.divf(this.length());
-  }
+    if (x == 0 && y == 0) return 0.0;
+    if (x == 1 && y == 0) return 0.5;
+    if (x == 0 && y == 1) return 0.75;
+    return 0.25; // x=1, y=1
 }
 
-function mixf(a: float, b: float, t: float) {
-  return a * (1.0 - t) + b * t;
+float raySphereCast(vec3 ro, vec3 rd, vec3 center, float radius) {
+    vec3 oc = ro - center;
+    float b = dot(oc, rd);
+    float c = dot(oc, oc) - radius * radius;
+    float h = b * b - c;
+
+    if (h < 0.0) return -1.0;
+
+    float t = -b - sqrt(h);
+    return t;
 }
 
-function smoothstepf(a: float, b: float, x: float) {
-  let t = Math.max(0.0, Math.min(1.0, (x - a) / (b - a)));
-  return t * t * (3.0 - 2.0 * t);
+float rayPlaneCast(vec3 ro, vec3 rd, float planeHeight) {
+    if (abs(rd.y) < 1e-4) return -1.0;
+    float t = (planeHeight - ro.y) / rd.y;
+    return t > 0.0 ? t : -1.0;
 }
 
-function step(a: float, b: float) {
-  return b < a ? 0.0 : 1.0;
+float groundColor(vec3 point, float frameCounter) {
+    float movement = (frameCounter * 0.02) * u_moving;
+    float fX = floor(point.x + 0.5);
+    float fZ = floor(point.z - movement);
+    float checker = mod(fX + fZ, 2.0);
+
+    return mix(0.6, 1.0, checker);
 }
 
-class Display {
-  pixels: float[][] = [];
-  width: number;
-  height: number;
+float getLighting(vec3 rayOrigin, vec3 rayDirection, vec3 sphereCenter, float sphereRadius, float frameCounter) {
+    float tPlane = rayPlaneCast(rayOrigin, rayDirection, PLANE_Y);
 
-  constructor(width: number, height: number) {
-    this.width = width;
-    this.height = height;
-
-    this.resize(width, height);
-  }
-
-  at(x: number, y: number) {
-    return this.pixels[y][x];
-  }
-
-  set(x: number, y: number, val: float) {
-    this.pixels[y][x] = val;
-  }
-
-  resize(width: number, height: number) {
-    const newGrid: float[][] = [];
-
-    for (let y = 0; y < height; y++) {
-      const row = new Array(width);
-      newGrid[y] = row;
-
-      for (let x = 0; x < width; x++) {
-        row[x] = this.pixels[y]?.[x] ?? 0.0;
-      }
+    if (tPlane < 0.0) {
+        float sky = max(0.0, dot(rayDirection, UP_DIR));
+        float sun = pow(max(0.0, dot(rayDirection, SUN_DIR)), 16.0) * 1.2;
+        return sky + sun;
     }
 
-    this.pixels = newGrid;
-    this.width = width;
-    this.height = height;
-  }
+    vec3 hitPoint = rayOrigin + rayDirection * tPlane;
 
-  copyFrom(display: Display) {
-    this.pixels = display.pixels;
-  }
+    float tShadow = raySphereCast(hitPoint + SUN_DIR * BIAS, SUN_DIR, sphereCenter, sphereRadius);
+    float shadow = (tShadow > 0.0) ? 0.2 : 1.0;
+
+    float distToSphere = distance(hitPoint, sphereCenter);
+    float attenuation = smoothstep(16.0, 0.0, distToSphere);
+
+    float col = groundColor(hitPoint, frameCounter);
+
+    return col * shadow * attenuation;
 }
 
-const grid = new Display(0, 0);
+void main() {
+    vec2 uv = gl_FragCoord.xy / u_resolution;
+    vec2 p = uv * 2.0 - 1.0;
+    p.x *= u_resolution.x / u_resolution.y;
 
-const upDir = new vec3(0.0, 1.0, 0.0);
-const sunDirection = new vec3(-0.5, 0.7, -0.4).normalize();
+    vec3 rayOrigin = vec3(0.0, 1.8, -5.0);
+    vec3 rayDirection = normalize(vec3(p.x, p.y - 0.45, 1.25));
 
-function raySphereCast(
-  rayOrigin: vec3,
-  rayDirection: vec3,
-  sphereCenter: vec3,
-  sphereRadius: float
-) {
-  const originLocal = rayOrigin.sub(sphereCenter);
+    vec3 sphereCenter = vec3(cos(u_time * 0.03), sin(u_time * 0.05) * 0.5 + 0.5, 0.2 * sin(u_time * 0.03));
+    float sphereRadius = 1.0;
 
-  let c = originLocal.dot(originLocal) - sphereRadius * sphereRadius;
-  let b = rayDirection.dot(originLocal);
-  let d = b * b - c;
-  let t = -b - Math.sqrt(Math.abs(d));
-  let st = step(0.0, Math.min(t, d));
+    float tSphere = raySphereCast(rayOrigin, rayDirection, sphereCenter, sphereRadius);
 
-  return mixf(-1.0, t, st);
-}
+    float finalColor = 0.0;
 
-function rayPlaneCast(
-  rayOrigin: vec3,
-  rayDirection: vec3,
-  planeOrigin: vec3,
-  planeNormal: vec3
-) {
-  let dist =
-    planeOrigin.sub(rayOrigin).dot(planeNormal) / rayDirection.dot(planeNormal);
-  let st = step(0.0, -rayDirection.dot(planeNormal));
-  return mixf(-1.0, dist, st);
-}
+    if (tSphere > 0.0) {
+        vec3 hitPoint = rayOrigin + rayDirection * tSphere;
+        vec3 normal = normalize(hitPoint - sphereCenter);
 
-function groundColor(point: vec3, frameCounter: number, sphereCenter: vec3) {
-  return mixf(
-    0.0,
-    mixf(
-      1.0,
-      0.6,
-      Math.abs(
-        Math.floor(point.z - (frameCounter / 10) * moving) + Math.floor(point.x)
-      ) % 2.0
-    ),
-    smoothstepf(16, 0, point.distance(sphereCenter))
-  );
-}
+        float fresnel = pow(1.0 - max(0.0, dot(normal, -rayDirection)), 3.0);
 
-function background(
-  rayOrigin: vec3,
-  rayDirection: vec3,
-  sphereCenter: vec3,
-  frameCounter: number
-) {
-  let groundDistance = rayPlaneCast(
-    rayOrigin,
-    rayDirection,
-    new vec3(0.0, -1.0, 0.0),
-    upDir
-  );
+        vec3 reflectDir = reflect(rayDirection, normal);
+        float reflection = getLighting(hitPoint + normal * BIAS, reflectDir, sphereCenter, sphereRadius, u_time);
 
-  let groundHitPoint = rayOrigin.add(rayDirection.mulf(groundDistance));
-
-  let sky = Math.max(0.0, rayDirection.dot(upDir));
-  let sun = Math.pow(Math.max(0.0, rayDirection.dot(sunDirection)), 32) * 1.75;
-
-  let shadow =
-    1.0 -
-    step(0.0, raySphereCast(groundHitPoint, sunDirection, sphereCenter, 1.0));
-
-  let color = groundColor(groundHitPoint, frameCounter, sphereCenter);
-
-  let ground = step(0.0, groundDistance);
-
-  return sun + sky + ground * color * mixf(0.1, 1.0, shadow);
-}
-
-const ditherWeights = [0.25, 0.75, 1.0, 0.5];
-
-function dither(position: vec3, value: float) {
-  let x = position.x % 2.0;
-  let y = position.y % 2.0;
-  let index = x + y * 2;
-  let limit = ditherWeights[index];
-  return step(limit, value);
-}
-
-function raytrace(
-  x: number,
-  y: number,
-  display: Display,
-  frameCounter: number
-) {
-  const UV = new vec3(x / display.width, 1.0 - y / display.height, 0.0)
-    .mulf(2.0)
-    .subf(1.0)
-    .mul(new vec3(display.width / display.height, 1.0, 1.0));
-
-  const rayOrigin = new vec3(0.0, 1.8, -5.0);
-  const rayDirection = new vec3(UV.x, UV.y - 0.45, 1.25).normalize();
-
-  const sphereCenter = new vec3(
-    0.0,
-    Math.sin(frameCounter / 10) * 0.5 + 0.5,
-    0.0
-  );
-  const sphereRadius = 1.0;
-
-  const sphereDist = raySphereCast(
-    rayOrigin,
-    rayDirection,
-    sphereCenter,
-    sphereRadius
-  );
-  const sphereHitPoint = rayOrigin.add(rayDirection.mulf(sphereDist));
-  const sphereNormal = sphereHitPoint.sub(sphereCenter).normalize();
-
-  const floor = background(rayOrigin, rayDirection, sphereCenter, frameCounter);
-
-  const reflectedRayDirection = rayDirection.reflect(sphereNormal);
-
-  const reflection = background(
-    sphereHitPoint,
-    reflectedRayDirection,
-    sphereCenter,
-    frameCounter
-  );
-
-  let isSphere = step(0.0, sphereDist);
-
-  let outColor = mixf(floor, reflection * 0.3, isSphere);
-  outColor = Math.floor(outColor * colors) / colors;
-
-  return outColor + dither(new vec3(x, y, 0.0), outColor) / colors;
-}
-
-function createCells() {
-  container.innerHTML = "";
-
-  for (let y = 0; y < grid.height; y++) {
-    const rowElem = document.createElement("div");
-    container.appendChild(rowElem);
-    rowElem.className = ROW_CLASS;
-
-    for (let x = 0; x < grid.width; x++) {
-      const cell = document.createElement("div");
-      rowElem.appendChild(cell);
-      cell.className = CELL_CLASS;
-    }
-  }
-}
-
-function renderCells(frameCounter: number) {
-  for (let y = 0; y < container.childElementCount; y++) {
-    const row = container.children[y];
-
-    for (let x = 0; x < row.childElementCount; x++) {
-      grid.set(x, y, raytrace(x, y, grid, frameCounter));
-      (row.children[x] as HTMLElement).style.backgroundColor = `hsl(0, 0%, ${
-        grid.at(x, y) * 100
-      }%)`;
-    }
-  }
-}
-
-// these heights are only used to generate cell counts nothing more
-export default () => {
-  let frameCounter = 0;
-  function makeGrid() {
-    let cellHeight = 12;
-    let cellWidth = 12;
-
-    const gridWidth = Math.floor(window.innerWidth / cellWidth);
-    const gridHeight = Math.floor(window.innerHeight / cellHeight);
-
-    grid.resize(gridWidth, gridHeight);
-
-    createCells();
-    renderCells(frameCounter);
-  }
-
-  window.addEventListener("resize", makeGrid);
-  makeGrid();
-
-  let rendering = true;
-  let uiHidden = false;
-
-  const pauseButton = document.getElementById(PAUSE_B_ID)!;
-  pauseButton.onclick = () => {
-    rendering = !rendering;
-    pauseButton.innerText =
-      pauseButton.innerText === "resume" ? "pause" : "resume";
-  };
-
-  const nameBar = document.getElementById(NAME_DIV_ID)!;
-  const uiButton = document.getElementById(HIDEUI_B_ID)!;
-  uiButton.onclick = () => {
-    uiHidden = !uiHidden;
-    if (uiHidden) {
-      nameBar.classList.add("opacity-0");
-      uiButton.innerText = "show";
+        finalColor = mix(reflection * 0.4, reflection * 0.7, fresnel);
     } else {
-      nameBar.classList.remove("opacity-0");
-      uiButton.innerText = "hide";
+        finalColor = getLighting(rayOrigin, rayDirection, sphereCenter, sphereRadius, u_time);
     }
-  };
 
-  const groundButton = document.getElementById(GROUND_B_ID)!;
-  groundButton.onclick = () => {
-    moving = (moving + 1) % 2;
-    groundButton.innerText =
-      moving === 1.0 ? "moving ground: true" : "moving ground: false";
-  };
+    float levels = pow(2.0, u_bitDepth);
+    float threshold = bayer2x2(gl_FragCoord.xy);
 
-  const depthButton = document.getElementById(DEPTH_B_ID)!;
-  depthButton.onclick = () => {
-    bitDepth++;
-    if (bitDepth == 9) bitDepth = 1;
-    colors = 2 ** bitDepth;
-    depthButton.innerText = "bitdepth: " + bitDepth;
-  };
+    float scaledColor = finalColor * (levels - 1.0);
+    float quantized = floor(scaledColor + threshold);
 
-  setInterval(() => {
-    rendering && renderCells(++frameCounter);
-  }, 1000 / 24); // => Target 24 fps
+    finalColor = quantized / (levels - 1.0);
+    gl_FragColor = vec4(vec3(clamp(finalColor, 0.0, 1.0)), 1.0);
+}
+`;
+
+function createShader(gl: WebGLRenderingContext, type: number, source: string) {
+	const shader = gl.createShader(type)!;
+	gl.shaderSource(shader, source);
+	gl.compileShader(shader);
+	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+		console.error(gl.getShaderInfoLog(shader));
+		gl.deleteShader(shader);
+		return null;
+	}
+	return shader;
+}
+
+function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader) {
+	const program = gl.createProgram()!;
+	gl.attachShader(program, vertexShader);
+	gl.attachShader(program, fragmentShader);
+	gl.linkProgram(program);
+	if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+		console.error(gl.getProgramInfoLog(program));
+		gl.deleteProgram(program);
+		return null;
+	}
+	return program;
+}
+
+export default () => {
+	const canvas = document.getElementById(CONTAINER_ID) as HTMLCanvasElement;
+	const gl = canvas.getContext("webgl");
+
+	if (!gl) {
+		console.error("WebGL not supported");
+		return;
+	}
+
+	// Set pixelated rendering
+	canvas.style.imageRendering = "pixelated";
+
+	const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource)!;
+	const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)!;
+	const program = createProgram(gl, vertexShader, fragmentShader)!;
+
+	const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+	const resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
+	const timeUniformLocation = gl.getUniformLocation(program, "u_time");
+	const movingUniformLocation = gl.getUniformLocation(program, "u_moving");
+	const bitDepthUniformLocation = gl.getUniformLocation(program, "u_bitDepth");
+
+	const positionBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+	// Two triangles covering the screen
+	const positions = [-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1];
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+	let bitDepth = 4;
+	let moving = 1.0;
+	let frameCounter = 0;
+	let rendering = true;
+	let uiHidden = false;
+
+	let lastTime = 0;
+
+	const cellSize = 4;
+
+	function resize() {
+		const width = Math.floor(window.innerWidth / cellSize) - 1;
+		const height = Math.floor(window.innerHeight / cellSize) - 1;
+
+		canvas.width = width;
+		canvas.height = height;
+		lastTime = 0;
+		gl!.viewport(0, 0, width, height);
+	}
+
+	window.addEventListener("resize", resize);
+	resize();
+
+	// UI Logic
+	const pauseButton = document.getElementById(PAUSE_B_ID)!;
+	pauseButton.onclick = () => {
+		rendering = !rendering;
+		pauseButton.innerText = pauseButton.innerText === "resume" ? "pause" : "resume";
+		if (rendering) requestAnimationFrame(loop);
+	};
+
+	const nameBar = document.getElementById(NAME_DIV_ID)!;
+	const uiButton = document.getElementById(HIDEUI_B_ID)!;
+	uiButton.onclick = () => {
+		uiHidden = !uiHidden;
+		if (uiHidden) {
+			nameBar.classList.add("opacity-0");
+			uiButton.innerText = "show";
+		} else {
+			nameBar.classList.remove("opacity-0");
+			uiButton.innerText = "hide";
+		}
+	};
+
+	const groundButton = document.getElementById(GROUND_B_ID)!;
+	groundButton.onclick = () => {
+		moving = (moving + 1) % 2;
+		groundButton.innerText = moving === 1.0 ? "moving ground: true" : "moving ground: false";
+	};
+
+	const depthButton = document.getElementById(DEPTH_B_ID)!;
+	depthButton.onclick = () => {
+		bitDepth++;
+		if (bitDepth == 9) bitDepth = 1;
+		depthButton.innerText = "bitdepth: " + bitDepth;
+	};
+
+	const fpsInterval = 1000 / 60;
+
+	function loop(timestamp: number) {
+		if (!rendering) return;
+
+		const elapsed = timestamp - lastTime;
+
+		if (elapsed > fpsInterval) {
+			lastTime = timestamp - (elapsed % fpsInterval);
+
+			gl!.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+			gl!.uniform1f(timeUniformLocation, frameCounter);
+			gl!.uniform1f(movingUniformLocation, moving);
+			gl!.uniform1f(bitDepthUniformLocation, bitDepth);
+
+			gl!.drawArrays(gl!.TRIANGLES, 0, 6);
+
+			frameCounter++;
+		}
+
+		requestAnimationFrame(loop);
+	}
+
+	gl!.useProgram(program);
+
+	gl!.enableVertexAttribArray(positionAttributeLocation);
+	gl!.bindBuffer(gl!.ARRAY_BUFFER, positionBuffer);
+	gl!.vertexAttribPointer(positionAttributeLocation, 2, gl!.FLOAT, false, 0, 0);
+
+	requestAnimationFrame(loop);
 };

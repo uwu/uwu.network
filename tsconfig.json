@@ -40,11 +40,11 @@
 			"§/*": ["/phorcys/*"],
 
 			// xirreal
-			"<components/*": ["src/components/xirreal/*"],
-			"<layouts/*": ["src/layouts/xirreal/*"],
-			"<css/*": ["src/res/css/xirreal/*"],
-			"<js/*": ["src/res/js/xirreal/*"],
-			"</*": ["/xirreal/*"],
+			"⚢components/*": ["src/components/xirreal/*"],
+			"⚢layouts/*": ["src/layouts/xirreal/*"],
+			"⚢css/*": ["src/res/css/xirreal/*"],
+			"⚢js/*": ["src/res/js/xirreal/*"],
+			"⚢/*": ["/xirreal/*"],
 
 			// kasimir
 			"~components/*": ["src/components/kasimir/*"],
@@ -65,9 +65,9 @@
 			"☆layouts/*": ["src/layouts/tasky/*"],
 			"☆css/*": ["src/res/css/tasky/*"],
 			"☆js/*": ["src/res/js/tasky/*"],
-			"☆/*": ["/tasky/*"]
+			"☆/*": ["/tasky/*"],
 		},
 		// Astro's tsconfig sets this, and while I personally have no issue with it, the others might :>
-		"verbatimModuleSyntax": false
-	}
+		"verbatimModuleSyntax": false,
+	},
 }

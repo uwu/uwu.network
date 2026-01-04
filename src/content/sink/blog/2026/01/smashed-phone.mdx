@@ -1,0 +1,580 @@
+---
+title: Backdooring my Phone for Neither Fun nor Profit
+description: A Data Recovery Misadventure
+pubDate: "2026-01-04T23:11:00"
+tags: ["ANDROID"]
+---
+
+import I from "@components/FlexImg.astro";
+
+# Backdooring my Phone for Neither Fun nor Profit
+
+I had a little bit of an oopsie recently. I tripped while running outside and hit the ground pretty hard. I'm okay now, but my phone certainly is NOT. It is functional in all ways but one: the screen is fully black and can take no inputs.
+
+After spending some time weighing up fixing the screen vs buying a new phone, I decided on the latter. A large deciding factor is that the only real benefit to me of fixing this phone is that I would get to keep the data as is... but when you replace the screen on a Pixel 6, you have to factory reset it if you want the fingerprint sensor to start working. Dumb.
+
+Okay, so, let's survey the situation. I have a Pixel 6 with no way of taking inputs. It is running Android 14 with an unlocked bootloader and Magisk installed. It has ADB _disabled_ but developer options _enabled_, and no backdoors or anything (e.g. MagiskSSH) installed. It does support USB OTG, so I can plug a usb keyboard into it, but it does NOT support DP Alt Mode out. By a stroke of past luck, I happen to know the exact Android build too, its AP2A.240805.005.F1.
+
+The main goal here is to get ADB enabled, so that I can connect scrcpy to my phone and see and control it from a PC, then its effectively functional again.
+
+Two main avenues of attack present themselves to me: one is to, flying entirely blind, puppet the phone with a USB keyboard and hope i can enter the exact combination of keypresses that will navigate into settings and flick the adb switch. This could work but its just a lot that has to line up luckily to work. The second is to somehow get shell access, and abuse being rooted to let us enable adb from there.
+
+> Quick Note: the method I'm going to present here (or rather, the one that works out of the two I tried and explain) only works if you have your bootloader unlocked. The process of unlocking your bootloader wipes your user data, presumably exactly because what I'm about to do is possible.
+>
+> If you just want to skip all the storytelling or explanations and simply jump to the steps I did, go to [Telnet Tribulations II: Electric Boogaloo](#telnet-tribulations-ii-electric-boogaloo). But where's the fun in that. Don't you want to read 4000 words about breaking into a phone...? &colon;p - anyway, I jest.
+>
+> All of the "Magic Android Boot Fuckery" sections before that one _don't work_ as-presented, and would need tweaks. They are explained anyway both for storytelling and just-in-case they are useful jumping off points for someone else who needs to do something similar but slightly different :)
+
+## Magic Android Boot Fuckery
+
+The main issue with getting shell access is... how? While I can get into fastboot, it's not so easy to go anywhere from there. I can trivially reboot it into recovery mode, but the version of the adb API accessible from stock recovery is VERY limited. Adb cannot open a shell nor push or pull files. About all you can do is sideload, or reboot the phone. Unlike TWRP, which gives you a full ADB with pull/push, shell, and on supported devices FDE decryption. TWRP and its OrangeFox fork do not have Pixel 6 support, so I can't just flash and use it.
+
+(_Useful info nugget: on a modern Pixel device you can get into the bootloader from the on state by holding Power+VolDown for 32 seconds / when the device goes black, then releasing Power but keeping VolDown held for about 5 more seconds, or just until it appears again in fastboot mode in `lsusb`._)
+
+This leaves me with very few options. A chat with an Android nerd and dear friend of mine, [marsh](https://marsh.zone/), surfaced the possibility of using [magiskinit](https://topjohnwu.github.io/Magisk/tools.html) to run some commands on device boot, and flashing a modified boot image onto my phone, but I have been unable to figure out how this would actually work from turning the idea over in my head - how would I get access to the Magisk patched boot image without access to the device? After all, Magisk explicitly warns you not to use another device, even of the same model, to patch the boot image, and to always patch on the same device as you intend to install on... And these tools are installed on the phone, not my PC!
+
+This seems unfruitful, though tempting as an avenue. Remind me to leave MagiskSSH setup on my new phone with an up to date key, so I can use that approach next time... And back up my unpatched and patched boot images...
+
+## Pray and Press Keys
+
+A USB keyboard is capable of controlling an Android phone. Indeed all that should be necessary is to wake the device using the power button, and then it can be unlocked and navigated all using the keypresses. In theory this is enough to enable USB debugging, or even wireless debugging, but it's difficult.
+
+I used the Android Emulator built into Android Studio to setup a virtual device running Android 14, to test against. This was running Android UE1A.230829.050, a build from August 2023, rather than my Pixel's AP2A.240805.005.F1, a build from August 2024, so there may be some slight discrepancies, but for the most part it seemed familiar to me.
+
+Still, to be sure I pursued getting the exact version running, so I downloaded [the factory image](https://googledownloads.cn/dl/android/aosp/oriole-ap2a.240805.005.f1-factory-a0d64730.zip) from the [Nexus / Pixel OTA images list](https://developers.google.cn/android/images?hl=en#oriole) and used the instructions from [this stackoverflow post](https://stackoverflow.com/a/34994592) to update my emulator. This, in fact, did not yield an updated emulator, but one that hung on boot. So I deleted `system.img` and decided to just live with it being slightly old. Surely system settings hasn't changed that much...
+
+Then, by using scrcpy to connect to the emulator (the emulator UI has really weird keyboard support and some shortcuts that work in Android like Ctrl-A don't work in the emulator), I could use my computer keyboard to control the phone exactly as a real phone with USB keyboard would.
+
+I managed to draft up a series of keystrokes that would get adb enabled on the emulator, but my first attempt at it on the real device did..... nothing. oh. weird.
+
+### Hazel's Recipe: to make One USB Debugging
+
+Wake device:
+
+- Press power button
+- Spacebar
+- Enter Pin code
+
+Open settings:
+
+- Ctrl-A (app switcher)
+- Up up up right (select text box)
+- "settings"
+- Tab tab (select app)
+- Enter (open)
+
+Go to dev options:
+
+- Tab, tab (select list)
+- Page down, Up, enter (device)
+- Down x10, enter (developer options)
+
+Select adb debugging:
+
+- Down x18, enter (open confirm dialog)
+- Tab, tab, enter (confirm enable)
+
+Wireless debugging (optional):
+
+- Down enter
+- Enter (enable)
+- Tab tab enter (confirm)
+- Down enter (scan pairing qr)
+- Scan QR, no confirm necessary.
+
+This works a treat on an emulator (note of course that when i succeed in this case, my device will _disappear, as I'm disabling ADB, used by scrcpy_):
+
+<video controls src="https://cdn.hyrule.pics/b9f430a8e.mp4" style="aspect-ratio: 16/9; max-height: 20rem"></video>
+
+### Attempt 2 on the real device
+
+So, when my device is freshly booted, it takes AAAGES to init itself, part of this is due to Iconify forcing a reload of SystemUI, part of it is just that I have a lot of shit that starts up. So, maybe I just need to unlock it, and leave it for like 5 minutes, then unlock and leave for 5m, then try the process?
+
+I felt somewhat nervous at this stage, and wondered if i had actually failed to even unlock the phone at all, because it had not connected to Tailscale automatically. I asked marsh to check if this even works on a real phone. At the same time, I dug out my old Nokia 5 to see if it was even alive enough to test or if the battery was so ruined that it was unusable. I then got heavily sidetracked (ADHD :>) and just played with that phone for a day. I have no USB micro-B OTG adapter so its useless for this.
+
+I put this on hold again.
+
+## The Return of Magic Android Boot Fuckery
+
+So, MagiskBoot could help me break back into my phone, but the docs tell me never to patch an image on another phone:
+
+> Warning: **NEVER** flash patched image shared by others or patch image on another device even if they have the same device model! You may need to do a full data wipe to recover your device. **ALWAYS** patch boot image **on the same device where you want to install Magisk**.
+
+Well, I asked marsh and [Kasi](/~kasimir) (another knowledgeable android person), and Kasi said that I could in fact do this, Magisk just tells people this to reduce the likelihood that they brick their phone. I decided to take his word on it, so copied the AP2A.240805.005.F1 factory image's `boot.img` over to my working Pixel 9 to patch. I sure hope I don't regret it.
+
+One short `tailscale file cp oriole-AP2A.240805.005.F1-boot.img izumi:` later, I had a patched boot image.
+
+<I src="https://i.uwu.network/d88d53d4b.png" />
+
+This image should theoretically be identical to the one on my phone right now, and the plan is to patch in a shell script that would enable ADB, and ideally bypass the confirmation dialog somehow. I went to list all available settings via `adb shell settings list global | grep adb`, and the ones that stood out were `adb_enabled`, `adb_wifi_enabled`, and `adb_allowed_connection_time`. The guide [here](https://xdaforums.com/t/guide-how-to-enable-access-via-adb-on-a-new-installed-os.4535165/) isn't directly useful as it relies on TWRP, but does tell me that all I should have to do is `settings put global adb_enabled 1`.
+
+As for the confirmation dialog, Kasi just told me off the top of his head that its stored in `/data/misc/adb/adb_keys`, and indeed:
+
+```sh
+λ adb shell su -c cat /data/misc/adb/adb_keys
+QAAAAL2x+jpr7oJ+dnGqFbZwjHuEzBMgSibahjp/xpMTCQKZKDF0+jV+rTNnNaWP9e7lpS9XQZjnG9Mvcd1fzmnaI8M/upXdAiIVR+aOiaVYOX9stAGt6x8aV7VlSZoJH304XqBSsdWWipVC4RIyDIdhUFmtEtTQZoc9pO0da1ZxNBT37qHiBCCMWpCF60oNm6AsOZXDTuIkLMEhmo6i2C9qE4/xrZ4lFHMls5IJmQpXjmxGASGx7GOaENwmMbEUwKmzCYtdf+XRs+T12L4Pvf4t0E6VDeeBYNqPDO8usXV3V3TbdlwFb3aCOIXwmMBH/X/TpQYqU9LMZunCsbvzRZZsx6L1UGyYGLY/JpJ5MLgk3Z0KSCfMDRNjBkXt8X4UKP4rJQKbYKep93nfxAd+CSlKcNJz7mEUTOlRiwTQ3xjkYdMjb3Xwd4MC9v988bSuczETb2UkNfe49AhW/oHIlDTi0cRtAzcHX6w+KCtJKhYtRdOf5yXExWzw80+D6MHi9FrAqK+5Jvh/Cb4JC4c7u6DFEHZYqwzcnjammh83e+Ll326Pec53C/LwQfCA0b+EaY+KydxpNJ1V4WeH4BIb/KgzYvGdf0E0XjNLkJ5dmS+hRI3NXOJgGSN/8/ScvfxGJBfW0SvWB470G3ewANKviHas0pw6HpdEwIHoq2v4X+2qRoCF8+umHwEAAQA= sink@arima
+```
+
+Nice. [This XDA post](https://xdaforums.com/t/solved-adb-unauthorized-no-rsa-prompt-and-no-revoke-usb-debugging-option.3693961/) tells me I also need to ensure the file has 0644 permissions, but here it appears to have 640 permissions (I double checked with `stat`).
+
+```sh
+λ adb shell su -c ls -l /data/misc/adb
+total 8
+-rw-r----- 1 system shell 712 2026-01-04 14:33 adb_keys
+-rw------- 1 system shell 800 2026-01-04 14:33 adb_temp_keys.xml
+```
+
+### Adventures in MagiskBoot
+
+So, I now have to write a shell script that will during from the [Magisk boot process](https://topjohnwu.github.io/Magisk/details.html#magisk-booting-process), which will enable adb and place this file, THEN I need to use [`magiskboot`](https://topjohnwu.github.io/Magisk/tools.html#magiskboot) to get it onto my phone.
+
+Turns out (thanks marsh) that you can just invoke the `.so` library as a binary, so I grabbed it from the apk and did it on my pc: it's in `Magisk.apk/lib/x86_64/libmagiskboot.so`.
+
+I can use the [magisk root overlay directory system](https://github.com/topjohnwu/Magisk/blob/master/docs/guides.md#root-directory-overlay-system) to append custom content to the `init.rc` file, to be ran by the android init system, which is my golden ticket. Essentially this is the android equivalent of installing a systemd-init service, or a Windows service.
+
+The anatomy of the ramdisk is as such:
+
+```sh
+λ ./libmagiskboot.so unpack magisk_patched-30600_YTW9E.img
+λ 7z l ramdisk.cpio
+   Date      Time    Attr         Size   Compressed  Name
+------------------- ----- ------------ ------------  ------------------------
+                    D....            0            0  .backup
+                    .....          140          140  .backup/.magisk
+                    .....       254584       254584  init
+                    D....            0            0  overlay.d
+                    D....            0            0  overlay.d/sbin
+                    .....         1556         1556  overlay.d/sbin/init-ld.xz
+                    .....       160216       160216  overlay.d/sbin/magisk.xz
+                    .....        26288        26288  overlay.d/sbin/stub.xz
+```
+
+Files in `overlay.d/sbin` get copied to `${MAGISKTMP}`, which on modern devices is `/debug_ramdisk`, and on older devices is who knows where. Files called `overlay.d/*.rc` get appended to `init.rc` so you can use them to inject your own shell scripts. Anything else is just overlaid onto the file system.
+
+### Creating the Service
+
+I created `overlay.d/sbin/give_me_adb.sh` with this content:
+
+```sh
+mkdir -p /data/misc/adb/
+echo "QAAAAL2x+jpr7oJ+dnGqFbZwjHuEzBMgSibahjp/xpMTCQKZKDF0+jV+rTNnNaWP9e7lpS9XQZjnG9Mvcd1fzmnaI8M/upXdAiIVR+aOiaVYOX9stAGt6x8aV7VlSZoJH304XqBSsdWWipVC4RIyDIdhUFmtEtTQZoc9pO0da1ZxNBT37qHiBCCMWpCF60oNm6AsOZXDTuIkLMEhmo6i2C9qE4/xrZ4lFHMls5IJmQpXjmxGASGx7GOaENwmMbEUwKmzCYtdf+XRs+T12L4Pvf4t0E6VDeeBYNqPDO8usXV3V3TbdlwFb3aCOIXwmMBH/X/TpQYqU9LMZunCsbvzRZZsx6L1UGyYGLY/JpJ5MLgk3Z0KSCfMDRNjBkXt8X4UKP4rJQKbYKep93nfxAd+CSlKcNJz7mEUTOlRiwTQ3xjkYdMjb3Xwd4MC9v988bSuczETb2UkNfe49AhW/oHIlDTi0cRtAzcHX6w+KCtJKhYtRdOf5yXExWzw80+D6MHi9FrAqK+5Jvh/Cb4JC4c7u6DFEHZYqwzcnjammh83e+Ll326Pec53C/LwQfCA0b+EaY+KydxpNJ1V4WeH4BIb/KgzYvGdf0E0XjNLkJ5dmS+hRI3NXOJgGSN/8/ScvfxGJBfW0SvWB470G3ewANKviHas0pw6HpdEwIHoq2v4X+2qRoCF8+umHwEAAQA= sink@arima" > /data/misc/adb/adb_keys
+chmod 644 /data/misc/adb/adb_keys
+
+settings put global adb_enabled 1
+```
+
+And `overlay.d/give_me_adb.rc` with this content:
+
+```sh
+on post-fs-data
+    start hazel_adb_enabler
+
+service hazel_adb_enabler ${MAGISKTMP}/give_me_adb.sh
+	oneshot
+```
+
+I patched them into the ramdisk and rebuilt the image:
+
+```sh
+λ ./libmagiskboot.so cpio ramdisk.cpio "add 0644 overlay.d/sbin/give_me_adb.sh give_me_adb.sh"
+λ ./libmagiskboot.so cpio ramdisk.cpio "add 0644 overlay.d/give_me_adb.rc give_me_adb.rc"
+λ ./libmagiskboot.so repack magisk_patched-30600_YTW9E.img give_adb_magisk_patched-30600_YTW9E.img
+```
+
+And now for the scary moment. Flashing.
+
+### Flashing and Praying
+
+Kasi warned me that I may have to reboot my phone twice to get this to actually work, but I was more scared just by the prospect of flashing it in the first place. I crossed my fingers and went for it.
+
+I put my Pixel 6 into fastboot mode the usual way - `watch -n 0.2 lsusb`, hold power+voldown until it disappears, hold voldown until it reappears in fastboot mode, then I flashed it.
+
+```sh
+λ fastboot flash boot give_adb_magisk_patched-30600_YTW9E.img
+Sending 'boot_b' (65536 KB)                        OKAY [  1.738s]
+Writing 'boot_b'                                   OKAY [  0.111s]
+Finished. Total time: 1.851s
+λ fastboot reboot
+Rebooting                                          OKAY [  0.000s]
+Finished. Total time: 0.050s
+```
+
+I held my breath waiting for a USB device to appear, and lo and behold, `Google Inc. Nexus / Pixel Device (MTP)`. An `adb devices` didn't yield anything, so as per Kasi's warning, I went for another round - hold buttons to get into fastboot, then immediately `fastboot reboot`. Still nothing. marsh wondered if it had broken and automatically swapped boot slots, but I suspect not because my slot A is broken if memory serves. And like, this script was my first attempt.
+
+### My Script Needs Fixing
+
+So, my initial service is too naive. I saw [that this guide (that I mentioned earlier)](https://xdaforums.com/t/guide-how-to-enable-access-via-adb-on-a-new-installed-os.4535165/) used a similar process with its `enable_adb_using_magisk.sh` script. I could use this. I copied their rc and script and modified them to my use case:
+
+```sh
+service bnsmb_enable_adb /system/bin/sh ${MAGISKTMP}/enable_adb_via_service.sh
+    user root
+    group root
+    seclabel u:r:magisk:s0
+    disabled
+    oneshot
+
+on zygote-start
+    setprop sys.bnsmb_enable_adb_done 0
+    start bnsmb_enable_adb
+```
+
+```sh
+echo "ENABLE ADB SCRIPT START"
+
+echo "The PID of the process running this script is ${$$}"
+
+## -----
+## wait for settings cmd to work
+## -----
+
+echo "Waiting (up to 60 seconds) until settings works..."
+
+SETTINGS="/system/bin/settings"
+
+STEP=5
+
+i=0
+while [ $i -lt 60 ] ; do
+  if [ -x ${SETTINGS} ] ; then
+    CUR_OUTPUT=$( ${SETTINGS} get global development_settings_enabled 2>/dev/null  )
+    [ "${CUR_OUTPUT}"x != ""x ] && break
+  #
+    [ $? -eq 0 ] && break
+  fi
+  echo "Waiting ${STEP} seconds ..."
+  let i=i+${STEP}
+  sleep ${STEP}
+done
+
+if [ -x ${SETTINGS}] ; then
+  echo "/system/bin/settings is available after $i second(s) "
+else
+  echo "ERROR: /system/bin/settings is NOT available, not even after $i second(s)"
+fi
+
+ADB_ENABLED=$( settings get global adb_enabled )
+if [ ${ADB_ENABLED}x = 1x ] ; then
+	echo "adb is already enabled"
+else
+
+	echo "sleeping 30 seconds to enable adb..."
+	# idk why this is necessary
+	sleep 30
+
+	echo "enabling"
+	settings put global development_settings_enabled 1
+	settings put global adb_enabled 1
+
+
+	echo "placing keys..."
+
+	FILES_CREATED=0
+	if [ ! -d /data/misc/adb ] ; then
+
+    echo "Creating the directory /data/misc/adb ... "
+
+    mkdir -p /data/misc/adb
+    chmod 2750 /data/misc/adb
+    chown system:shell /data/misc/adb
+    chcon -v u:object_r:adb_keys_file:s0 /data/misc/adb
+
+    FILES_CREATED=1
+  else
+    echo "The directory /data/misc/adb already exists"
+  fi
+
+  if [ ! -r /data/misc/adb/adb_keys ] ; then
+    echo "Creating the file /data/misc/adb/adb_keys ..."
+
+    touch /data/misc/adb/adb_keys
+    chown system:shell /data/misc/adb/adb_keys
+    chmod 0640 /data/misc/adb/adb_keys
+    chcon -v u:object_r:adb_keys_file:s0 /data/misc/adb/adb_keys
+
+    FILES_CREATED=1
+
+  else
+    echo "The file /data/misc/adb/adb_keys already exits"
+  fi
+
+  cat "QAAAAL2x+jpr7oJ+dnGqFbZwjHuEzBMgSibahjp/xpMTCQKZKDF0+jV+rTNnNaWP9e7lpS9XQZjnG9Mvcd1fzmnaI8M/upXdAiIVR+aOiaVYOX9stAGt6x8aV7VlSZoJH304XqBSsdWWipVC4RIyDIdhUFmtEtTQZoc9pO0da1ZxNBT37qHiBCCMWpCF60oNm6AsOZXDTuIkLMEhmo6i2C9qE4/xrZ4lFHMls5IJmQpXjmxGASGx7GOaENwmMbEUwKmzCYtdf+XRs+T12L4Pvf4t0E6VDeeBYNqPDO8usXV3V3TbdlwFb3aCOIXwmMBH/X/TpQYqU9LMZunCsbvzRZZsx6L1UGyYGLY/JpJ5MLgk3Z0KSCfMDRNjBkXt8X4UKP4rJQKbYKep93nfxAd+CSlKcNJz7mEUTOlRiwTQ3xjkYdMjb3Xwd4MC9v988bSuczETb2UkNfe49AhW/oHIlDTi0cRtAzcHX6w+KCtJKhYtRdOf5yXExWzw80+D6MHi9FrAqK+5Jvh/Cb4JC4c7u6DFEHZYqwzcnjammh83e+Ll326Pec53C/LwQfCA0b+EaY+KydxpNJ1V4WeH4BIb/KgzYvGdf0E0XjNLkJ5dmS+hRI3NXOJgGSN/8/ScvfxGJBfW0SvWB470G3ewANKviHas0pw6HpdEwIHoq2v4X+2qRoCF8+umHwEAAQA= sink@arima">/data/misc/adb/adb_keys
+
+  echo "placed adb key, done!"
+fi
+```
+
+marsh said I should try just directly starting `adbd` but god damn it I'm gonna try this first. A couple reboots later, 30 seconds waited, it didn't work.
+
+Fine, okay, let's try this:
+
+```
+on zygote-start
+    start adbd
+```
+
+Nope. I wondered if it was to do with being pre-first-unlock or something, so I rebooted my _working_ other phone with ADB enabled and authorised, and plugged her in... It showed as `charging+debug` before even it had finished the Google boot splash. Nope.
+
+## Telnet Tribulations
+
+Okay, this wasn't working, so let's try something a little less "hit go and pray", and try and get a telnet into the system. I stole the Magisk Busybox binary from my working Pixel 9:
+
+```sh
+λ adb shell
+tokay:/ $ su
+tokay:/ # cp /data/adb/magisk/busybox /storage/emulated/0
+tokay:/ # ^D
+tokay:/ $ ^D
+λ adb pull /storage/emulated/0/busybox busybox-android
+```
+
+For a sanity check, I ran `sudo /data/adb/magisk/busybox telnetd -F` on my working phone, and I could connect but immediately got connection closed by remote host. `telnetd -Fl /system/bin/sh` did the trick, though. Cool.
+
+I injected Busybox into the Pixel 6's boot image, along with the following rc file:
+
+```sh
+service hazel-busybox-telnet ${MAGISKTMP}/busybox telnetd -Fl /system/bin/sh
+
+on init
+    start hazel-busybox-telnet
+```
+
+```sh
+λ ./libmagiskboot.so unpack magisk_patched-30600_YTW9E.img
+λ ./libmagiskboot.so cpio ramdisk.cpio "add 0644 overlay.d/sbin/busybox busybox"
+λ ./libmagiskboot.so cpio ramdisk.cpio "add 0644 overlay.d/busybox_telnet.rc busybox_telnet.rc"
+λ ./libmagiskboot.so repack magisk_patched-30600_YTW9E.img telnetd.img
+λ fastboot flash boot telnetd.img
+λ fastboot reboot
+```
+
+The question now is if I can telnet in... unfortunately, my phone was refusing connections when I tried to telnet in.
+
+marsh asked me to double check that it was definitely executable...... I'd been adding the binary with mode `644`. Which is `rw-r--r--`. Fuck. LOL! So anyway, I re-added my `busybox` binary to the image with mode `755` (`rwxr-xr-x`), and tried again. This is also probably why my shell script service didn't work, I added that as 644 too.
+
+It didn't work, so I wondered if the ramdisk.cpio can't actually store modes properly, so I made a launchpad script:
+
+```sh
+#!/system/bin/sh
+
+chmod +x ${MAGISKTMP}/busybox
+${MAGISKTMP}/busybox telnetd -Fl /system/bin/sh
+```
+
+and ran _that instead_:
+
+```sh
+service hazel-busybox-telnet /system/bin/sh ${MAGISKTMP}/telnet.sh
+	oneshot
+
+on zygote-start
+    start hazel-busybox-telnet
+```
+
+STILL NO JOY! Damn it.
+
+### Testing on a Working Phone
+
+To try and demystify what the hell is happening, I decided to do the same telnet patch to my working Pixel 9, so I could see what the logs looked like when it failed and generally poke at it. This is luckily a process we know quite well by now. Extract image, add shit to ramdisk.cpio, repack image, flash it.
+
+```sh
+λ libmagiskboot.so unpack magisk_init_boot.img
+λ libmagiskboot.so cpio ramdisk.cpio "add 0755 overlay.d/sbin/busybox busybox"
+λ libmagiskboot.so cpio ramdisk.cpio "add 0755 overlay.d/sbin/telnet.sh telnet.sh"
+λ libmagiskboot.so cpio ramdisk.cpio "add 0755 overlay.d/telnet.rc busybox_telnet.rc"
+λ libmagiskboot.so repack magisk_init_boot.img telnetd_init_boot.img
+λ fastboot flash init_boot telnetd_init_boot.img
+Sending 'init_boot_a' (8192 KB)                    OKAY [  0.219s]
+Writing 'init_boot_a'                              OKAY [  0.056s]
+Finished. Total time: 0.276s
+λ fastboot reboot
+Rebooting                                          OKAY [  0.000s]
+Finished. Total time: 0.050s
+```
+
+Same result, that's good, no telnetd. Results match between the phones, so let's do some forensics:
+
+```sh
+tokay:/ # ls /debug_ramdisk/ -l
+-rwxr-xr-x 1 root root 1710600 1970-01-01 01:00 busybox
+-rwxr-xr-x 1 root root      96 1970-01-01 01:00 telnet.sh
+# -- normal uninteresting magisk stuff excluded --
+tokay:/ # cat /system/etc/init/hw/init.rc
+# -- a bunch o shit --
+tokay:/ # dmesg | grep hazel
+[    2.189411] init: No user specified for service 'hazel-busybox-telnet', so it is root.
+[   12.126308] init: Command 'start hazel-busybox-telnet' action=zygote-start (/system/etc/init/hw/init.rc:1369) took 0ms and failed: Could not start service: File /system/bin/sh(labeled "u:object_r:shell_exec:s0") has incorrect label or no domain transition from u:r:init:s0 to another SELinux domain defined. Have you configured your service correctly? https://source.android.com/security/selinux/device-policy#label_new_services_and_address_denials. Note: this error shows up even in permissive mode in order to make auditing denials possible.
+```
+
+Let's try adding a seclabel, like the services I copied from XDA did earlier:
+
+```sh
+service hazel-busybox-telnet /system/bin/sh ${MAGISKTMP}/telnet.sh
+    user root
+    group root
+    seclabel u:r:magisk:s0
+	oneshot
+
+on zygote-start
+    start hazel-busybox-telnet
+```
+
+Okay, let's see...
+
+```sh
+λ adb shell
+tokay:/ $ su
+tokay:/ # dmesg | grep hazel
+[   12.148153] init: starting service 'hazel-busybox-telnet'...
+[   12.150088] init: ... started service 'hazel-busybox-telnet' has pid 1031
+[   12.175768] init: Service 'hazel-busybox-telnet' (pid 1031) exited with status 127 oneshot service took 0.026000 seconds in background
+[   12.175791] init: Sending signal 9 to service 'hazel-busybox-telnet' (pid 1031) process group...
+tokay:/ # ^D
+tokay:/ $ ^D
+λ telnet 192.168.2.101
+Trying 192.168.2.101...
+telnet: Unable to connect to remote host: Connection refused
+```
+
+CLOSE, but no cigar. For some reason, it exits quickly with exit code 127, which means "Command not found" in shell. Hm.
+
+Let's swap `chmod` for `/system/bin/chmod` in our shell script and go again:
+
+```sh
+#!/system/bin/sh
+
+/system/bin/chmod +x ${MAGISKTMP}/busybox
+${MAGISKTMP}/busybox telnetd -Fl /system/bin/sh
+```
+
+Nope. Perhaps MAGISKTMP isn't defined here. Let's try passing it in as an argument.
+
+```sh
+#!/system/bin/sh
+
+/system/bin/chmod +x $1/busybox
+$1/busybox telnetd -Fl /system/bin/sh
+```
+
+```sh
+service hazel-busybox-telnet /system/bin/sh ${MAGISKTMP}/telnet.sh ${MAGISKTMP}
+    user root
+    group root
+    seclabel u:r:magisk:s0
+	oneshot
+
+on zygote-start
+    start hazel-busybox-telnet
+```
+
+```sh
+λ adb shell su -c dmesg | grep hazel
+[   11.595104] init: starting service 'hazel-busybox-telnet'...
+[   11.596842] init: ... started service 'hazel-busybox-telnet' has pid 1023
+λ telnet 192.168.2.101
+Trying 192.168.2.101...
+Connected to 192.168.2.101.
+Escape character is '^]'.
+
+:/ #
+```
+
+PEAK.
+
+### Telnet Tribulations II: Electric Boogaloo
+
+Okay, now we have a script and rc that works, let's apply it to our pixel 6. Oh also, I'll put the normal non-telnet image back on my working phone - an open root telnet is a giant gaping security hole:
+
+```sh
+λ adb reboot bootloader
+λ fastboot flash init_boot magisk_init_boot.img
+λ fastboot reboot
+```
+
+From the top, then.
+
+- Get the `init_boot.img`/`boot.img` from the exact correct factory image for the Android version installed on the phone.
+
+- Get a copy of Android Busybox (just steal one from an installed working Magisk on a similar phone).
+
+- Patch it with the Magisk app's "Select and patch a file" option.
+
+- Unpack it with `libmagiskboot.so unpack magisk_patched-30600_YTW9E.img`.
+
+- Copy in your files:
+
+  The content of `telnet.custom.rc` is
+
+  ```sh
+  service hazel-busybox-telnet /system/bin/sh ${MAGISKTMP}/telnet.sh ${MAGISKTMP}
+      user root
+      group root
+      seclabel u:r:magisk:s0
+  	oneshot
+
+  on zygote-start
+      start hazel-busybox-telnet
+  ```
+
+  The content of `telnet.sh` is
+
+  ```sh
+  #!/system/bin/sh
+  /system/bin/chmod +x $1/busybox
+  $1/busybox telnetd -Fl /system/bin/sh
+  ```
+
+  Add it all to the ramdisk with
+
+  ```sh
+  libmagiskboot.so cpio ramdisk.cpio \
+  	"add 0755 overlay.d/sbin/busybox busybox" \
+      "add 0755 overlay.d/telnet.custom.rc telnet.custom.rc" \
+      "add 0755 overlay.d/sbin/telnet.sh telnet.sh"
+  ```
+
+- Repack the image with `libmagiskboot.so repack magisk_patched-30600_YTW9E.img final.img`
+
+- Put your phone into fastboot mode by holding power+down until the usb device disappears, then holding down until the fastboot usb device appears
+
+- `fastboot flash boot final.img`
+
+- `fastboot reboot`
+
+## From Telnet to ADB to `scrcpy`
+
+Now, when the device comes back up and connects to the network, we can connect to it:
+
+```sh
+λ telnet 192.168.2.124
+Trying 192.168.2.124...
+Connected to 192.168.2.124.
+Escape character is '^]'.
+
+:/ # settings put global adb_enabled 1
+:/ # echo "QAAAAL2x+jpr7oJ+dnGqFbZwjHuEzBMgSibahjp/xpMTCQKZKDF0+jV+rTNnNaWP9e7lpS9XQZjnG9Mvcd1fzmnaI8M/upXdAiIVR+aOiaVYOX9stAGt6x8aV7VlSZoJH304XqBSsdWWipVC4RIyDIdhUFmtEtTQZoc9pO0da1ZxNBT37qHiBCCMWpCF60oNm6AsOZXDTuIkLMEhmo6i2C9qE4/xrZ4lFHMls5IJmQpXjmxGASGx7GOaENwmMbEUwKmzCYtdf+XRs+T12L4Pvf4t0E6VDeeBYNqPDO8usXV3V3TbdlwFb3aCOIXwmMBH/X/TpQYqU9LMZunCsbvzRZZsx6L1UGyYGLY/JpJ5MLgk3Z0KSCfMDRNjBkXt8X4UKP4rJQKbYKep93nfxAd+CSlKcNJz7mEUTOlRiwTQ3xjkYdMjb3Xwd4MC9v988bSuczETb2UkNfe49AhW/oHIlDTi0cRtAzcHX6w+KCtJKhYtRdOf5yXExWzw80+D6MHi9FrAqK+5Jvh/Cb4JC4c7u6DFEHZYqwzcnjammh83e+Ll326Pec53C/LwQfCA0b+EaY+KydxpNJ1V4WeH4BIb/KgzYvGdf0E0XjNLkJ5dmS+hRI3NXOJgGSN/8/ScvfxGJBfW0SvWB470G3ewANKviHas0pw6HpdEwIHoq2v4X+2qRoCF8+umHwEAAQA= sink@arima" > /data/misc/adb/adb_keys
+:/ # exit
+Connection closed by foreign host.
+λ adb devices
+List of devices attached
+1A061FDF6002ZZ	device
+```
+
+BAM, ADB ACCESS BABYYYYYY.
+
+Now I can connect with scrcpy and grab off all the data I need. I used the LSPosed module "Disable FLAG_SECURE" to remove black invisible squares over the screen for things like the pin input and WhatsApp's 2-step-verification PIN, so that I can access everything properly.
+
+Now, I can use the normal device flows to move WhatsApp and Signal, I can tar my Download folder and LocalSend it to my new phone. SwiftBackup easily moved my work's Microsoft Authenticator and my MediTrak data to the new phone. Cool.
+
+## Conclusion
+
+I need to give a massive shoutout to both [marsh](https://marsh.zone) and [Kasi](/~kasimir) for being far more knowledgeable about Android than me, for suggesting ideas, and helping me brainstorm through this. Without them both I would not have got back into this phone, and I owe both of them a round now, lol.
+
+Going forward, I will be leaving USB Debugging enabled on my phone, with authorisation timeout disabled, so that whenever I need to, my laptop will be able to just get scrcpy access. I haven't done it yet, but I also intend to setup [MagiskSSH](https://gitlab.com/d4rcm4rc/MagiskSSH) so that even without USB Debugging, I can SSH into my device.
+
+However, this doesn't protect me against fucking my phone up _even worse_ than I did this time - what if my phone no longer boots? What if it explodes? What if someone particularly evil opens the phone, steals the flash memory chip, and snaps it? I need proper backups.
+
+Google Drive backups do not include app data in _most_ (not all!) cases, so I am using Swift Backup Premium to automatically back up all app APKs and associated data to a Backblaze B2 bucket nightly. This - if I have root - gives me a complete snapshot of my apps (with a few exceptions, e.g. Twitter stores its account data in the Android accounts system so this doesn't cover that). It uses about 16GB for my phone, which is very acceptable. That way my data is unlikely to be totally irretrievable.
+
+Thanks for reading all that, this took me a good couple of weeks 😅. Hopefully this could be helpful to someone else, even!
+
+\- Hazel

@@ -128,30 +128,7 @@ void main() {
 }
 `;
 
-function createShader(gl: WebGLRenderingContext, type: number, source: string) {
-	const shader = gl.createShader(type)!;
-	gl.shaderSource(shader, source);
-	gl.compileShader(shader);
-	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-		console.error(gl.getShaderInfoLog(shader));
-		gl.deleteShader(shader);
-		return null;
-	}
-	return shader;
-}
-
-function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader) {
-	const program = gl.createProgram()!;
-	gl.attachShader(program, vertexShader);
-	gl.attachShader(program, fragmentShader);
-	gl.linkProgram(program);
-	if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-		console.error(gl.getProgramInfoLog(program));
-		gl.deleteProgram(program);
-		return null;
-	}
-	return program;
-}
+import { createShader, createProgram, createFullscreenQuad } from "@res/js/gl-utils";
 
 export default () => {
 	const canvas = document.getElementById(CONTAINER_ID) as HTMLCanvasElement;
@@ -175,11 +152,7 @@ export default () => {
 	const movingUniformLocation = gl.getUniformLocation(program, "u_moving");
 	const bitDepthUniformLocation = gl.getUniformLocation(program, "u_bitDepth");
 
-	const positionBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-	// Two triangles covering the screen
-	const positions = [-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1];
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+	const positionBuffer = createFullscreenQuad(gl);
 
 	let bitDepth = 4;
 	let moving = 1.0;

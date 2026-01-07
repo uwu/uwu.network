@@ -3,13 +3,12 @@ import IndexLayout from "@layouts/IndexLayout.astro";
 import _404 from "/404.txt?raw";
 import rawInsults from "/insults.txt?raw";
 
-const insults = rawInsults.split("\n")
+const insults = rawInsults.split("\n");
 ---
 
 <IndexLayout>
 	<div class="place-items-center font-plex h-full grid children:(col-start-1 row-start-1 col-end-2 row-end-2)">
-
-		<div id="gol"></div>
+		<canvas id="gol" class="w-full h-full"></canvas>
 
 		<div id="gol-buttons" class="absolute bottom-2 right-2 flex gap-2 opacity-0 transition-opacity duration-500">
 			<button id="gol-fade">fade</button>
@@ -18,8 +17,9 @@ const insults = rawInsults.split("\n")
 			<button id="gol-stop">pause</button>
 		</div>
 
-		<div class="flex flex-col justify-center items-stretch gap-2 z-1 w-[400px] children:(bg-black p-5 border border-white)">
-
+		<div
+			class="flex flex-col justify-center items-stretch gap-2 z-1 w-[400px] children:(bg-black p-5 border border-white)"
+		>
 			<div>
 				<pre class="text-center">{_404}</pre>
 				<p class="text-right"><a href="/">back to uwu.network</a></p>
@@ -50,22 +50,22 @@ const insults = rawInsults.split("\n")
 	}
 
 	.gol-on {
-		background: #CCC;
+		background: #ccc;
 	}
 
 	#gol-buttons > * {
 		background: black;
 		border: 1px solid white;
-		padding: .25rem;
+		padding: 0.25rem;
 	}
 </style>
 
 <script>
-	import GOL from "@res/js/gameOfLife";
+	import GOL from "@res/js/gameOfLifeWebGL";
 	GOL(10, 10);
-	document.getElementById("gol-buttons").classList.remove("opacity-0")
+	document.getElementById("gol-buttons")!.classList.remove("opacity-0");
 </script>
 
 <script define:vars={{ insults }}>
-	document.getElementById("snarky-sudo-insult").innerText = insults[Math.floor(Math.random() * insults.length)]
+	document.getElementById("snarky-sudo-insult").innerText = insults[Math.floor(Math.random() * insults.length)];
 </script>

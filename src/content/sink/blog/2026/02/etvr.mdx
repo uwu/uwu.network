@@ -1,0 +1,215 @@
+---
+title: The AliExpress Quest Pro
+description: Building a DIY VR eye tracking setup
+pubDate: "2026-02-15T17:40:00"
+tags: ["VR"]
+---
+
+import ImgCont from "^components/ImgCont.astro";
+import I from "@components/FlexImg.astro";
+
+# The AliExpress Quest Pro
+
+I have been hanging around with my friends in VRChat a lot lately, and some of them have gotten headsets with eye tracking. This really makes your avatar feel more alive and it has me feeling kinda jealous, so I want to attempt to DIY eye tracking into my Pico 4 Ultra.
+
+The most sensible course of action for me to take is to sell my Pico 4 Ultra and buy a Pico 4 Pro or Enterprise, which have it built in, without any jank, over the same Pico Connect / Steam Link connection, with eye position, dilation, blinking, and even decent mouth tracking!
+
+This, however, costs me money, I have to obtain a new headset, and sell my current one that I already own, which probably will lose me money.
+
+Instead, I can spend about 100 quid on building an [EyetrackVR](https://docs.eyetrackvr.dev/getting_started/intro) setup. If I decide I want mouth tracking (less of a concern as VRChat can emulate this from your voice pretty believably), I can add a [Babble](https://babble.diy) later.
+
+## Things Needed
+
+- parts list:
+  - total cost: £55.98 (AliExpress) + £45 (Fovea Labs) = £100.98
+  - £45 [ETVR V4 mini no solder kit](https://store.eyetrackvr.dev/)
+  - £30.69 [2x Seed Studio Xiao ESP32 S3 Sense](https://www.aliexpress.com/item/1005004788285643.html)
+  - £11.58 [2x IR Camera (120deg 75mm)](https://www.aliexpress.com/item/1005003040149873.html?spm=a2g0o.order_list.order_list_main.44.1b631802lr5MUA)
+  - £3.36 [2x 2.4GHz antenna](https://www.aliexpress.com/item/32986748472.html?spm=a2g0o.order_list.order_list_main.39.1b631802lr5MUA)
+  - £3.40 [USB-C splitter for power](https://www.aliexpress.com/item/1005008269156416.html)
+  - £2.84 [usb hub](https://www.aliexpress.com/item/1005009385323419.html)
+  - £3.36 [3x short usb c-c elbow](https://www.aliexpress.com/item/1005008721286216.html), [1x straight](https://www.aliexpress.com/store/2034002)
+  - glue of some kind (hot glue is best)
+  - 3D printed mounts (considered free for this build as I have access to a printer)
+- tools
+  - 3D printer (or shapeways o/e) - perhaps look for local makerspaces!
+
+## Paths to Take
+
+There are a few different sets of mounts. The main ones for my headset are [RamesTheGeneric's mounts](https://github.com/EyeTrackVR/EyeTrackVR-Hardware/tree/main/3d_Printed_Mounts/Pico_4/V4/RamesTheGeneric) that attach to the lenses, [CucFlavius' mounts](https://github.com/CucFlavius/Pico4EyeTracking) that attach entirely inside an AMVR facial interface, and Bevergames2018's series of [entirely 3d printed facial interfaces](https://github.com/Bevergames2018/Pico4AIOFaceTrackingGasket) featuring mounting points in them.
+
+The latter of these is definitely the neatest and cleanest, but I do not feel like printing for 15 hours with a tenth of a spool of filament, so I chose not to use that.
+
+I printed the parts for both the other two mounts, but CucFlavius' mounts are highly janky, with broken-ass obj files that only just barely work in Cura, and definitely not in Slic3r. They seemed workable but were incredibly hot-glue-tastic jank, and very little instructional images were available.
+
+After much testing, I ended up settling on trying Rames' mounts.
+
+## Lens Mounts
+
+It was recommended to use PETG as the cameras get warm, but I haven't noticed any issues with PLA. I did reprint the parts 2% bigger to make them fit slightly better, but I think 1% is the sweet spot in retrospect. By the time I was test fitting I no longer had access to a 3D printer, so I just rolled with it.
+
+The bottom and outside-top LEDs would intersect with the AMVR interface, but its kinda fine cause I won't be mounting them in the official spots anyway.
+
+These mounts require popping off a plastic ring that surrounds the lenses, and is held on by plastic clips. They replace these rings.
+
+If you are in the EyetrackVR Discord server, some useful threads on this are here: [[1]](https://discord.com/channels/946212245187199026/946218248284827668/1282801637873811488)
+[[2]](https://discord.com/channels/946212245187199026/946223893620879400/1241133875720093696)
+[[3]](https://discord.com/channels/946212245187199026/1141486936859619380/1176349876813058162).
+
+Now, you have to hit a few specific points to get these off in the least janky way possible. First, you hit the clip on the bottom, then the one on the inside, then the one on the top.
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260103_220337579.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260104_212250796.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_215614256.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_215848303.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_215921298.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_215938979.jpg.webp" />
+</ImgCont>
+
+The locations of these clips are shown in these two images:
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260108_220228422~2.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_220544188~2.jpg.webp" />
+</ImgCont>
+
+And then you can simply install your 3D printed ones in their place.
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260108_221513181.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_221610028.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_221854636.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260108_222048683.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260109_000139883.jpg.webp" />
+</ImgCont>
+
+## Prepping the Electronics on the Bench
+
+You can essentially follow the guide on the ETVR docs to build the [ESP32/camera assemblies](https://docs.eyetrackvr.dev/how_to_build/preparing_xiao) and [LED boards](https://docs.eyetrackvr.dev/how_to_build/led_setup) (be SUPER careful when building these to use all the cables correctly).
+
+You cannot omit any of the LEDs in the chain, if you won't be mounting all of them, just leave them in the chain taped over or something. Make sure you have the end boards on the end of the chains. Once its done it should look like the picture below.
+
+You'll have to remove the IR filters from the cameras, again follow [the tutorial](https://docs.eyetrackvr.dev/how_to_build/preparing_cameras) for how to this. You can kinda pry the filter disc out instead of breaking it, just be careful that it doesn't fire off somewhere never to be seen again.
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260115_201604275.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260115_205013359.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260115_211948286.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260115_213938933.jpg.webp" />
+</ImgCont>
+
+Then you can plug everything into the cursed fucked up power setup:
+
+<I src="/sink/quiet_etvr/PXL_20260129_144022050.jpg.webp" />
+
+### Flashing the ESP32 Firmware
+
+You can download the flashing tool from [Github](https://github.com/EyeTrackVR/FirmwareFlashingTool/releases/tag/v1.6.0). Then select `xiaosenses3` as the board target, and set the hostname to something like `openiristrackerleft` and enter your wifi network details. You then have to hold the tiiiiiiny button to the right of the usb port and hold it while plugging in. If you do it right, you'll get a red LED. If you do it wrong you'll get a red LED _and_ a yellow blinking LED. A yellow solid LED is fine.
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260115_155428145~2.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260115_155729851.jpg.webp" />
+</ImgCont>
+
+Click "install openiris". Once its done, unplug and replug it, and click "send credentials". Now, you should be able to connect the ESP32S3 to a dumb power supply (not a PC) and see it connect to your router. Check the router page to see what IP it has, and open it in a browser. You'll see its camera feed! Yay!
+
+Repeat this for your other ESP32S3, and I set both of mine, openiristrackerleft and openiristrackerright, static IPs using my router dashboard, I chose 192.168.8.48 and 192.168.8.49.
+
+Now, you should be able to see your IR LEDs shining bright through these cameras:
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/Screenshot_20260129-155724.png.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_143549967.jpg.webp" />
+</ImgCont>
+
+You can then install the [ETVR App](https://github.com/EyeTrackVR/EyeTrackVR/releases/tag/EyeTrackApp-0.2.5.1) which will actually perform the tracking. You can rotate the camera lenses to focus them.
+
+### Positioning the LEDs
+
+Now, to choose where to mount the LEDs, I test fit the rings in my headset and just held the ETVR LED chain up to them, after deciding on where everything was going, I simply superglued the LEDs to the mounting rings wherever the fuck I felt like:
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260129_150223209.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_173458234.jpg.webp" />
+	<I src="/sink/quiet_etvr/d16d0b85-4382-4e1b-acf6-ffc0d64109c9.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_223102929.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_221655138.jpg.webp" />
+</ImgCont>
+
+I hope you enjoy holding small things in exactly the same spot for multiple minutes while it cures enough to hold itself through the longer hardening stage. And three cheers for ethyl 2-cyanoacrylate!
+
+I suggest you play a nice game of Rummy with a friend or family member while you wait. Given you're going to be spending a bunch of time in VRChat later it might be nice to do something off-grid. :) And yes, that is a real hand they actually won with. I can't believe it.
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260129_212049648.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_235521133.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_235942433.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_215918111.jpg.webp" />
+</ImgCont>
+
+## Test It
+
+There's now enough pieces of the puzzle here to throw everything very jankily and haphazardly into the headset and give it a quick go. This setup looks even more like a homemade bomb than the final one.
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/PXL_20260129_220836895.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_220838868.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260129_220843077.jpg.webp" />
+</ImgCont>
+
+You may notice only the left eye is here. I fully glued up and tested just one half of the setup to verify it before building the second eye, in case I'd fucked it up. It was fine :)
+
+## Hardware Mounting
+
+So, LED mounting is sorted, we have all the hardware working on the bench. Let's mount it to the headset permanently.
+
+I experimented a lot with where I could mount the ESP32s with the cameras in the spots they needed to be in, and where the power cabling would work. I eventually landed on the sides of the facial interface, with the ribbon cable going between the facial interface and the PU foam cushion, so that it wasn't kinking the delicate ribbon cable. I held it in place with double sided tape, and then just doused those fuckers in loctite until they held niiiiice and firm. They seem plenty solid.
+
+Then I took the coward's approach and sellotaped the USB hub to the front of the headset. lol.
+
+The ETVR board didn't want to stay stuck to the top of the Pico with double sided tape so I decided to just let it hang out the side.
+
+<ImgCont>
+	<I src="/sink/quiet_etvr/20260130_002456.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260130_003406282.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260130_003430504.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260130_005442906.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260130_010244033.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260130_010259785.jpg.webp" />
+	<I src="/sink/quiet_etvr/PXL_20260130_010305115.jpg.webp" />
+</ImgCont>
+
+## Tracking Software
+
+To test initially, I hopped into [this VRChat avatar world](https://vrchat.com/home/world/wrld_ed931899-8ebc-4953-b941-1b8c2ef89db4) and used those avatars. You need [VRCFaceTracking](https://docs.vrcft.io/) with the ETVR module, and the ETVR app. Then that just kinda _worked_, after following the ETVR cropping and calibration guides. Be aware that the recenter eyes button will open SteamVR if possible!
+
+## Avatar Setup
+
+Oh boy. Whew.
+
+I bought [Pawlygon's face tracking addon for Chalo](https://booth.pm/en/items/5236912), which is great, but it uses a patcher to apply the blendshapes to your existing Chalo FBX model. My avatar uses the wrong version of Chalo, and its a modified FBX anyway. Not gonna cut it.
+
+After a bunch of fucking around with the correct original FBX, I was able to find the patched avatar and drag it into Unity. There was also a few prefabs that it added that I copied across too.
+
+Now, to try to copy the blendshapes to my own avatar. This was going to be a job for Blender. At first, I tried using this plugin ([fblah/ShapeKeyTransferBlender](https://github.com/fblah/ShapeKeyTransferBlender)), but it took 20 years to run and didn't work.
+
+So, I used [this plugin](https://extensions.blender.org/approval-queue/mesh-data-transfer/) and set its coordinate space to World, and then it worked! I exported the FBX with all object types, scale 1, apply scalings all local, forward -Z, up Y, apply unit, use space transform, _NO_ apply transform, apply scalings: FBX Units Scale.
+
+Then I copied "!Pawlygon - VRCFT.prefab" onto my avatar and added a VRCFury Menu Move or Rename Menu Item to reposition its added menu.
+
+It works in unity! I have face tracking!... but there are some teething issues, the mouth open blendshape is a little glitchy, not that I'm using it, but my eyes also keep blinking while ET is on, and my hand (paw?) gestures are like, scaled wrong, my paw fingers move too much. It looks weird so I need to try and fix that.
+
+And here she is!: (**_FAIR WARNING_** for sound! If you are in a public place or something you may wanna mute your phone, I'm not saying anything of substance here anyway, I promise, lol)
+
+<ImgCont>
+	{/* <I> but manually done using 25 * 17.333333 as the height and 1920x1080 */}
+	<video controls src="/sink/quiet_etvr/cmp-1.mp4" style="aspect-ratio: 16/9; max-width: 770.3702px; width: 100%" />
+	<video controls src="/sink/quiet_etvr/cmp-2.mp4" style="aspect-ratio: 16/9; max-width: 770.3702px; width: 100%" />
+</ImgCont>
+
+It doesn't quite fit in its original carrying case now, but it does JUST ABOUT well enough that I can just very minorly disassemble it and it will, so its chill.
+
+I hope you find this interesting, or perhaps helpful. Hope to see you back here some time soon!
+
+\- Hazel

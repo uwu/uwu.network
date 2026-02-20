@@ -1,0 +1,400 @@
+---
+title: Good Software
+description: A celebration of the software that makes me happy.
+pubDate: "2026-02-20T23:24:00"
+tags: []
+---
+
+import K from "^components/Katex.astro";
+
+# Good Software
+
+A collection of software that makes me happy. Perhaps its just oozes a sense of delight. Or maybe it simply does its job fantastically and never lets you down. Maybe its unmatched by anything in its class.
+This is for the apps that make me happy, a celebration of Good Software.
+
+_Contents:_
+
+<div style="display: flex; flex-flow: row wrap;">
+
+{/* make sure even on the biggest of phablets, android apps wraps below desktop software */}
+
+<div style="min-width: 16rem">
+
+- [Desktop Software](#desktop-software)
+  - [7-Zip](#7-zip)
+  - [Thunderbird](#thunderbird)
+  - [Strawberry](#strawberry)
+  - [pcmanfm](#pcmanfm)
+  - [TeXmacs](#texmacs)
+  - [btrfs](#btrfs)
+  - [mpv](#mpv)
+
+</div>
+
+<div style="min-width: 16rem">
+
+- [Android Apps](#android-apps)
+  - [Poweramp](#poweramp)
+  - [Tachiyomi](#tachiyomi)
+  - [Findroid](#findroid)
+  - [FolderSync](#foldersync)
+  - [Harmonic](#harmonic)
+  - [Feeder](#feeder)
+  - [Wise](#wise)
+  - [WhatsApp](#whatsapp)
+
+</div>
+
+<div style="min-width: 16rem">
+
+- [Websites, Web Extensions, and Platforms](#websites-web-extensions-and-platforms)
+  - [Sidebery](#sidebery)
+  - [uBlock Origin](#ublock-origin)
+  - [Monica](#monica)
+  - [Anilist](#anilist)
+  - [Furtrack](#furtrack)
+
+</div>
+
+<div style="min-width: 16rem">
+
+- [Developer Tooling](#developer-tooling)
+  - [esbuild](#esbuild)
+  - [Linear](#linear)
+  - [Astro](#astro)
+  - [Vite](#vite)
+  - [Deno](#deno)
+  - [Jetbrains DataGrip](#jetbrains-datagrip)
+  - [SmartGit](#smartgit)
+
+</div>
+
+<div style="min-width: 16rem">
+
+- [Server and Infrastructure](#server-and-infrastructure)
+  - [Alpine Linux](#alpine-linux)
+  - [Docker](#docker)
+  - [Caddy](#caddy)
+  - [Tailscale](#tailscale)
+  - [Stalwart Mail](#stalwart-mail)
+
+</div>
+
+</div>
+
+## Desktop Software
+
+### 7-Zip
+
+The archiver that just... does it. Always. Any archive, at maximum efficiency. For free.
+It also has a fantastic archive format to call its own. Basically my only complaint is a lack of upstreamed support for ZStandard.
+
+### Thunderbird
+
+There's many mail clients, but only one tickles my brain in just the right way, and its Thunderbird.
+It's high density, supports everything, and the calendar UI is just _perfect_. Little details like the "Move to 'folder' again" shortcut in the context menu, email tagging, and the way multi-day events are handled in the today pane just make it feel super productive and easy to do anything.
+Unfortunately, many great extensions such as ThreadVis appear to have never been updated as Thunderbird has been updated, which is a bummer.
+It's super customisable and can look either suspiciously close to something like Mailspring or roll with the classic ultra dense list and horizontal split layout that I, as a power user, love.
+It can even connect to Exchange / Outlook servers that don't have open IMAP support enabled, freeing me from having to use the Outlook web app at university (the Outlook mac app is _Fine_, and I have a weird soft spot for full fat Windows Outlook, but I run Linux).
+
+### Strawberry
+
+[Strawberry](https://www.strawberrymusicplayer.org/) is a music player for desktop that seems to support basically everything. It runs on GStreamer with support for Last.fm, Listenbrainz, and Libre.fm, and can connect to your Spotify, Qobuz, or Tidal account, or your Subsonic server.
+It has a dense and simple UI, is fast, and is organised nicely. I like that it gets out of the way and just does its job and does it well. I've tried music players like Rhythmbox and Tauon and nothing gets me from opening it to having the music I want to listen to _now_ playing faster than Strawberry.
+There's lots of features and customisation to be found just under the surface if you want it, and the rest of the time it just sits out of the way.
+
+Perhaps the smallest thing that never fails to delight me when I use it is the ability to just right-click its tray icon and hit "stop after this track". If I know I want to get off the computer in a minute but don't want to cut off the song I'm listening to, this will let the song finish and then just stop automatically. Useful more often than you'd think if you're anything like me.
+
+### pcmanfm
+
+This one might be one of the more confusing ones so far, but I maintain that the [pcmanfm](https://pcmanfm.com/) file manager is _fantastic_ software. It's light and fast but just... has everything.
+Live updates, split-screen, sorting options and multiple display modes, easy to learn hotkeys, network file access, archiver integration, removable drive management, thumbnails (top tip: you can install ffmpegthumbnailer to make it work even better), a hotkey to open a terminal in your current directory.
+
+No notes, no other file manager will ever do it for me; once an LXDE person always an LXDE person I guess 😅
+
+### TeXmacs
+
+I can say a _lot_ about [GNU TeXmacs](https://www.texmacs.org/). TeXmacs is the brainchild, predominantly, of mathematician and computer scientist Joris van der Hoeven.
+It is a typesetting system much like LaTeX, but it is also a WYSIWYG editor for its typesetting engine. Its typesetting output is of good quality, and there's some interesting stuff there about semantic editing and macros and whatever, but that's not why I like it.
+
+TeXmacs is a _masterpiece_ of UX design. It's absurdly fast to write LaTeX-quality math in. This software is the only thing other than pen and paper that I've found can capture math at the speed of speech/reading or even speed of thought. It is not only incredibly fast for a learned power user, with short hotkeys galore such as F5 for italic or alt-T for a matrix, but it is super learnable by a focus on _how your math looks_, not what word is used to describe it.
+The main way this manifests is through the way you build up complex symbols out of simpler ones.
+
+How do you enter the isomorphism symbol, <K>\cong</K>? Well, first you type `~`. which gives you a single tilde. At this point you can press `~` again to give you a <K>\approx</K> symbol. Instead, we press `=` to gain <K>\cong</K>.
+Another example, you want this symbol: <K>\oplus</K>. In LaTeX I'd have to google something like "plus circle symbol latex", which is not feasible when my math lecturer has just dropped this symbol to represent connecting arcs into a path in the middle of a lecture. In TeXmacs, I already know that `shift-2` (so, @ on a normal keyboard) gives me <K>\circ</K> (`\circ` in LaTeX), and I know from experience that, for example, `@@` combines into <K>\infty</K>, so I can intuit that typing `@+` is worth a shot.
+
+Indeed, this combination will give you <K>\oplus</K> (for LaTeX people, this is `\oplus` by the way).
+You want a weird or unusual symbol? You probably can't remember its name, but you can find it this way, in addition to the UI palette at the top, which will give you the key combinations on hover, or by typing its latex name - you can absolutely just highlight a selection of stuff, type `\underbrace` and hit enter to insert one!
+
+It's software optimised for speed first, but crucially, _discovery second_.
+
+Greek letters can be inserted with, for example, `p Tab` to insert π, and common variations can be accessed via tab: `<` is of course <K>\lt</K>, but `< Tab` is <K>\in</K> and `< Tab Tab` is <K>\subset</K>. These go right in hand with combining characters, one can get a subset symbol <K>\subseteq</K> with `< Tab Tab =`.
+But really its as simple as the fact that typing `==>` and getting a <K>\Longrightarrow</K> symbol immediately is just Better than typing `\Longrightarrow` in one pane and hitting F5 to then see it appear on the right pane somewhere a few seconds later (or moving off of the `$ $` math block in a markdown editor like Obsidian).
+
+For me, TeXmacs not only provides powerful and beautiful document processing, but it uniquely enables me to do mathematics at the speed of thought, digitally, and for that, it is truly _good_ software.
+
+### btrfs
+
+What if your file system just worked. It was fast, stable, resilient, didn't have weird filename or path length restrictions, and was cross platform (btrfs is one of the only non-microsoft-designed file systems to work _well_ on windows via WinBtrfs (ext2fsd makes me anxious that I'm going to explode my data)).
+
+Now what if it also had some flashy features like out-of-band deduplication, snapshotting, copy-on-write, being able to switch to it _in-place_ from an old file system and roll back to it if you don't want to move forward with it, pooling disks, and online resizing.
+
+btrfs is that file system. I switched all my machines and my server to it from ext4 a few years ago and never looked back. Being able to just copy a folder as a quick and dirty backup, without actually duplicating the data feels like _such_ a luxury, and you sorely miss it when you leave.
+Just don't use its RAID modes, and I'd probably prefer ZFS for anything _actually_ mission critical like a server - its resilient but the recovery tools are rather shite.
+
+### mpv
+
+I think most people would expect me to mention VLC here, but honestly, I've kinda had a slow and steady falling out with VLC. It has outdated dependencies and a lot of them, its UI is nice but imperfect, its decoding / playback is just not the best sometimes - try to play a lossless H.264 video, and its context menu controls are actually rather bad.
+
+mpv is the media player that I have found to _just work_. It's fast, minimal but not ugly, supports EVERYTHING, always works flawlessly without exception (so far for me!), and is small and embeddable. I still use VLC on my phone, but on desktop mpv is my go-to video player.
+Its only real downside is not having a proper persistent UI, just an OSD that sits over your video. This is fine for me but realistically is a drawback.
+
+## Android Apps
+
+### Poweramp
+
+As soon as I tried out [Poweramp](https://powerampapp.com), I knew there was no going back.
+
+This music player supports every format you could reasonably want to throw at it (it can play tracker modules, for christ's sake), is extensible, supports every Android audio output API and Hi-Res output, is ultra configurable, and most importantly... just feels amazing.
+The UI design, the transitions, the gestures, everything just feels _good_ in a way that's hard to get across without just putting the app in your hands.
+
+When I bought it in December 2023 it was £5.99 and I think that may just be one of the most bang-for-buck software purchases I've ever made. I use Poweramp literally every day, and have zero regrets.
+Poweramp just has this air of feeling somehow special. No app I've used feels quite like it, and the only things that get close are iOS alternative apple music frontends Soor and Marvis, both of which have a lot of really unique touch-first UI designs and well considered UIs.
+Poweramp does that, and just piles being feature-complete and basically jankless on top of it.
+
+### Tachiyomi
+
+Tachiyomi / [Mihon](https://mihon.app/) is a venerable manga/manhwa/manhua reader. It's the go-to choice for pretty much any android user wanting to read comics. I use the TachiyomiJ2K fork (there's a whole family tree of forks with this thing, lol), and its just fantastic. It connects to tons of popular comic hosting sites (may I recommend [Keiyoushi's extensions!](https://keiyoushi.github.io/)), automatically notifies you of and downloads new chapters, has a super configurable reading view, connects to your Anilist/MAL/Kitsu/etc, and is just all-around a frictionless perfected comic reading app.
+
+### Findroid
+
+Jellyfin is a self-hosted media server. Imagine it like Netflix for piracy nerds. I have my server fetch new episodes of shows I'm watching and Jellyfin gives me a convenient streaming interface for them. I'm not talking about Jellyfin here though. JF is good but its not quite on the level for this list.
+
+_[Findroid](https://github.com/jarnedemeulemeester/findroid)_ is an Android alternative Jellyfin client that follows Material 3. It's gorgeous. You lose the web UI with a native player tacked on and gain a native UI with embedded mpv player and in-player gestures. It supports seek previews and the popular intro skipper extension.
+It's not fancy or super deep, but it doesn't have to be. It just plays my media, and it does a damn good job of it. And while doing so, it sparks joy.
+
+### FolderSync
+
+[FolderSync](https://foldersync.io/) makes a seemingly simple problem actually simple: sync this folder on my phone to (insert cloud storage here). I use this on my phone to sync my music library, notes, and signal backups.
+
+It just _works_, which is quite the fucking feat when you consider how cursed cloud storage vendors can make things and how complex the task often is when you have to support a bunch of proprietary protocols, WebDAV, FTP, S3, and everything else while doing the minimum possible network transfers to sync everything up.
+On top of that its very configurable with regards to scheduling, reporting, and sync behaviour, can produce detailed dry-run reports, and supports running a directory watcher - I use that on my VR headset to move screenshots into my ownCloud in real time.
+
+FolderSync is one of those pieces of software that just kinda sits in the background of my life and makes it a little bit better without being seen or heard.
+
+### Harmonic
+
+I will admit, I am no huge fan of Hacker News. It tends to be oversaturated with AI-bro/techbro type content, likely as a side effect of being hosted by Y-Combinator, and it rather seems to have been built once ten years ago and then just left to run without maintenance.
+I bring this up because [Harmonic](https://github.com/SimonHalvdansson/Harmonic-HN) is a Hacker News reader. I find it to be an overall joyous app to use. It is Material 3, and somehow it just _feels_ amazing to use. Its full of little QoL features to make the core of the app - a list of links and webview - feel like a nice reading experience as often as possible.
+
+### Feeder
+
+I want to get notifications for some of my RSS feeds but not others. Some of them I want to read in a embedded webview because the website itself has a lovely design, others not-so-much, and I'd like those to keep the structure of the content almost as if it was converted to markdown, but be just part of the reader app. I'd like to bring my own font, as I rather enjoy IBM Plex Serif, if you please.
+
+Feeder lets me do all of this. It's not the most sexy feeling app to use like Poweramp or Harmonic may be, but it just does its job damn-fucking-well and I appreciate that.
+Plus, any tool that lets me connect with interesting and neat content without interacting with social media is a force that I want in my life.
+
+### Wise
+
+The last two Android apps I'm gonna list here are gonna be a little bit weird as picks, and I need you to bear with me for this...
+[Wise](https://wise.com/), the finance app, is _good software_ in my opinion. The service is good, and of course that is necessary as the app lives or dies by the service its providing, but just comparing it to the PayPal mobile app side by side should give you the essence of what I'm getting at here.
+
+Everything just feels good. The graphical design, in fitting with their brand identity, is gorgeous, and the app feels modern and pretty for it. Every button gives you an immediate response and every navigation is eased. You never feel any _jank_, no flashes of white as a webview loads, or a page navigation without a transition followed by a loading circle popping into existence, but rather a native UI page slides effortlessly into the screen as a custom, buttery smooth, and relatively interesting to look at loader animation runs.
+
+If you open a page that needs to load, the progress bar eases from zero thickness to full thickness, has a _texture to it_, and then eases back down to zero thickness again. Skeletons appear when it feels good, and don't when it wouldn't. Number inputs are in a custom font, and GIANT. Numbers you've entered yourself are green, and the parts of the input that are placeholder or padding are in gray. As it recalculates a currency conversion, the target number will gently shimmer, kind of like a UI skeleton but not.
+
+Everything oozes character and everything feels obsessively polished. There's no rough corners left, but without rounding them off so much the app feels sluggish.
+It's not afraid to have bold UI design, not afraid to make UI elements BIG when there's nothing else that needed that space anyway, and it puts whats important to you right now in front of you when you need it.
+
+Wise may be a financial services company that lives on scraping pennies off of me bypassing the slowness of the American financial system, but oh boy does their app just feel _fucking fantastic_ to use. Honestly, I'd say it rivals Poweramp in feeling like some developer just _cared_ way more than anyone would expect.
+Make sure to open the PayPal app, experience authenticating in, and navigate around it for a little bit, just to give yourself that whiplash (shitlash?).
+
+By the way, Wise has a dedicated [brand identity and design](https://wise.design/) website and even if you have no need for and don't want to use their services, I strongly recommend looking at it, its really nice.
+
+### WhatsApp
+
+While Telegram might be the nicest _feeling_ messenger app I've used, and Signal might be the least evil, WhatsApp has something rather fundamental going for it. It always works.
+WhatsApp almost uniquely will just always work on the weakest network you can possibly find to throw at it. It feels pretty nice to use, too, but its very clearly focused on effectively and efficiently connecting as many people as possible.
+
+Its function-first in a big way and that is a key trait of Good Software.
+
+## Websites, Web Extensions, and Platforms
+
+### Sidebery
+
+[Sidebery](https://addons.mozilla.org/en-US/firefox/addon/sidebery/) is a Firefox extension that adds vertical tabs. It is, to this day, the only vertical tabs implementation that has ever "clicked" for me. It supports tree style tabs, tab groups are collapsible, you can rename and group tabs, you can assign them colours, create multiple collections of tabs to switch between (that can automatically line themselves up with Firefox containers), and take regular snapshots of your tabs state to defend against that _one time_ in two hundred that Firefox launches and your 350 open tabs don't come back.
+Sidebery keeps my browser in a state that my ADHD brain can feel comfy in.
+
+### uBlock Origin
+
+It blocks ads. It does it flawlessly. I have no notes. This is good software. Sadly it no longer works on Chrome for reasons outside of their control.
+
+### Monica
+
+[Monica](https://www.monicahq.com/) is an essentially unmaintained, self-hostable "personal CRM". What this actually means is that its a little webapp you can host for yourself (or use their instance!) that lets you track your contacts... but on crack, and journal in digitally.
+
+You get standard contacts features like names, dates of birth, and contact details, but you can also store how people are related to each other (wife? brother? ex-enby-partner? crush? best-friends?), how you met someone, and when you met them. You can tag them, for example I have people tagged by sexuality (because I forget!) and what friend circle I know them from (oh Google+...). I only have one contact without at least one tag.
+
+Perhaps you don't know their birth date but you do know their birthday? Or you don't know their birth date but you're sure they're 34. You have a nickname for them, maybe.
+You really need to keep in touch with this person and would love to get a little reminder every so often.
+You want to log a phone call or a conversation you had maybe.
+
+You can track gifts you've given to and received from that person, and you can log their major life events such as moving house or getting married.
+Upload photos of that person, if you have nowhere better to keep them.
+You can log activities you did with that person, and those will automatically show up in your Journal view as entries.
+Log gift ideas, your debts to/from them, documents related to them, to-dos related to them.
+
+Oh, shit, Lith's birthday is coming up! Good thing that Monica exposed an iCal with all my contacts birthdays to put in my phone!
+
+Its also just nice to have a decent markdown journal that's available from _anywhere_. I tried paper journalling for a bit but I just didn't keep up with it as often as I'd like - a phone is way more accessible when I'm in bed at 1am and just remembered I forgot to journal that one thing than a pen and paper on my desk.
+I can type into it from my phone, from my laptop, or my pc. I can search through it with a ctrl-F.
+
+Monica is one of those pieces of software that has quietly revolutionised my life in two ways - one, for letting me actually keep a log of the kind of shit I'd forget about people otherwise, second for the journal. Journalling has been _revolutionary_ for my mental health, and I 100% recommend it, and this is by far the lowest-friction way to get me to _actually do it_.
+
+### Anilist
+
+Of all the anime/manga tracking apps, the most popular is definitely MyAnimeList. Not gonna lie, I respect the database quality and the positively old-school UI - it's very up my street, but the platform I landed on using is [Anilist](https://anilist.co/home). Anilist is probably one of the prettiest web apps I've ever used. Everything is laid out just so and information is presented clearly.
+It's fast to navigate too, you can hit ctrl-s on desktop to open search (and this is a rare case where I don't mind overriding default browser shortcuts - who the fuck wants to save the anilist website as a HTML file???). It has airing information inline, you can configure the language and scoring systems, and just generally is simple and easy to use.
+
+### Furtrack
+
+[Furtrack](https://www.furtrack.com/) solves a genuinely novel problem: I've just gone to a furry convention, where the fuck are my pics???
+
+People take pictures at furry cons, a lot, and people get taken pics of a lot. Often those two parties never get connected.
+Furtrack is a large database of high quality photos of fursuits, tagged by the fursuiters that appear in them, the photographers that took them, the attributes of the fursuit on show, and the event it was taken at.
+
+Want to figure out who that guy you posed for a pic with at FWA 2025 was, knowing that he was definitely a brown hyena? `event:fwa2025 species:hyena brown` will find you a sea of pictures of brown hyenas at that particular event.
+
+If you're a photographer, you can put your pictures on there and tag them by event and species and hope that people will later come along and crowdsource tagging info.
+Perhaps you're a fursuiter, and the photographer knows who you are but forgot to exchange Telegram usernames with you! Well, they can just upload it to furtrack and tag your name on the photo, and later after the con, you can check your tag on furtrack and hopefully see your pics!
+It's a well made solution to a real problem, and it appears to have taken off in a big way, which is awesome to see.
+
+It would be remiss here not to mention [backpaw](https://backpaw.app/), a third party site that fills in a gap in the problem furtrack is trying to solve by providing a reverse-image-search for fursuits, to really allow you to identify fursuiters from images. This is not an official feature though, and is really just mentioned in case anyone reading would find it useful.
+
+## Developer Tooling
+
+### esbuild
+
+It bundles Javascript. Fast. Simple as that. I don't need a config file, I don't need to install plugins, I just run the CLI with a few arguments and get a usable production build.
+It can be extended or used programmatically, but its much more simple to do so than other builders. You may run into roadblocks if you want to do anything complex, but use the right tool for the right job.
+[esbuild](https://esbuild.github.io/) is a tool that just _does its job_ really well.
+
+### Linear
+
+[Linear](https://linear.app/) is another issue tracking tool like Github Projects or Clickup. It's not perfect, but it is _nice_. The UI feels efficient and well considered. It's feature-rich.
+I enjoy using it.
+
+### Astro
+
+[Astro](https://astro.build/) is kinda the perfect website framework. I'm a bit of an early adopter here, we've been using it for https://uwu.network since it was in beta, but its simply a fantastic tool. You get to write something kind of Vue-esque really with JSX, but your frontmatter code runs at compile time and you get a static site.
+
+The headline feature is the _islands architecture_, where you can import React/Solid/Svelte/Vue/etc components into your Astro pages and have an "island" of client-side interactivity inside a static HTML page, but not gonna lie, I just use it on its own without a framework. There's no need for it.
+
+You get components, scoped styles, everything built in without it, and for the small amounts of interactivity I do use, usually vanilla JS more than does the job.
+I can build pages with markdown or MDX, almost CMS-style, and honestly its just the best developer experience for building a website I've ever had.
+
+And its a static site at the end.
+The blog you're looking at right now was built from MDX using Astro (its part of the uwu.network monorepo!).
+
+10/10, single greatest thing in the Javascript ecosystem I've used.
+
+### Vite
+
+Keeping in the Javascript build tools theme, [Vite](https://vite.dev). It's kinda the de-facto standard now anyway, but Vite was kind of revolutionary at its introduction.
+
+A replacement for Webpack that gives you an efficient Rollup output at build time, but an uber fast esbuild development server with hot module replacement allowing truly blistering iteration times - you edit code in your IDE and your dev website changes in real time without losing any of its state.
+It supports pretty much every framework and its kind of magical to experience HMR for the first time - it feels unreal, and its a feature that as far as I know, only otherwise exists in Microsoft UI frameworks with Visual Studio, Compose with Android Studio, and React Native.
+My "magic" reaction to this technology was with Xamarin, not Vite, but still, its awesome.
+
+HMR aside though, Vite is a JS build tool that just makes all the hard stuff easy. You do reference your js index in a script tag in index.html, run `vite dev`, and you have a dev server that supports just about every single thing in the JS ecosystem you could ever want.
+
+### Deno
+
+I am not the most [Deno](https://deno.com/)-inducted person I know, but I do regularly use it whenever I want a quick REPL to do some JSON processing or scripting in. Download some things from an API and put them into a SQLite DB? No better tool for the job.
+
+Deno is the Javascript runtime that just _always works_. All browser APIs. ES imports. Just use an NPM package, don't bother installing it just use it, fuck it, import from https://esm.sh even.
+While Node is catching up honestly rather impressively and remains _the_ world's headless Javascript runtime, and while Bun is busy inventing new bullshit APIs and fucking itself over with vibe coded internals, Deno is software built with purpose and to actually solve problems.
+
+It is a JS runtime that sparks joy.
+
+### Jetbrains DataGrip
+
+Really, this is a placeholder for any of the Jetbrains IDEs, I'm a big fan of them, but they also _definitely_ have their drawbacks, and I'm not sure I'd put any of them on this list.
+
+[DataGrip](https://www.jetbrains.com/datagrip/) though?
+Well, every Jetbrains IDE has the same database client in it.
+In a project, you can pull open the data sources panel and connect to just about any database. DataGrip is simply the minimum possible JB IDE to run this database client - you don't get any code, you get a simplified UI with a database explorer panel and a large open space for tables and SQL consoles.
+
+The Jetbrains database client is hands-down the best graphical database client in existence. It's clean and fast. It's intuitive. It is PACKED with more features than you could ever know you wanted. The table viewer just _works_. You can add rows, change their data, delete them, easily add WHERE or ORDER BY queries with boxes at the top. You can count rows, export to JSON and CSV. You get a really intuitive table editor that makes it easy to do things like changing the datatype or constraints on a row, even if that requires a _weird_ `ALTER TABLE` query, or often in the case of SQLite entirely recreating the table and copying all the rows! You just click the "not null" tickbox and rename the column and add a new column and change the primary key and DataGrip generates the best SQL to perform that operation (which you can of course preview before running it).
+
+It has a nice SQL console with smart completion and will refuse to run operations like `UPDATE` or `DELETE` without a `WHERE` clause without first stopping, warning you that you've _maybe forgotten_ your `WHERE`, and having you click "I'm sure, go!".
+You can click the "plan query" button to ask the database to run the query planner then show you a pretty digest of what the output means - because frankly the output of `EXPLAIN QUERY PLAN` in most databases is not exactly easy to read.
+
+There is an Inject Language feature in any Jetbrains IDE to tell it to treat a string literal as a particular programming language (if you didn't know your JB IDE could do that, congrats now you do, and if you are wishing VS Code had that now, me too!).
+If you use this to have it treat a string literal as SQL in your codebase, it will try to match it up to your connected data sources to provide autocomplete and error highlighting when you type `INSERT INTO psots` in your string literal but it can see that your development database doesn't have a _psots_ table!
+
+If you use tools such as .NET Aspire in Rider, it automatically picks up that instance of SQL Server Developer Edition you have configured and pops it into your data sources panel for you, so that when you change branch and go "ahhh I need to undo that migration that isn't on `develop` yet", you can go to the data sources panel and the database is _already there_ for you.
+
+Considering VS Code where having a graphical table viewer is a _new_ thing (other than just a sql script to head the top few lines of a database), and its a very very rough implementation at that, what Jetbrains has to offer just feels leagues ahead of anything else.
+
+### SmartGit
+
+[SmartGit](https://www.smartgit.dev/) is a graphical git wrapper. There is a surprisingly large cottage industry of git wrappers, including titans like GitKraken and Github Desktop, old guard like TortoiseGit (to be fair, I like Tortoise!!), and new competitors.
+SmartGit has always been my personal favourite.
+
+For simple git operations, I do usually just use the command line, its faster and works fine most of the time.
+Sometimes though, it's not so simple - perhaps I had a merge go wrong or I need to do a weird rebase / cherry pick, or I really want to squash a change I have with a commit two-commits-ago... These kinds of little git puzzles become much much easier to solve with SmartGit.
+
+I also use it a _lot_ at work - we usually have around 5 branches actively on the go and many more branches in the repo, and SmartGit can present the current state of the repo in a way that my brain\* can absorb frighteningly easily (\*albeit an experienced software developer brain which has spent many years staring at SmartGit).
+
+It also has integrations for common git SaaS hosts like Github, Azure Devops, and Bitbucket, so that it can show me which branches have PRs open, too.
+
+## Server and Infrastructure
+
+### Alpine Linux
+
+[Alpine](https://alpinelinux.org/) is a tiny (like, really tiny) Linux distro that _really_ shines on servers. It's classic in its makeup, and minimal, but its not _painful_ to use like many more minimal or old-school setups are.
+It notably comes with by far the best package manager, apk. apk is kinda the killer feature.
+
+I chose it when I got my server after having used Debian for years and having heard good things about it, and never looked back.
+
+### Docker
+
+I realise the industry is moving onto Kubernetes and containerd and podman and fuck knows what else but Docker works fine for me.
+Either way, having some kind of containerisation system is truly revolutionary for someone who had managed a Debian server with everything running directly on the server. Docker lets me install and orchestrate everything in a repeatable way that doesn't cloud up my host system with shite everywhere. It gives me a good way to collect logs and metrics in the absence of journald, lets me set resource limits, restarts things if they crash, and just makes running a server 100x cleaner.
+Its internal networking is a huge feature to me, I use that heavily.
+
+### Caddy
+
+Many HTTP servers have had their moment of being the "in" server over the years. The venerable Apache web server. Perhaps Nginx, which I generally far prefer.
+[Caddy](https://caddyserver.com/) is one of the younger options, but I find it truly joyous to use.
+Its powerful in its capabilities, featuring reverse proxying, ability to modify headers and respond directly, apply authentication, and serve files including a browsing UI.
+
+However, its killer headline feature is its automatic HTTPS. Its pretty awesome. Essentially, you just tell it to listen to `https://my-domain.com` and it automatically fetches a HTTPS certificate for you, without you having to raise a finger, and will renew it when it gets close to expiring.
+It makes HTTPS certificates go from a bit of a hassle to a complete non-consideration.
+
+It also features a rather cool feature called _on-demand HTTPS_ which, when it receives a request to a wildcard domain (e.g. `https://*.my-domain.com`) will ping a local server to ask "hey, is this chill?" and if the answer is yes, it will fetch a HTTPS certificate on the fly _during the TLS handshake_ so that it can serve HTTPS on wildcard domains without having a wildcard certificate.
+
+It's just a straight up fantastic piece of software and its never let me down. I find its configuration very easy to understand too, Apache always baffled me and Nginx always made me feel like I only just "got it".
+
+### Tailscale
+
+[Tailscale](https://tailscale.com/), and [tools](https://www.zerotier.com/) [like](https://netbird.io/) [it\*](https://blog.tonari.no/introducing-innernet), are revolutionary. All of your devices just seamlessly connect, peer to peer, without any hassle. I can type `ssh sink@arima` from my phone and it'll find a path to my laptop and ssh into it, whether that be over LAN, or the open internet, or over a relay server.
+
+It lets me quickly and easily send files around, ssh into machines, and its core functionality of connecting devices is ultra battle-tested.
+It will get you a connection as fast as is realistically possible, and use the LAN when it can. I always find its ability to hole-punch NATs truly shocking - I've had it get me direct connections between devices on residential ISPs in different countries via some dark magic. What do you mean my friend's phone in their house in Italy and my PC in my house have a direct IPv4 connection open between them? That feels impossible!!!
+
+\*actually, innernet is a bit different. There's so many more in this genre though. I linked Netbird and Zerotier, but not [Pangolin](https://pangolin.net/)! or [Netmaker](https://www.netmaker.io/)! or (...)
+
+### Stalwart Mail
+
+So, you want to host your own mail server? Get ready to orchestrate your cocktail of Postfix (or maybe Haraka?) and Dovecot, a reverse proxy, Roundcube (or perhaps Rainloop?), Sieve, RSpamD (or maybe spamassassin?), perhaps ClamAV?, perhaps postgrey?, fail2ban, maybe z-push?, OpenDKIM, some bullshit for calendars and contacts perhaps (Nextcloud? an entire ass Nextcloud instance? Mail-in-a-box _genuinely_ does that!), configure it all, and then cry when something breaks.
+Or perhaps you use a pre-configured collection of all these components like [Poste](https://poste.io) or [Mail in a box](https://mailinabox.email).
+It works, but its pretty miserable.
+
+[Stalwart](https://stalw.art/) is a _completely new_ email server written as an all-in-one Rust-based server. You install the server and run it and you get IMAP, SMTP, JMAP, Sieve, advanced machine learning based spam filtering, fail2ban, IP reputation, SPF, DKIM, DMARC and TLS enforcement and reporting, CalDAV, CardDAV, and WebDAV FS, a pretty management UI, _good_ user management and aliases, multi-tenancy, _good_ domain management, and its all easy as shit to configure. You can even use SAML/OIDC, and it has 2FA. Its encrypted at rest, has ACME, ACLs, rate limiting, observability, it can be sharded, and supports tons of backend databases. You get _serious_ spam filtering.
+
+And it runs as one binary, or if you prefer one docker container.
+Just about the only thing you have to bring yourself is a webmail. Even so, if Roundcube is a beast to wrangle, Roundcube + Stalwart is a much easier to wrangle beast (say, it has 2 heads) than the 8-headed beast of the email server described earlier.
+
+What Stalwart have done is fix email, sell it to companies, and make a subset of it (basically you lose out on white-labelling and sharding) open-source. The magnitude of the service they've done to us is kinda insane.

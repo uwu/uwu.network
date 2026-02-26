@@ -1,4 +1,7 @@
 ---
+const { smol, mobileOnly } = Astro.props;
+
+const id = Math.random().toString(16).split(".")[1];
 ---
 
 <link
@@ -6,58 +9,36 @@
 	href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Mono:ital,wght@0,100..700;1,100..700"
 />
 
-<div id="quiet-style-picker" class="mb-2 p-2 block w-[max-content] grid grid-cols-3">
+<div id={id} class={`quiet-style-picker mb-2 p-2 block w-[max-content] grid grid-cols-3 text-sm ${mobileOnly ? "ml-auto mb-3" : ""}`} style={mobileOnly ? "display: none" : ""}>
 	<span class="mr-2">visual style:</span>
 
-	<button id="btn-uwunet" class="px-1 active">uwu.network</button>
+	{smol && <br />}
 
-	<button id="btn-ysnk" class="px-1">yellows.ink</button>
+	<button class="btn-uwunet px-1 active">uwu.network</button>
+
+	<button class="btn-ysnk px-1">yellows.ink</button>
 </div>
 
 <noscript>
-	<style>#quiet-style-picker { display: none; }</style>
+	<style>.quiet-style-picker { display: none; }</style>
 </noscript>
 
 <style>
-	#quiet-style-picker, #quiet-style-picker > button.active {
+	.quiet-style-picker, .quiet-style-picker > button.active {
 		border-color: white;
 		border-width: 1px;
 	}
 </style>
 
 <script>
-	import stylesheet from "^css/quiet_ysnk.sass?inline";
-
-	const btnUwuN = document.getElementById("btn-uwunet");
-	const btnYsnk = document.getElementById("btn-ysnk");
-
-	const styleElemTemplate = document.createElement("style");
-	styleElemTemplate.append(new Text(stylesheet));
-
-	let styleElem: undefined | HTMLStyleElement;
-
-	let overriding = false;
-
-	const set = (override: boolean) => {
-		if (overriding && !override) {
-			// use uwunet style
-			styleElem?.remove();
-			styleElem = undefined;
-
-			btnUwuN?.classList.toggle("active");
-			btnYsnk?.classList.toggle("active");
-		}
-		if (!overriding && override) {
-			// use ysnk style
-			styleElem = styleElemTemplate.cloneNode(true) as HTMLStyleElement;
-			document.head.append(styleElem);
-			btnUwuN?.classList.toggle("active");
-			btnYsnk?.classList.toggle("active");
-		}
-
-		overriding = override;
-	};
-
-	btnUwuN?.addEventListener("click", () => set(false));
-	btnYsnk?.addEventListener("click", () => set(true));
+	import "^js/quiet_visual_style.ts";
 </script>
+
+{mobileOnly && (<script define:vars={{id}}>
+	const el = document.getElementById(id);
+	function check() {
+		el.style.display = (window.innerWidth < 768) ? "" : "none";
+	}
+	check();
+	window.addEventListener("resize", check);
+</script>)}

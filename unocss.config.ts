@@ -25,7 +25,7 @@ export default defineConfig({
 	theme: {
 		fontFamily,
 		fontSize: {
-			quiet: ["13pt", "17pt"],
+			quiet: ["13pt", "19pt"],
 		},
 		letterSpacing: {
 			serif: "-0.015em",

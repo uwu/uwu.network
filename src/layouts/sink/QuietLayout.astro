@@ -7,9 +7,10 @@ import VisualsPicker from "^components/quiet/VisualsPicker.astro";
 
 interface Props {
 	post: any;
+	headings: any[];
 }
 
-const {post, headings} = Astro.props;
+const { post, headings } = Astro.props;
 const frontmatter = post.data;
 ---
 
@@ -25,37 +26,39 @@ const frontmatter = post.data;
 	ogpDescription={frontmatter.description}
 	defaultMain={false}
 >
-	<meta slot="head" property="og:title" content={frontmatter.title + " - Quiet System"}/>
-	<meta slot="head" property="og:image" content="/sink/silent.png"/>
-	<meta slot="head" property="article:author" content="Yellowsink"/>
-	<meta slot="head" property="article:published_time" content={frontmatter.pubDate}/>
+	<meta slot="head" property="og:title" content={frontmatter.title + " - Quiet System"} />
+	<meta slot="head" property="og:image" content="/sink/silent.png" />
+	<meta slot="head" property="article:author" content="Yellowsink" />
+	<meta slot="head" property="article:published_time" content={frontmatter.pubDate} />
 
 	<div class="-mx-6 md:pl-80">
 		<nav class="lt-md:hidden fixed w-80 left-12px top-12px bottom-12px p-6 b-white b-r-1 overflow-auto">
 			<VisualsPicker smol />
 
 			<ul id="sidenav" class="children:(mb-2 text-sm opacity-70) ml-.5rem">
-				{headings.map(({depth, slug, text}) => (
-					<li class="pl-.25rem" style={`margin-left: ${depth - 1.25}rem`}><a href={"#" + slug}>{text}</a></li>
-				))}
+				{
+					headings.map(({ depth, slug, text }) => (
+						<li class="pl-.25rem" style={`margin-left: ${depth - 1.25}rem`}><a href={"#" + slug}>{text}</a></li>
+					))
+				}
 			</ul>
 		</nav>
-		<main id="quiet" class="px-6">
+		<main id="quiet" class="px-6 grid cols-[1fr_min(100%,50rem)_1fr] children:col-start-2">
 			<VisualsPicker mobileOnly />
-			<Hits date={frontmatter.physPubDate ?? frontmatter.pubDate}/>
-			<slot/>
+			<Hits date={frontmatter.physPubDate ?? frontmatter.pubDate} />
+			<slot />
 		</main>
 	</div>
 
 	<style>
-		.active {
-			@apply opacity-100 text-md;
-			list-style-type: disclosure-closed;
-		}
+	.active {
+		@apply opacity-100 text-md;
+		list-style-type: disclosure-closed;
+	}
 	</style>
 
 	<script>
-		import "^js/quiet_analytics.js";
-		import "^js/quiet_sidebar.ts";
+	import "^js/quiet_analytics.js";
+	import "^js/quiet_sidebar.ts";
 	</script>
 </BorderLayout>

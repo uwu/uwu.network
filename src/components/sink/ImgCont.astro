@@ -1,17 +1,22 @@
 ---
+interface Props {
+	wide?: boolean;
+}
+
+const { wide } = Astro.props;
 ---
 
-<div>
+<div class={`mb-2 justify-center ${(wide ?? true) ? "col-start-1! col-span-3" : ""}`}>
 	<slot />
 </div>
 
 <style>
-	* {
-		display: flex;
-		flex-flow: row wrap;
-	}
+* {
+	display: flex;
+	flex-flow: row wrap;
+}
 
-	* :global(:is(img, video, p)) {
-		margin: 0 !important;
-	}
+* :global(:is(img, video, p)) {
+	margin: 0 !important;
+}
 </style>

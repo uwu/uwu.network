@@ -47,7 +47,7 @@ export default {
   title: "tasky",
   description: "Shitposter by day, programmer by night.",
   links: {
-    github: "taskyliz",
+    github: "taskylizard",
     bluesky: "tasky.uwu.network",
     rss: "https://tasky.uwu.network/posts/rss.xml",
   },
@@ -127,7 +127,7 @@ export default {
     },
     {
       title: "kanikou",
-      link: "https://github.com/taskyliz/kanikou",
+      link: "https://github.com/taskylizard/kanikou",
       description: "Personal discord bot for funsies.",
       date: new Date("2024-07-13"),
     },

@@ -61,6 +61,14 @@ export default {
   ],
   persual: [
     {
+      title: "Rust zero-cost abstractions vs. SIMD",
+      date: new Date("2026-02-18"),
+      description:
+        "How turbopuffer reduced query latency from 220ms to 47ms by discovering that Rust's zero-cost iterators were silently preventing SIMD vectorization.",
+      url: "https://turbopuffer.com/blog/zero-cost",
+      author: "Xavier Denis",
+    },
+    {
       title: "Radiant Computer",
       date: new Date("2025-11-08"),
       description:

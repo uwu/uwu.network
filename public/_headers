@@ -4,3 +4,10 @@
 
 /uwus/*.txt
   Content-Type: text/plain; charset=utf-8
+
+## https://www.blogsareback.com/guides/enable-cors
+/*.rss
+  Access-Control-Allow-Origin: *
+
+/*.xml
+  Access-Control-Allow-Origin: *

@@ -11,3 +11,21 @@
 
 /*.xml
   Access-Control-Allow-Origin: *
+
+/sink/*.jpg
+  Cache-Control: max-age=31557600, public, immutable
+
+/sink/*.png
+  Cache-Control: max-age=31557600, public, immutable
+
+/sink/*.webp
+  Cache-Control: max-age=31557600, public, immutable
+
+/sink/*.mp3
+  Cache-Control: max-age=31557600, public, immutable
+
+/sink/*.gif
+  Cache-Control: max-age=31557600, public, immutable
+
+/sink/*.mp4
+  Cache-Control: max-age=31557600, public, immutable

@@ -104,7 +104,7 @@ Well, I asked marsh and [Kasi](/~kasimir) (another knowledgeable android person)
 
 One short `tailscale file cp oriole-AP2A.240805.005.F1-boot.img izumi:` later, I had a patched boot image.
 
-<I src="https://i.uwu.network/d88d53d4b.png" />
+<I src="https://hy2.yellows.ink/d88d53d4b.png" />
 
 This image should theoretically be identical to the one on my phone right now, and the plan is to patch in a shell script that would enable ADB, and ideally bypass the confirmation dialog somehow. I went to list all available settings via `adb shell settings list global | grep adb`, and the ones that stood out were `adb_enabled`, `adb_wifi_enabled`, and `adb_allowed_connection_time`. The guide [here](https://xdaforums.com/t/guide-how-to-enable-access-via-adb-on-a-new-installed-os.4535165/) isn't directly useful as it relies on TWRP, but does tell me that all I should have to do is `settings put global adb_enabled 1`.
 

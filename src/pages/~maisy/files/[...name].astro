@@ -8,15 +8,16 @@ import FilesPanel from "%components/FilesPanel.astro";
 import File from "%components/File.astro";
 
 // Replicate __dirname, because we're in ESM.
-const files = Object.keys(import.meta.glob("./_files/**/*", {
-	as: "raw",
-})).map((path) => path.split("/").pop());
+const files = Object.keys(import.meta.glob("./_files/**/*")).map((path) =>
+	path.split("/").pop(),
+);
 
 export function getStaticPaths() {
 	const files = import.meta.glob("./_files/**/*", {
 		eager: true,
-		as: "raw",
-	});
+		query: "?raw",
+		import: "default",
+	}) as Record<string, string>;
 
 	return [
 		// Default route, incase the user goes to /files/

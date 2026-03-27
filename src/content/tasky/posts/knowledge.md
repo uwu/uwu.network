@@ -2,6 +2,7 @@
 title: Knowledge
 description: Knowledge is important to the human cycle
 date: 2026-03-24
+published: true
 ---
 
 I've been doing quite a bit of agentic programming, which is comprised of my own Pi agent. But I am not the type to spin up 16 Claude Code instances and just say "make me a frontend for this." That approach, to me, is just asking for trouble. You need real domain knowledge to tame these tools, without it, you are not directing an agent, you are just hoping you get some output, which to be fair, usually works with frontier models like Claude Opus 4.6 or Codex 5.3, but that's still....not good.

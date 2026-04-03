@@ -1,0 +1,295 @@
+<video
+	id="tasky-light-leaves-overlay"
+	src="/tasky/light/leaves.mp4"
+	loop
+	muted
+	playsinline
+	preload="none"
+	aria-hidden="true"
+	transition:name="tasky-light-leaves-overlay"
+	transition:persist
+></video>
+<audio
+	id="tasky-light-forest-audio"
+	src="/tasky/light/forest.mp3"
+	loop
+	preload="none"
+	aria-hidden="true"
+	transition:name="tasky-light-forest-audio"
+	transition:persist
+></audio>
+
+<script is:inline>
+(() => {
+	const LIGHT_CLASS = "light";
+	const TRANSITION_CLASS = "tasky-appearance-transition";
+	const MODE_KEY = "apperance-mode";
+	const APPEARANCE_KEY = "data-appearance";
+	const FADE_MS = 420;
+
+	const root = document.documentElement;
+	let fadeRaf = null;
+	let transitionTimer = null;
+	let waitingForUnlock = false;
+
+	const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const getLeaves = () => document.getElementById("tasky-light-leaves-overlay");
+	const getForest = () => document.getElementById("tasky-light-forest-audio");
+
+	const persistMode = (mode) => {
+		localStorage.setItem(MODE_KEY, mode);
+		localStorage.setItem(APPEARANCE_KEY, mode);
+	};
+
+	const stopAudioFade = () => {
+		if (fadeRaf) cancelAnimationFrame(fadeRaf);
+		fadeRaf = null;
+	};
+
+	const clearUnlockListeners = () => {
+		document.removeEventListener("pointerdown", unlockForestAudio);
+		document.removeEventListener("keydown", unlockForestAudio);
+		document.removeEventListener("touchstart", unlockForestAudio);
+		waitingForUnlock = false;
+	};
+
+	const unlockForestAudio = () => {
+		clearUnlockListeners();
+		if (!root.classList.contains(LIGHT_CLASS)) return;
+		const forest = getForest();
+		if (!forest) return;
+		forest.volume = 0;
+		forest.muted = false;
+		forest.play()
+			.then(() => fadeForestVolume(1))
+			.catch(() => {});
+	};
+
+	const queueAudioUnlock = () => {
+		if (waitingForUnlock) return;
+		waitingForUnlock = true;
+		document.addEventListener("pointerdown", unlockForestAudio, { once: true, passive: true });
+		document.addEventListener("touchstart", unlockForestAudio, { once: true, passive: true });
+		document.addEventListener("keydown", unlockForestAudio, { once: true });
+	};
+
+	const fadeForestVolume = (to, pauseWhenDone = false) => {
+		const forest = getForest();
+		if (!forest) return;
+		stopAudioFade();
+		if (reducedMotion()) {
+			forest.volume = to;
+			if (pauseWhenDone && to === 0) {
+				forest.pause();
+				forest.currentTime = 0;
+			}
+			return;
+		}
+
+		const from = forest.volume;
+		if (Math.abs(from - to) < 0.01) {
+			forest.volume = to;
+			if (pauseWhenDone && to === 0) {
+				forest.pause();
+				forest.currentTime = 0;
+			}
+			return;
+		}
+
+		const startedAt = performance.now();
+		const targetForest = forest;
+		const step = (now) => {
+			const progress = Math.min((now - startedAt) / FADE_MS, 1);
+			targetForest.volume = from + ((to - from) * progress);
+			if (progress < 1) {
+				fadeRaf = requestAnimationFrame(step);
+				return;
+			}
+			fadeRaf = null;
+			targetForest.volume = to;
+			if (pauseWhenDone && to === 0) {
+				targetForest.pause();
+				targetForest.currentTime = 0;
+			}
+		};
+
+		fadeRaf = requestAnimationFrame(step);
+	};
+
+	const withCrossFade = (fn) => {
+		if (reducedMotion()) {
+			fn();
+			return;
+		}
+		root.classList.add(TRANSITION_CLASS);
+		void document.body.offsetWidth;
+		fn();
+		window.clearTimeout(transitionTimer);
+		transitionTimer = window.setTimeout(() => {
+			root.classList.remove(TRANSITION_CLASS);
+		}, FADE_MS + 80);
+	};
+
+	const startLightMedia = () => {
+		const leaves = getLeaves();
+		if (leaves && leaves.paused) {
+			leaves.play().catch(() => {});
+		}
+
+		const forest = getForest();
+		if (!forest) return;
+		clearUnlockListeners();
+
+		if (!forest.paused) {
+			forest.muted = false;
+			if (forest.volume < 0.99) fadeForestVolume(1);
+			return;
+		}
+
+		forest.volume = 0;
+		forest.muted = true;
+		forest.play()
+			.then(() => {
+				forest.muted = false;
+				fadeForestVolume(1);
+			})
+			.catch(() => {
+				queueAudioUnlock();
+			});
+	};
+
+	const stopLightMedia = () => {
+		clearUnlockListeners();
+		fadeForestVolume(0, true);
+
+		const leaves = getLeaves();
+		if (!leaves) return;
+		if (reducedMotion()) {
+			leaves.pause();
+			leaves.currentTime = 0;
+			return;
+		}
+		window.setTimeout(() => {
+			const nextLeaves = getLeaves();
+			if (!nextLeaves) return;
+			nextLeaves.pause();
+			nextLeaves.currentTime = 0;
+		}, FADE_MS);
+	};
+
+	const currentMode = () => (root.classList.contains(LIGHT_CLASS) ? "light" : "dark");
+
+	const readStoredMode = () => {
+		const stored = localStorage.getItem(MODE_KEY);
+		if (stored === "light" || stored === "dark") return stored;
+		return root.classList.contains(LIGHT_CLASS) ? "light" : "dark";
+	};
+
+	const applyMode = (mode, { animate = true, persist = true } = {}) => {
+		const isLight = mode === "light";
+		const run = () => {
+			if (isLight) {
+				root.classList.remove("dark");
+				root.classList.add("light");
+				root.style.colorScheme = "light";
+				startLightMedia();
+			} else {
+				root.classList.remove("light");
+				root.classList.add("dark");
+				root.style.colorScheme = "dark";
+				stopLightMedia();
+			}
+		};
+
+		if (animate) withCrossFade(run);
+		else run();
+		if (persist) persistMode(isLight ? "light" : "dark");
+	};
+
+	const setupAppearanceMode = () => {
+		window.__taskyAppearanceCleanup?.();
+
+		const initialMode = readStoredMode();
+		applyMode(initialMode, { animate: false, persist: true });
+
+		const toggleMode = () => {
+			applyMode(currentMode() === "light" ? "dark" : "light");
+		};
+
+		const onKeyDown = (event) => {
+			if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+			const target = event.target;
+			if (
+				target instanceof HTMLInputElement
+				|| target instanceof HTMLTextAreaElement
+				|| target instanceof HTMLSelectElement
+				|| (target instanceof HTMLElement && target.isContentEditable)
+			) {
+				return;
+			}
+			if (event.key === "s" || event.key === "S") {
+				event.preventDefault();
+				toggleMode();
+			}
+		};
+
+		document.addEventListener("keydown", onKeyDown);
+
+		const cleanup = () => {
+			document.removeEventListener("keydown", onKeyDown);
+			stopAudioFade();
+			window.clearTimeout(transitionTimer);
+			root.classList.remove(TRANSITION_CLASS);
+			window.__taskyAppearanceCleanup = null;
+		};
+
+		window.__taskyAppearanceCleanup = cleanup;
+		document.addEventListener("astro:before-swap", cleanup, { once: true });
+	};
+
+	document.addEventListener("astro:page-load", setupAppearanceMode);
+	setupAppearanceMode();
+})();
+</script>
+
+<style>
+#tasky-light-leaves-overlay {
+	position: fixed;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top;
+	mix-blend-mode: multiply;
+	pointer-events: none;
+	opacity: 0;
+	z-index: 999;
+	transition: opacity 700ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+:global(html.light) #tasky-light-leaves-overlay {
+	opacity: 1;
+}
+
+:global(html.tasky-appearance-transition),
+:global(html.tasky-appearance-transition *),
+:global(html.tasky-appearance-transition *::before),
+:global(html.tasky-appearance-transition *::after) {
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+	transition-duration: 420ms;
+	transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#tasky-light-leaves-overlay {
+		transition-duration: 0ms;
+	}
+
+	:global(html.tasky-appearance-transition),
+	:global(html.tasky-appearance-transition *),
+	:global(html.tasky-appearance-transition *::before),
+	:global(html.tasky-appearance-transition *::after) {
+		transition-duration: 0ms;
+	}
+}
+</style>

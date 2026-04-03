@@ -5,6 +5,7 @@ import { ClientRouter } from "astro:transitions";
 import Fonts from "☆components/Fonts.astro";
 import LoadingIndicatorScript from "☆components/LoadingIndicatorScript.astro";
 import MetaTags, { type Props as MetaTagsProps } from "☆components/MetaTags.astro";
+import AppearanceMode from "☆components/AppearanceMode.astro";
 import ThemeScript from "☆components/ThemeScript.astro";
 
 type Props = MetaTagsProps;
@@ -27,5 +28,6 @@ const { ...meta } = Astro.props;
 	</head>
 	<body class="font-serif antialiased text-[1.1875rem] sm:text-xl leading-normal bg-gray-1 text-gray-12 w-full h-full">
 		<slot />
+		<AppearanceMode />
 	</body>
 </html>

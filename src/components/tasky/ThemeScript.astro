@@ -28,9 +28,11 @@ transition: none !important;
 		};
 
 		const appearanceKey = "data-appearance";
+		const modeKey = "apperance-mode";
 		const appearanceOptions = ["light", "dark", "system"];
 		const resolvedAppearanceOptions = appearanceOptions.slice(0, -1);
 		let appearanceValue = undefined;
+		let modeValue = undefined;
 
 		const query = "(prefers-color-scheme: dark)";
 		const matchMedia = window.matchMedia(query);
@@ -39,34 +41,68 @@ transition: none !important;
 				? appearanceOptions[1]
 				: appearanceOptions[0];
 
-		const applyAppearance = () => {
+		const getResolvedAppearance = () => {
+			if (modeValue === "light" || modeValue === "dark") return modeValue;
 			let resolvedValue = appearanceValue;
-
 			if (!appearanceValue || appearanceValue === "system") {
 				resolvedValue = getSystemAppearance();
 			}
-
 			if (!resolvedAppearanceOptions.includes(resolvedValue)) {
 				resolvedValue = appearanceOptions[0];
 			}
-
-			withoutTransitions(() => {
-				d.style.colorScheme = resolvedValue;
-
-				d[classList].add(resolvedValue);
-				d[classList].remove(
-					resolvedAppearanceOptions.filter((value) => value !== resolvedValue),
-				);
-			});
+			return resolvedValue;
 		};
 
-		appearanceValue = ls.getItem(appearanceKey);
+		const applyAppearanceTo = (target) => {
+			const resolvedValue = getResolvedAppearance();
+			target.style.colorScheme = resolvedValue;
+			target[classList].add(resolvedValue);
+			target[classList].remove(
+				resolvedAppearanceOptions.filter((value) => value !== resolvedValue),
+			);
+		};
+
+		const syncValuesFromStorage = () => {
+			appearanceValue = ls.getItem(appearanceKey);
+			modeValue = ls.getItem(modeKey);
+			if (!appearanceOptions.includes(appearanceValue)) {
+				appearanceValue = undefined;
+			}
+			if (modeValue !== "light" && modeValue !== "dark") {
+				modeValue = undefined;
+			}
+		};
+
+		const persistMode = (mode) => {
+			ls.setItem(modeKey, mode);
+			ls.setItem(appearanceKey, mode);
+		};
+
+		const applyAppearance = () => {
+			withoutTransitions(() => applyAppearanceTo(d));
+		};
+
+		syncValuesFromStorage();
 		applyAppearance();
 
 		const handleUpdateEvents = ({ key, newValue }, updateStorage = false) => {
-			if (key === appearanceKey) {
-				if (updateStorage) ls.setItem(appearanceKey, newValue);
+			if (key === modeKey) {
+				if (newValue !== "light" && newValue !== "dark") return;
+				modeValue = newValue;
 				appearanceValue = newValue;
+				if (updateStorage) persistMode(newValue);
+				applyAppearance();
+				return;
+			}
+			if (key === appearanceKey) {
+				if (!appearanceOptions.includes(newValue)) return;
+				appearanceValue = newValue;
+				modeValue = newValue === "light" || newValue === "dark" ? newValue : undefined;
+				if (updateStorage) {
+					ls.setItem(appearanceKey, newValue);
+					if (modeValue) ls.setItem(modeKey, modeValue);
+					else ls.removeItem(modeKey);
+				}
 				applyAppearance();
 			}
 		};
@@ -83,7 +119,16 @@ transition: none !important;
 		);
 
 		matchMedia[addEventListener]("change", () => applyAppearance());
-		document.addEventListener("astro:after-swap", () => applyAppearance());
+		document.addEventListener("astro:before-swap", (event) => {
+			syncValuesFromStorage();
+			const nextRoot = event.newDocument?.documentElement;
+			if (!nextRoot) return;
+			applyAppearanceTo(nextRoot);
+		});
+		document.addEventListener("astro:after-swap", () => {
+			syncValuesFromStorage();
+			applyAppearance();
+		});
 	} catch (e) {}
 })();
 </script>

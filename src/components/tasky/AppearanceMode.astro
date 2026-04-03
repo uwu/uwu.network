@@ -18,102 +18,146 @@
 	transition:name="tasky-light-forest-audio"
 	transition:persist
 ></audio>
+<video
+	id="tasky-moon-overlay"
+	src="/tasky/moon/moon.mp4"
+	loop
+	muted
+	playsinline
+	preload="none"
+	aria-hidden="true"
+	transition:name="tasky-moon-overlay"
+	transition:persist
+></video>
+<audio
+	id="tasky-moon-audio"
+	src="/tasky/moon/night.mp3"
+	loop
+	preload="none"
+	aria-hidden="true"
+	transition:name="tasky-moon-audio"
+	transition:persist
+></audio>
 
 <script is:inline>
 (() => {
 	const LIGHT_CLASS = "light";
+	const MOON_CLASS = "tasky-moon";
 	const TRANSITION_CLASS = "tasky-appearance-transition";
 	const MODE_KEY = "apperance-mode";
 	const APPEARANCE_KEY = "data-appearance";
 	const FADE_MS = 420;
 
 	const root = document.documentElement;
-	let fadeRaf = null;
+	const audioFadeRafs = new Map();
 	let transitionTimer = null;
 	let waitingForUnlock = false;
 
 	const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	const getLeaves = () => document.getElementById("tasky-light-leaves-overlay");
 	const getForest = () => document.getElementById("tasky-light-forest-audio");
+	const getMoon = () => document.getElementById("tasky-moon-overlay");
+	const getNight = () => document.getElementById("tasky-moon-audio");
 
 	const persistMode = (mode) => {
+		localStorage.setItem(APPEARANCE_KEY, mode === "light" ? "light" : "dark");
 		localStorage.setItem(MODE_KEY, mode);
-		localStorage.setItem(APPEARANCE_KEY, mode);
 	};
 
-	const stopAudioFade = () => {
-		if (fadeRaf) cancelAnimationFrame(fadeRaf);
-		fadeRaf = null;
+	const stopAudioFade = (audio = null) => {
+		if (audio) {
+			const key = audio.id || "__anonymous__";
+			const raf = audioFadeRafs.get(key);
+			if (raf) cancelAnimationFrame(raf);
+			audioFadeRafs.delete(key);
+			return;
+		}
+		for (const raf of audioFadeRafs.values()) {
+			cancelAnimationFrame(raf);
+		}
+		audioFadeRafs.clear();
+	};
+
+	const fadeAudioVolume = (audio, to, pauseWhenDone = false) => {
+		if (!audio) return;
+		const key = audio.id || "__anonymous__";
+		stopAudioFade(audio);
+		if (reducedMotion()) {
+			audio.volume = to;
+			if (pauseWhenDone && to === 0) {
+				audio.pause();
+				audio.currentTime = 0;
+			}
+			return;
+		}
+
+		const from = audio.volume;
+		if (Math.abs(from - to) < 0.01) {
+			audio.volume = to;
+			if (pauseWhenDone && to === 0) {
+				audio.pause();
+				audio.currentTime = 0;
+			}
+			return;
+		}
+
+		const startedAt = performance.now();
+		const targetAudio = audio;
+		const step = (now) => {
+			const progress = Math.min((now - startedAt) / FADE_MS, 1);
+			targetAudio.volume = from + ((to - from) * progress);
+			if (progress < 1) {
+				const raf = requestAnimationFrame(step);
+				audioFadeRafs.set(key, raf);
+				return;
+			}
+			audioFadeRafs.delete(key);
+			targetAudio.volume = to;
+			if (pauseWhenDone && to === 0) {
+				targetAudio.pause();
+				targetAudio.currentTime = 0;
+			}
+		};
+
+		const raf = requestAnimationFrame(step);
+		audioFadeRafs.set(key, raf);
 	};
 
 	const clearUnlockListeners = () => {
-		document.removeEventListener("pointerdown", unlockForestAudio);
-		document.removeEventListener("keydown", unlockForestAudio);
-		document.removeEventListener("touchstart", unlockForestAudio);
+		document.removeEventListener("pointerdown", unlockModeAudio);
+		document.removeEventListener("keydown", unlockModeAudio);
+		document.removeEventListener("touchstart", unlockModeAudio);
 		waitingForUnlock = false;
 	};
 
-	const unlockForestAudio = () => {
+	const unlockModeAudio = () => {
 		clearUnlockListeners();
+		if (root.classList.contains(MOON_CLASS)) {
+			const night = getNight();
+			if (!night) return;
+			night.volume = 0;
+			night.muted = false;
+			night.play()
+				.then(() => fadeAudioVolume(night, 1))
+				.catch(() => {});
+			return;
+		}
 		if (!root.classList.contains(LIGHT_CLASS)) return;
 		const forest = getForest();
 		if (!forest) return;
 		forest.volume = 0;
 		forest.muted = false;
 		forest.play()
-			.then(() => fadeForestVolume(1))
+			.then(() => fadeAudioVolume(forest, 1))
 			.catch(() => {});
 	};
 
 	const queueAudioUnlock = () => {
 		if (waitingForUnlock) return;
 		waitingForUnlock = true;
-		document.addEventListener("pointerdown", unlockForestAudio, { once: true, passive: true });
-		document.addEventListener("touchstart", unlockForestAudio, { once: true, passive: true });
-		document.addEventListener("keydown", unlockForestAudio, { once: true });
-	};
-
-	const fadeForestVolume = (to, pauseWhenDone = false) => {
-		const forest = getForest();
-		if (!forest) return;
-		stopAudioFade();
-		if (reducedMotion()) {
-			forest.volume = to;
-			if (pauseWhenDone && to === 0) {
-				forest.pause();
-				forest.currentTime = 0;
-			}
-			return;
-		}
-
-		const from = forest.volume;
-		if (Math.abs(from - to) < 0.01) {
-			forest.volume = to;
-			if (pauseWhenDone && to === 0) {
-				forest.pause();
-				forest.currentTime = 0;
-			}
-			return;
-		}
-
-		const startedAt = performance.now();
-		const targetForest = forest;
-		const step = (now) => {
-			const progress = Math.min((now - startedAt) / FADE_MS, 1);
-			targetForest.volume = from + ((to - from) * progress);
-			if (progress < 1) {
-				fadeRaf = requestAnimationFrame(step);
-				return;
-			}
-			fadeRaf = null;
-			targetForest.volume = to;
-			if (pauseWhenDone && to === 0) {
-				targetForest.pause();
-				targetForest.currentTime = 0;
-			}
-		};
-
-		fadeRaf = requestAnimationFrame(step);
+		document.addEventListener("pointerdown", unlockModeAudio, { once: true, passive: true });
+		document.addEventListener("touchstart", unlockModeAudio, { once: true, passive: true });
+		document.addEventListener("keydown", unlockModeAudio, { once: true });
 	};
 
 	const withCrossFade = (fn) => {
@@ -142,7 +186,7 @@
 
 		if (!forest.paused) {
 			forest.muted = false;
-			if (forest.volume < 0.99) fadeForestVolume(1);
+			if (forest.volume < 0.99) fadeAudioVolume(forest, 1);
 			return;
 		}
 
@@ -151,7 +195,7 @@
 		forest.play()
 			.then(() => {
 				forest.muted = false;
-				fadeForestVolume(1);
+				fadeAudioVolume(forest, 1);
 			})
 			.catch(() => {
 				queueAudioUnlock();
@@ -160,7 +204,7 @@
 
 	const stopLightMedia = () => {
 		clearUnlockListeners();
-		fadeForestVolume(0, true);
+		fadeAudioVolume(getForest(), 0, true);
 
 		const leaves = getLeaves();
 		if (!leaves) return;
@@ -177,33 +221,98 @@
 		}, FADE_MS);
 	};
 
-	const currentMode = () => (root.classList.contains(LIGHT_CLASS) ? "light" : "dark");
+	const startMoonMedia = () => {
+		const moon = getMoon();
+		if (moon && moon.paused) {
+			moon.play().catch(() => {});
+		}
+
+		const night = getNight();
+		if (!night) return;
+		clearUnlockListeners();
+
+		if (!night.paused) {
+			night.muted = false;
+			if (night.volume < 0.99) fadeAudioVolume(night, 1);
+			return;
+		}
+
+		night.volume = 0;
+		night.muted = true;
+		night.play()
+			.then(() => {
+				night.muted = false;
+				fadeAudioVolume(night, 1);
+			})
+			.catch(() => {
+				queueAudioUnlock();
+			});
+	};
+
+	const stopMoonMedia = () => {
+		clearUnlockListeners();
+		fadeAudioVolume(getNight(), 0, true);
+
+		const moon = getMoon();
+		if (!moon) return;
+		if (reducedMotion()) {
+			moon.pause();
+			moon.currentTime = 0;
+			return;
+		}
+		window.setTimeout(() => {
+			const nextMoon = getMoon();
+			if (!nextMoon) return;
+			nextMoon.pause();
+			nextMoon.currentTime = 0;
+		}, FADE_MS);
+	};
+
+	const currentMode = () => {
+		if (root.classList.contains(MOON_CLASS)) return "moon";
+		if (root.classList.contains(LIGHT_CLASS)) return "light";
+		return "dark";
+	};
 
 	const readStoredMode = () => {
 		const stored = localStorage.getItem(MODE_KEY);
-		if (stored === "light" || stored === "dark") return stored;
-		return root.classList.contains(LIGHT_CLASS) ? "light" : "dark";
+		if (stored === "light" || stored === "dark" || stored === "moon") return stored;
+		return currentMode();
 	};
 
 	const applyMode = (mode, { animate = true, persist = true } = {}) => {
 		const isLight = mode === "light";
+		const isMoon = mode === "moon";
 		const run = () => {
 			if (isLight) {
-				root.classList.remove("dark");
+				root.classList.remove("dark", MOON_CLASS);
 				root.classList.add("light");
 				root.style.colorScheme = "light";
+				stopMoonMedia();
 				startLightMedia();
-			} else {
-				root.classList.remove("light");
-				root.classList.add("dark");
+				return;
+			}
+
+			root.classList.remove("light");
+			root.classList.add("dark");
+
+			if (isMoon) {
+				root.classList.add(MOON_CLASS);
 				root.style.colorScheme = "dark";
 				stopLightMedia();
+				startMoonMedia();
+				return;
 			}
+
+			root.classList.remove(MOON_CLASS);
+			root.style.colorScheme = "dark";
+			stopLightMedia();
+			stopMoonMedia();
 		};
 
 		if (animate) withCrossFade(run);
 		else run();
-		if (persist) persistMode(isLight ? "light" : "dark");
+		if (persist) persistMode(isLight ? "light" : (isMoon ? "moon" : "dark"));
 	};
 
 	const setupAppearanceMode = () => {
@@ -212,8 +321,12 @@
 		const initialMode = readStoredMode();
 		applyMode(initialMode, { animate: false, persist: true });
 
-		const toggleMode = () => {
+		const toggleLightMode = () => {
 			applyMode(currentMode() === "light" ? "dark" : "light");
+		};
+
+		const toggleMoonMode = () => {
+			applyMode(currentMode() === "moon" ? "dark" : "moon");
 		};
 
 		const onKeyDown = (event) => {
@@ -229,7 +342,12 @@
 			}
 			if (event.key === "s" || event.key === "S") {
 				event.preventDefault();
-				toggleMode();
+				toggleLightMode();
+				return;
+			}
+			if (event.key === "m" || event.key === "M") {
+				event.preventDefault();
+				toggleMoonMode();
 			}
 		};
 
@@ -237,6 +355,7 @@
 
 		const cleanup = () => {
 			document.removeEventListener("keydown", onKeyDown);
+			clearUnlockListeners();
 			stopAudioFade();
 			window.clearTimeout(transitionTimer);
 			root.classList.remove(TRANSITION_CLASS);
@@ -271,6 +390,28 @@
 	opacity: 1;
 }
 
+#tasky-moon-overlay {
+	position: fixed;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	pointer-events: none;
+	opacity: 0;
+	z-index: 999;
+	transition: opacity 700ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+:global(html.tasky-moon) #tasky-moon-overlay {
+	opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+	#tasky-moon-overlay {
+		object-position: left;
+	}
+}
+
 :global(html.tasky-appearance-transition),
 :global(html.tasky-appearance-transition *),
 :global(html.tasky-appearance-transition *::before),
@@ -281,7 +422,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	#tasky-light-leaves-overlay {
+	#tasky-light-leaves-overlay,
+	#tasky-moon-overlay {
 		transition-duration: 0ms;
 	}
 

@@ -31,6 +31,7 @@ transition: none !important;
 		const modeKey = "apperance-mode";
 		const appearanceOptions = ["light", "dark", "system"];
 		const resolvedAppearanceOptions = appearanceOptions.slice(0, -1);
+		const modeOptions = ["light", "dark", "moon"];
 		let appearanceValue = undefined;
 		let modeValue = undefined;
 
@@ -43,6 +44,7 @@ transition: none !important;
 
 		const getResolvedAppearance = () => {
 			if (modeValue === "light" || modeValue === "dark") return modeValue;
+			if (modeValue === "moon") return "dark";
 			let resolvedValue = appearanceValue;
 			if (!appearanceValue || appearanceValue === "system") {
 				resolvedValue = getSystemAppearance();
@@ -60,6 +62,7 @@ transition: none !important;
 			target[classList].remove(
 				resolvedAppearanceOptions.filter((value) => value !== resolvedValue),
 			);
+			target[classList].toggle("tasky-moon", modeValue === "moon");
 		};
 
 		const syncValuesFromStorage = () => {
@@ -68,14 +71,14 @@ transition: none !important;
 			if (!appearanceOptions.includes(appearanceValue)) {
 				appearanceValue = undefined;
 			}
-			if (modeValue !== "light" && modeValue !== "dark") {
+			if (!modeOptions.includes(modeValue)) {
 				modeValue = undefined;
 			}
 		};
 
 		const persistMode = (mode) => {
+			ls.setItem(appearanceKey, mode === "light" ? "light" : "dark");
 			ls.setItem(modeKey, mode);
-			ls.setItem(appearanceKey, mode);
 		};
 
 		const applyAppearance = () => {
@@ -87,9 +90,9 @@ transition: none !important;
 
 		const handleUpdateEvents = ({ key, newValue }, updateStorage = false) => {
 			if (key === modeKey) {
-				if (newValue !== "light" && newValue !== "dark") return;
+				if (!modeOptions.includes(newValue)) return;
 				modeValue = newValue;
-				appearanceValue = newValue;
+				appearanceValue = newValue === "light" ? "light" : "dark";
 				if (updateStorage) persistMode(newValue);
 				applyAppearance();
 				return;
@@ -97,10 +100,12 @@ transition: none !important;
 			if (key === appearanceKey) {
 				if (!appearanceOptions.includes(newValue)) return;
 				appearanceValue = newValue;
-				modeValue = newValue === "light" || newValue === "dark" ? newValue : undefined;
+				if (newValue === "light") modeValue = "light";
+				if (newValue === "dark" && (modeValue !== "moon" || updateStorage)) modeValue = "dark";
+				if (newValue === "system") modeValue = undefined;
 				if (updateStorage) {
 					ls.setItem(appearanceKey, newValue);
-					if (modeValue) ls.setItem(modeKey, modeValue);
+					if (newValue === "light" || newValue === "dark") ls.setItem(modeKey, newValue);
 					else ls.removeItem(modeKey);
 				}
 				applyAppearance();

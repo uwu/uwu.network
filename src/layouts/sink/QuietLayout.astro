@@ -37,8 +37,8 @@ const frontmatter = post.data;
 
 			<ul id="sidenav" class="children:(mb-2 text-sm opacity-70) ml-.5rem">
 				{
-					headings.map(({ depth, slug, text }) => (
-						<li class="pl-.25rem" style={`margin-left: ${depth - 1.25}rem`}><a href={"#" + slug}>{text}</a></li>
+					headings.filter(h => h.depth > 1).map(({ depth, slug, text }) => (
+						<li class="pl-.25rem" style={`margin-left: ${(depth - 1) - 1.25}rem`}><a href={"#" + slug}>{text}</a></li>
 					))
 				}
 			</ul>

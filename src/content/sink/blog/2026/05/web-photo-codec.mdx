@@ -1,0 +1,122 @@
+---
+title: What Image Codec Should I Use?
+description: AVIF, JXL, or WebP?
+pubDate: "2026-05-07T21:38:00"
+tags: ["GRAPHICS", "WEB"]
+---
+
+import I from "@components/FlexImg.astro";
+
+# What Image Codec Should I Use?
+
+I am getting into photography as a hobby, and as part of that I have built my own little portfolio CMS.
+The question then is what file format to use.
+
+A large album (108 photos) takes up 370MB as 95 quality JPEG, and takes 40 seconds to export from darktable.
+I am aware that that is not a good speed metric to compare, as it involves also processing the photos,
+but its my real world scenario!
+
+## Part 1: Compression Performance
+
+This data from [the webp team](https://developers.google.com/speed/webp/docs/webp_study) suggests that the equivalent
+WebP setting to 95 quality JPEG is found when targeting ~70% file size.
+
+With my photo album that means aiming to hit 260MB. 95 quality WebP took 220MB and exported in 3 minutes.
+That's close enough that I'll take that!
+
+Now what about AVIF? This chart from [Cloudinary](https://cloudinary.com/blog/the-case-for-jpeg-xl) shows that for AVIF
+of quality equal to 1.8 bits per pixel WebP, we need to target about 1.4 bits per pixel,
+which gives us (10036224 \* 1.4 / 8) = 1.76 MB per image \* = 187MB. Yes this math is atrocious.
+Good enough for me.
+
+<I src="https://hy2.yellows.ink/4c1b980ce.png" />
+
+Keeping tiling off, as I imagine that was the setting used to encode these tests, it took 80 seconds to export,
+and I needed a quality of 87.
+
+Out of interest, I turned tiling on, since darktable claims the image quality loss is "negligible" and you just lose
+some compression ratio. This export parallelised much better and only took 44 seconds. It was only 100kb larger across
+107 images.
+
+Finally, JPEG XL. The same napkin math I applied to AVIF gives me a JPEG XL bps of ~1.15,
+and so aiming for 154MB overall. I left the effort at the default of 7.
+This one very much used my CPU! The CPU use was about 800%, whereas AVIF used 300% when tiling and 125% without!
+The quality setting needed was 90 and it took 160 seconds.
+
+This is much slower.
+
+### Sanity Check
+
+Are the quality equivalences suggested by this chart and my napkin math at all accurate? I picked out a few photos
+and compared JPEG / WebP / AVIF / JXL.
+
+It was noticable that the JPEG was nicer. All three other codecs were softer looking, and only JPEG and JPEG XL were
+able to keep the brown leaf colours in the background in the slit between two very close blades of grass, whereas
+WebP and AVIF made it gray.
+
+JXL looked softer and had more artefacts than AVIF at these settings. Sensor noise was preserved worse and made blocky.
+
+This suggests that the quality "equivalences" aren't actually perfect. Indeed the compression ratios here are like,
+60% over JPEG, which is not really going to be equivalent in any case.
+
+WebP actually performed fantastically at these settings. The JPEG preserved that fine colour better, but the WebP
+had less visual artefacts and kept more perceived detail.
+There is noticably more detail / less blocking in the WebP than in the AVIF/JXL images.
+I point out that AVIF is compressing ~20% smaller than WebP here, and JXL ~35%.
+
+## Compatibility
+
+I'm publishing on the web platform, so I need to support what browsers can use.
+
+Obviously everything supports JPEG, and WebP is supported by pretty much everything of note.
+The sticking point for support is almost _always_ going to be iOS here.
+
+WebP is supported on everything other than IE, iOS < 14 and macOS < 11 Big Sur.
+caniuse.com lists the estimated global proportion of web users with WebP support as 96%. I'll take that.
+
+AVIF is supported on everything other than IE, Opera Mini, QQ Browser, iOS < 16 and macOS < 13 Ventura.
+caniuse.com estimates that 94% of web users can use AVIF.
+This seems fine but I do worry about iOS 15 and macOS Big Sur / Monterey not being supported.
+Hell, my mum's old Macbook Air runs Big Sur, I'm pretty sure. My dad's old Macbook Pro runs something pre-Big Sur.
+Lord knows what it is though.
+
+JPEG XL is supported only on macOS 12 Monterey and iOS 17 in Safari, and in Chrome behind a flag.
+It is shipped in Firefox behind a flag, only on Nightly builds. caniuse.com thinks only 15% of users can use JXL.
+
+This situation saddens me but it is the reality of the web, and forcing 85% of your users to use a polyfill is just not
+tenable. Image codec polyfills perform Badly.
+
+## What to do?
+
+Ship AVIF. Render thumbnails in low res and use those as fallbacks.
+Display an image using &lt;picture> that will display a transparent 1 pixel image when it can use the AVIF source and a
+sensibly sized "your browser does not support AVIF, images will be low quality. If on macOS try using Chrome or Firefox"
+banner, if it has to fall back to something else (SVG?).
+
+Now, I just want to dial in my targeted AVIF quality a bit more. 87 is a little less nice than I'd like,
+though I'm being extremely nitpicky. A quality of 90 is not discernable from a 95 quality JPEG.
+It also looks pretty damn good to my eyes next to a lossless PNG export.
+
+For comparison, the JPEG is 6.6MB, and the AVIF is 4MB. That's a nice 40% saving with equivalent quality.
+Shame that AVIF doesn't support progressive rendering. I can always overlay the nice image over the thumbnail
+for large display to make the line by line loading less jarring.
+
+This also means I'll be exporting web-ready images directly out of darktable, instead of dumping my JPEGs onto my backend
+and allowing it to convert to WebP. I don't like that solution in retrospect, it's issue prone.
+
+I'll just let the backend create thumbnails, which should be nice and fast. The thumbnails are currently displayed 120px
+tall on a standard DPI display. Taking into account higher DPI displays, with pixel ratios of, say, 4, I would want
+480px height to not lose any quality when displaying thumbnails.
+
+This certainly looks a little pixellated when blown up for display, but it is much less so than you'd think, and should do
+while waiting for the full size image to load!
+At 90 quality JPEG, these take up about 100kb, and the JPEG artefacts are noticeable but ~fine.
+
+A 90 quality WebP takes up 50kb and looks very smoothed but lacks ugly artefacts. Acceptable, I'll ship this.
+
+TL;DR: Export 90 quality tiled AVIF from darktable and ship those as the file. Have the server generate 480-high
+90-quality WebP thumbnails, render that behind the AVIF.
+
+Now to implement it.
+
+    ~ Hazel

@@ -1,38 +1,66 @@
 ---
-import path from "node:path";
 import site from "☆js/site.config";
 
 export type Props = {
 	title: string;
 	description: string;
+	ogType?: "website" | "article";
+	ogImage?: string;
+	ogImageAlt?: string;
+	publishedTime?: string;
+	noindex?: boolean;
 };
-const { title, description } = Astro.props;
+const {
+	title,
+	description,
+	ogType = "website",
+	ogImage,
+	ogImageAlt = "A gruvbox-toned painting of a flower basket",
+	publishedTime,
+	noindex = false,
+} = Astro.props;
 
-let canonical: URL | undefined;
-let ogImage: URL | undefined;
+let canonical: string | undefined;
+let resolvedOgImage: string;
+const imageOrigin = Astro.url.origin;
 if (Astro.site) {
-	canonical = new URL(Astro.url.pathname, Astro.site);
-	ogImage = new URL(path.join(Astro.url.pathname, "og.png"), Astro.site);
+	canonical = new URL(Astro.url.pathname, Astro.site).href;
+	resolvedOgImage = new URL(ogImage ?? "/tasky/og.jpg", imageOrigin).href;
+} else {
+	canonical = Astro.url.href;
+	resolvedOgImage = new URL(ogImage ?? "/tasky/og.jpg", imageOrigin).href;
 }
 
 const metaTags = [
 	{ tag: "meta", attrs: { name: "description", content: description } },
-	{ tag: "link", attrs: { rel: "canonical", href: canonical?.href } },
+	{ tag: "link", attrs: { rel: "canonical", href: canonical } },
 	{ tag: "meta", attrs: { name: "generator", content: Astro.generator } },
+	noindex && { tag: "meta", attrs: { name: "robots", content: "noindex, nofollow" } },
 	{ tag: "link", attrs: { rel: "sitemap", href: "/sitemap-index.xml" } },
 	// OpenGraph Tags
 	{ tag: "meta", attrs: { property: "og:title", content: title } },
-	{ tag: "meta", attrs: { property: "og:type", content: "article" } },
-	{ tag: "meta", attrs: { property: "og:url", content: canonical?.href } },
+	{ tag: "meta", attrs: { property: "og:type", content: ogType } },
+	{ tag: "meta", attrs: { property: "og:url", content: canonical } },
 	{ tag: "meta", attrs: { property: "og:description", content: description } },
 	{ tag: "meta", attrs: { property: "og:site_name", content: site.title } },
-	{ tag: "meta", attrs: { property: "og:image", content: ogImage } },
+	{ tag: "meta", attrs: { property: "og:image", content: resolvedOgImage } },
+	{ tag: "meta", attrs: { property: "og:image:alt", content: ogImageAlt } },
+	{ tag: "meta", attrs: { property: "og:image:width", content: "3160" } },
+	{ tag: "meta", attrs: { property: "og:image:height", content: "1944" } },
+	publishedTime && {
+		tag: "meta",
+		attrs: { property: "article:published_time", content: publishedTime },
+	},
 	// Twitter Tags
 	{
 		tag: "meta",
 		attrs: { name: "twitter:card", content: "summary_large_image" },
 	},
+	{ tag: "meta", attrs: { name: "twitter:title", content: title } },
+	{ tag: "meta", attrs: { name: "twitter:description", content: description } },
+	{ tag: "meta", attrs: { name: "twitter:image", content: resolvedOgImage } },
+	{ tag: "meta", attrs: { name: "twitter:image:alt", content: ogImageAlt } },
 ];
 ---
 
-{metaTags.map(({ tag: Tag, attrs }) => <Tag {...(attrs as any)} />)}
+{metaTags.filter(Boolean).map(({ tag: Tag, attrs }) => <Tag {...(attrs as any)} />)}

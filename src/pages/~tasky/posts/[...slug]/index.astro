@@ -51,6 +51,9 @@ const isAboutPage = post.id === "about";
 	padded={!isAboutPage}
 	title={post.data.title}
 	description={post.data.description}
+	ogType={isAboutPage ? "website" : "article"}
+	publishedTime={!isAboutPage && post.data.published ? post.data.date.toISOString() : undefined}
+	noindex={!isAboutPage && !post.data.published}
 >
 	{headings.length > 0 && <TOCScript slot="head" />}
 

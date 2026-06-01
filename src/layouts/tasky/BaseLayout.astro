@@ -22,7 +22,8 @@ const { ...meta } = Astro.props;
 		<Fonts />
 		<ClientRouter />
 		<LoadingIndicatorScript />
-		<link rel="icon" href="/favicon.svg" sizes="32x32" />
+		<link rel="icon" href="/tasky/favicon.svg" type="image/svg+xml" />
+		<link rel="alternate icon" href="/tasky/favicon.ico" sizes="32x32" />
 		<MetaTags {...meta} />
 		<slot name="head" />
 	</head>

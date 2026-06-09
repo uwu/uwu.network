@@ -79,25 +79,14 @@ export default {
   ],
   projects: [
     {
-      title: "vivivi",
-      link: "https://trunk.vivivi-647.pages.dev/",
-      date: new Date("2025-06-07"),
-      image: {
-        light: {
-          format: "webp",
-          height: 1080,
-          width: 1920,
-          src: "/tasky/sites/vivivi.webp",
-          orientation: 0,
-        },
-        dark: {
-          format: "webp",
-          height: 1080,
-          width: 1920,
-          src: "/tasky/sites/vivivi.webp",
-          orientation: 0,
-        },
-      },
+      title: "oxc-solid-js",
+      link: "https://github.com/taskylizard/oxc-solid-js",
+      date: new Date("2026-04-13"),
+    },
+    {
+      title: "flora",
+      link: "https://flora.uwu.network/",
+      date: new Date("2025-12-15"),
     },
     {
       title: "Wotaku",

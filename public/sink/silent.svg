@@ -1,4 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- SVG by Yellowsink 2022-10-24 -->
-<!-- Actual image source is the Software menu icon from Uplink by Introversion Software -->
-<svg version="1.1" viewBox="0 0 53 53" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#fff" stroke-width="1px"><path d="m6 49 4-22c-1.0402-8.1381 0.074438-16.13 3-24h1c-2.1411 25.457 8.7975 37.535 35 34v1c-7.3787 4.5605-15.549 5.0075-24 4l-3 7z"/><path d="m14 11 27-1 1 28"/><path d="m22 31 21-23" stroke-linecap="round"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 53 53" xml:space="preserve"><g fill="none" stroke="#fff" stroke-width="1"><path d="m6 49 4-22c-1.0402-8.1381 0.074438-16.13 3-24h1c-2.1411 25.457 8.7975 37.535 35 34v1c-7.3787 4.5605-15.549 5.0075-24 4l-3 7z"/><path d="m14 11 27-1 1 28"/><path stroke-linecap="round" d="m22 31 21-23"/></g></svg>

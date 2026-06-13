@@ -1,0 +1,78 @@
+---
+title: "VR Eye Tracking: I Caved"
+description: Comparing the Pico 4 Enterprise to the alternatives.
+pubDate: "2026-06-13T15:30:00"
+tags: ["VR"]
+---
+
+import ImgCont from "^components/ImgCont.astro";
+import I from "@components/FlexImg.astro";
+
+# VR Eye Tracking: I Caved
+
+So, about 4 months ago, I [built an EyetrackVR setup for my Pico 4 Ultra](https://uwu.network/~sink/blog/2026/02/etvr). I love the Pico 4 Ultra, I think it is one of the best headsets on the market at the moment, but I did lament the lack of eye tracking.
+
+<I src="/sink/quiet-p4e-1.webp" />
+
+This worked pretty well, enough for me to be happy, and cost me about £100 to build. Over the months of using it occasionally though, I noticed that it started to slowly degrade in quality.
+The eye tracking quality was as mediocre as it had always been but the ESP32s powering the thing started to more and more often crap out and stop sending any video to my pc. This was quite infuriating.
+Not only this, but the whole rig drew tons of power, enough to make wireless VR go from a luxury I could enjoy to something that I couldn't practically use for normal-length hangouts.
+
+This headset has seen me through a lot, from playing Budget Cuts a little bit until I realised that I'm shit at it, or letting me experience Rez Infinite's Area X for the first time - and in VR, which was transcendental, to simply letting me hang out with all my friends from America, Germany, Italy, Australia, Iran, and many more far-flung places in a way that I could never have before, to finally taking me to Furality.
+
+[Furality](https://furality.org) Online Xperience is an annual furry convention held entirely within VRChat. This takes the form of meetups, panels, clubbing, and virtual common spaces (a dealer's den and a hub akin to a con floor). There's also the annual amazing fireworks displays, a real treat to end off the con.
+I woke up bright and early to attend Furality Ultra's face and eye tracking meetup, excited to hang out with fellow face tracking nerds, and maybe if any ETVR people were there, pick their brains about my non-ideal setup's issues.
+
+Shortly before joining this world, the setup was playing up again, and in attempt to help fix it up I managed to just straight up break it. I attended that meet, and the remainder of the con, without any working eye tracking, and decided that that was the last straw. I need something different.
+
+## It's Shiny for an Amazing Reason
+
+This is what I've bought: a Pico 4 Enterprise. These are a pain in the balls to get, but in my opinion are _almost_ (not quite) the gold standard for VR face tracking.
+
+<I src="/sink/quiet-p4e-2.webp" />
+
+(Note how much less cursed the Pico 4 Ultra looks without all the eye tracking bullshit strapped to it... heh.)
+
+Generally, the headset everyone uses for face tracking is the Quest Pro. This is an oooold headset that Meta would prefer everyone forgot about. It has sub-par optics, they are increasingly expensive, and they have a documented issue that if you get too sweaty in there you can easily short out the FT components and kill its face tracking forever. This is sub-par, but what is generally recommended if you don't want to fuck around building an EyetrackVR (in your Index or Pimax or Quest 3 or whatever the fuck) and bolting a Project Babble or Vive Facial Tracker (those suck btw) onto your headset.
+
+The gold standard, in my opinion, is the Bigscreen Beyond 2e. These cost £1249 (£150 of that is the eye tracking) and you need to buy a set of Index base stations and controllers on top of that (which will run you roughly £540), so that doesn't work for me. Granted the Beyond 2 is basically just The Best headset, but yikes. Oh, and if you want face tracking, you'll need a Vive face tracker or a Babble.
+
+So, the Pico 4 Enterprise then. This headset is a Pico 4 (non-Ultra), with face tracking shoved into it, and sold exclusively to businesses for a healthy markup. It was also sold in China as the Pico 4 Pro to consumers. They rarely hit western markets, but when they do, they're often pretty reasonably priced, because nobody knows what the fuck they are. Note that this is not even Pico's first eye-tracked headset! They also sold the Pico Neo 3 Pro Eye before.
+
+So what do I lose? Well, I lose exactly what I'd lose from going from a Pico 4 Ultra to a Pico 4 base - I get a Snapdragon XR2, not an XR2 Gen 2, I get only one, worse, passthrough camera, instead of the Ultra's delicious stereoscopic passthrough, and slightly worse mics. I get tracking rings put back onto the controllers, which isn't necessarily a minus, but they're worse built controllers. I also lose WiFi 7 and just get WiFi 6. I also lose the ability to sign into my retail Pico account and use the Pico store. Oh no, the whole 2 games on there, what a shame, I can't play them anymore. Pico OS for Pico 4 is also a lot less nice than Pico 4 Ultra, and multitasking is reallllly tenuous compared to the flawless multitasking on the Ultra.
+
+What do I get? _Fantastic_ eye-tracking and upper-face-tracking and better-than-nothing lower-face-tracking, processed on-device, sent through Pico Connect. Wonderful. My headset also now looks normal again instead of being a strange contraption with PCBs superglued and sellotaped to it.
+
+## Let me sell it to you
+
+The Pico 4 Enterprise is basically a Quest 3 but with the following:
+
+- your passthrough is only single-camera and a bit worse
+- you don't have the Oculus game library
+- the official PCVR streaming app isn't dogshit (it's actually really advanced)
+- the audio (both speakers and mics) is leagues better, I've had people compliment me on my mic in VRChat
+- its way comfier because the battery lives at the back of the strap, so the weight is balanced centrally on your head
+- you can use it without an account if you want
+- the optics are effectively the same.
+- you do lose out on refresh rate, its only 90hz not 120. This is perfectly fine IMO. 90hz is still nice and smooth.
+- You get good, seamless, on-device eye tracking and face tracking supported first-party by Pico Connect and Steam Link.
+- you can buy first-party full body tracking for only about £100, that is handled device side, and is impossibly easy to calibrate.
+- its only about as powerful as a Quest 2 for on-device experiences.
+
+Alternatively, it's like a Quest Pro but
+
+- its 4K, with Quest 3-tier optics
+- its somehow less expensive
+- the eye tracking won't shit itself if you get too sweaty
+- it weighs way less and is comfier
+- no finger tracking
+
+Overall, I am very happy with the Pico 4 Enterprise, it is a significant upgrade over the EyetrackVR.
+
+{/* see etvr.mdx */}
+
+<video
+	controls
+	src="https://cdn.hyrule.pics/0fbfe23cd.mp4"
+	style="aspect-ratio: 16/9; max-width: 770.3702px; width: 100%"
+/>

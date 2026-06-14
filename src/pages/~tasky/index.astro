@@ -78,11 +78,103 @@ import MainLayout from "☆layouts/MainLayout.astro";
 
 	<Fragment slot="footnotes">
 		<div class="h-20"></div>
-		<div class="w-full flex flex-row items-end justify-between">
+		<div class="w-full flex flex-row items-end justify-between pb-10">
 			<div class="flex flex-col gap-5 xl:gap-0">
+				<div class="app-icon-ring">
+					<a href="https://ring.basil.cafe/prev?id=tasky">
+						<img
+							src="https://ring.basil.cafe/images/left.svg"
+							width="52"
+							height="52"
+							alt="Previous App Icon webring site"
+							draggable="false"
+						/>
+					</a>
+					<a href="https://ring.basil.cafe">
+						<img
+							src="https://ring.basil.cafe/avatars/tasky.svg"
+							width="52"
+							height="52"
+							alt="App Icon webrin"
+							draggable="false"
+						/>
+					</a>
+					<a href="https://ring.basil.cafe/next?id=tasky">
+						<img
+							src="https://ring.basil.cafe/images/right.svg"
+							width="52"
+							height="52"
+							alt="Next App Icon webring site"
+							draggable="false"
+						/>
+					</a>
+				</div>
 				<div class="block xl:hidden"><LinkIcons links={site.links} /></div>
 			</div>
 			<FlowersSVG class="h-25 w-auto text-gray-11 mb-2.5 hidden xl:block" />
 		</div>
 	</Fragment>
 </MainLayout>
+
+<style>
+.app-icon-ring {
+	display: inline-flex;
+	align-items: center;
+	width: fit-content;
+	gap: 16px;
+	padding: 10px;
+	border-radius: 24px;
+	background-color: rgb(255 255 255 / 0.56);
+	box-shadow:
+		0 0 0 1px rgb(255 255 255 / 0.42),
+		0 12px 32px rgb(48 60 72 / 0.12);
+	backdrop-filter: blur(10px) saturate(1.1);
+	-webkit-backdrop-filter: blur(10px) saturate(1.1);
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.app-icon-ring a {
+	display: block;
+	flex: 0 0 auto;
+	border-radius: 14px;
+	transition-property: scale;
+	transition-duration: 120ms;
+	transition-timing-function: ease-out;
+}
+
+.app-icon-ring img {
+	display: block;
+	width: 52px;
+	height: 52px;
+	border-radius: 14px;
+	outline: 1px solid rgb(0 0 0 / 0.1);
+	outline-offset: -1px;
+	transition-property: filter;
+	transition-duration: 120ms;
+	transition-timing-function: ease-out;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.app-icon-ring a:active {
+	scale: 0.96;
+}
+
+.app-icon-ring a:active img {
+	filter: brightness(0.4);
+}
+
+:global(html.dark) .app-icon-ring,
+:global(html.tasky-moon) .app-icon-ring {
+	background-color: rgb(18 18 22 / 0.48);
+	box-shadow:
+		0 0 0 1px rgb(255 255 255 / 0.12),
+		0 12px 32px rgb(0 0 0 / 0.24);
+}
+
+:global(html.dark) .app-icon-ring img,
+:global(html.tasky-moon) .app-icon-ring img {
+	outline-color: rgb(255 255 255 / 0.12);
+}
+</style>

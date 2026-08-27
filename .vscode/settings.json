@@ -10,6 +10,9 @@
 	"[markdown]": {
 		"editor.defaultFormatter": "gplane.dprint2"
 	},
+	"[mdx]": {
+		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
+	},
 	"[typescript]": {
 		"editor.defaultFormatter": "gplane.dprint2"
 	},
